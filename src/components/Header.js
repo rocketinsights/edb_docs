@@ -7,7 +7,6 @@ import Loadable from 'react-loadable';
 
 import config from '../../config.js';
 import LoadingProvider from './mdxComponents/loading';
-import { DarkModeSwitch } from './DarkModeSwitch';
 
 const help = require('./images/help.svg');
 
@@ -53,7 +52,7 @@ const StyledBgDiv = styled('div')`
   }
 `;
 
-const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
+const Header = ({ location, isDarkThemeActive }) => (
   <StaticQuery
     query={graphql`
       query headerTitleQuery {
@@ -181,12 +180,7 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
                     </GitHubButton>
                   </li>
                 ) : null}
-                <li>
-                  <DarkModeSwitch
-                    isDarkThemeActive={isDarkThemeActive}
-                    toggleActiveTheme={toggleActiveTheme}
-                  />
-                </li>
+                <li></li>
               </ul>
             </div>
           </nav>
