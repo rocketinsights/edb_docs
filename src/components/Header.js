@@ -79,10 +79,6 @@ const Header = ({ location, isDarkThemeActive }) => (
 
       const twitter = require('./images/twitter.svg');
 
-      const discordBrandsBlock = require('./images/discord-brands-block.svg');
-
-      const twitterBrandsBlock = require('./images/twitter-brands-block.svg');
-
       const {
         site: {
           siteMetadata: { headerTitle, githubUrl, helpUrl, tweetText, logo, headerLinks },
