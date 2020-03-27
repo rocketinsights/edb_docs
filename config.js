@@ -40,7 +40,7 @@ const config = {
     title: 'EDB Docs',
     description: 'Documentation built with mdx.',
     ogImage: null,
-    docsLocation: '',
+    docsLocation: 'https://github.com/rocketinsights/postgres-docs-test/blob/master/content',
     favicon: '',
   },
   pwa: {
