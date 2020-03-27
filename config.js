@@ -24,12 +24,7 @@ const config = {
     },
   },
   sidebar: {
-    forcedNavOrder: [
-      '/edb-postgres-advanced-server',
-      '/installation', // add trailing slash if enabled above
-      '/reference',
-      '/user-guides',
-    ],
+    forcedNavOrder: ['/ark-platform', '/edb-postgres-advanced-server', '/user-guides'],
     collapsedNav: [
       // '/codeblock', // add trailing slash if enabled above
     ],
