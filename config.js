@@ -1,6 +1,6 @@
 const config = {
   gatsby: {
-    pathPrefix: '/',
+    pathPrefix: '/postgres-docs-test',
     siteUrl: 'https://hasura.io',
     gaTrackingId: null,
     trailingSlash: false,
