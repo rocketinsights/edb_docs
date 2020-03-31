@@ -37,7 +37,8 @@ const config = {
   },
   siteMetadata: {
     title: 'EDB Docs',
-    description: 'Documentation built with mdx.',
+    description:
+      'Documentation built with mdx. Viewable at https://rocketinsights.github.io/postgres-docs-test/',
     ogImage: null,
     docsLocation: 'https://github.com/rocketinsights/postgres-docs-test/edit/master/content',
     favicon: '',
