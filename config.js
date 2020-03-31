@@ -1,15 +1,14 @@
 const config = {
   gatsby: {
     pathPrefix: '/postgres-docs-test',
-    siteUrl: 'https://hasura.io',
+    siteUrl: 'https://github.com/rocketinsights/postgres-docs-test',
     gaTrackingId: null,
     trailingSlash: false,
   },
   header: {
-    logo: 'https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/brand.svg',
+    logo: '',
     logoLink: '',
-    title:
-      "<img class='img-responsive' src='https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/learn-logo.svg' alt='Learn logo' />",
+    title: 'title',
     githubUrl: '',
     helpUrl: '',
     tweetText: '',
@@ -46,8 +45,8 @@ const config = {
   pwa: {
     enabled: false, // disabling this will also remove the existing service worker.
     manifest: {
-      name: 'Gatsby Gitbook Starter',
-      short_name: 'GitbookStarter',
+      name: 'Postgres Docs Test',
+      short_name: 'postgresDocsTest',
       start_url: '/',
       background_color: '#6b37bf',
       theme_color: '#6b37bf',
