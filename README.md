@@ -1,4 +1,4 @@
-Test version of a docs page
+Test version of a docs page. The preview version can be seen at https://rocketinsights.github.io/postgres-docs-test/
 
 This repo uses Gatsby. Install gatsby-cli to run it locally
 ```
