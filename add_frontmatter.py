@@ -2,7 +2,7 @@ import fileinput
 
 for line in fileinput.input(inplace=1):
   if line.startswith('# '):
-    title = line.replace("# ", "").replace("\n", "")
+    title = line.replace("# ", "").replace("\n", "").replace("`", "")
     print("---")
     print("title:", title, sep=" ")
     print("metaTitle:", title, sep=" ")

@@ -1,0 +1,50 @@
+.. _alter_queue_table:
+
+**************************
+`ALTER QUEUE TABLE`:index:
+**************************
+
+Advanced Server includes extra syntax (not offered by Oracle) with the
+``ALTER QUEUE SQL`` command. This syntax can be used in association with the
+``DBMS_AQADM`` package.
+
+**Name**
+
+``ALTER QUEUE TABLE--`` modify an existing queue table.
+
+**Synopsis**
+
+Use ``ALTER QUEUE TABLE`` to change the name of an existing queue table:
+
+.. code-block:: text
+
+   ALTER QUEUE TABLE name RENAME TO new_name
+
+**Description**
+
+``ALTER QUEUE TABLE`` allows a superuser or a user with the
+``aq_administrator_role privilege`` to change the name of an existing queue
+table.
+
+**Parameters**
+
+``name``
+
+    The name (optionally schema-qualified) of an existing queue table.
+
+``new_name``
+
+    New name for the queue table.
+
+**Example**
+
+To change the name of a queue table from ``wo_table_east`` to
+``work_order_table``:
+
+.. code-block:: text
+
+    ALTER QUEUE TABLE wo_queue_east RENAME TO work_order_table;
+
+**See Also**
+
+:ref:`CREATE QUEUE TABLE <create_queue_table>`, :ref:`DROP QUEUE TABLE <drop_queue_table>`

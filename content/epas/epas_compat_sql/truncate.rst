@@ -1,0 +1,50 @@
+.. _truncate:
+
+*****************
+`TRUNCATE`:index:
+*****************
+
+**Name**
+
+``TRUNCATE --`` empty a table
+
+**Synopsis**
+
+.. code-block:: text
+
+    TRUNCATE TABLE name [DROP STORAGE]
+
+**Description**
+
+``TRUNCATE`` quickly removes all rows from a table. It has the same effect
+as an unqualified ``DELETE`` but since it does not actually scan the table,
+it is faster. This is most useful on large tables.
+
+The ``DROP STORAGE`` clause is accepted for compatibility, but is ignored.
+
+**Parameters**
+
+``name``
+
+    The name (optionally schema-qualified) of the table to be truncated.
+
+**Notes**
+
+``TRUNCATE`` cannot be used if there are foreign-key references to the table
+from other tables. Checking validity in such cases would require table
+scans, and the whole point is not to do one.
+
+``TRUNCATE`` will not run any user-defined ``ON DELETE`` triggers that might
+exist for the table.
+
+**Examples**
+
+The following command truncates a table named ``accounts``:
+
+.. code-block:: text
+
+    TRUNCATE TABLE accounts;
+
+**See Also**
+
+:ref:`DROP VIEW <drop_view>`, :ref:`DELETE <delete>`

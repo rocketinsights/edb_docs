@@ -1,0 +1,19 @@
+.. _boolean_type:
+
+**********************
+`Boolean Types`:index:
+**********************
+
+Advanced Server provides the standard SQL type ``BOOLEAN``. ``BOOLEAN`` can have
+one of only two states: ``TRUE`` or ``FALSE``. A third state, ``UNKNOWN``, is
+represented by the SQL ``NULL`` value.
+
+Table ‑ Boolean Type
+
+======= ============ ============================
+Name    Storage Size Description
+BOOLEAN 1 byte       Logical Boolean (true/false)
+======= ============ ============================
+
+The valid literal value for representing the true state is ``TRUE``. The
+valid literal for representing the false state is ``FALSE``.

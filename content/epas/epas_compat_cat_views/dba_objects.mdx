@@ -1,0 +1,24 @@
+---
+title: DBA_OBJECTS
+metaTitle: DBA_OBJECTS
+metaDescription: description
+---
+
+The `DBA_OBJECTS` view provides information about all objects in the
+database.
+
+<div class="tabularcolumns">
+
+Y{0.3}
+
+</div>
+
+|              |                   |                                                                                                                                           |
+| ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Name         | Type              | Description                                                                                                                               |
+| owner        | TEXT              | User name of the object’s owner.                                                                                                          |
+| schema\_name | TEXT              | Name of the schema in which the object belongs.                                                                                           |
+| object\_name | TEXT              | Name of the object.                                                                                                                       |
+| object\_type | TEXT              | Type of the object – possible values are: INDEX, FUNCTION, PACKAGE, PACKAGE BODY, PROCEDURE, SEQUENCE, SYNONYM, TABLE, TRIGGER, and VIEW. |
+| status       | CHARACTER VARYING | Included for compatibility only; always set to VALID.                                                                                     |
+| temporary    | TEXT              | Y if the table is temporary; N if the table is permanent.                                                                                 |

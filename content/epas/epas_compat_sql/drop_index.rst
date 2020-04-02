@@ -1,0 +1,40 @@
+.. _drop_index:
+
+*******************
+`DROP INDEX`:index:
+*******************
+
+**Name**
+
+``DROP INDEX --`` remove an index
+
+**Synopsis**
+
+.. code-block:: text
+
+    DROP INDEX name
+
+**Description**
+
+``DROP INDEX`` drops an existing index from the database system. To execute
+this command you must be a superuser or the owner of the index. If any
+objects depend on the index, an error will be given and the index will
+not be dropped.
+
+**Parameters**
+
+``name``
+
+    The name (optionally schema-qualified) of an index to remove.
+
+**Examples**
+
+This command will remove the index named ``accts_payable``:
+
+.. code-block:: text
+
+    DROP INDEX accts_payable;
+
+**See Also**
+
+:ref:`CREATE INDEX <create_index>`, :ref:`ALTER INDEX <alter_index>`
