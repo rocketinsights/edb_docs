@@ -59,4 +59,4 @@ To drop a role named ``admins``:
 **See Also**
 
 
-`CREATE ROLE <create_role>_`, 
+`CREATE ROLE <create_role>`_, 

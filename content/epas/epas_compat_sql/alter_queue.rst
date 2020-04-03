@@ -165,4 +165,4 @@ named ``work_order``:
 **See Also**
 
 
-`CREATE QUEUE <create_queue>_`, 
+`CREATE QUEUE <create_queue>`_, 

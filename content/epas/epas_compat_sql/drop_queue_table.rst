@@ -60,4 +60,4 @@ any objects that depend on it:
 **See Also**
 
 
-`CREATE QUEUE TABLE <create_queue_table>_`, 
+`CREATE QUEUE TABLE <create_queue_table>`_, 

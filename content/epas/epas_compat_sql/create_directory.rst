@@ -101,5 +101,5 @@ databases:
 **See Also**
 
 
-`DROP DIRECTORY <drop_directory>_`
+`DROP DIRECTORY <drop_directory>`_
 

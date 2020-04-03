@@ -303,7 +303,7 @@ Grant ``CONNECT`` privilege to user ``joe``:
 **See Also**
 
 
-`REVOKE <revoke>_`, 
+`REVOKE <revoke>`_, 
 
 .. raw:: latex
 
@@ -391,4 +391,4 @@ commands compatible with Oracle databases.
 **See Also**
 
 
-`REVOKE <revoke>_`, 
+`REVOKE <revoke>`_, 

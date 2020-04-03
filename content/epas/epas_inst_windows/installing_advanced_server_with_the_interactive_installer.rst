@@ -11,19 +11,19 @@ You can use the Advanced Server interactive installer to install Advanced Server
 You can invoke the graphical installer in different installation modes to perform an Advanced Server installation:
 
 -  For information about using the graphical installer, see 
-`Performing a Graphical Installation on Windows <performing_a_graphical_installation_on_windows>_`.
+`Performing a Graphical Installation on Windows <performing_a_graphical_installation_on_windows>`_.
 
 
 -  For information about performing an unattended installation, see 
-`Performing an Unattended Installation <performing_an_unattended_installation>_`.
+`Performing an Unattended Installation <performing_an_unattended_installation>`_.
 
 
 -  For information about performing an installation with limited privileges, see 
-`Performing an Installation with Limited Privileges <performing_an_installation_with_limited_privileges>_`.
+`Performing an Installation with Limited Privileges <performing_an_installation_with_limited_privileges>`_.
 
 
 -  For information about the command line options you can include when invoking the installer, see 
-`Reference - Command Line Options <reference_command_line_options>_`.
+`Reference - Command Line Options <reference_command_line_options>`_.
 
 
 During the installation, the graphical installer copies a number of temporary files to the location specified by the ``TEMP`` environment variable. You can optionally specify an alternate location for the temporary files by modifying the ``TEMP`` environment variable.

@@ -85,4 +85,4 @@ Change the increment and cache value of sequence, serial.
 **See Also**
 
 
-`CREATE SEQUENCE <create_sequence>_`, 
+`CREATE SEQUENCE <create_sequence>`_, 

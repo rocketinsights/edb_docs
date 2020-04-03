@@ -117,4 +117,4 @@ named ``work_order_table``:
 **See Also**
 
 
-`ALTER QUEUE TABLE <alter_queue_table>_`, 
+`ALTER QUEUE TABLE <alter_queue_table>`_, 

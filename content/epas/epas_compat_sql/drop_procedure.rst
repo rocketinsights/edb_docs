@@ -86,5 +86,5 @@ The following command removes the ``select_emp`` procedure.
 See Also
 
 
-`CREATE PROCEDURE <create_procedure>_`
+`CREATE PROCEDURE <create_procedure>`_
 

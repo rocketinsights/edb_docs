@@ -36,4 +36,4 @@ To remove the sequence, ``serial``:
 **See Also**
 
 
-`ALTER SEQUENCE <alter_sequence>_`, 
+`ALTER SEQUENCE <alter_sequence>`_, 

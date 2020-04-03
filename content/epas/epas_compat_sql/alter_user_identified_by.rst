@@ -58,4 +58,4 @@ Change a user password:
 **See Also**
 
 
-`CREATE USER <create_USER>_`, 
+`CREATE USER <create_USER>`_, 

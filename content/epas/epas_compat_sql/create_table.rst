@@ -404,4 +404,4 @@ Create table ``dept`` in tablespace ``diskvol1``:
 **See Also**
 
 
-`ALTER TABLE <alter_table>_`, 
+`ALTER TABLE <alter_table>`_, 

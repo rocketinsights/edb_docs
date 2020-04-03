@@ -671,5 +671,5 @@ removed entirely in a future Advanced Server release.
 **See Also**
 
 
-`DROP PUBLIC DATABASE LINK <drop_public_database_link>_`
+`DROP PUBLIC DATABASE LINK <drop_public_database_link>`_
 

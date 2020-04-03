@@ -645,9 +645,8 @@ must also specify a maximum length for each column (or parameter) name
 and each indicator variable name - in this case, we expect names to be
 no more than 64 bytes long.
 
-See <span class="title-ref">SQLDA Structure
-\<sqlda_structure\>_</span> section for a complete description of the
-SQLDA structure.
+See [SQLDA Structure](sqlda_structure) section for a complete
+description of the SQLDA structure.
 
 ``` text
 params = sqlald(20, 64, 64);
@@ -891,12 +890,12 @@ the loop.
 The FETCH statement will populate the following members of the results
 descriptor:
 
-  - \*results-\>I\[col\] will indicate whether the column contains a
+  - *results-\>I\[col\] will indicate whether the column contains a
     NULL value (-1) or a non-NULL value (0). If the value non-NULL but
     too large to fit into the space provided, the value is truncated and
-    \*results-\>I\[col\] will contain a positive value.
+    *results-\>I\[col\] will contain a positive value.
   - results-\>V\[col\] will contain the value fetched for the given
-    column (unless \*results-\>I\[col\] indicates that the column value
+    column (unless *results-\>I\[col\] indicates that the column value
     is NULL).
   - results-\>L\[col\] will contain the length of the value fetched for
     the given column

@@ -647,7 +647,7 @@ and each indicator variable name - in this case, we expect names to be
 no more than 64 bytes long.
 
 See 
-`SQLDA Structure <sqlda_structure>_` section for a complete description of the SQLDA structure.
+`SQLDA Structure <sqlda_structure>`_ section for a complete description of the SQLDA structure.
 
 
 .. code-block:: text

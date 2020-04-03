@@ -55,12 +55,11 @@ remove the entry for the deleted role from the protected roles list.
 
 Removing a role using these functions also removes the role’s protected
 relations list. The statistics for a role that has been removed are not
-deleted until you use the <span class="title-ref">drop_stats function
-\<drop_stats\>_</span>. The offending queries for a role
+deleted until you use the [drop_stats function](drop_stats). The
+offending queries for a role
 
-that has been removed are not deleted until you use the
-<span class="title-ref">drop_queries function
-\<drop_queries\>_</span>.
+that has been removed are not deleted until you use the [drop_queries
+function](drop_queries).
 
 The following is an example of the `unprotect_role` function:
 
@@ -105,8 +104,7 @@ statement that updates `edb_sql_protect`:
 For example, to allow a given role to issue utility commands, update the
 `allow_utility_cmds` column as follows:
 
-> `UPDATE edb_sql_protect SET allow_utility_cmds = TRUE WHERE dbid
-> = 13917 AND roleid = 16671;`
+> `UPDATE edb_sql_protect SET allow_utility_cmds = TRUE WHERE dbid 13917 AND roleid = 16671;`
 
 You can verify the change was made by querying `edb_sql_protect` or
 `list_protected_users`. In the following query note that column
@@ -139,10 +137,9 @@ Delete its entry from the `edb_sql_protect_rel` table using any of the
 following functions:
 
 > `unprotect_rel('<rolename>', '<relname>')`
-> `unprotect_rel('<rolename>', '<schema>', '<relname>')` `unprotect_rel(
-> <roleoid>, <reloid>)`
+> `unprotect_rel('<rolename>', '<schema>', '<relname>')` `unprotect_rel(<roleoid>, <reloid>)`
 
-If the relation given by \<relname\> is not in your current search path,
+If the relation given by `<relname>` is not in your current search path,
 specify the relation’s schema using the second function format.
 
 The third function format allows you to specify the OIDs of the role and

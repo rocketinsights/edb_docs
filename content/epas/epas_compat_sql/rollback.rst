@@ -45,4 +45,4 @@ To abort all changes:
 **See Also**
 
 
-`COMMIT <commit>_`, 
+`COMMIT <commit>`_, 

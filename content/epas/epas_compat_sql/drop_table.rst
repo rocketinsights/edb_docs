@@ -74,4 +74,4 @@ the ``orders`` table, depending on the drop behavior that you specify:
 **See Also**
 
 
-`ALTER TABLE <alter_table>_`, 
+`ALTER TABLE <alter_table>`_, 

@@ -38,4 +38,4 @@ This command will remove the index named ``accts_payable``:
 **See Also**
 
 
-`CREATE INDEX <create_index>_`, 
+`CREATE INDEX <create_index>`_, 

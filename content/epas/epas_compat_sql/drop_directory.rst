@@ -42,5 +42,5 @@ Remove the directory alias named ``empdir``:
 **See Also**
 
 
-`CREATE DIRECTORY <create_directory>_`
+`CREATE DIRECTORY <create_directory>`_
 

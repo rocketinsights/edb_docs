@@ -105,4 +105,4 @@ To create the same index as above, but have it reside in the
 **See Also**
 
 
-`ALTER INDEX <alter_index>_`, 
+`ALTER INDEX <alter_index>`_, 

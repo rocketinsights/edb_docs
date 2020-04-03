@@ -66,4 +66,4 @@ documentation at:
 **See Also**
 
 
-`CREATE INDEX <create_index>_`, 
+`CREATE INDEX <create_index>`_, 

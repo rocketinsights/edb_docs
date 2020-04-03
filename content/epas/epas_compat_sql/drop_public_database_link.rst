@@ -46,5 +46,5 @@ Remove the private database link named, ``edblink``:
 **See Also**
 
 
-`CREATE PUBLIC DATABASE LINK <create_public_database_link>_`
+`CREATE PUBLIC DATABASE LINK <create_public_database_link>`_
 

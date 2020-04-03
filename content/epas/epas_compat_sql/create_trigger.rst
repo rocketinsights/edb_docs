@@ -454,5 +454,5 @@ or ``AFTER STATEMENT`` timing-point.
 **See Also**
 
 
-`DROP TRIGGER <drop_trigger>_`
+`DROP TRIGGER <drop_trigger>`_
 

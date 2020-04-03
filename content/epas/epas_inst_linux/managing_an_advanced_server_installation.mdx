@@ -8,7 +8,7 @@ Unless otherwise noted, the commands and paths noted in the following
 section assume that you have performed an installation using the native
 packages.
 
-## `Starting and Stopping Advanced Server and Supporting Components`
+## Starting and Stopping Advanced Server and Supporting Components
 
 A service is a program that runs in the background and requires no user
 interaction (in fact, a service provides no user interface); a service
@@ -35,7 +35,7 @@ server and the services of Advanced Server's supporting components. The
 commands that control the Advanced Server service on a Linux platform
 are host specific.
 
-### `Controlling a Service on CentOS or RHEL 7.x`
+### Controlling a Service on CentOS or RHEL 7.x
 
 If your installation of Advanced Server resides on version 7.x of RHEL
 and CentOS, you must use the `systemctl` command to control the Advanced
@@ -58,7 +58,7 @@ Where:
 >   - `restart` to stop and then start the service.
 >   - `status` to discover the current status of the service.
 
-### `Controlling a Service on CentOS or RHEL 6.x`
+### Controlling a Service on CentOS or RHEL 6.x
 
 On version 6.x of RHEL or CentOS Linux, you can control a service at the
 command line with the `service` command. The `service` command can be
@@ -98,7 +98,7 @@ Where:
 >     if the server is already stopped.
 >   - `status` to discover the current status of the service.
 
-### `Controlling a Service on Debian 9x or Ubuntu 18.04`
+### Controlling a Service on Debian 9x or Ubuntu 18.04
 
 If your installation of Advanced Server resides on version 9x of Debian
 or 18.04 of Ubuntu, assume superuser privileges and invoke the following
@@ -125,7 +125,7 @@ following commands to:
     
     > `systemctl restart edb-as@12-main`
 
-### `Using pg_ctl to Control Advanced Server`
+### Using pg_ctl to Control Advanced Server
 
 You can use the `pg_ctl` utility to control an Advanced Server service
 from the command line on any platform. `pg_ctl` allows you to start,
@@ -162,7 +162,7 @@ the operating system service controller to changes in the status of a
 server, so it is beneficial to use the service command whenever
 possible.
 
-### `Configuring Component Services to AutoStart at System Reboot`
+### Configuring Component Services to AutoStart at System Reboot
 
 After installing, configuring, and starting the services of Advanced
 Server supporting components on a Linux system, you must manually
@@ -180,7 +180,7 @@ Where `service_name` specifies the name of the service.
 
 </div>
 
-## `Modifying the postgresql.conf File`
+## Modifying the postgresql.conf File
 
 Configuration parameters in the `postgresql.conf` file specify server
 behavior with regards to auditing, authentication, encryption, and other
@@ -209,7 +209,7 @@ command line:
 
 </div>
 
-## `Modifying the pg_hba.conf File`
+## Modifying the pg_hba.conf File
 
 Appropriate authentication methods provide protection and security.
 Entries in the `pg_hba.conf` file specify the authentication method or
@@ -248,7 +248,7 @@ For more information about modifying the `pg_hba.conf` file, please
 review [the PostgreSQL core
 documentation](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html).
 
-## `Connecting to Advanced Server with psql`
+## Connecting to Advanced Server with psql
 
 `psql` is a command line client application that allows you to execute
 SQL commands and view the results. To open the psql client, the client

@@ -66,4 +66,4 @@ Create a role (and a schema) named, ``admins``, with a password:
 **See Also**
 
 
-`ALTER ROLE <alter_role_identified_by>_`, 
+`ALTER ROLE <alter_role_identified_by>`_, 

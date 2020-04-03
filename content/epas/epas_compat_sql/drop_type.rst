@@ -51,4 +51,4 @@ Drop the nested table type named ``budget_tbl_typ``:
 **See Also**
 
 
-`CREATE TYPE <create_type>_`, 
+`CREATE TYPE <create_type>`_, 

@@ -126,5 +126,5 @@ public variable, a public procedure, and a public function.
 **See Also**
 
 
-`DROP PACKAGE <drop_package>_`
+`DROP PACKAGE <drop_package>`_
 

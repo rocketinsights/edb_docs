@@ -88,4 +88,4 @@ enforce a retry delay of 2 seconds between attempts.
 **See Also**
 
 
-`ALTER QUEUE <alter_queue>_`, 
+`ALTER QUEUE <alter_queue>`_, 

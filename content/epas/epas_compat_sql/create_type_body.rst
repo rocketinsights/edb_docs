@@ -177,4 +177,4 @@ example for the ``CREATE TYPE`` command.
 **See Also**
 
 
-`CREATE TYPE <create_type>_`, 
+`CREATE TYPE <create_type>`_, 

@@ -189,4 +189,4 @@ Revoke the ``EXEMPT ACCESS POLICY`` privilege from user ``joe``:
 **See Also**
 
 
-`GRANT <grant>_`, 
+`GRANT <grant>`_, 

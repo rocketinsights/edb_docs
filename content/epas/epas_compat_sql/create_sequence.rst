@@ -160,4 +160,4 @@ Select the next number from this sequence:
 **See Also**
 
 
-`ALTER SEQUENCE <alter_sequence>_`, 
+`ALTER SEQUENCE <alter_sequence>`_, 

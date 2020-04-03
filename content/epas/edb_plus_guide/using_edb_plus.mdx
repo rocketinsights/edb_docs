@@ -6,7 +6,7 @@ metaDescription: description
 
 <div id="starting_edb_plus">
 
-To open an EDB\*Plus command line, navigate through the `Applications`
+To open an EDB*Plus command line, navigate through the `Applications`
 or `Start` menu to the `Advanced Server` menu, to the `Run SQL Command
 Line` menu, and select the `EDB*Plus` option. You can also invoke
 `EDB*Plus` from the operating system command line with the following
@@ -17,7 +17,7 @@ command:
 > `edbplus [ -S[ILENT ] ] [ <login> | NOLOG ] [ @<scriptfile> [.<ext> ]
 > ] -SILENT`
 
-If specified, the EDB\*Plus sign-on banner is suppressed along with all
+If specified, the EDB*Plus sign-on banner is suppressed along with all
 prompts.
 
 `login`
@@ -37,7 +37,7 @@ white space within the login information:
     If a *password* is not provided, but a password is required for
     authentication, a password file is used if available. If there is no
     password file or no entry in the password file with the matching
-    connection parameters, then EDB\*Plus will prompt for the password.
+    connection parameters, then EDB*Plus will prompt for the password.
 
   - `connectstring` is the database connection string with the following
     format:
@@ -95,21 +95,21 @@ core documentation at:
 
 `/NOLOG`
 
-Specify `/NOLOG` to start EDB\*Plus without establishing a database
-connection. SQL commands and EDB\*Plus commands that require a database
+Specify `/NOLOG` to start EDB*Plus without establishing a database
+connection. SQL commands and EDB*Plus commands that require a database
 connection cannot be used in this mode. The CONNECT command can be
-subsequently given to connect to a database after starting EDB\*Plus
+subsequently given to connect to a database after starting EDB*Plus
 with the /NOLOG option.
 
 `scriptfile\ [.<ext> ]`
 
 `scriptfile` is the name of a file residing in the current working
-directory, containing SQL and/or EDB\*Plus commands that will be
-automatically executed after startup of EDB\*Plus. *ext* is the filename
+directory, containing SQL and/or EDB*Plus commands that will be
+automatically executed after startup of EDB*Plus. *ext* is the filename
 extension. If the filename extension is sql, then the `.sql` extension
 may be omitted when specifying *scriptfile*. When creating a script
 file, always name the file with an extension, otherwise it will not be
-accessible by EDB\*Plus. (EDB\*Plus will always assume a `.sql`
+accessible by EDB*Plus. (EDB*Plus will always assume a `.sql`
 extension on filenames that are specified with no extension.)
 
 The following example shows user `enterprisedb` with password

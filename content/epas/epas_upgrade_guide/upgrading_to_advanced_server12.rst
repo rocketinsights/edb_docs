@@ -20,7 +20,7 @@ cluster when specifying a target cluster for the upgrade.
 
 If a problem occurs during the upgrade process, you can revert to the
 previous version. See 
-`Reverting to the old cluster <reverting_to_the_old_cluster>_` Section for detailed information about this
+`Reverting to the old cluster <reverting_to_the_old_cluster>`_ Section for detailed information about this
 
 process.
 

@@ -71,5 +71,5 @@ Create a view consisting of all employees in department ``30``:
 **See Also**
 
 
-`DROP VIEW <drop_view>_`
+`DROP VIEW <drop_view>`_
 

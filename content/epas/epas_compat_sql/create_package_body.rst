@@ -247,4 +247,4 @@ the ``empinfo`` package and display the public variable.
 **See Also**
 
 
-`CREATE PACKAGE <create_package>_`, 
+`CREATE PACKAGE <create_package>`_, 

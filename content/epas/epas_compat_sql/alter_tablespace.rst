@@ -40,5 +40,5 @@ Rename tablespace ``empspace`` to ``employee_space``:
 **See Also**
 
 
-`DROP TABLESPACE <drop_tablespace>_`
+`DROP TABLESPACE <drop_tablespace>`_
 

@@ -36,7 +36,7 @@ Server home directory.
    parameter to ``learn``. 
 
    See 
-`Setting the Protection Level <setting_the_protection_level>_` for more information.
+`Setting the Protection Level <setting_the_protection_level>`_ for more information.
 
 
 -  **edb_sql_protect.max_protected_roles.** Sets the maximum number of
@@ -426,7 +426,7 @@ parameters in the ``postgresql.conf`` file as shown below:
     edb_sql_protect.level = passive
 
 **Step 2:** Reload the configuration file as shown in ``Step 2`` of the 
-`Learn Mode <learn_mode>_` section.
+`Learn Mode <learn_mode>`_ section.
 
 
 Now SQL/Protect is in passive mode. For relations that have been learned
@@ -563,7 +563,7 @@ parameters in the ``postgresql.conf`` file as shown below:
     edb_sql_protect.level = active
 
 **Step 2:** Reload the configuration file as shown in ``Step 2`` of the 
-`Learn Mode <learn_mode>_` section.
+`Learn Mode <learn_mode>`_ section.
 
 
 The following example illustrates SQL statements similar to those given

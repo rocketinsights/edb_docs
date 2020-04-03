@@ -50,5 +50,5 @@ Create a user named, ``john``.
 **See Also**
 
 
-`DROP USER <drop_user>_`
+`DROP USER <drop_user>`_
 

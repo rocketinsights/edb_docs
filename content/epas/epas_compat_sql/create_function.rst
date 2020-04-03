@@ -344,5 +344,5 @@ defined the function, replace the ``AUTHID CURRENT_USER`` clause with the
 **See Also**
 
 
-`DROP FUNCTION <drop_function>_`
+`DROP FUNCTION <drop_function>`_
 

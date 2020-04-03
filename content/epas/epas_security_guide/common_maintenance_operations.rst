@@ -43,10 +43,10 @@ remove the entry for the deleted role from the protected roles list.
 Removing a role using these functions also removes the role’s protected
 relations list.  The statistics for a role that has been removed are not deleted until
 you use the 
-`drop_stats function <drop_stats>_`.  The offending queries for a role 
+`drop_stats function <drop_stats>`_.  The offending queries for a role 
 
 that has been removed are not deleted until you use the 
-`drop_queries function <drop_queries>_`.
+`drop_queries function <drop_queries>`_.
 
 
 The following is an example of the ``unprotect_role`` function:

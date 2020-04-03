@@ -86,5 +86,5 @@ The following command removes the ``emp_comp`` function.
 **See Also**
 
 
-`CREATE FUNCTION <create_function>_`
+`CREATE FUNCTION <create_function>`_
 

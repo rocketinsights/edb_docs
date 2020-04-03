@@ -21,8 +21,8 @@ user is `bash`, and the user's home directory is `/var/lib/edb/as12`.
 By default, Advanced Server logging is configured to write files to the
 `log` subdirectory of the `data` directory, rotating the files each day
 and retaining one week of log entries. You can customize the logging
-behavior of the server by <span class="title-ref">modifying the
-postgresql.conf File \<modifying_the_postgresqlconf_file\>_</span>.
+behavior of the server by [modifying the postgresql.conf
+File](modifying_the_postgresqlconf_file).
 
 The RPM installers place Advanced Server components in the directories
 listed in the table below:
@@ -58,12 +58,12 @@ you must:
 You must install `xterm, konsole`, or `gnome-terminal` before executing
 any console-based program installed by EnterpriseDB installers.
 
-**Install Migration Toolkit or EDB\*Plus Installation Prerequisites
+**Install Migration Toolkit or EDB*Plus Installation Prerequisites
 (Optional)**
 
-Before using an RPM to install Migration Toolkit or EDB\*Plus, you must
+Before using an RPM to install Migration Toolkit or EDB*Plus, you must
 first install Java version 1.7 or later for Migration Toolkit and Java
-version 1.8 or later for EDB\*Plus. On a Linux system, you can use the
+version 1.8 or later for EDB*Plus. On a Linux system, you can use the
 yum package manager to install Java. Open a terminal window, assume
 superuser privileges, and enter:
 
@@ -85,7 +85,7 @@ After receiving your repository credentials you can:
 3.  Install the repository keys and additional prerequisite software.
 4.  Install Advanced Server and supporting components.
 
-### `Creating a Repository Configuration File and Installing Advanced Server`
+### Creating a Repository Configuration File and Installing Advanced Server
 
 To create the repository configuration file, assume superuser privileges
 and invoke the following command:
@@ -140,14 +140,14 @@ the packages come from a trustworthy source, enter a `y`, and press
 `Return` to continue.
 
 After installing Advanced Server, you must configure the installation.
-For more information, see <span class="title-ref">Configuring a Package
-Installation \<configuring_a_package_installation\>_</span>.
+For more information, see [Configuring a Package
+Installation](configuring_a_package_installation).
 
 During the installation, yum may encounter a dependency that it cannot
 resolve. If it does, it will provide a list of the required dependencies
 that you must manually resolve.
 
-### `Advanced Server RPM Packages`
+### Advanced Server RPM Packages
 
 The tables that follow list the RPM packages that are available from
 EnterpriseDB. You can also use the yum search command to access a list
@@ -161,12 +161,12 @@ name) of a package.
 
 Please note: The available package list is subject to change.
 
-<span class="title-ref">Installing Advanced Server on a Linux Host
-\<installing_advanced_server_on_a_linux_host\>_</span>.
+[Installing Advanced Server on a Linux
+Host](installing_advanced_server_on_a_linux_host).
 
 > edb-as12-edbplus The `edb-edbplus` package contains the files required
-> to install the EDB\*Plus command line client. EDB\*Plus commands are
-> compatible with Oracle's SQL\*Plus. edb-as12-pgsnmpd SNMP (Simple
+> to install the EDB*Plus command line client. EDB*Plus commands are
+> compatible with Oracle's SQL*Plus. edb-as12-pgsnmpd SNMP (Simple
 > Network Management Protocol) is a protocol that allows you to
 > supervise an apparatus connected to the network. edb-as12-pljava
 > Installs PL/Java, providing access to Java stored procedures, triggers
@@ -192,8 +192,8 @@ Please note: The available package list is subject to change.
 > replication environments. Before installing this package, you must
 > install EPEL; for detailed information about installing EPEL, see
 
-<span class="title-ref">Installing Advanced Server on a Linux Host
-\<installing_advanced_server_on_a_linux_host\>_</span>.
+[Installing Advanced Server on a Linux
+Host](installing_advanced_server_on_a_linux_host).
 
 > edb-as12-libicu These packages contain supporting library files.
 > ==================================================
@@ -352,7 +352,7 @@ components.
 </tbody>
 </table>
 
-### `Updating an RPM Installation`
+### Updating an RPM Installation
 
 If you have an existing Advanced Server RPM installation, you can use
 yum to upgrade your repository configuration file and update to a more
@@ -377,7 +377,7 @@ For more information about using yum commands and options, enter `yum
 
 <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/ch-yum.html>
 
-## `Installing Advanced Server on a Debian or Ubuntu Host`
+## Installing Advanced Server on a Debian or Ubuntu Host
 
 To install Advanced Server on a Debian or Ubuntu host, you must have
 credentials that allow access to the EnterpriseDB repository. To request
@@ -428,13 +428,13 @@ Note
 Some Advanced Server components require a Java installation. Before
 using a native package to add Migration Toolkit to your system, please
 ensure that Java version 7 is installed on your Advanced Server host.
-Before using a native package to install EDB\*Plus, please ensure that
+Before using a native package to install EDB*Plus, please ensure that
 Java version 8 or later is installed.
 
 </div>
 
 If you are installing an Advanced Server supporting component that
-requires Java (such as MTK or EDB\*Plus), make sure that you install
+requires Java (such as MTK or EDB*Plus), make sure that you install
 Java version 8 before installing the supporting components.
 
 The Debian package manager places Advanced Server and supporting
@@ -525,7 +525,7 @@ components in the directories listed in the following table:
 </tbody>
 </table>
 
-### `Advanced Server Debian Packages`
+### Advanced Server Debian Packages
 
 The table that follows lists some of the Debian packages that are
 available from EnterpriseDB. You can also use the `apt list` command to
@@ -664,7 +664,7 @@ Please note: The available package list is subject to change.
 </tr>
 <tr class="even">
 <td><p>`Installing Advanced Server on a</p></td>
-<td><p>Linux Host &lt;installing_advanced_server_on_a_linux_host&gt;_`.</p></td>
+<td><p>Linux Host &lt;installing_advanced_server_on_a_linux_host&gt;`_.</p></td>
 </tr>
 <tr class="odd">
 <td>edb-as12-slony-replication</td>
@@ -684,7 +684,7 @@ Please note: The available package list is subject to change.
 </tr>
 <tr class="odd">
 <td><p>`Installing Advanced Server on a</p></td>
-<td><p>Linux Host &lt;installing_advanced_server_on_a_linux_host&gt;_`.</p></td>
+<td><p>Linux Host &lt;installing_advanced_server_on_a_linux_host&gt;`_.</p></td>
 </tr>
 <tr class="even">
 <td>edb-as12-hdfs-fdw</td>
@@ -736,13 +736,13 @@ Please note: The available package list is subject to change.
 </tbody>
 </table>
 
-## `Configuring a Package Installation`
+## Configuring a Package Installation
 
 The packages that install the database server component create a service
 configuration file (on version 6.x hosts) or unit file (on version 7.x
 hosts), and service startup scripts.
 
-### `Creating a Database Cluster and Starting the Service`
+### Creating a Database Cluster and Starting the Service
 
 The PostgreSQL `initdb` command creates a database cluster; when
 installing Advanced Server with an RPM package, the `initdb` executable
@@ -768,10 +768,10 @@ platform specific.
 
 To create a database cluster in the `PGDATA` directory that listens on
 the port specified by the `PGPORT` environment variable specified in the
-service configuration file (described in <span class="title-ref">Using a
-Service Configuration File on CentOS or Redhat 6.x
-\<using_a_service_configuration_file_on_centos_or_redhat_6x\>_</span>),
-assume `root`
+service configuration file (described in [Using a Service Configuration
+File on CentOS or Redhat
+6.x](using_a_service_configuration_file_on_centos_or_redhat_6x)), assume
+`root`
 
 privileges, and invoke the `service` script:
 
@@ -845,7 +845,7 @@ newpage
 
 </div>
 
-### `Using a Service Configuration File on CentOS or Redhat 6.x`
+### Using a Service Configuration File on CentOS or Redhat 6.x
 
 On a CentOS or RedHat version 6.x host, the RPM installer creates a
 service configuration file named `edb-as-12.sysconfig` in
@@ -874,8 +874,8 @@ The file contains the following environment variables:
     you wish  
     to apply to the new cluster. For more information, see
 
-<span class="title-ref">Specifying Cluster Options with INITDBOPTS
-\<specifying_cluster_options_with_initdbopts\>_</span>.
+[Specifying Cluster Options with
+INITDBOPTS](specifying_cluster_options_with_initdbopts).
 
 You can modify the `edb-as-12.sysconfig` file before using the service
 command to invoke the `startup` script to change the listener port, data
@@ -889,7 +889,7 @@ instance that resides on the same host.
 
 </div>
 
-#### `Specifying Cluster Options with INITDBOPTS`
+#### Specifying Cluster Options with INITDBOPTS
 
 You can use the `INITDBOPTS` variable to specify your cluster
 configuration preferences. By default, the `INITDBOPTS` variable is
@@ -1003,7 +1003,7 @@ privileges and entering:
 Where `path_to_initdb_installation_directory` specifies the location of
 the `initdb` binary file.
 
-### `Modifying the Data Directory Location on CentOS or Redhat 7.x`
+### Modifying the Data Directory Location on CentOS or Redhat 7.x
 
 On a CentOS or RedHat version 7.x host, the unit file is named
 `edb-as-12.service` and resides in `/usr/lib/systemd/system`. The unit
@@ -1034,7 +1034,7 @@ For information about setting an environment variable, see the [Database
 Compatibility for Oracle Developers Reference
 Guide](https://www.enterprisedb.com/edb-docs/d/edb-postgres-advanced-server/reference/database-compatibility-for-oracle-developers-reference-guide/12/toc.html).
 
-### `Starting Multiple Postmasters with Different Clusters`
+### Starting Multiple Postmasters with Different Clusters
 
 You can configure Advanced Server to use multiple postmasters, each with
 its own database cluster. The steps required are version specific to the
@@ -1118,7 +1118,7 @@ two instances; the secondary instance is named `secondary`:
     
     `systemctl start secondary-edb-as-12`
 
-### `Creating an Advanced Server Repository on an Isolated Network`
+### Creating an Advanced Server Repository on an Isolated Network
 
 You can create a local repository to act as a host for the Advanced
 Server RPM packages if the server on which you wish to install Advanced

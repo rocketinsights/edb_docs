@@ -124,5 +124,5 @@ Clear the table ``jobhist``:
 **See Also**
 
 
-`TRUNCATE <truncate>_`
+`TRUNCATE <truncate>`_
 

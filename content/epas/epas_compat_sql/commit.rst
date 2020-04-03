@@ -46,4 +46,4 @@ To commit the current transaction and make all changes permanent:
 
 
 
-`ROLLBACK <rollback>_`, 
+`ROLLBACK <rollback>`_, 

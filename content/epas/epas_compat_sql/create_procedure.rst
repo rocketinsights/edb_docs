@@ -358,5 +358,5 @@ DEFINER`` clause with the ``AUTHID CURRENT_USER`` clause.
 **See Also**
 
 
-`DROP PROCEDURE <drop_procedure>_`
+`DROP PROCEDURE <drop_procedure>`_
 

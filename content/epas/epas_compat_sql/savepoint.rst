@@ -66,4 +66,4 @@ inserts into the ``emp`` and ``jobhist`` tables are rolled back.
 **See Also**
 
 
-`COMMIT <commit>_`, 
+`COMMIT <commit>`_, 

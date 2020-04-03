@@ -45,5 +45,5 @@ This command will remove the view named ``dept_30``:
 **See Also**
 
 
-`CREATE VIEW <create_view>_`
+`CREATE VIEW <create_view>`_
 

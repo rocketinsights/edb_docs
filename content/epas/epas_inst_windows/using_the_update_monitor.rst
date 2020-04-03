@@ -31,7 +31,7 @@ Right click on the symbol to access the Update Monitor context menu.
     *The Update Monitor context menu*
 
 Click ``Install components`` to open StackBuilder Plus, and check for component updates. See 
-`Using StackBuilder Plus <using_stackbuilder_plus>_` for detailed information about the update process.
+`Using StackBuilder Plus <using_stackbuilder_plus>`_ for detailed information about the update process.
 
 
 If one or more alerts are available for your Advanced Server installation, the context menu displays the alert count. Select ``View alerts`` to display the ``EnterpriseDB Advanced Server Alerts`` window.

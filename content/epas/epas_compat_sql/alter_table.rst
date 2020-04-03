@@ -117,7 +117,7 @@ are updated.
 
 Changing any part of a system catalog table is not permitted. Refer to
 
-`CREATE TABLE <create_table>_` for a further description of valid
+`CREATE TABLE <create_table>`_ for a further description of valid
 
 parameters.
 
@@ -162,4 +162,4 @@ To remove a check constraint from a table:
 **See Also**
 
 
-`CREATE TABLE <create_table>_`, 
+`CREATE TABLE <create_table>`_, 

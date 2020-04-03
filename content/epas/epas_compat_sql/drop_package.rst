@@ -38,4 +38,4 @@ This command will remove the ``emp_admin`` package:
 **See Also**
 
 
-`CREATE PACKAGE <create_package>_`, 
+`CREATE PACKAGE <create_package>`_, 

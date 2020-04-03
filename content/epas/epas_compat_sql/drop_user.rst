@@ -68,4 +68,4 @@ any objects, and does not own any objects outside of a schema named,
 **See Also**
 
 
-`CREATE USER <create_user>_`, 
+`CREATE USER <create_user>`_, 

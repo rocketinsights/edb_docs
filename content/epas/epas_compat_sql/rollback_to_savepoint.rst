@@ -49,4 +49,4 @@ established:
 **See Also**
 
 
-`COMMIT <commit>_`, 
+`COMMIT <commit>`_, 

@@ -8,11 +8,11 @@ Table - Date/Time Functions shows the available functions for date/time value pr
 with details appearing in the following subsections. The following table
 illustrates the behaviors of the basic arithmetic operators ``(+, -)``. For
 formatting functions, refer to 
-`Section - IMMUTABLE TO_CHAR(TIMESTAMP, format) Function <immutable_to_char_function>_`. You should be familiar
+`Section - IMMUTABLE TO_CHAR(TIMESTAMP, format) Function <immutable_to_char_function>`_. You should be familiar
 
 with the background information on date/time data types from Section
 
-`Section - Date/Time Types <date_time_types>_`.
+`Section - Date/Time Types <date_time_types>`_.
 
 
 Table ‑ Date/Time Operators

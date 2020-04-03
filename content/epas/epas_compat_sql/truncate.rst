@@ -48,4 +48,4 @@ The following command truncates a table named ``accounts``:
 **See Also**
 
 
-`DROP VIEW <drop_view>_`, 
+`DROP VIEW <drop_view>`_, 

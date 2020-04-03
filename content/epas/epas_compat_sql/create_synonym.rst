@@ -99,5 +99,5 @@ Create a synonym for the ``emp`` table in a schema named, ``enterprisedb``:
 **See Also**
 
 
-`DROP SYNONYM <drop_synonym>_`
+`DROP SYNONYM <drop_synonym>`_
 

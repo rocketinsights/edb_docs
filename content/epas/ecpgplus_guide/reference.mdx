@@ -386,8 +386,8 @@ The `V` structure member is a pointer to an array of data values.
 > uses the descriptor).
 
 Your application must allocate the space required to hold each value.
-Refer to <span class="title-ref">displayResultSet
-\<executing_query_with_unknown_number_of_variables\>_</span>
+Refer to
+[displayResultSet](executing_query_with_unknown_number_of_variables)
 function for an example of how to allocate
 
 space for `SELECT`-list values.
@@ -529,7 +529,7 @@ The `X` structure member points to an array of NULL-terminated strings
 corresponding value.
 
 This array is not used by ECPGPlus, but is provided for compatibility
-with Pro\*C applications.
+with Pro*C applications.
 
 `Y` - *maximum indicator name length*
 
@@ -539,7 +539,7 @@ the `X` array (that is, `Y[0]` specifies the maximum length of the
 indicator name found at `X[0]`).
 
 This array is not used by ECPGPlus, but is provided for compatibility
-with Pro\*C applications.
+with Pro*C applications.
 
 `Z` - *actual indicator name length*
 
@@ -549,7 +549,7 @@ the `X` array (that is, `Z[0]` specifies the actual length of the
 indicator name found at `X[0]`).
 
 This array is not used by ECPGPlus, but is provided for compatibility
-with Pro\*C applications.
+with Pro*C applications.
 
 ## ECPGPlus Statements
 
@@ -573,8 +573,8 @@ takes the form:
 Where *sql_command_body* represents a standard SQL statement. You can
 use a host variable anywhere that the SQL statement expects a value
 expression. For more information about substituting host variables for
-value expressions, please refer to <span class="title-ref">Declaring
-Host Variables \<declaring_host_variables\>_</span> section.
+value expressions, please refer to [Declaring Host
+Variables](declaring_host_variables) section.
 
 ECPGPlus extends the PostgreSQL server-side syntax for some statements;
 for those statements, syntax differences are outlined in the following
@@ -995,7 +995,7 @@ After invoking the command declaring `acctg` as a database identifier,
 the `acctg` database can be referenced by name when establishing a
 connection or in AT clauses.
 
-This statement has no effect and is provided for Pro\*C compatibility
+This statement has no effect and is provided for Pro*C compatibility
 only.
 
 ### DECLARE STATEMENT
@@ -1041,7 +1041,7 @@ might be:
 > 
 > EXEC SQL EXECUTE give_raise;
 
-This statement has no effect and is provided for Pro\*C compatibility
+This statement has no effect and is provided for Pro*C compatibility
 only.
 
 ### DELETE
@@ -1101,7 +1101,7 @@ each row is deleted:
 
 > *output_expression* is an expression to be computed and returned by
 > the `DELETE` command after each row is deleted. *output_name* is the
-> name of the returned column; include \* to return all columns.
+> name of the returned column; include * to return all columns.
 > 
 > *host_variable_list* is a comma-separated list of host variables and
 > optional indicator variables. Each host variable receives a
@@ -1153,7 +1153,7 @@ Where:
 *statement_name* is the identifier associated with a prepared SQL
 statement or PL/SQL block.
 
-*descriptor* is the name of C variable of type SQLDA\*. You must
+*descriptor* is the name of C variable of type SQLDA*. You must
 allocate the space for the descriptor by calling `sqlald()` (and
 initialize the descriptor) before executing the `DESCRIBE` statement.
 
@@ -1203,7 +1203,7 @@ bind for the input values specify the actual values used by the
 statement. The variables that you bind for the output values tell
 ECPGPlus where to put the values when you execute the statement.
 
-This is alternate Pro\*C compatible syntax for the `DESCRIBE DESCRIPTOR`
+This is alternate Pro*C compatible syntax for the `DESCRIBE DESCRIPTOR`
 statement.
 
 ### DESCRIBE DESCRIPTOR
@@ -1742,7 +1742,7 @@ inserted.
 
 *output_expression* is an expression that will be computed and returned
 by the `INSERT` command after each row is inserted. The expression can
-refer to any column within the table. Specify \* to return all columns
+refer to any column within the table. Specify * to return all columns
 of the inserted row(s).
 
 *output_name* specifies a name to use for a returned column.
@@ -1784,7 +1784,7 @@ Where *parameters* is one of the following:
 
 Where:
 
-*array_*size\* is an integer value or a host variable that contains an
+*array_*size* is an integer value or a host variable that contains an
 integer value specifying the number of rows to fetch. If you omit the
 FOR clause, the statement is executed once for each member of the array.
 

@@ -93,7 +93,7 @@ to invoke the installer for you, or will delay the installation until a
 more convenient time.
 
 For details about using the graphical installer, see 
-`Invoking the Graphical Installer <invoking_the_graphical_installer>_`.
+`Invoking the Graphical Installer <invoking_the_graphical_installer>`_.
 
 
 .. index:: Configuring Language Pack on an Advanced Server Host

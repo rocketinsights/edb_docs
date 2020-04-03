@@ -16,44 +16,64 @@ with `DBMS_AQADM`.
 
 Use `CREATE QUEUE TABLE` to define a new queue table:
 
-``` text
+```text
 CREATE QUEUE TABLE name OF type_name [ ( { option_name option_value } [, ... ] ) ]
 ```
 
 where `option_name` and the corresponding `option_value` can be:
 
 <table style="width:14%;">
-<colgroup>
-<col style="width: 4%" />
-<col style="width: 10%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th><em>option_name</em></th>
-<th><em>option_value</em></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SORT_LIST</td>
-<td>priority, enq_time</td>
-</tr>
-<tr class="even">
-<td>MULTIPLE_CONSUMERS</td>
-<td>FALSE, TRUE</td>
-</tr>
-<tr class="odd">
-<td>MESSAGE_GROUPING</td>
-<td>NONE, TRANSACTIONAL</td>
-</tr>
-<tr class="even">
-<td><p>STORAGE_CLAUSE</p></td>
-<td><p>TABLESPACE <em>tablespace</em>_<em>name</em>, PCTFREE integer, PCTUSED integer, INITRANS integer, MAXTRANS integer, STORAGE <em>storage_option</em></p>
-<p>Where <em>storage</em>_<em>option</em> is one or more of the following:</p>
-<div class="line-block">MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL <em>size</em>_<em>clause</em>, NEXT, FREELISTS integer, OPTIMAL <em>size</em>_<em>clause</em>, BUFFER_POOL {KEEPDEFAULT}.<br />
-Please note that only the TABLESPACE option is enforced; all others are accepted for compatibility and ignored. Use the TABLESPACE clause to specify the name of a tablespace in which the table will be created.</div></td>
-</tr>
-</tbody>
+  <colgroup>
+    <col style="width: 4%" />
+    <col style="width: 10%" />
+  </colgroup>
+  <thead>
+    <tr class="header">
+      <th>
+        <em>option_name</em>
+      </th>
+      <th>
+        <em>option_value</em>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td>SORT_LIST</td>
+      <td>priority, enq_time</td>
+    </tr>
+    <tr class="even">
+      <td>MULTIPLE_CONSUMERS</td>
+      <td>FALSE, TRUE</td>
+    </tr>
+    <tr class="odd">
+      <td>MESSAGE_GROUPING</td>
+      <td>NONE, TRANSACTIONAL</td>
+    </tr>
+    <tr class="even">
+      <td>
+        <p>STORAGE_CLAUSE</p>
+      </td>
+      <td>
+        <p>
+          TABLESPACE <em>tablespace</em>_<em>name</em>, PCTFREE integer, PCTUSED integer, INITRANS
+          integer, MAXTRANS integer, STORAGE <em>storage_option</em>
+        </p>
+        <p>
+          Where <em>storage</em>_<em>option</em> is one or more of the following:
+        </p>
+        <div class="line-block">
+          MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL <em>size</em>_
+          <em>clause</em>, NEXT, FREELISTS integer, OPTIMAL <em>size</em>_<em>clause</em>,
+          BUFFER_POOL KEEPDEFAULT.
+          <br />
+          Please note that only the TABLESPACE option is enforced; all others are accepted for
+          compatibility and ignored. Use the TABLESPACE clause to specify the name of a tablespace
+          in which the table will be created.
+        </div>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 **Description**
@@ -77,8 +97,7 @@ queue table in the same schema.
 `type_name`
 
 > The name of an existing type that describes the payload of each entry
-> in the queue table. For information about defining a type, see `CREATE
-> TYPE`.
+> in the queue table. For information about defining a type, see `CREATE TYPE`.
 
 `option_name option_value`
 
@@ -88,40 +107,71 @@ queue table in the same schema.
 > return an error. The following values are accepted:
 
 <table style="width:14%;">
-<colgroup>
-<col style="width: 4%" />
-<col style="width: 10%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><p>SORT_LIST</p></td>
-<td><p>Use the SORT_LIST option to control the dequeueing order of the queue; specify the names of the column(s) that will be used to sort the queue (in ascending order). The currently accepted values are the following combinations of enq_time and priority:</p>
-<p>enq_time. priority</p>
-<p>priority. enq_time</p>
-<p>priority</p>
-<p>enq_time</p>
-<p>Any other value will return an ERROR.</p></td>
-</tr>
-<tr class="even">
-<td>==================</td>
-<td>==========================================================================================================================================================================================================================================================</td>
-</tr>
-<tr class="odd">
-<td>MULTIPLE_CONSUMERS</td>
-<td>A BOOLEAN value that indicates if a message can have more than one consumer (TRUE), or are limited to one consumer per message (FALSE).</td>
-</tr>
-<tr class="even">
-<td>MESSAGE_GROUPING</td>
-<td>Specify none to indicate that each message should be dequeued individually, or transactional to indicate that messages that are added to the queue as a result of one transaction should be dequeued as a group.</td>
-</tr>
-<tr class="odd">
-<td><p>STORAGE_CLAUSE</p></td>
-<td><p>Use STORAGE_CLAUSE to specify table attributes. STORAGE_CLAUSE may be TABLESPACE tablespace_name, PCTFREE integer, PCTUSED integer, INITRANS integer, MAXTRANS integer, STORAGE storage_option</p>
-<p>Where storage_option is one or more of the following:</p>
-<div class="line-block">MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL size_clause, NEXT, FREELISTS integer, OPTIMAL size_clause, BUFFER_POOL {KEEPDEFAULT}.<br />
-Please note that only the TABLESPACE option is enforced; all others are accepted for compatibility and ignored. Use the TABLESPACE clause to specify the name of a tablespace in which the table will be created.</div></td>
-</tr>
-</tbody>
+  <colgroup>
+    <col style="width: 4%" />
+    <col style="width: 10%" />
+  </colgroup>
+  <tbody>
+    <tr class="odd">
+      <td>
+        <p>SORT_LIST</p>
+      </td>
+      <td>
+        <p>
+          Use the SORT_LIST option to control the dequeueing order of the queue; specify the names
+          of the column(s) that will be used to sort the queue (in ascending order). The currently
+          accepted values are the following combinations of enq_time and priority:
+        </p>
+        <p>enq_time. priority</p>
+        <p>priority. enq_time</p>
+        <p>priority</p>
+        <p>enq_time</p>
+        <p>Any other value will return an ERROR.</p>
+      </td>
+    </tr>
+    <tr class="even">
+      <td>==================</td>
+      <td>
+        ==========================================================================================================================================================================================================================================================
+      </td>
+    </tr>
+    <tr class="odd">
+      <td>MULTIPLE_CONSUMERS</td>
+      <td>
+        A BOOLEAN value that indicates if a message can have more than one consumer (TRUE), or are
+        limited to one consumer per message (FALSE).
+      </td>
+    </tr>
+    <tr class="even">
+      <td>MESSAGE_GROUPING</td>
+      <td>
+        Specify none to indicate that each message should be dequeued individually, or transactional
+        to indicate that messages that are added to the queue as a result of one transaction should
+        be dequeued as a group.
+      </td>
+    </tr>
+    <tr class="odd">
+      <td>
+        <p>STORAGE_CLAUSE</p>
+      </td>
+      <td>
+        <p>
+          Use STORAGE_CLAUSE to specify table attributes. STORAGE_CLAUSE may be TABLESPACE
+          tablespace_name, PCTFREE integer, PCTUSED integer, INITRANS integer, MAXTRANS integer,
+          STORAGE storage_option
+        </p>
+        <p>Where storage_option is one or more of the following:</p>
+        <div class="line-block">
+          MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL size_clause, NEXT,
+          FREELISTS integer, OPTIMAL size_clause, BUFFER_POOL KEEPDEFAULT.
+          <br />
+          Please note that only the TABLESPACE option is enforced; all others are accepted for
+          compatibility and ignored. Use the TABLESPACE clause to specify the name of a tablespace
+          in which the table will be created.
+        </div>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 **Example**
@@ -130,18 +180,17 @@ You must create a user-defined type before creating a queue table; the
 type describes the columns and data types within the table. The
 following command creates a type named `work_order`:
 
-``` text
+```text
 CREATE TYPE work_order AS (name VARCHAR2, project TEXT, completed BOOLEAN);
 ```
 
 The following command uses the `work_order` type to create a queue table
 named `work_order_table`:
 
-``` text
+```text
 CREATE QUEUE TABLE work_order_table OF work_order (sort_list (enq_time, priority));
 ```
 
 **See Also**
 
-<span class="title-ref">ALTER QUEUE TABLE
-\<alter_queue_table\>_</span>,
+[ALTER QUEUE TABLE](alter_queue_table),

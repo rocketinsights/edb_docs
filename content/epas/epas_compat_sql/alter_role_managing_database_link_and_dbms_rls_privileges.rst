@@ -130,4 +130,4 @@ POLICY`` and ``NO EXEMPT ACCESS POLICY`` syntax options.
 **See Also**
 
 
-`CREATE ROLE <create_role>_`, 
+`CREATE ROLE <create_role>`_, 

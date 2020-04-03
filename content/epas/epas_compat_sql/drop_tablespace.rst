@@ -41,5 +41,5 @@ To remove tablespace ``employee_space`` from the system:
 **See Also**
 
 
-`ALTER TABLESPACE <alter_tablespace>_`
+`ALTER TABLESPACE <alter_tablespace>`_
 

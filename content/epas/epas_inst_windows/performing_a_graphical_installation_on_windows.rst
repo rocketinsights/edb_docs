@@ -78,7 +78,7 @@ The ``Setup`` wizard can install the following components while installing Advan
 **StackBuilder Plus**
 
    The ``StackBuilder Plus`` utility is a graphical tool that can update installed products, or download and add supporting modules (and the resulting dependencies) after your Advanced Server setup and installation completes. See 
-`Using StackBuilder Plus <using_stackbuilder_plus>_` for more information about StackBuilder Plus.
+`Using StackBuilder Plus <using_stackbuilder_plus>`_ for more information about StackBuilder Plus.
 
 
 .. raw:: latex
@@ -343,7 +343,7 @@ Before the ``Setup`` wizard completes the Advanced Server installation, it offer
 You can clear the ``StackBuilder Plus`` check box and click ``Finish`` to complete the Advanced Server installation, or accept the default and proceed to StackBuilder Plus.
 
 EDB Postgres StackBuilder Plus is included with the installation of Advanced Server and its core supporting components. StackBuilder Plus is a graphical tool that can update installed products, or download and add supporting modules (and the resulting dependencies) after your Advanced Server setup and installation completes. See 
-`Using StackBuilder Plus <using_stackbuilder_plus>_` for more information about StackBuilder Plus.
+`Using StackBuilder Plus <using_stackbuilder_plus>`_ for more information about StackBuilder Plus.
 
 
 .. raw:: latex

@@ -417,4 +417,4 @@ the following:
 **See Also**
 
 
-`CREATE TYPE BODY <create_type_body>_`, 
+`CREATE TYPE BODY <create_type_body>`_, 
