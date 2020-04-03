@@ -343,4 +343,6 @@ defined the function, replace the ``AUTHID CURRENT_USER`` clause with the
 
 **See Also**
 
-:ref:`DROP FUNCTION <drop_function>`
+
+`DROP FUNCTION <drop_function>_`
+

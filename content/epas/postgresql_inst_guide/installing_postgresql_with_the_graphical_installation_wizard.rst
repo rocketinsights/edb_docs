@@ -21,7 +21,9 @@ specified during the previous installation.
 When the PostgreSQL installation finishes, you will be offered the
 option to invoke the Stack Builder package manager. Stack Builder
 provides an easy-to-use graphical interface that downloads and installs
-applications, drivers and utilities and their dependencies. See :ref:`Using Stackbuilder <using_stackbuilder>` for more information.
+applications, drivers and utilities and their dependencies. See 
+`Using Stackbuilder <using_stackbuilder>_` for more information.
+
 
 The graphical PostgreSQL installer is available from the EnterpriseDB
 website at:

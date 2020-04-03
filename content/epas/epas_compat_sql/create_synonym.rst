@@ -98,4 +98,6 @@ Create a synonym for the ``emp`` table in a schema named, ``enterprisedb``:
 
 **See Also**
 
-:ref:`DROP SYNONYM <drop_synonym>`
+
+`DROP SYNONYM <drop_synonym>_`
+

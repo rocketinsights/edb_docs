@@ -129,4 +129,5 @@ POLICY`` and ``NO EXEMPT ACCESS POLICY`` syntax options.
 
 **See Also**
 
-:ref:`CREATE ROLE <create_role>`, :ref:`DROP ROLE <drop_role>`, :ref:`GRANT <grant>`, :ref:`REVOKE <revoke>`, :ref:`SET ROLE <set_role>`
+
+`CREATE ROLE <create_role>_`, 

@@ -44,4 +44,6 @@ This command will remove the view named ``dept_30``:
 
 **See Also**
 
-:ref:`CREATE VIEW <create_view>`
+
+`CREATE VIEW <create_view>_`
+

@@ -116,7 +116,9 @@ is not reclaimed. The space will be reclaimed over time as existing rows
 are updated.
 
 Changing any part of a system catalog table is not permitted. Refer to
-:ref:`CREATE TABLE <create_table>` for a further description of valid
+
+`CREATE TABLE <create_table>_` for a further description of valid
+
 parameters.
 
 **Examples**
@@ -159,4 +161,5 @@ To remove a check constraint from a table:
 
 **See Also**
 
-:ref:`CREATE TABLE <create_table>`, :ref:`DROP TABLE <drop_table>`
+
+`CREATE TABLE <create_table>_`, 

@@ -70,4 +70,6 @@ Create a view consisting of all employees in department ``30``:
 
 **See Also**
 
-:ref:`DROP VIEW <drop_view>`
+
+`DROP VIEW <drop_view>_`
+

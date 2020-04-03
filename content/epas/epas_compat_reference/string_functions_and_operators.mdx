@@ -58,7 +58,7 @@ Table ‑ Other String Functions
 | LENGTH4                                                              | INTEGER                                               | This function is identical in functionality to LENGTH; the function name is supported for compatibility.                                                                                                                        | LENGTH4('Côte d''Azur')                             | 11        |
 | LENGTHB                                                              | INTEGER                                               | Returns the number of bytes required to hold the given value.                                                                                                                                                                   | LENGTHB('Côte d''Azur')                             | 12        |
 | LPAD(string, length INTEGER \[, fill \])                             | CLOB                                                  | Fill up string to size, length by prepending the characters, fill (a space by default). If string is already longer than length then it is truncated (on the right).                                                            | LPAD('hi', 5, 'xy')                                 | xyxhi     |
-| REPLACE(string, search\_string \[, replace\_string \]                | CLOB                                                  | Replaces one value in a string with another. If you do not specify a value for replace\_string, the search\_string value when found, is removed.                                                                                | REPLACE( 'GEORGE', 'GE', 'EG')                      | EGOREG    |
+| REPLACE(string, search_string \[, replace_string \]                | CLOB                                                  | Replaces one value in a string with another. If you do not specify a value for replace_string, the search_string value when found, is removed.                                                                                | REPLACE( 'GEORGE', 'GE', 'EG')                      | EGOREG    |
 | RPAD(string, length INTEGER \[, fill \])                             | CLOB                                                  | Fill up string to size, length by appending the characters, fill (a space by default). If string is already longer than length then it is truncated.                                                                            | RPAD('hi', 5, 'xy')                                 | hixyx     |
 | TRANSLATE(string, from, to)                                          | CLOB                                                  | Any character in string that matches a character in the from set is replaced by the corresponding character in the to set.                                                                                                      | TRANSLATE('12345', '14', 'ax')                      | a23x5     |
 
@@ -112,13 +112,13 @@ Table ‑ Data Types with Implicit Coercion to Text
 |                             |            |                  |                         |                       |
 | --------------------------- | ---------- | ---------------- | ----------------------- | --------------------- |
 | castsource                  | casttarget | castfunc         | castcontext             | castmethod            |
-| character                   | text       | pg\_catalog.text | implicit in expressions | function              |
+| character                   | text       | pg_catalog.text | implicit in expressions | function              |
 | character varying           | text       | \-               | implicit in expressions | binary-coercible      |
-| "char"                      | text       | pg\_catalog.text | implicit in expressions | function              |
-| name                        | text       | pg\_catalog.text | implicit in expressions | function              |
-| pg\_node\_tree              | text       | \-               | implicit in expressions | binary-coercible      |
-| pg\_ndistinct               | text       | \-               | implicit in expressions | input/output function |
-| pg\_dependencies            | text       | \-               | implicit in expressions | input/output function |
+| "char"                      | text       | pg_catalog.text | implicit in expressions | function              |
+| name                        | text       | pg_catalog.text | implicit in expressions | function              |
+| pg_node_tree              | text       | \-               | implicit in expressions | binary-coercible      |
+| pg_ndistinct               | text       | \-               | implicit in expressions | input/output function |
+| pg_dependencies            | text       | \-               | implicit in expressions | input/output function |
 | integer                     | text       | \-               | implicit in expressions | input/output function |
 | smallint                    | text       | \-               | implicit in expressions | input/output function |
 | oid                         | text       | \-               | implicit in expressions | input/output function |
@@ -133,7 +133,7 @@ Table ‑ Data Types with Implicit Coercion to Text
 | numeric                     | text       | \-               | implicit in expressions | input/output function |
 | timestamp without time zone | text       | \-               | implicit in expressions | input/output function |
 | record                      | text       | \-               | implicit in expressions | input/output function |
-| boolean                     | text       | pg\_catalog.text | implicit in expressions | function              |
+| boolean                     | text       | pg_catalog.text | implicit in expressions | function              |
 | bytea                       | text       | \-               | implicit in expressions | input/output function |
 
 For information on the column output, see the `pg_cast` system catalog
@@ -220,7 +220,7 @@ Thus, depending upon the data type of a `NULL` column, explicit casting
 or the `CONCAT` function should be used to avoid loss of some text
 string.
 
-## SYS\_GUID
+## SYS_GUID
 
 The `SYS_GUID` function generates and returns a globally unique
 identifier; the identifier takes the form of 16 bytes of `RAW` data. The

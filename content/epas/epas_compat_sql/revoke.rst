@@ -188,4 +188,5 @@ Revoke the ``EXEMPT ACCESS POLICY`` privilege from user ``joe``:
 
 **See Also**
 
-:ref:`GRANT <grant>`, :ref:`SET ROLE <set_role>`
+
+`GRANT <grant>_`, 

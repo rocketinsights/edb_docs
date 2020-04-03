@@ -11,7 +11,9 @@ The command line options of the Advanced Server installer offer functionality fo
 
 -  Invoke the installer with the ``--extract-only`` option to perform a minimal installation when you don’t hold the privileges required to perform a complete installation.
 
-Not all command line options are suitable for all situations. For a complete reference guide to the command line options, see :ref:`Reference - Command Line Options <reference_command_line_options>`.
+Not all command line options are suitable for all situations. For a complete reference guide to the command line options, see 
+`Reference - Command Line Options <reference_command_line_options>_`.
+
 
 .. Note:: If you are invoking the installer from the command line to perform a system upgrade, the installer will ignore command line options, and preserve the configuration of the previous installation.
 

@@ -37,4 +37,5 @@ This command will remove the ``emp_admin`` package:
 
 **See Also**
 
-:ref:`CREATE PACKAGE <create_package>`, :ref:`CREATE PACKAGE BODY <create_package_body>`
+
+`CREATE PACKAGE <create_package>_`, 

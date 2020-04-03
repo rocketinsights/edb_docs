@@ -67,4 +67,5 @@ any objects, and does not own any objects outside of a schema named,
 
 **See Also**
 
-:ref:`CREATE USER <create_user>`, :ref:`ALTER USER <alter_user_identified_by>`
+
+`CREATE USER <create_user>_`, 

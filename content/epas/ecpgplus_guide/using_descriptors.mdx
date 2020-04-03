@@ -343,7 +343,7 @@ EXEC SQL WHENEVER SQLERROR SQLPRINT;
 ```
 
 The application includes a forward-declaration for a function named
-print\_meta\_data() that will print the metadata found in a descriptor:
+print_meta_data() that will print the metadata found in a descriptor:
 
 ``` text
 static void print_meta_data( char * desc_name );
@@ -403,7 +403,7 @@ EXEC SQL DESCRIBE query INTO SQL DESCRIPTOR parse_desc;
 
 Then, the application interrogates the descriptor to discover the number
 of columns in the result set, and stores that in the host variable
-col\_count.
+col_count.
 
 ``` text
 EXEC SQL GET DESCRIPTOR parse_desc :col_count = COUNT;
@@ -500,7 +500,7 @@ varchar name[20+1];
 EXEC SQL END DECLARE SECTION;
 ```
 
-The application interrogates the row descriptor (row\_desc) to copy the
+The application interrogates the row descriptor (row_desc) to copy the
 column value (:val), null indicator (:ind) and column name (:name) into
 the host variables declared above. Notice that you can retrieve multiple
 items from a descriptor using a comma-separated list.
@@ -540,7 +540,7 @@ exit( 0 );
 }
 ```
 
-The print\_meta\_data() function extracts the metadata from a descriptor
+The print_meta_data() function extracts the metadata from a descriptor
 and prints the name, data type, and length of each column:
 
 ``` text
@@ -629,8 +629,8 @@ VALUE :col
 ```
 
 If the numeric type code matches a 'known' type code (that is, a type
-code found in the types\[\] array), it sets type\_name to the name of
-the corresponding type; otherwise, it sets type\_name to "unknown".
+code found in the types\[\] array), it sets type_name to the name of
+the corresponding type; otherwise, it sets type_name to "unknown".
 
 ``` text
 if( type > 0 && type < SQL3_abstract )

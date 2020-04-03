@@ -85,4 +85,6 @@ The following command removes the ``emp_comp`` function.
 
 **See Also**
 
-:ref:`CREATE FUNCTION <create_function>`
+
+`CREATE FUNCTION <create_function>_`
+

@@ -246,4 +246,5 @@ the ``empinfo`` package and display the public variable.
 
 **See Also**
 
-:ref:`CREATE PACKAGE <create_package>`, :ref:`DROP PACKAGE <drop_package>`
+
+`CREATE PACKAGE <create_package>_`, 

@@ -84,4 +84,5 @@ Change the increment and cache value of sequence, serial.
 
 **See Also**
 
-:ref:`CREATE SEQUENCE <create_sequence>`, :ref:`DROP SEQUENCE <drop_sequence>`
+
+`CREATE SEQUENCE <create_sequence>_`, 

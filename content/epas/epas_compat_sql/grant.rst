@@ -302,7 +302,8 @@ Grant ``CONNECT`` privilege to user ``joe``:
 
 **See Also**
 
-:ref:`REVOKE <revoke>`, :ref:`SET ROLE <set_role>`
+
+`REVOKE <revoke>_`, 
 
 .. raw:: latex
 
@@ -389,4 +390,5 @@ commands compatible with Oracle databases.
 
 **See Also**
 
-:ref:`REVOKE <revoke>`, :ref:`ALTER ROLE <alter_role_identified_by>` 
+
+`REVOKE <revoke>_`, 

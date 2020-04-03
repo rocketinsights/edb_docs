@@ -46,4 +46,5 @@ The following example drops a queue named ``work_order``:
 
 **See Also**
 
-:ref:`CREATE QUEUE <create_queue>`, :ref:`ALTER QUEUE <alter_queue>`
+
+`CREATE QUEUE <create_queue>_`, 

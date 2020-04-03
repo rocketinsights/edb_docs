@@ -116,4 +116,5 @@ named ``work_order_table``:
 
 **See Also**
 
-:ref:`ALTER QUEUE TABLE <alter_queue_table>`, :ref:`DROP QUEUE TABLE <drop_queue_table>`
+
+`ALTER QUEUE TABLE <alter_queue_table>_`, 

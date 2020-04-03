@@ -163,7 +163,7 @@ Table ‑ Mathematical Functions
 | SQRT(DOUBLE PRECISION or NUMBER)                              | Same as input                                                          | Square root                                                                                                         | SQRT(2.0)                            | 1.414213562373095    |
 | TRUNC(DOUBLE PRECISION or NUMBER)                             | Same as input                                                          | Truncate toward zero                                                                                                | TRUNC(42.8)                          | 42                   |
 | TRUNC(v NUMBER, s INTEGER)                                    | NUMBER                                                                 | Truncate to s decimal places                                                                                        | TRUNC(42.4382, 2)                    | 42.43                |
-| WIDTH\_BUCKET(op NUMBER, b1 NUMBER, b2 NUMBER, count INTEGER) | INTEGER                                                                | Return the bucket to which op would be assigned in an equidepth histogram with count buckets, in the range b1 to b2 | WIDTH\_BUCKET(5.35, 0.024, 10.06, 5) | 3                    |
+| WIDTH_BUCKET(op NUMBER, b1 NUMBER, b2 NUMBER, count INTEGER) | INTEGER                                                                | Return the bucket to which op would be assigned in an equidepth histogram with count buckets, in the range b1 to b2 | WIDTH_BUCKET(5.35, 0.024, 10.06, 5) | 3                    |
 
 The following table shows the available trigonometric functions. All
 trigonometric functions take arguments and return values of type `DOUBLE

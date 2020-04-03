@@ -45,4 +45,6 @@ Remove the private database link named, ``edblink``:
 
 **See Also**
 
-:ref:`CREATE PUBLIC DATABASE LINK <create_public_database_link>`
+
+`CREATE PUBLIC DATABASE LINK <create_public_database_link>_`
+

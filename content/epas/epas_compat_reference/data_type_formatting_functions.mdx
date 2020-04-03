@@ -405,41 +405,41 @@ number of digits following `V`. `TO_CHAR` does not support the use of
 The following table shows some examples of the use of the `TO_CHAR` and
 `TO_DATE` functions.
 
-Table ‑ TO\_CHAR Examples
+Table ‑ TO_CHAR Examples
 
 |                                                         |                           |
 | ------------------------------------------------------- | ------------------------- |
 | Expression                                              | Result                    |
-| TO\_CHAR(CURRENT\_TIMESTAMP, 'Day, DD  HH12:MI:SS')     | 'Tuesday  , 06  05:39:18' |
-| TO\_CHAR(CURRENT\_TIMESTAMP, 'FMDay, FMDD  HH12:MI:SS') | 'Tuesday, 6  05:39:18'    |
-| TO\_CHAR(-0.1, '99.99')                                 | '  -.10'                  |
-| TO\_CHAR(-0.1, 'FM9.99')                                | '-.1'                     |
-| TO\_CHAR(0.1, '0.9')                                    | ' 0.1'                    |
-| TO\_CHAR(12, '9990999.9')                               | '    0012.0'              |
-| TO\_CHAR(12, 'FM9990999.9')                             | '0012.'                   |
-| TO\_CHAR(485, '999')                                    | ' 485'                    |
-| TO\_CHAR(-485, '999')                                   | '-485'                    |
-| TO\_CHAR(1485, '9,999')                                 | ' 1,485'                  |
-| TO\_CHAR(1485, '9G999')                                 | ' 1,485'                  |
-| TO\_CHAR(148.5, '999.999')                              | ' 148.500'                |
-| TO\_CHAR(148.5, 'FM999.999')                            | '148.5'                   |
-| TO\_CHAR(148.5, 'FM999.990')                            | '148.500'                 |
-| TO\_CHAR(148.5, '999D999')                              | ' 148.500'                |
-| TO\_CHAR(3148.5, '9G999D999')                           | ' 3,148.500'              |
-| TO\_CHAR(-485, '999S')                                  | '485-'                    |
-| TO\_CHAR(-485, '999MI')                                 | '485-'                    |
-| TO\_CHAR(485, '999MI')                                  | '485 '                    |
-| TO\_CHAR(485, 'FM999MI')                                | '485'                     |
-| TO\_CHAR(-485, '999PR')                                 | '\<485\>'                 |
-| TO\_CHAR(485, 'L999')                                   | '$ 485'                   |
-| TO\_CHAR(485, 'RN')                                     | '        CDLXXXV'         |
-| TO\_CHAR(485, 'FMRN')                                   | 'CDLXXXV'                 |
-| TO\_CHAR(5.2, 'FMRN')                                   | 'V'                       |
-| TO\_CHAR(12, '99V999')                                  | ' 12000'                  |
-| TO\_CHAR(12.4, '99V999')                                | ' 12400'                  |
-| TO\_CHAR(12.45, '99V9')                                 | ' 125'                    |
+| TO_CHAR(CURRENT_TIMESTAMP, 'Day, DD  HH12:MI:SS')     | 'Tuesday  , 06  05:39:18' |
+| TO_CHAR(CURRENT_TIMESTAMP, 'FMDay, FMDD  HH12:MI:SS') | 'Tuesday, 6  05:39:18'    |
+| TO_CHAR(-0.1, '99.99')                                 | '  -.10'                  |
+| TO_CHAR(-0.1, 'FM9.99')                                | '-.1'                     |
+| TO_CHAR(0.1, '0.9')                                    | ' 0.1'                    |
+| TO_CHAR(12, '9990999.9')                               | '    0012.0'              |
+| TO_CHAR(12, 'FM9990999.9')                             | '0012.'                   |
+| TO_CHAR(485, '999')                                    | ' 485'                    |
+| TO_CHAR(-485, '999')                                   | '-485'                    |
+| TO_CHAR(1485, '9,999')                                 | ' 1,485'                  |
+| TO_CHAR(1485, '9G999')                                 | ' 1,485'                  |
+| TO_CHAR(148.5, '999.999')                              | ' 148.500'                |
+| TO_CHAR(148.5, 'FM999.999')                            | '148.5'                   |
+| TO_CHAR(148.5, 'FM999.990')                            | '148.500'                 |
+| TO_CHAR(148.5, '999D999')                              | ' 148.500'                |
+| TO_CHAR(3148.5, '9G999D999')                           | ' 3,148.500'              |
+| TO_CHAR(-485, '999S')                                  | '485-'                    |
+| TO_CHAR(-485, '999MI')                                 | '485-'                    |
+| TO_CHAR(485, '999MI')                                  | '485 '                    |
+| TO_CHAR(485, 'FM999MI')                                | '485'                     |
+| TO_CHAR(-485, '999PR')                                 | '\<485\>'                 |
+| TO_CHAR(485, 'L999')                                   | '$ 485'                   |
+| TO_CHAR(485, 'RN')                                     | '        CDLXXXV'         |
+| TO_CHAR(485, 'FMRN')                                   | 'CDLXXXV'                 |
+| TO_CHAR(5.2, 'FMRN')                                   | 'V'                       |
+| TO_CHAR(12, '99V999')                                  | ' 12000'                  |
+| TO_CHAR(12.4, '99V999')                                | ' 12400'                  |
+| TO_CHAR(12.45, '99V9')                                 | ' 125'                    |
 
-## IMMUTABLE TO\_CHAR(TIMESTAMP, format) Function
+## IMMUTABLE TO_CHAR(TIMESTAMP, format) Function
 
 There are certain cases of the `TO_CHAR` function that can result in
 usage of an IMMUTABLE form of the function. Basically, a function is

@@ -114,7 +114,7 @@ affects one column.
 > refer to Section Data Types of Database Compatibility for Oracle
 > Developers Reference Guide.
 
-  - `DEFAULT`default\_expr`The`DEFAULT`clause assigns a default data
+  - `DEFAULT`default_expr`The`DEFAULT`clause assigns a default data
     value for the column whose column definition it appears within. The
     value is any variable-free expression (subqueries and
     cross-references to other columns in the current table are not
@@ -122,13 +122,13 @@ affects one column.
     data type of the column. The default expression will be used in any
     insert operation that does not specify a value for the column. If
     there is no default for a column, then the default
-    is`null`.`CONSTRAINT constraint\_name`An optional name for a column
+    is`null`.`CONSTRAINT constraint_name`An optional name for a column
     or table constraint. If not specified, the system generates a
     name.`NOT NULL`The column is not allowed to contain null
     values.`NULL`The column is allowed to contain null values. This is
     the default. This clause is only available for compatibility with
     non-standard SQL databases. Its use is discouraged in new
-    applications. |`UNIQUE`- column constraint |`UNIQUE (column\_name
+    applications. |`UNIQUE`- column constraint |`UNIQUE (column_name
     \[, ...\] )`- table constraint The`UNIQUE`constraint specifies that
     a group of one or more distinct columns of a table may contain only
     unique values. The behavior of the unique table constraint is the
@@ -139,7 +139,7 @@ affects one column.
     named by any other unique or primary key constraint defined for the
     table. (Otherwise it would just be the same constraint listed
     twice.) |`PRIMARY KEY`- column constraint |`PRIMARY KEY (
-    column\_name \[, ...\] )`- table constraint The primary key
+    column_name \[, ...\] )`- table constraint The primary key
     constraint specifies that a column or columns of a table may contain
     only unique (non-duplicate), non-null values. Technically,`PRIMARY
     KEY`is merely a combination of`UNIQUE`and`NOT NULL`, but identifying
@@ -372,4 +372,4 @@ CREATE TABLE dept (
 
 **See Also**
 
-`ALTER TABLE <alter_table>`, `DROP TABLE <drop_table>`
+<span class="title-ref">ALTER TABLE \<alter_table\>_</span>,

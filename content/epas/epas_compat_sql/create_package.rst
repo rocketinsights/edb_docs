@@ -125,4 +125,6 @@ public variable, a public procedure, and a public function.
 
 **See Also**
 
-:ref:`DROP PACKAGE <drop_package>`
+
+`DROP PACKAGE <drop_package>_`
+

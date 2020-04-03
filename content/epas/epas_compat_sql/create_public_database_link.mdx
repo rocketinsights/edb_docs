@@ -104,7 +104,7 @@ transaction`, and the application must retry the transaction.
 > remote Advanced Server database. If `postgres_fdw` has not been
 > installed on the database, use the `CREATE EXTENSION` command to
 > install
-> <span class="title-ref">postgres\_fdw</span><span class="title-ref">.
+> <span class="title-ref">postgres_fdw</span><span class="title-ref">.
 > For more information, please see the
 > </span><span class="title-ref">CREATE EXTENSION</span>\` command in
 > the PostgreSQL Core documentation at:
@@ -291,7 +291,7 @@ CREATE DATABASE LINK chicago
 **Note**: You can specify a hostname in the connection string (in place
 of an IP address).
 
-**Creating a postgres\_fdw Database Link**
+**Creating a postgres_fdw Database Link**
 
 The following example demonstrates using the `CREATE DATABASE LINK`
 command to create a database link (named `bedford`) that connects an
@@ -307,7 +307,7 @@ server address and name of the database.
 ```
 
   - CREATE DATABASE LINK bedford  
-    CONNECT TO admin IDENTIFIED BY 'mypassword' USING postgres\_fdw
+    CONNECT TO admin IDENTIFIED BY 'mypassword' USING postgres_fdw
     'host=127.0.0.1 port=5444 dbname=marketing';
 
 **Note**: You can specify a hostname in the connection string (in place
@@ -693,4 +693,5 @@ release.
 
 **See Also**
 
-`DROP PUBLIC DATABASE LINK <drop_public_database_link>`
+<span class="title-ref">DROP PUBLIC DATABASE LINK
+\<drop_public_database_link\>_</span>

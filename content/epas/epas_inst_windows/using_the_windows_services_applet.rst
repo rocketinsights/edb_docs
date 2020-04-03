@@ -18,7 +18,9 @@ The ``Services`` window displays an alphabetized list of services; the ``edb-as-
 
 -  Use the ``Start the service`` option to start the Advanced Server service.
 
--  Use the ``Pause the service`` option to tell Advanced Server to reload the server configuration parameters without disrupting user sessions for many of the configuration parameters. See :ref:`Configuring Advanced Server <configuring_advanced_server>` for more information about the parameters that can be updated with a server reload.
+-  Use the ``Pause the service`` option to tell Advanced Server to reload the server configuration parameters without disrupting user sessions for many of the configuration parameters. See 
+`Configuring Advanced Server <configuring_advanced_server>_` for more information about the parameters that can be updated with a server reload.
+
 
 -  Use the ``Restart the service`` option to stop and then start the Advanced Server. Please note that any user sessions will be terminated when you stop the service. This option is useful to reset server parameters that only take effect on server start.
 

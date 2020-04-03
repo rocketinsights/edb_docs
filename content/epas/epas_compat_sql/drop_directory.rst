@@ -41,4 +41,6 @@ Remove the directory alias named ``empdir``:
 
 **See Also**
 
-:ref:`CREATE DIRECTORY <create_directory>`
+
+`CREATE DIRECTORY <create_directory>_`
+

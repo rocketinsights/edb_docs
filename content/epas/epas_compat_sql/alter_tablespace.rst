@@ -39,4 +39,6 @@ Rename tablespace ``empspace`` to ``employee_space``:
 
 **See Also**
 
-:ref:`DROP TABLESPACE <drop_tablespace>`
+
+`DROP TABLESPACE <drop_tablespace>_`
+

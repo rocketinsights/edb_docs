@@ -374,7 +374,9 @@ The ``V`` structure member is a pointer to an array of data values.
    uses the descriptor).
 
 Your application must allocate the space required to hold each value.
-Refer to :ref:`displayResultSet <executing_query_with_unknown_number_of_variables>` function for an example of how to allocate
+Refer to 
+`displayResultSet <executing_query_with_unknown_number_of_variables>_` function for an example of how to allocate
+
 space for ``SELECT``-list values.
 
 
@@ -559,7 +561,9 @@ takes the form:
 Where *sql_command_body* represents a standard SQL statement. You can
 use a host variable anywhere that the SQL statement expects a value
 expression. For more information about substituting host variables for
-value expressions, please refer to :ref:`Declaring Host Variables <declaring_host_variables>` section.
+value expressions, please refer to 
+`Declaring Host Variables <declaring_host_variables>_` section.
+
 
 ECPGPlus extends the PostgreSQL server-side syntax for some statements;
 for those statements, syntax differences are outlined in the following

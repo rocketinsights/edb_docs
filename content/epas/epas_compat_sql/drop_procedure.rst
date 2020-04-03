@@ -85,4 +85,6 @@ The following command removes the ``select_emp`` procedure.
 
 See Also
 
-:ref:`CREATE PROCEDURE <create_procedure>`
+
+`CREATE PROCEDURE <create_procedure>_`
+

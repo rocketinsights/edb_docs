@@ -41,29 +41,32 @@ SQL/Protect:
 `postgresql.conf` file located in the `data` subdirectory of your
 Advanced Server home directory.
 
-  - **shared\_preload\_libraries.** Add `$libdir/sqlprotect` to the list
+  - **shared_preload_libraries.** Add `$libdir/sqlprotect` to the list
     of libraries.
-
-  - **edb\_sql\_protect.enabled.** Controls whether or not `SQL/Protect`
+  - **edb_sql_protect.enabled.** Controls whether or not `SQL/Protect`
     is actively monitoring protected roles by analyzing SQL statements
     issued by those roles and reacting according to the setting of
     `edb_sql_protect.level`. When you are ready to begin monitoring with
     `SQL/Protect` set this parameter to `on`. If this parameter is
     omitted, the default is `off`.
 
-  - **edb\_sql\_protect.level.** Sets the action taken by `SQL/Protect`
-    when a SQL statement is issued by a protected role. If this
-    parameter is omitted, the default behavior is `passive`. Initially,
-    set this parameter to `learn`.
-    
-    See `Setting the Protection Level <setting_the_protection_level>`
-    for more information.
+<!-- end list -->
 
-  - **edb\_sql\_protect.max\_protected\_roles.** Sets the maximum number
+  - \- **edb_sql_protect.level.** Sets the action taken by
+    `SQL/Protect` when  
+    a SQL statement is issued by a protected role. If this parameter is
+    omitted, the default behavior is `passive`. Initially, set this
+    parameter to `learn`.
+    
+    See
+
+<span class="title-ref">Setting the Protection Level
+\<setting_the_protection_level\>_</span> for more information.
+
+  - **edb_sql_protect.max_protected_roles.** Sets the maximum number
     of roles that can be protected. If this parameter is omitted, the
     default setting is `64`.
-
-  - **edb\_sql\_protect.max\_protected\_relations.** Sets the maximum
+  - **edb_sql_protect.max_protected_relations.** Sets the maximum
     number of relations that can be protected per role. If this
     parameter is omitted, the default setting is `1024`.
 
@@ -73,7 +76,7 @@ Advanced Server home directory.
 > memory. The space for the maximum possible protected relations is
 > reserved during database server startup.
 
-  - **edb\_sql\_protect.max\_queries\_to\_save.** Sets the maximum
+  - **edb_sql_protect.max_queries_to_save.** Sets the maximum
     number of offending queries to save in the `edb_sql_protect_queries`
     view. If this parameter is omitted, the default setting is `5000`.
     If the number of offending queries reaches the limit, additional
@@ -487,7 +490,7 @@ edb_sql_protect.level = passive
 ```
 
 **Step 2:** Reload the configuration file as shown in `Step 2` of the
-`Learn Mode <learn_mode>` section.
+<span class="title-ref">Learn Mode \<learn_mode\>_</span> section.
 
 Now SQL/Protect is in passive mode. For relations that have been learned
 such as the dept and emp tables of the prior examples, SQL statements
@@ -541,13 +544,13 @@ f1
 **Step 3:** Monitor the statistics for suspicious activity.
 
 By querying the view
-<span class="title-ref">edb\_sql\_protect\_stats</span><span class="title-ref">,
+<span class="title-ref">edb_sql_protect_stats</span><span class="title-ref">,
 you can see the number of times SQL statements were executed that
 referenced relations that were not in a role’s protected relations list,
 or contained SQL injection attack signatures. See Section
 </span><span class="title-ref">Attack Attempt
 Statistics</span><span class="title-ref"> for more information on view
-</span><span class="title-ref">edb\_sql\_protect\_stats</span>\`.
+</span><span class="title-ref">edb_sql_protect_stats</span>\`.
 
 The following is a query on `edb_sql_protect_stats`:
 
@@ -641,7 +644,7 @@ edb_sql_protect.level = active
 ```
 
 **Step 2:** Reload the configuration file as shown in `Step 2` of the
-`Learn Mode <learn_mode>` section.
+<span class="title-ref">Learn Mode \<learn_mode\>_</span> section.
 
 The following example illustrates SQL statements similar to those given
 in the previous examples, but executed by user `appuser` when

@@ -35,4 +35,5 @@ To remove the sequence, ``serial``:
 
 **See Also**
 
-:ref:`ALTER SEQUENCE <alter_sequence>`, :ref:`CREATE SEQUENCE <create_sequence>`
+
+`ALTER SEQUENCE <alter_sequence>_`, 

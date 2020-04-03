@@ -35,7 +35,9 @@ Server home directory.
    omitted, the default behavior is ``passive``. Initially, set this
    parameter to ``learn``. 
 
-   See :ref:`Setting the Protection Level <setting_the_protection_level>` for more information.
+   See 
+`Setting the Protection Level <setting_the_protection_level>_` for more information.
+
 
 -  **edb_sql_protect.max_protected_roles.** Sets the maximum number of
    roles that can be protected. If this parameter is omitted, the
@@ -423,7 +425,9 @@ parameters in the ``postgresql.conf`` file as shown below:
     edb_sql_protect.enabled = on
     edb_sql_protect.level = passive
 
-**Step 2:** Reload the configuration file as shown in ``Step 2`` of the :ref:`Learn Mode <learn_mode>` section.
+**Step 2:** Reload the configuration file as shown in ``Step 2`` of the 
+`Learn Mode <learn_mode>_` section.
+
 
 Now SQL/Protect is in passive mode. For relations that have been learned
 such as the dept and emp tables of the prior examples, SQL statements
@@ -558,7 +562,9 @@ parameters in the ``postgresql.conf`` file as shown below:
     edb_sql_protect.enabled = on
     edb_sql_protect.level = active
 
-**Step 2:** Reload the configuration file as shown in ``Step 2`` of the :ref:`Learn Mode <learn_mode>` section.
+**Step 2:** Reload the configuration file as shown in ``Step 2`` of the 
+`Learn Mode <learn_mode>_` section.
+
 
 The following example illustrates SQL statements similar to those given
 in the previous examples, but executed by user ``appuser`` when ``edb_sql_protect.level`` is set to ``active``:

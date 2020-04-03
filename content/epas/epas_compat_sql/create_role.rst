@@ -65,4 +65,5 @@ Create a role (and a schema) named, ``admins``, with a password:
 
 **See Also**
 
-:ref:`ALTER ROLE <alter_role_identified_by>`, :ref:`DROP ROLE <drop_role>`, :ref:`GRANT <grant>`, :ref:`REVOKE <revoke>`, :ref:`SET ROLE <set_role>`
+
+`ALTER ROLE <alter_role_identified_by>_`, 

@@ -46,7 +46,9 @@ Use options on the ``Select Components`` dialog to select which software compone
 
 -  ``pgAdmin 4`` is available for PostgreSQL version 12.0.
 
--  ``Stack Builder`` to install the Stack Builder utility; for more information about the Stack Builder utility, see :ref:`Using Stackbuilder <using_stackbuilder>`.
+-  ``Stack Builder`` to install the Stack Builder utility; for more information about the Stack Builder utility, see 
+`Using Stackbuilder <using_stackbuilder>_`.
+
 
 -  ``Command Line Tools`` to install PostgreSQL tools such as:
 

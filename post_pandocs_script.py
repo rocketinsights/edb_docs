@@ -9,7 +9,7 @@ for line in fileinput.input(inplace=1):
     print("metaDescription: description")
     print('---')
   else:
-    print(line.replace("\n", ""))
+    print(line.replace("\n", "").replace("\_", "_"))
   
 
 

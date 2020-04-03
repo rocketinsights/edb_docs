@@ -49,4 +49,6 @@ Create a user named, ``john``.
 
 **See Also**
 
-:ref:`DROP USER <drop_user>`
+
+`DROP USER <drop_user>_`
+

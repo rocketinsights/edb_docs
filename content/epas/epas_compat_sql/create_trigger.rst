@@ -453,4 +453,6 @@ or ``AFTER STATEMENT`` timing-point.
 
 **See Also**
 
-:ref:`DROP TRIGGER <drop_trigger>`
+
+`DROP TRIGGER <drop_trigger>_`
+

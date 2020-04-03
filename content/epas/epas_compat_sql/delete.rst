@@ -123,4 +123,6 @@ Clear the table ``jobhist``:
 
 **See Also**
 
-:ref:`TRUNCATE <truncate>`
+
+`TRUNCATE <truncate>_`
+

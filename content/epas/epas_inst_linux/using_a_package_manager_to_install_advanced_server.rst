@@ -21,7 +21,9 @@ and the user's home directory is ``/var/lib/edb/as12``.
 By default, Advanced Server logging is configured to write files to the
 ``log`` subdirectory of the ``data`` directory, rotating the files each day and
 retaining one week of log entries. You can customize the logging
-behavior of the server by :ref:`modifying the postgresql.conf File <modifying_the_postgresqlconf_file>`.
+behavior of the server by 
+`modifying the postgresql.conf File <modifying_the_postgresqlconf_file>_`.
+
 
 The RPM installers place Advanced Server components in the directories
 listed in the table below:
@@ -151,7 +153,9 @@ packages come from a trustworthy source, enter a ``y``, and press ``Return`` to
 continue.
 
 After installing Advanced Server, you must configure the installation. For more information,
-see :ref:`Configuring a Package Installation <configuring_a_package_installation>`.
+see 
+`Configuring a Package Installation <configuring_a_package_installation>_`.
+
 
 During the installation, yum may encounter a dependency that it cannot
 resolve. If it does, it will provide a list of the required dependencies
@@ -207,7 +211,9 @@ Please note: The available package list is subject to change.
    edb-as12-server-sslutils                           This package installs functionality that provides SSL support.
    edb-as12-server-cloneschema                        This package installs the EDB Clone Schema extension. For more information about EDB Clone Schema, see the EDB Postgres Advanced Server Guide.
    edb-as12-server-parallel-clone                     This package installs functionality that supports the EDB Clone Schema extension.
-   edb-as12-pgagent                                   Installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see :ref:`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>`.
+   edb-as12-pgagent                                   Installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see 
+`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>_`.
+
    edb-as12-edbplus                                   The ``edb-edbplus`` package contains the files required to install the EDB*Plus command line client. EDB*Plus commands are compatible with Oracle's SQL*Plus.
    edb-as12-pgsnmpd                                   SNMP (Simple Network Management Protocol) is a protocol that allows you to supervise an apparatus connected to the network.
    edb-as12-pljava                                    Installs PL/Java, providing access to Java stored procedures, triggers and functions via the JDBC interface.
@@ -220,7 +226,9 @@ Please note: The available package list is subject to change.
    edb-as12-slony-replication                         Installs the meta RPM for Slony-I.
    edb-as12-slony-replication-core                    Slony-I builds a master-slave system that includes all features and capabilities needed to replicate large databases to a reasonably limited number of slave systems.
    edb-as12-slony-replication-docs                    This package contains the Slony project documentation (in pdf form).
-   edb-as12-slony-replication-tools                   This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see :ref:`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>`.
+   edb-as12-slony-replication-tools                   This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see 
+`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>_`.
+
    edb-as12-libicu                                    These packages contain supporting library files.
    ================================================== ===================================================================================================================================================================================================================================================================================================================
 
@@ -430,11 +438,15 @@ edb-as12-postgis-doc-2.5         This package provides support for POSTGIS.
 edb-as12-postgis-gui-2.5         This package provides support for POSTGIS.
 edb-as12-postgis-jdbc            This package provides support for POSTGIS.
 edb-as12-postgis-scripts         This package provides support for POSTGIS.
-edb-as12-pgagent                 This package installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see :ref:`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>`.
+edb-as12-pgagent                 This package installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see 
+`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>_`.
+
 edb-as12-slony-replication       This package installs the meta RPM for Slony-I.
 edb-as12-slony-replication-core  This package contains core portions of Slony-I to build a master-slave system that includes all features and capabilities needed to replicate large databases to a reasonably limited number of slave systems.
 edb-as12-slony-replication-docs  This package contains the Slony project documentation (in pdf form).
-edb-as12-slony-replication-tools This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see :ref:`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>`.
+edb-as12-slony-replication-tools This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see 
+`Installing Advanced Server on a Linux Host <installing_advanced_server_on_a_linux_host>_`.
+
 edb-as12-hdfs-fdw                The Hadoop Data Adapter allows you to query and join data from Hadoop environments with your Postgres or Advanced Server instances. It is YARN Ready certified with HortonWorks, and provides optimizations for performance with predicate pushdown support.
 edb-as12-hdfs-fdw-doc            Documentation for the Hadoop Data Adapter.
 edb-as12-mongo-fdw               This EnterpriseDB Advanced Server extension implements a Foreign Data Wrapper for MongoDB.
@@ -499,7 +511,9 @@ platform specific.
 
 To create a database cluster in the ``PGDATA`` directory that listens on the
 port specified by the ``PGPORT`` environment variable specified in the
-service configuration file (described in :ref:`Using a Service Configuration File on CentOS or Redhat 6.x <using_a_service_configuration_file_on_centos_or_redhat_6x>`), assume ``root``
+service configuration file (described in 
+`Using a Service Configuration File on CentOS or Redhat 6.x <using_a_service_configuration_file_on_centos_or_redhat_6x>_`), assume ``root``
+
 privileges, and invoke the ``service`` script:
 
    ``service edb-as-12 initdb``
@@ -597,7 +611,9 @@ The file contains the following environment variables:
    writes startup information.
 
 -  Use ``INITDBOPTS`` to specify any ``initdb`` option or options that you wish
-   to apply to the new cluster. For more information, see :ref:`Specifying Cluster Options with INITDBOPTS <specifying_cluster_options_with_initdbopts>`.
+   to apply to the new cluster. For more information, see 
+`Specifying Cluster Options with INITDBOPTS <specifying_cluster_options_with_initdbopts>_`.
+
 
 You can modify the ``edb-as-12.sysconfig`` file before using the service
 command to invoke the ``startup`` script to change the listener port, data

@@ -36,4 +36,6 @@ Remove a trigger named ``emp_salary_trig``:
 
 **See Also**
 
-:ref:`CREATE TRIGGER <create_trigger>`
+
+`CREATE TRIGGER <create_trigger>_`
+

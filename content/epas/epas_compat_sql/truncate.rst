@@ -47,4 +47,5 @@ The following command truncates a table named ``accounts``:
 
 **See Also**
 
-:ref:`DROP VIEW <drop_view>`, :ref:`DELETE <delete>`
+
+`DROP VIEW <drop_view>_`, 

@@ -48,4 +48,5 @@ established:
 
 **See Also**
 
-:ref:`COMMIT <commit>`, :ref:`ROLLBACK <rollback>`, :ref:`SAVEPOINT <savepoint>`
+
+`COMMIT <commit>_`, 

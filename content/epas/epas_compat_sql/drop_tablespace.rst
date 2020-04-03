@@ -40,4 +40,6 @@ To remove tablespace ``employee_space`` from the system:
 
 **See Also**
 
-:ref:`ALTER TABLESPACE <alter_tablespace>`
+
+`ALTER TABLESPACE <alter_tablespace>_`
+

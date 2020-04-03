@@ -176,4 +176,5 @@ example for the ``CREATE TYPE`` command.
 
 **See Also**
 
-:ref:`CREATE TYPE <create_type>`, :ref:`DROP TYPE <drop_type>`
+
+`CREATE TYPE <create_type>_`, 

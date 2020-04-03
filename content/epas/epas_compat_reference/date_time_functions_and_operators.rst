@@ -7,9 +7,13 @@
 Table - Date/Time Functions shows the available functions for date/time value processing,
 with details appearing in the following subsections. The following table
 illustrates the behaviors of the basic arithmetic operators ``(+, -)``. For
-formatting functions, refer to :ref:`Section - IMMUTABLE TO_CHAR(TIMESTAMP, format) Function <immutable_to_char_function>`. You should be familiar
+formatting functions, refer to 
+`Section - IMMUTABLE TO_CHAR(TIMESTAMP, format) Function <immutable_to_char_function>_`. You should be familiar
+
 with the background information on date/time data types from Section
-:ref:`Section - Date/Time Types <date_time_types>`.
+
+`Section - Date/Time Types <date_time_types>_`.
+
 
 Table ‑ Date/Time Operators
 

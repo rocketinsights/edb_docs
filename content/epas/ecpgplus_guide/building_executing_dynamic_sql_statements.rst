@@ -646,7 +646,9 @@ must also specify a maximum length for each column (or parameter) name
 and each indicator variable name - in this case, we expect names to be
 no more than 64 bytes long.
 
-See :ref:`SQLDA Structure <sqlda_structure>` section for a complete description of the SQLDA structure.
+See 
+`SQLDA Structure <sqlda_structure>_` section for a complete description of the SQLDA structure.
+
 
 .. code-block:: text
 

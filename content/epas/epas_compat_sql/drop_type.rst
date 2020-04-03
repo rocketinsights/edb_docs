@@ -50,4 +50,5 @@ Drop the nested table type named ``budget_tbl_typ``:
 
 **See Also**
 
-:ref:`CREATE TYPE <create_type>`, :ref:`CREATE TYPE BODY <create_type_body>`
+
+`CREATE TYPE <create_type>_`, 

@@ -87,4 +87,5 @@ enforce a retry delay of 2 seconds between attempts.
 
 **See Also**
 
-:ref:`ALTER QUEUE <alter_queue>`, :ref:`DROP QUEUE <drop_queue>`
+
+`ALTER QUEUE <alter_queue>_`, 

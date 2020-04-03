@@ -670,4 +670,6 @@ removed entirely in a future Advanced Server release.
 
 **See Also**
 
-:ref:`DROP PUBLIC DATABASE LINK <drop_public_database_link>`
+
+`DROP PUBLIC DATABASE LINK <drop_public_database_link>_`
+

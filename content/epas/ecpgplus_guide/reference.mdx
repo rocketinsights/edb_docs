@@ -173,11 +173,11 @@ PROC on the ECPG command line.
 
 <div class="index">
 
-Using the SELECT\_ERROR Precompiler Option
+Using the SELECT_ERROR Precompiler Option
 
 </div>
 
-### Using the SELECT\_ERROR Precompiler Option
+### Using the SELECT_ERROR Precompiler Option
 
 When using ECPGPlus in compatible mode, you can use the `SELECT_ERROR`
 precompiler option to instruct your program how to handle result sets
@@ -327,7 +327,7 @@ Y{0.5}|
 | 188                    | TIMESTAMP W/TIMEZONE   |
 | 189                    | INTERVAL YEAR TO MONTH |
 | 190                    | INTERVAL DAY TO SECOND |
-| 232                    | TIMESTAMP LOCAL\_TZ    |
+| 232                    | TIMESTAMP LOCAL_TZ    |
 
 ## The SQLDA Structure
 
@@ -386,9 +386,11 @@ The `V` structure member is a pointer to an array of data values.
 > uses the descriptor).
 
 Your application must allocate the space required to hold each value.
-Refer to `displayResultSet
-<executing_query_with_unknown_number_of_variables>` function for an
-example of how to allocate space for `SELECT`-list values.
+Refer to <span class="title-ref">displayResultSet
+\<executing_query_with_unknown_number_of_variables\>_</span>
+function for an example of how to allocate
+
+space for `SELECT`-list values.
 
 `L` - *length of each data value*
 
@@ -568,11 +570,11 @@ takes the form:
 
 > `EXEC SQL <sql_command_body>;`
 
-Where *sql\_command\_body* represents a standard SQL statement. You can
+Where *sql_command_body* represents a standard SQL statement. You can
 use a host variable anywhere that the SQL statement expects a value
 expression. For more information about substituting host variables for
-value expressions, please refer to `Declaring Host Variables
-<declaring_host_variables>` section.
+value expressions, please refer to <span class="title-ref">Declaring
+Host Variables \<declaring_host_variables\>_</span> section.
 
 ECPGPlus extends the PostgreSQL server-side syntax for some statements;
 for those statements, syntax differences are outlined in the following
@@ -599,16 +601,16 @@ area:
 
 Where:
 
-*array\_size* is a variable that specifies the number of array elements
-to allocate for the descriptor. *array\_size* may be an INTEGER value or
+*array_size* is a variable that specifies the number of array elements
+to allocate for the descriptor. *array_size* may be an INTEGER value or
 a host variable.
 
-*descriptor\_name* is the host variable that contains the name of the
+*descriptor_name* is the host variable that contains the name of the
 descriptor, or the name of the descriptor. This value may take the form
 of an identifier, a quoted string literal, or of a host variable.
 
-*variable\_count* specifies the maximum number of host variables in the
-descriptor. The default value of *variable\_count* is 100.
+*variable_count* specifies the maximum number of host variables in the
+descriptor. The default value of *variable_count* is 100.
 
 The following code fragment allocates a descriptor named `emp_query`
 that may be processed as an array `(emp_array)`:
@@ -643,21 +645,21 @@ EXEC SQL CALL <program_name< '('[<actual_arguments>]')';
 
 Where:
 
-*program\_name* is the name of the stored procedure or function that the
+*program_name* is the name of the stored procedure or function that the
 `CALL` statement invokes. The program name may be schema-qualified or
 package-qualified (or both); if you do not specify the schema or package
 in which the program resides, ECPGPlus will use the value of
 `search_path` to locate the program.
 
-*actual\_arguments* specifies a comma-separated list of arguments
-required by the program. Note that each *actual\_argument* corresponds
+*actual_arguments* specifies a comma-separated list of arguments
+required by the program. Note that each *actual_argument* corresponds
 to a formal argument expected by the program. Each formal argument may
 be an `IN` parameter, an `OUT` parameter, or an `INOUT` parameter.
 
-:*ret\_variable* specifies a host variable that will receive the value
+:*ret_variable* specifies a host variable that will receive the value
 returned if the program is a function.
 
-:*ret\_indicator* specifies a host variable that will receive the
+:*ret_indicator* specifies a host variable that will receive the
 indicator value returned, if the program is a function.
 
 For example, the following statement invokes the `get_job_desc` function
@@ -687,7 +689,7 @@ EXEC SQL CLOSE [<cursor_name>];
 
 Where:
 
-*cursor\_name* is the name of the cursor closed by the statement. The
+*cursor_name* is the name of the cursor closed by the statement. The
 cursor name may take the form of an identifier or of a host variable.
 
 The `OPEN` statement initializes a cursor. Once initialized, a cursor
@@ -720,7 +722,7 @@ EXEC SQL [AT <database_name>] COMMIT [WORK]
 
 Where:
 
-*database\_name* is the name of the database (or host variable that
+*database_name* is the name of the database (or host variable that
 contains the name of the database) in which the work resides. This value
 may take the form of an unquoted string literal, or of a host variable.
 
@@ -777,17 +779,17 @@ EXEC SQL CONNECT
 
 Where:
 
-*user\_name* is a host variable that contains the role that the client
+*user_name* is a host variable that contains the role that the client
 application will use to connect to the server.
 
 *password* is a host variable that contains the password associated with
 that role.
 
-*connection\_id* is a host variable that contains a slash-delimited user
+*connection_id* is a host variable that contains a slash-delimited user
 name and password used to connect to the database.
 
 Include the `AT` clause to specify the database to which the connection
-is established. *database\_name* is the name of the database to which
+is established. *database_name* is the name of the database to which
 the client is connecting; specify the value in the form of a variable,
 or as a string literal.
 
@@ -827,23 +829,23 @@ EXEC SQL CONNECT TO <database_name>
 
 Where *credentials* is one of the following:
 
-  - USER *user\_name* *password*
-  - USER *user\_name* IDENTIFIED BY *password*
-  - USER *user\_name* USING *password*
+  - USER *user_name* *password*
+  - USER *user_name* IDENTIFIED BY *password*
+  - USER *user_name* USING *password*
 
 In the second form:
 
-*database\_name* is the name or identity of the database to which the
-client is connecting. Specify *database\_name* as a variable, or as a
+*database_name* is the name or identity of the database to which the
+client is connecting. Specify *database_name* as a variable, or as a
 string literal, in one of the following forms:
 
-> \<database\_name\> \[@\<hostname\>\]\[: \<port\>\]
+> \<database_name\> \[@\<hostname\>\]\[: \<port\>\]
 > 
 > tcp:postgresql:// \<hostname\>\[:\<port\>\]\[/
-> \<database\_name\>\]\[\<options\>\]
+> \<database_name\>\]\[\<options\>\]
 > 
 > unix:postgresql:// \<hostname\>\[:\<port\>\]\[/
-> \<database\_name\>\]\[\<options\>\]
+> \<database_name\>\]\[\<options\>\]
 > 
 > Where:
 > 
@@ -854,13 +856,13 @@ string literal, in one of the following forms:
 > 
 > You can also specify a value of `DEFAULT` to establish a connection
 > with the default database, using the default role name. If you specify
-> `DEFAULT` as the target database, do not include a *connection\_name*
+> `DEFAULT` as the target database, do not include a *connection_name*
 > or *credentials*.
 
-*connection\_name* is the name of the connection to the database.
-*connection\_name* should take the form of an identifier (that is, not a
+*connection_name* is the name of the connection to the database.
+*connection_name* should take the form of an identifier (that is, not a
 string literal or a variable). You can open multiple connections, by
-providing a unique *connection\_name* for each connection.
+providing a unique *connection_name* for each connection.
 
 > If you do not specify a name for a connection, `ecpglib` assigns a
 > name of `DEFAULT` to the connection. You can refer to the connection
@@ -871,11 +873,11 @@ providing a unique *connection\_name* for each connection.
 > a connection by name in an `EXEC SQL` statement, ECPG assumes the name
 > of the connection to be CURRENT.
 
-*user\_name* is the role used to establish the connection with the
+*user_name* is the role used to establish the connection with the
 Advanced Server database. The privileges of the specified role will be
 applied to all commands performed through the connection.
 
-*password* is the password associated with the specified *user\_name*.
+*password* is the password associated with the specified *user_name*.
 
 The following code fragment uses the second form of the `CONNECT`
 statement to establish a connection to a database named `edb`, using the
@@ -907,7 +909,7 @@ EXEC SQL DEALLOCATE DESCRIPTOR *descriptor_name*
 
 Where:
 
-*descriptor\_name* is the name of the descriptor. This value may take
+*descriptor_name* is the name of the descriptor. This value may take
 the form of a quoted string literal, or of a host variable.
 
 The following example deallocates a descriptor named `emp_query`:
@@ -934,18 +936,18 @@ EXEC SQL [AT <database_name>] DECLARE <cursor_name> CURSOR FOR
 
 Where:
 
-*database\_name* is the name of the database on which the cursor
+*database_name* is the name of the database on which the cursor
 operates. This value may take the form of an identifier or of a host
 variable. If you do not specify a database name, the default value of
-*database\_name* is the default database.
+*database_name* is the default database.
 
-*cursor\_name* is the name of the cursor.
+*cursor_name* is the name of the cursor.
 
-*select\_statement* is the text of the `SELECT` statement that defines
+*select_statement* is the text of the `SELECT` statement that defines
 the cursor result set; the SELECT statement cannot contain an INTO
 clause.
 
-*statement\_name* is the name of a SQL statement or block that defines
+*statement_name* is the name of a SQL statement or block that defines
 the cursor result set.
 
 The following example declares a cursor named `employees`:
@@ -980,7 +982,7 @@ EXEC SQL DECLARE <database_name> DATABASE;
 
 Where:
 
-*database\_name* specifies the name of the database.
+*database_name* specifies the name of the database.
 
 The following example demonstrates declaring an identifier for the acctg
 database:
@@ -1021,23 +1023,23 @@ EXEC SQL DECLARE STATEMENT <statement_name>;
 
 Where:
 
-*statement\_name* specifies the identifier associated with the
+*statement_name* specifies the identifier associated with the
 statement.
 
-*database\_name* specifies the name of the database. This value may take
+*database_name* specifies the name of the database. This value may take
 the form of an identifier or of a host variable that contains the
 identifier.
 
 A typical usage sequence that includes the DECLARE STATEMENT directive
 might be:
 
-> EXEC SQL DECLARE give\_raise STATEMENT; // give\_raise is now a
+> EXEC SQL DECLARE give_raise STATEMENT; // give_raise is now a
 > statement handle (not prepared)
 > 
-> EXEC SQL PREPARE give\_raise FROM :stmtText; // give\_raise is now
+> EXEC SQL PREPARE give_raise FROM :stmtText; // give_raise is now
 > associated with a statement
 > 
-> EXEC SQL EXECUTE give\_raise;
+> EXEC SQL EXECUTE give_raise;
 
 This statement has no effect and is provided for Pro\*C compatibility
 only.
@@ -1065,7 +1067,7 @@ any place that an expression is allowed. The syntax is:
 
 Where:
 
-Include the FOR *exec\_count* clause to specify the number of times the
+Include the FOR *exec_count* clause to specify the number of times the
 statement will execute; this clause is valid only if the `VALUES` clause
 references an array or a pointer to an array.
 
@@ -1076,7 +1078,7 @@ named table are also processed.
 
 *alias* is a substitute name for the target table.
 
-*using\_list* is a list of table expressions, allowing columns from
+*using_list* is a list of table expressions, allowing columns from
 other tables to appear in the `WHERE` condition.
 
 Include the `WHERE` clause to specify which rows should be deleted. If
@@ -1087,27 +1089,27 @@ delete all rows from the table, leaving the table definition intact.
 returns a value of type `BOOLEAN`. Those rows for which *condition*
 returns true will be deleted.
 
-*cursor\_name* is the name of the cursor to use in the `WHERE CURRENT
+*cursor_name* is the name of the cursor to use in the `WHERE CURRENT
 OF` clause; the row to be deleted will be the one most recently fetched
 from this cursor. The cursor must be a non-grouping query on the
 `DELETE` statements target table. You cannot specify `WHERE CURRENT OF`
 in a `DELETE` statement that includes a Boolean condition.
 
-The `RETURN/RETURNING` clause specifies an *output\_expression* or
-*host\_variable\_list* that is returned by the `DELETE` command after
+The `RETURN/RETURNING` clause specifies an *output_expression* or
+*host_variable_list* that is returned by the `DELETE` command after
 each row is deleted:
 
-> *output\_expression* is an expression to be computed and returned by
-> the `DELETE` command after each row is deleted. *output\_name* is the
+> *output_expression* is an expression to be computed and returned by
+> the `DELETE` command after each row is deleted. *output_name* is the
 > name of the returned column; include \* to return all columns.
 > 
-> *host\_variable\_list* is a comma-separated list of host variables and
+> *host_variable_list* is a comma-separated list of host variables and
 > optional indicator variables. Each host variable receives a
 > corresponding value from the `RETURNING` clause.
 
 For example, the following statement deletes all rows from the `emp`
 table where the `sal` column contains a value greater than the value
-specified in the `host` variable, :max\_sal:
+specified in the `host` variable, :max_sal:
 
 ``` text
 DELETE FROM emp WHERE sal > :max_sal;
@@ -1148,7 +1150,7 @@ EXEC SQL DESCRIBE SELECT LIST FOR <statement_name> INTO <descriptor>;
 
 Where:
 
-*statement\_name* is the identifier associated with a prepared SQL
+*statement_name* is the identifier associated with a prepared SQL
 statement or PL/SQL block.
 
 *descriptor* is the name of C variable of type SQLDA\*. You must
@@ -1224,9 +1226,9 @@ USING [SQL] DESCRIPTOR <descriptor_name>;
 
 Where:
 
-*statement\_name* is the name of a prepared SQL statement.
+*statement_name* is the name of a prepared SQL statement.
 
-*descriptor\_name* is the name of the descriptor. *descriptor\_name* can
+*descriptor_name* is the name of the descriptor. *descriptor_name* can
 be a quoted string value or a host variable that contains the name of
 the descriptor.
 
@@ -1294,7 +1296,7 @@ EXEC SQL DISCONNECT
 
 Where:
 
-*connection\_name* is the connection name specified in the `CONNECT`
+*connection_name* is the connection name specified in the `CONNECT`
 statement used to establish the connection. If you do not specify a
 connection name, the current connection is closed.
 
@@ -1308,7 +1310,7 @@ connection, ECPGPlus assigns the name, DEFAULT, to the connection.
 Include the `ALL` keyword to instruct ECPGPlus to close all active
 connections.
 
-The following example creates a connection (named hr\_connection) that
+The following example creates a connection (named hr_connection) that
 connects to the hr database, and then disconnects from the connection:
 
 ``` text
@@ -1340,21 +1342,21 @@ EXEC SQL [FOR <array_size>] EXECUTE <statement_name>
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value that specifies the number of rows to be processed. If you
 omit the `FOR` clause, the statement is executed once for each member of
 the array.
 
-*statement\_name* specifies the name assigned to the statement when the
+*statement_name* specifies the name assigned to the statement when the
 statement was created (using the `EXEC SQL PREPARE` statement).
 
 Include the `USING` clause to supply values for parameters within the
 prepared statement:
 
-> Include the `DESCRIPTOR` *SQLDA\_descriptor* clause to provide an
+> Include the `DESCRIPTOR` *SQLDA_descriptor* clause to provide an
 > SQLDA descriptor value for a parameter.
 > 
-> Use a *host\_variable* (and an optional *indicator\_variable*) to
+> Use a *host_variable* (and an optional *indicator_variable*) to
 > provide a user-specified value for a parameter.
 
 The following example creates a prepared statement that inserts a record
@@ -1386,18 +1388,18 @@ Use the `EXECUTE` statement to execute a statement previously prepared
 by an `EXEC SQL PREPARE` statement, using an SQL descriptor. The syntax
 is:
 
-> EXEC SQL \[FOR \<array\_size\>\] EXECUTE \<statement\_identifier\>
-> \[USING \[SQL\] DESCRIPTOR \<descriptor\_name\>\] \[INTO \[SQL\]
-> DESCRIPTOR \<descriptor\_name\>\];
+> EXEC SQL \[FOR \<array_size\>\] EXECUTE \<statement_identifier\>
+> \[USING \[SQL\] DESCRIPTOR \<descriptor_name\>\] \[INTO \[SQL\]
+> DESCRIPTOR \<descriptor_name\>\];
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value that specifies the number of rows to be processed. If you
 omit the `FOR` clause, the statement is executed once for each member of
 the array.
 
-*statement\_identifier* specifies the identifier assigned to the
+*statement_identifier* specifies the identifier assigned to the
 statement with the `EXEC SQL PREPARE` statement.
 
 Include the `USING` clause to specify values for any input parameters
@@ -1407,11 +1409,11 @@ Include the `INTO` clause to specify a descriptor into which the
 `EXECUTE` statement will write the results returned by the prepared
 statement.
 
-*descriptor\_name* specifies the name of a descriptor (as a
+*descriptor_name* specifies the name of a descriptor (as a
 single-quoted string literal), or a host variable that contains the name
 of a descriptor.
 
-The following example executes the prepared statement, give\_raise,
+The following example executes the prepared statement, give_raise,
 using the values contained in the descriptor stmtText:
 
 ``` text
@@ -1436,11 +1438,11 @@ EXEC SQL [AT <database_name>] EXECUTE <anonymous_block> END-EXEC;
 
 Where:
 
-*database\_name* is the database identifier or a host variable that
+*database_name* is the database identifier or a host variable that
 contains the database identifier. If you omit the AT clause, the
 statement will be executed on the current default database.
 
-*anonymous\_block* is an inline sequence of PL/pgSQL or SPL statements
+*anonymous_block* is an inline sequence of PL/pgSQL or SPL statements
 and declarations. You may include host variables and optional indicator
 variables within the block; each such variable is treated as an IN/OUT
 value.
@@ -1486,11 +1488,11 @@ EXEC SQL [AT <database_name>] EXECUTE IMMEDIATE
 
 Where:
 
-*database\_name* is the database identifier or a host variable that
+*database_name* is the database identifier or a host variable that
 contains the database identifier. If you omit the AT clause, the
 statement will be executed on the current default database.
 
-*command\_text* is the command executed by the EXECUTE IMMEDIATE
+*command_text* is the command executed by the EXECUTE IMMEDIATE
 statement.
 
 This dynamic SQL statement is useful when you don't know the text of an
@@ -1531,7 +1533,7 @@ EXEC SQL [FOR <array_size>] FETCH <cursor>
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value specifying the number of rows to fetch. If you omit the
 `FOR` clause, the statement is executed once for each member of the
 array.
@@ -1544,7 +1546,7 @@ specified SQLDA descriptor with the values returned by the server.
 
 If you include an `INTO` clause, the `FETCH` statement will populate the
 host variables (and optional indicator variables) specified in the
-*target\_list*.
+*target_list*.
 
 The following code fragment declares a cursor named employees that
 retrieves the `employee number`, `name` and `salary` from the `emp`
@@ -1575,7 +1577,7 @@ INTO [SQL] DESCRIPTOR <descriptor_name>;
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value specifying the number of rows to fetch. If you omit the
 `FOR` clause, the statement is executed once for each member of the
 array.
@@ -1587,7 +1589,7 @@ statement.
 
 Include the `INTO` clause to specify an SQL descriptor into which the
 `EXECUTE` statement will write the results returned by the prepared
-statement. *descriptor\_name* specifies the name of a descriptor (as a
+statement. *descriptor_name* specifies the name of a descriptor (as a
 single-quoted string literal), or a host variable that contains the name
 of a descriptor. Prior to use, the descriptor must be allocated using an
 `ALLOCATE DESCRIPTOR` statement.
@@ -1628,7 +1630,7 @@ EXEC SQL GET DESCRIPTOR <descriptor_name>
 ```
 
 The second form returns information about a specific value (specified by
-the VALUE *column\_number* clause).
+the VALUE *column_number* clause).
 
 ``` text
 EXEC SQL [FOR <array_size>] GET DESCRIPTOR
@@ -1639,36 +1641,36 @@ VALUE <column_number> {:<host_variable> = <descriptor_item>
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value that specifies the number of rows to be processed. If you
-specify an array\_size, the host\_variable must be an array of that
-size; for example, if array\_size is 10, :host\_variable must be a
-10-member array of host\_variables. If you omit the `FOR` clause, the
+specify an array_size, the host_variable must be an array of that
+size; for example, if array_size is 10, :host_variable must be a
+10-member array of host_variables. If you omit the `FOR` clause, the
 statement is executed once for each member of the array.
 
-*descriptor\_name* specifies the name of a descriptor (as a
+*descriptor_name* specifies the name of a descriptor (as a
 single-quoted string literal), or a host variable that contains the name
 of a descriptor.
 
 Include the `VALUE` clause to specify the information retrieved from the
 descriptor.
 
-> *column\_number* identifies the position of the variable within the
+> *column_number* identifies the position of the variable within the
 > descriptor.
 > 
-> *host\_variable* specifies the name of the host variable that will
+> *host_variable* specifies the name of the host variable that will
 > receive the value of the item.
 > 
-> *descriptor\_item* specifies the type of the retrieved descriptor
+> *descriptor_item* specifies the type of the retrieved descriptor
 > item.
 
-ECPGPlus implements the following *descriptor\_item* types:
+ECPGPlus implements the following *descriptor_item* types:
 
   - TYPE
   - LENGTH
-  - OCTET\_LENGTH
-  - RETURNED\_LENGTH
-  - RETURNED\_OCTET\_LENGTH
+  - OCTET_LENGTH
+  - RETURNED_LENGTH
+  - RETURNED_OCTET_LENGTH
   - PRECISION
   - SCALE
   - NULLABLE
@@ -1690,7 +1692,7 @@ EXEC SQL GET DESCRIPTOR parse_desc :col_count = COUNT;
 The example allocates an SQL descriptor (named `parse_desc`), before
 using a `PREPARE` statement to syntax check the string provided by the
 user (`:stmt`). A `DESCRIBE` statement moves the user-provided string
-into the descriptor, parse\_desc. The call to `EXEC SQL GET DESCRIPTOR`
+into the descriptor, parse_desc. The call to `EXEC SQL GET DESCRIPTOR`
 interrogates the descriptor to discover the number of columns
 (`:col_count`) in the result set.
 
@@ -1720,7 +1722,7 @@ VALUES ({<expression> | DEFAULT} [, ...])[, ...] \| <query>}
 
 Where:
 
-Include the `FOR` *exec\_count* clause to specify the number of times
+Include the `FOR` *exec_count* clause to specify the number of times
 the statement will execute; this clause is valid only if the `VALUES`
 clause references an array or a pointer to an array.
 
@@ -1738,12 +1740,12 @@ fill the corresponding column with its default value.
 *query* specifies a `SELECT` statement that supplies the row(s) to be
 inserted.
 
-*output\_expression* is an expression that will be computed and returned
+*output_expression* is an expression that will be computed and returned
 by the `INSERT` command after each row is inserted. The expression can
 refer to any column within the table. Specify \* to return all columns
 of the inserted row(s).
 
-*output\_name* specifies a name to use for a returned column.
+*output_name* specifies a name to use for a returned column.
 
 The following example adds a row to the `employees` table:
 
@@ -1777,12 +1779,12 @@ EXEC SQL [FOR <array_size>] OPEN <cursor> [USING
 
 Where *parameters* is one of the following:
 
-> DESCRIPTOR \<SQLDA\_descriptor\> or \<host\_variable\> \[ \[ INDICATOR
-> \] \<indicator\_variable\>, … \]
+> DESCRIPTOR \<SQLDA_descriptor\> or \<host_variable\> \[ \[ INDICATOR
+> \] \<indicator_variable\>, … \]
 
 Where:
 
-*array\_*size\* is an integer value or a host variable that contains an
+*array_*size\* is an integer value or a host variable that contains an
 integer value specifying the number of rows to fetch. If you omit the
 FOR clause, the statement is executed once for each member of the array.
 
@@ -1791,7 +1793,7 @@ FOR clause, the statement is executed once for each member of the array.
 *parameters* is either `DESCRIPTOR SQLDA_descriptor` or a
 comma-separated list of host variables (and optional indicator
 variables) that initialize the cursor. If specifying an
-*SQLDA\_descriptor*, the descriptor must be initialized with a
+*SQLDA_descriptor*, the descriptor must be initialized with a
 `DESCRIBE` statement.
 
 The `OPEN` statement initializes a cursor using the values provided in
@@ -1836,14 +1838,14 @@ EXEC SQL [FOR <array_size>] OPEN <cursor>
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value specifying the number of rows to fetch. If you omit the
 `FOR` clause, the statement is executed once for each member of the
 array.
 
 *cursor* is the name of the cursor being opened.
 
-*descriptor\_name* specifies the name of an SQL descriptor (in the form
+*descriptor_name* specifies the name of an SQL descriptor (in the form
 of a single-quoted string literal) or a host variable that contains the
 name of an SQL descriptor that contains the query that initializes the
 cursor.
@@ -1888,15 +1890,15 @@ AS <sql_statement>;
 
 Where:
 
-*database\_name* is the database identifier or a host variable that
+*database_name* is the database identifier or a host variable that
 contains the database identifier against which the statement will
 execute. If you omit the `AT` clause, the statement will execute against
 the current default database.
 
-*statement\_name* is the identifier associated with a prepared SQL
+*statement_name* is the identifier associated with a prepared SQL
 statement or PL/SQL block.
 
-*sql\_statement* may take the form of a `SELECT` statement, a
+*sql_statement* may take the form of a `SELECT` statement, a
 single-quoted string literal or host variable that contains the text of
 an SQL statement.
 
@@ -1954,7 +1956,7 @@ EXEC SQL [AT <database_name>] ROLLBACK [WORK]
 
 Where:
 
-*database\_name* is the database identifier or a host variable that
+*database_name* is the database identifier or a host variable that
 contains the database identifier against which the statement will
 execute. If you omit the `AT` clause, the statement will execute against
 the current default database.
@@ -1975,7 +1977,7 @@ EXEC SQL ROLLBACK;
 
 Invoking this statement will abort the transaction, undoing all changes,
 erasing any savepoints, and releasing all transaction locks. If you
-include a savepoint (my\_savepoint in the following example):
+include a savepoint (my_savepoint in the following example):
 
 ``` text
 EXEC SQL ROLLBACK TO SAVEPOINT my_savepoint;
@@ -2008,13 +2010,13 @@ EXEC SQL [AT <database_name>] SAVEPOINT <savepoint_name>
 
 Where:
 
-*database\_name* is the database identifier or a host variable that
+*database_name* is the database identifier or a host variable that
 contains the database identifier against which the savepoint resides. If
 you omit the `AT` clause, the statement will execute against the current
 default database.
 
-*savepoint\_name* is the name of the savepoint. If you re-use a
-*savepoint\_name*, the original savepoint is discarded.
+*savepoint_name* is the name of the savepoint. If you re-use a
+*savepoint_name*, the original savepoint is discarded.
 
 Savepoints can only be established within a transaction block. A
 transaction block may contain multiple savepoints.
@@ -2059,14 +2061,14 @@ SELECT
 
 Where:
 
-*database\_name* is the name of the database (or host variable that
+*database_name* is the name of the database (or host variable that
 contains the name of the database) in which the table resides. This
 value may take the form of an unquoted string literal, or of a host
 variable.
 
-*host\_variables* is a list of host variables that will be populated by
+*host_variables* is a list of host variables that will be populated by
 the `SELECT` statement. If the `SELECT` statement returns more than a
-single row, *host\_variables* must be an array.
+single row, *host_variables* must be an array.
 
 ECPGPlus provides support for the additional clauses of the `SQL SELECT`
 statement as documented in the PostgreSQL Core documentation available
@@ -2123,7 +2125,7 @@ EXEC SQL SET CONNECTION <connection_name>;
 
 Where:
 
-*connection\_name* is the name of the connection to the database.
+*connection_name* is the name of the connection to the database.
 
 To use the `SET CONNECTION` statement, you should open the connection to
 the database using the second form of the `CONNECT` statement; include
@@ -2210,23 +2212,23 @@ COUNT = integer;
 
 Where:
 
-*array\_size* is an integer value or a host variable that contains an
+*array_size* is an integer value or a host variable that contains an
 integer value specifying the number of rows to fetch. If you omit the
 FOR clause, the statement is executed once for each member of the array.
 
-*descriptor\_name* specifies the name of a descriptor (as a
+*descriptor_name* specifies the name of a descriptor (as a
 single-quoted string literal), or a host variable that contains the name
 of a descriptor.
 
 Include the `VALUE` clause to describe the information stored in the
 descriptor.
 
-> *column\_number* identifies the position of the variable within the
+> *column_number* identifies the position of the variable within the
 > descriptor.
 > 
-> *descriptor\_item* specifies the type of the descriptor item.
+> *descriptor_item* specifies the type of the descriptor item.
 > 
-> *host\_variable* specifies the name of the host variable that contains
+> *host_variable* specifies the name of the host variable that contains
 > the value of the item.
 
 ECPGPlus implements the following `descriptor_item` types:
@@ -2240,7 +2242,7 @@ ECPGPlus implements the following `descriptor_item` types:
 For example, a client application might prompt a user for a dynamically
 created query:
 
-> query\_text = promptUser("Enter a query");
+> query_text = promptUser("Enter a query");
 
 To execute a dynamically created query, you must first `prepare` the
 query (parsing and validating the syntax of the query), and then
@@ -2347,7 +2349,7 @@ SET {<column> = { <expression> | DEFAULT } |
 
 Where:
 
-*database\_name* is the name of the database (or host variable that
+*database_name* is the name of the database (or host variable that
 contains the name of the database) in which the table resides. This
 value may take the form of an unquoted string literal, or of a host
 variable.
@@ -2368,7 +2370,7 @@ associated with any of the documented `UPDATE` clauses.
 
 The following `UPDATE` statement changes the job description of an
 employee (identified by the :ename host variable) to the value contained
-in the :new\_job host variable, and increases the employees salary, by
+in the :new_job host variable, and increases the employees salary, by
 multiplying the current salary by the value in the :increase host
 variable:
 

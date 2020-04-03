@@ -100,4 +100,6 @@ databases:
 
 **See Also**
 
-:ref:`DROP DIRECTORY <drop_directory>`
+
+`DROP DIRECTORY <drop_directory>_`
+

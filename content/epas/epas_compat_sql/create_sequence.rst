@@ -159,4 +159,5 @@ Select the next number from this sequence:
 
 **See Also**
 
-:ref:`ALTER SEQUENCE <alter_sequence>`, :ref:`DROP SEQUENCE <drop_sequence>`
+
+`ALTER SEQUENCE <alter_sequence>_`, 

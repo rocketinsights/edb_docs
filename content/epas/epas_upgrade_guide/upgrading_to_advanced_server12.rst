@@ -19,7 +19,9 @@ created by the Advanced Server 12 installer, but you can omit Step 2
 cluster when specifying a target cluster for the upgrade.
 
 If a problem occurs during the upgrade process, you can revert to the
-previous version. See :ref:`Reverting to the old cluster <reverting_to_the_old_cluster>` Section for detailed information about this
+previous version. See 
+`Reverting to the old cluster <reverting_to_the_old_cluster>_` Section for detailed information about this
+
 process.
 
 You must be an operating system superuser or Windows Administrator to

@@ -61,7 +61,7 @@ using`OUT`parameters, you cannot change the types of any`OUT`parameters
 except by dropping the function. The user that creates the function
 becomes the owner of the function. **Parameters**`name`  `name`is the
 identifier of the function.`parameters`  `parameters`is a list of formal
-parameters.`data\_type`  `data\_type`is the data type of the value
+parameters.`data_type`  `data_type`is the data type of the value
 returned by the
 function’s`RETURN`statement.`declarations`  `declarations`are
 variable, cursor, type, or subprogram declarations. If subprogram
@@ -110,12 +110,12 @@ conformance, but is optional.`\[ EXTERNAL \] SECURITY
 INVOKER`The`SECURITY INVOKER`clause indicates that the function will
 execute with the privileges of the user that calls it. The key
 word`EXTERNAL`is allowed for SQL conformance, but is optional. |`AUTHID
-DEFINER`|`AUTHID CURRENT\_USER`The`AUTHID DEFINER`clause is a synonym
+DEFINER`|`AUTHID CURRENT_USER`The`AUTHID DEFINER`clause is a synonym
 for`\[EXTERNAL\] SECURITY DEFINER`. If the`AUTHID`clause is omitted or
 if`AUTHID DEFINER`is specified, the rights of the function owner are
 used to determine access privileges to database objects. The`AUTHID
-CURRENT\_USER clause`is a synonym for`\[EXTERNAL\] SECURITY INVOKER`.
-If`AUTHID CURRENT\_USER`is specified, the rights of the current user
+CURRENT_USER clause`is a synonym for`\[EXTERNAL\] SECURITY INVOKER`.
+If`AUTHID CURRENT_USER`is specified, the rights of the current user
 executing the function are used to determine access privileges.`PARALLEL
 { UNSAFE | RESTRICTED | SAFE }`The`PARALLEL`clause enables the use of
 parallel sequential scans (parallel mode). A parallel sequential scan
@@ -129,15 +129,15 @@ restricted to the parallel group leader. If the qualification for any
 particular relation has anything that is parallel restricted, that
 relation won't be chosen for parallelism. When set to`SAFE`, the
 function can be executed in parallel mode with no restriction.`COST
-execution\_cost`  `execution\_cost`is a positive number giving the
+execution_cost`  `execution_cost`is a positive number giving the
 estimated execution cost for the function, in units
-of`cpu\_operator\_cost`. If the function returns a set, this is the cost
+of`cpu_operator_cost`. If the function returns a set, this is the cost
 per returned row. Larger values cause the planner to try to avoid
 evaluating the function more often than necessary.`ROWS
-result\_rows`  `result\_rows`is a positive number giving the estimated
+result_rows`  `result_rows`is a positive number giving the estimated
 number of rows that the planner should expect the function to return.
 This is only allowed when the function is declared to return a set. The
-default assumption is`1000`rows.`SET configuration\_parameter { TO value
+default assumption is`1000`rows.`SET configuration_parameter { TO value
 | = value | FROM CURRENT }`The`SET`clause causes the specified
 configuration parameter to be set to the specified value when the
 function is entered, and then restored to its prior value when the
@@ -150,14 +150,14 @@ restored at function exit. An ordinary`SET`command (without`LOCAL`)
 overrides the`SET`clause, much as it would do for a previous`SET
 LOCAL`command, with the effects of such a command persisting after
 procedure exit, unless the current transaction is rolled back.`PRAGMA
-AUTONOMOUS\_TRANSACTION`  `PRAGMA AUTONOMOUS\_TRANSACTION`is the
+AUTONOMOUS_TRANSACTION`  `PRAGMA AUTONOMOUS_TRANSACTION`is the
 directive that sets the function as an autonomous transaction. Please
 Note: The`STRICT`,`LEAKPROOF`,`PARALLEL`,`COST`,`ROWS`and`SET`keywords
 provide extended functionality for Advanced Server and are not supported
 by Oracle. *Notes* Advanced Server allows function overloading; that is,
 the same name can be used for several different functions so long as
 they have distinct input (`IN`,`IN OUT`) argument data types.
-**Examples** The function`emp\_comp`takes two numbers as input and
+**Examples** The function`emp_comp`takes two numbers as input and
 returns a computed value. The`SELECT`command illustrates use of the
 function. .. code-block:: text CREATE OR REPLACE FUNCTION emp_comp (
 p_sal NUMBER, p_comm NUMBER ) RETURN NUMBER IS BEGIN RETURN (p_sal +
@@ -171,7 +171,7 @@ FROM emp; Name | Salary | Commission | Total Compensation
 SCOTT | 3000.00 | | 72000.00 KING | 5000.00 | | 120000.00 TURNER
 | 1500.00 | 0.00 | 36000.00 ADAMS | 1100.00 | | 26400.00 JAMES | 950.00
 | | 22800.00 FORD | 3000.00 | | 72000.00 MILLER | 1300.00 | | 31200.00
-(14 rows) Function`sal\_range`returns a count of the number of employees
+(14 rows) Function`sal_range`returns a count of the number of employees
 whose salary falls in the specified range. The following anonymous block
 calls the function a number of times using the arguments’ default values
 for the first two calls. .. code-block:: text CREATE OR REPLACE FUNCTION
@@ -186,23 +186,23 @@ DBMS_OUTPUT.PUT_LINE('Number of employees with a salary between ' ||
 of employees with a salary: 14 Number of employees with a salary of at
 least $2000.00: 6 Number of employees with a salary between $2000.00 and
 $3000.00: 5 The following example demonstrates using the`AUTHID
-CURRENT\_USER`clause and`STRICT`keyword in a function declaration: ..
+CURRENT_USER`clause and`STRICT`keyword in a function declaration: ..
 code-block:: text CREATE OR REPLACE FUNCTION dept_salaries(dept_id int)
 RETURN NUMBER STRICT AUTHID CURRENT_USER BEGIN RETURN QUERY (SELECT
 sum(salary) FROM emp WHERE deptno = id); END; Include the`STRICT`keyword
 to instruct the server to return`NULL`if any input parameter passed
 is`NULL`; if a`NULL`value is passed, the function will not execute.
-The`dept\_salaries`function executes with the privileges of the role
+The`dept_salaries`function executes with the privileges of the role
 that is calling the function. If the current user does not have
 sufficient privileges to perform the`SELECT`statement querying
 the`emp`table (to display employee salaries), the function will report
 an error. To instruct the server to use the privileges associated with
 the role that defined the function, replace the`AUTHID
-CURRENT\_USER`clause with the`AUTHID DEFINER`clause. **Other Pragmas
+CURRENT_USER`clause with the`AUTHID DEFINER`clause. **Other Pragmas
 (declared within a package specification)**`PRAGMA
-RESTRICT\_REFERENCES`Advanced Server accepts but ignores syntax
-referencing`PRAGMA RESTRICT\_REFERENCES\`\`.
+RESTRICT_REFERENCES`Advanced Server accepts but ignores syntax
+referencing`PRAGMA RESTRICT_REFERENCES\`\`.
 
 **See Also**
 
-`DROP FUNCTION <drop_function>`
+<span class="title-ref">DROP FUNCTION \<drop_function\>_</span>

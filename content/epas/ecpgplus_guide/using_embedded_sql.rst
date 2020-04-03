@@ -85,12 +85,16 @@ with the database server:
 
 Please note that if you plan to pre-compile the code in ``PROC`` mode, you
 may omit the ``BEGIN DECLARE…END DECLARE`` section. For more information
-about declaring host variables, refer to the :ref:`Declaring Host Variables <declaring_host_variables>` section.
+about declaring host variables, refer to the 
+`Declaring Host Variables <declaring_host_variables>_` section.
+
 
 The data type associated with each variable within the declaration
 section is a C data type. Data passed between the server and the client
 application must share a compatible data type; for more information
-about data types, see the :ref:`Supported C Data Types <supported_c_data_types>` section.
+about data types, see the 
+`Supported C Data Types <supported_c_data_types>_` section.
+
 
 The next statement instructs the server how to handle an error:
 

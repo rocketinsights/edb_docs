@@ -97,7 +97,7 @@ char *insertStmt;
 ```
 
 The example then sets up an error handler; ECPGPlus calls the
-handle\_error() function whenever a SQL error occurs:
+handle_error() function whenever a SQL error occurs:
 
 ``` text
 EXEC SQL WHENEVER SQLERROR DO handle_error();
@@ -119,7 +119,7 @@ EXEC SQL EXECUTE IMMEDIATE :insertStmt;
 ```
 
 If the EXECUTE IMMEDIATE command fails for any reason, ECPGPlus will
-invoke the handle\_error() function (which terminates the application
+invoke the handle_error() function (which terminates the application
 after displaying an error message to the user). If the EXECUTE IMMEDIATE
 command succeeds, the application displays a message (ok) to the user,
 commits the changes, disconnects from the server, and terminates the
@@ -132,8 +132,8 @@ exit(EXIT_SUCCESS);
 }
 ```
 
-ECPGPlus calls the handle\_error() function whenever it encounters a SQL
-error. The handle\_error() function prints the content of the error
+ECPGPlus calls the handle_error() function whenever it encounters a SQL
+error. The handle_error() function prints the content of the error
 message, resets the error handler, rolls back any changes, disconnects
 from the database, and terminates the application.
 
@@ -215,7 +215,7 @@ char *stmtText;
 ```
 
 The example then sets up an error handler; ECPGPlus calls the
-handle\_error() function whenever a SQL error occurs:
+handle_error() function whenever a SQL error occurs:
 
 ``` text
 EXEC SQL WHENEVER SQLERROR DO handle_error();
@@ -249,7 +249,7 @@ EXEC SQL EXECUTE stmtHandle USING :argv[2], :argv[3], :argv[4];
 ```
 
 If the EXECUTE command fails for any reason, ECPGPlus will invoke the
-handle\_error() function (which terminates the application after
+handle_error() function (which terminates the application after
 displaying an error message to the user). If the EXECUTE command
 succeeds, the application displays a message (ok) to the user, commits
 the changes, disconnects from the server, and terminates the
@@ -262,8 +262,8 @@ exit(EXIT_SUCCESS);
 }
 ```
 
-ECPGPlus calls the handle\_error() function whenever it encounters a SQL
-error. The handle\_error() function prints the content of the error
+ECPGPlus calls the handle_error() function whenever it encounters a SQL
+error. The handle_error() function prints the content of the error
 message, resets the error handler, rolls back any changes, disconnects
 from the database, and terminates the application.
 
@@ -348,7 +348,7 @@ VARCHAR ename[20];
 ```
 
 The example then sets up an error handler; ECPGPlus calls the
-handle\_error() function whenever a SQL error occurs:
+handle_error() function whenever a SQL error occurs:
 
 ``` text
 EXEC SQL WHENEVER SQLERROR DO handle_error();
@@ -406,8 +406,8 @@ exit(EXIT_SUCCESS);
 }
 ```
 
-The application calls the handle\_error() function whenever it
-encounters a SQL error. The handle\_error() function prints the content
+The application calls the handle_error() function whenever it
+encounters a SQL error. The handle_error() function prints the content
 of the error message, resets the error handler, rolls back any changes,
 disconnects from the database, and terminates the application.
 
@@ -645,8 +645,9 @@ must also specify a maximum length for each column (or parameter) name
 and each indicator variable name - in this case, we expect names to be
 no more than 64 bytes long.
 
-See `SQLDA Structure <sqlda_structure>` section for a complete
-description of the SQLDA structure.
+See <span class="title-ref">SQLDA Structure
+\<sqlda_structure\>_</span> section for a complete description of the
+SQLDA structure.
 
 ``` text
 params = sqlald(20, 64, 64);
@@ -785,7 +786,7 @@ To decode the type code found in results-\>T, the program invokes the
 sqlnul() function (see the description of the T member of the SQLDA
 structure in [Section](#the-sqlda-structure)). This call to sqlnul()
 modifies results-\>T\[col\] to contain only the type code (the
-nullability flag is copied to null\_permitted). This step is necessary
+nullability flag is copied to null_permitted). This step is necessary
 because the DESCRIBE SELECT LIST statement encodes the type of each
 column and the nullability of each column into the T array.
 

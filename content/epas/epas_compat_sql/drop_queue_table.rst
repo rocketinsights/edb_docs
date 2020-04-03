@@ -59,4 +59,5 @@ any objects that depend on it:
 
 **See Also**
 
-:ref:`CREATE QUEUE TABLE <create_queue_table>`, :ref:`ALTER QUEUE TABLE <alter_queue_table>`
+
+`CREATE QUEUE TABLE <create_queue_table>_`, 

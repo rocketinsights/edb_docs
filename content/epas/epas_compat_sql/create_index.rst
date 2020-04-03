@@ -104,4 +104,5 @@ To create the same index as above, but have it reside in the
 
 **See Also**
 
-:ref:`ALTER INDEX <alter_index>`, :ref:`DROP INDEX <drop_index>`
+
+`ALTER INDEX <alter_index>_`, 

@@ -357,4 +357,6 @@ DEFINER`` clause with the ``AUTHID CURRENT_USER`` clause.
 
 **See Also**
 
-:ref:`DROP PROCEDURE <drop_procedure>`
+
+`DROP PROCEDURE <drop_procedure>_`
+

@@ -416,4 +416,5 @@ the following:
 
 **See Also**
 
-:ref:`CREATE TYPE BODY <create_type_body>`, :ref:`DROP TYPE <drop_type>`
+
+`CREATE TYPE BODY <create_type_body>_`, 

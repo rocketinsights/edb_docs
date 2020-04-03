@@ -37,4 +37,5 @@ This command will remove the index named ``accts_payable``:
 
 **See Also**
 
-:ref:`CREATE INDEX <create_index>`, :ref:`ALTER INDEX <alter_index>`
+
+`CREATE INDEX <create_index>_`, 

@@ -58,4 +58,5 @@ To drop a role named ``admins``:
 
 **See Also**
 
-:ref:`CREATE ROLE <create_role>`, :ref:`SET ROLE <set_role>`, :ref:`GRANT <grant>`, :ref:`REVOKE <revoke>`
+
+`CREATE ROLE <create_role>_`, 

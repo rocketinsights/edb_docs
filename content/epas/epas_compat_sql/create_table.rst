@@ -403,4 +403,5 @@ Create table ``dept`` in tablespace ``diskvol1``:
 
 **See Also**
 
-:ref:`ALTER TABLE <alter_table>`, :ref:`DROP TABLE <drop_table>`
+
+`ALTER TABLE <alter_table>_`, 

@@ -73,4 +73,5 @@ the ``orders`` table, depending on the drop behavior that you specify:
 
 **See Also**
 
-:ref:`ALTER TABLE <alter_table>`, :ref:`CREATE TABLE <create_table>`
+
+`ALTER TABLE <alter_table>_`, 

@@ -59,7 +59,9 @@ available in a long form or a short form:
 ``--link``
 
     Include the ``-k`` or ``--link`` keyword to create a hard link from the new
-    cluster to the old cluster. See :ref:`Linking versus Copying <linking_versus_copying>`
+    cluster to the old cluster. See 
+`Linking versus Copying <linking_versus_copying>_`
+
     for more information about using a symbolic link.
 
 ``-o <options>``

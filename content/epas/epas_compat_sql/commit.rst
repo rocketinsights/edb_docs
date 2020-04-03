@@ -45,4 +45,5 @@ To commit the current transaction and make all changes permanent:
 **See Also**
 
 
-:ref:`ROLLBACK <rollback>`, :ref:`ROLLBACK TO SAVEPOINT <rollback_to_savepoint>`
+
+`ROLLBACK <rollback>_`, 

@@ -164,4 +164,5 @@ named ``work_order``:
 
 **See Also**
 
-:ref:`CREATE QUEUE <create_queue>`, :ref:`DROP QUEUE <drop_queue>`
+
+`CREATE QUEUE <create_queue>_`, 

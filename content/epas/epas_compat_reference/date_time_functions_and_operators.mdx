@@ -7,11 +7,15 @@ metaDescription: description
 Table - Date/Time Functions shows the available functions for date/time
 value processing, with details appearing in the following subsections.
 The following table illustrates the behaviors of the basic arithmetic
-operators `(+, -)`. For formatting functions, refer to `Section -
-IMMUTABLE TO_CHAR(TIMESTAMP, format) Function
-<immutable_to_char_function>`. You should be familiar with the
-background information on date/time data types from Section `Section -
-Date/Time Types <date_time_types>`.
+operators `(+, -)`. For formatting functions, refer to
+<span class="title-ref">Section - IMMUTABLE TO_CHAR(TIMESTAMP, format)
+Function \<immutable_to_char_function\>_</span>. You should be
+familiar
+
+with the background information on date/time data types from Section
+
+<span class="title-ref">Section - Date/Time Types
+\<date_time_types\>_</span>.
 
 Table ‑ Date/Time Operators
 
@@ -161,7 +165,7 @@ Table ‑ Date/Time Functions
 </tbody>
 </table>
 
-## ADD\_MONTHS
+## ADD_MONTHS
 
 The `ADD_MONTHS` functions adds (or subtracts if the second parameter is
 negative) the specified number of months to the given date. The
@@ -284,7 +288,7 @@ SELECT EXTRACT(SECOND FROM TIMESTAMP '2001-02-16 20:38:40') FROM DUAL;
 (1 row)
 ```
 
-## MONTHS\_BETWEEN
+## MONTHS_BETWEEN
 
 The `MONTHS_BETWEEN` function returns the number of months between two
 dates. The result is a numeric value which is positive if the first date
@@ -327,7 +331,7 @@ SELECT MONTHS_BETWEEN('01-JAN-07','01-JAN-06') FROM DUAL;
 (1 row)
 ```
 
-## NEXT\_DAY
+## NEXT_DAY
 
 The `NEXT_DAY` function returns the first occurrence of the given
 weekday strictly greater than the given date. At least the first three
@@ -353,7 +357,7 @@ SELECT NEXT_DAY(TO_DATE('13-AUG-07','DD-MON-YY'),'MON') FROM DUAL;
 (1 row)
 ```
 
-## NEW\_TIME
+## NEW_TIME
 
 The `NEW_TIME` function converts a date and time from one time zone to
 another. `NEW_TIME` returns a value of type `DATE`. The syntax is:
@@ -852,7 +856,7 @@ a single SQL statement, it will return the same value for each
 occurrence within the statement. If called from multiple statements
 within a transaction, may return different values for each occurrence.
 If called from a function, may return a different value than the value
-returned by current\_timestamp in the caller.
+returned by current_timestamp in the caller.
 
 ``` text
 SELECT CURRENT_TIMESTAMP, CURRENT_TIMESTAMP FROM DUAL;

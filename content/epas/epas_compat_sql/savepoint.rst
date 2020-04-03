@@ -65,4 +65,5 @@ inserts into the ``emp`` and ``jobhist`` tables are rolled back.
 
 **See Also**
 
-:ref:`COMMIT <commit>`, :ref:`ROLLBACK <rollback>`, :ref:`ROLLBACK TO SAVEPOINT <rollback_to_savepoint>`
+
+`COMMIT <commit>_`, 

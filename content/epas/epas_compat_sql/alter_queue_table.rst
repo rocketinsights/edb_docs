@@ -47,4 +47,5 @@ To change the name of a queue table from ``wo_table_east`` to
 
 **See Also**
 
-:ref:`CREATE QUEUE TABLE <create_queue_table>`, :ref:`DROP QUEUE TABLE <drop_queue_table>`
+
+`CREATE QUEUE TABLE <create_queue_table>_`, 

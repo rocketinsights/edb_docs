@@ -57,4 +57,5 @@ Change a user password:
 
 **See Also**
 
-:ref:`CREATE USER <create_USER>`, :ref:`DROP USER <drop_user>`
+
+`CREATE USER <create_USER>_`, 

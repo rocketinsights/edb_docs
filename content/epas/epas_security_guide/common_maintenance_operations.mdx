@@ -55,9 +55,12 @@ remove the entry for the deleted role from the protected roles list.
 
 Removing a role using these functions also removes the role’s protected
 relations list. The statistics for a role that has been removed are not
-deleted until you use the `drop_stats function <drop_stats>`. The
-offending queries for a role that has been removed are not deleted until
-you use the `drop_queries function <drop_queries>`.
+deleted until you use the <span class="title-ref">drop_stats function
+\<drop_stats\>_</span>. The offending queries for a role
+
+that has been removed are not deleted until you use the
+<span class="title-ref">drop_queries function
+\<drop_queries\>_</span>.
 
 The following is an example of the `unprotect_role` function:
 
@@ -252,18 +255,18 @@ using either of the two following functions:
 
 The variation of the function using the OID is useful if you remove the
 role using the `DROP ROLE` or `DROP USER` SQL statement before deleting
-the role’s offending queries using drop\_queries('\<rolename\>'). If a
+the role’s offending queries using drop_queries('\<rolename\>'). If a
 query on `edb_sql_protect_queries` returns a value such as `unknown
 (OID=16454)` for the user name, use the `drop_queries( <roleoid>)` form
 of the function to remove the deleted role’s offending queries from
-`e`db\_sql\_protect\_queries`. The following is an example of
-the`drop\_queries`function: .. code-block:: text edb=# SELECT
+`e`db_sql_protect_queries`. The following is an example of
+the`drop_queries`function: .. code-block:: text edb=# SELECT
 drop_queries('appuser'); drop_queries -------------- 5 (1 row) edb=#
 SELECT * FROM edb_sql_protect_queries; username | ip_address | port |
 machine_name | date_time | query
 ----------+------------+------+--------------+-----------+------- (0
 rows) The following is an example of using
-the`drop\_queries(\<roleoid\>)`form of the function when a role is
+the`drop_queries(\<roleoid\>)`form of the function when a role is
 dropped before deleting its queries: .. code-block:: text edb=# SELECT
 username, query FROM edb_sql_protect_queries; username | query
 ---------------------+----------------------------------------------
@@ -279,8 +282,8 @@ machine_name | date_time | query
 rows) .. index:: Disabling and Enabling Monitoring Disabling and
 Enabling Monitoring ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ If you wish to
 turn off SQL/Protect monitoring, modify the`postgresql.conf`file,
-setting the`edb\_sql\_protect.enabled`parameter to`off`. After saving
+setting the`edb_sql_protect.enabled`parameter to`off`. After saving
 the file, reload the server configuration to apply the settings. If you
 wish to turn on SQL/Protect monitoring, modify the`postgresql.conf`file,
-setting the`edb\_sql\_protect.enabled`parameter to`on\`\`. After saving
+setting the`edb_sql_protect.enabled`parameter to`on\`\`. After saving
 the file, reload the server configuration to apply the settings.

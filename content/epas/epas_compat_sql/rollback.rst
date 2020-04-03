@@ -44,4 +44,5 @@ To abort all changes:
 
 **See Also**
 
-:ref:`COMMIT <commit>`, :ref:`ROLLBACK TO SAVEPOINT <rollback_to_savepoint>`, :ref:`SAVEPOINT <savepoint>`
+
+`COMMIT <commit>_`, 

@@ -65,4 +65,5 @@ documentation at:
 
 **See Also**
 
-:ref:`CREATE INDEX <create_index>`, :ref:`DROP INDEX <drop_index>`
+
+`CREATE INDEX <create_index>_`, 
