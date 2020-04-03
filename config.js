@@ -23,7 +23,7 @@ const config = {
     },
   },
   sidebar: {
-    forcedNavOrder: ['/ark-platform', '/edb-postgres-advanced-server', '/user-guides'],
+    forcedNavOrder: [],
     collapsedNav: [
       // '/codeblock', // add trailing slash if enabled above
     ],

@@ -10,7 +10,7 @@ metaDescription: description
 
 **Synopsis**
 
-``` text
+```text
 ALTER ROLE role_name IDENTIFIED BY password
           [REPLACE prev_password]
 ```
@@ -20,8 +20,8 @@ ALTER ROLE role_name IDENTIFIED BY password
 A role without the `CREATEROLE` privilege may use this command to change
 their own password. An unprivileged role must include the `REPLACE`
 clause and their previous password if `PASSWORD_VERIFY_FUNCTION` is not
-`NULL`<span class="title-ref"> in their profile. When the
-</span><span class="title-ref">REPLACE</span>\` clause is used by a
+`NULL`in their profile. When the
+REPLACE clause is used by a
 non-superuser, the server will compare the password provided to the
 existing password and raise an error if the passwords do not match.
 
@@ -53,6 +53,6 @@ associated with a role that is not a superuser.
 
 To change a role’s password:
 
-``` text
+```text
 ALTER ROLE john IDENTIFIED BY xyRP35z REPLACE 23PJ74a;
 ```

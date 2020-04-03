@@ -104,7 +104,8 @@ statement that updates `edb_sql_protect`:
 For example, to allow a given role to issue utility commands, update the
 `allow_utility_cmds` column as follows:
 
-> `UPDATE edb_sql_protect SET allow_utility_cmds = TRUE WHERE dbid 13917 AND roleid = 16671;`
+> `UPDATE edb_sql_protect SET allow_utility_cmds = TRUE WHERE dbid
+> = 13917 AND roleid = 16671;`
 
 You can verify the change was made by querying `edb_sql_protect` or
 `list_protected_users`. In the following query note that column
