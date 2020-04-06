@@ -3,7 +3,7 @@ import config from '../../../config';
 import TreeNode from './treeNode';
 
 const calculateTreeData = edges => {
-  const originalData = config.sidebar.ignoreIndex
+  let originalData = config.sidebar.ignoreIndex
     ? edges.filter(
         ({
           node: {
@@ -12,6 +12,12 @@ const calculateTreeData = edges => {
         }) => slug !== '/'
       )
     : edges;
+
+  originalData = originalData.sort((a, b) => {
+    if (a.node.fields.slug < b.node.fields.slug) return -1;
+    if (a.node.fields.slug > b.node.fields.slug) return 1;
+    return 0;
+  });
 
   const tree = originalData.reduce(
     (
