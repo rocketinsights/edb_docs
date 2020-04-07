@@ -10,7 +10,7 @@ metaDescription: description
 
 **Synopsis**
 
-``` text
+```text
 CREATE [ PUBLIC ] DATABASE LINK name
   CONNECT TO { CURRENT_USER |
                username IDENTIFIED BY 'password'}
@@ -69,8 +69,7 @@ Oracle queries and thereby uses a serializable isolation level to
 provide consistent results. A serialization failure may occur due to a
 table modification concurrent with long-running DML transactions (for
 example `ADD`, `UPDATE`, or `DELETE` statements). If such a failure
-occurs, the OCI reports `ORA-08177: can't serialize access for this
-transaction`, and the application must retry the transaction.
+occurs, the OCI reports `ORA-08177: can't serialize access for this transaction`, and the application must retry the transaction.
 
 **Parameters**
 
@@ -104,9 +103,9 @@ transaction`, and the application must retry the transaction.
 > remote Advanced Server database. If `postgres_fdw` has not been
 > installed on the database, use the `CREATE EXTENSION` command to
 > install
-> <span class="title-ref">postgres_fdw</span><span class="title-ref">.
+> `postgres_fdw`.
 > For more information, please see the
-> </span><span class="title-ref">CREATE EXTENSION</span>\` command in
+> `CREATE EXTENSION` command in
 > the PostgreSQL Core documentation at:
 > <https://www.postgresql.org/docs/12/static/sql-createextension.html>
 
@@ -126,8 +125,7 @@ transaction`, and the application must retry the transaction.
 
 **Notes**
 
-To create a non-public database link you must have the `CREATE DATABASE
-LINK` privilege. To create a public database link you must have the
+To create a non-public database link you must have the `CREATE DATABASE LINK` privilege. To create a public database link you must have the
 `CREATE PUBLIC DATABASE LINK` privilege.
 
 **Setting up an Oracle Instant Client for oci-dblink**
@@ -193,8 +191,7 @@ ensures that `LD_LIBRARY_PATH` will be set when you log in as
 
 If you are using a Linux service script with the `systemctl` or
 `service` command to start or restart Advanced Server, you must set
-`LD_LIBRARY_PATH` so it is in effect when the script invokes the `pg_ctl
-utility`.
+`LD_LIBRARY_PATH` so it is in effect when the script invokes the `pg_ctl utility`.
 
 For example, to set an environment variable for Advanced Server, you can
 create a file named `/etc/systemd/system/edb-as-12.service`; include
@@ -220,8 +217,7 @@ The particular script file that needs to be modified to include the
 Linux system on which it was installed, and whether it was installed
 with the graphical installer or an RPM package.
 
-See the appropriate version of the `EDB Postgres Advanced Server
-Installation Guide` to determine the service script that affects the
+See the appropriate version of the `EDB Postgres Advanced Server Installation Guide` to determine the service script that affects the
 startup environment. The installation guides can be found at the
 following location:
 
@@ -282,7 +278,7 @@ to Oracle as user `admin`, whose password is `mypassword`. Including the
 connection; the connection string, `'//127.0.0.1/acctg'` specifies the
 server address and name of the database.
 
-``` text
+```text
 CREATE DATABASE LINK chicago
   CONNECT TO admin IDENTIFIED BY 'mypassword'
   USING oci '//127.0.0.1/acctg';
@@ -303,12 +299,13 @@ Advanced Server that this is a `postgres_fdw` connection; the connection
 string, `'host=127.0.0.1 port=5444 dbname=marketing'` specifies the
 server address and name of the database.
 
-``` text
+```text
+
 ```
 
-  - CREATE DATABASE LINK bedford  
-    CONNECT TO admin IDENTIFIED BY 'mypassword' USING postgres_fdw
-    'host=127.0.0.1 port=5444 dbname=marketing';
+- CREATE DATABASE LINK bedford  
+  CONNECT TO admin IDENTIFIED BY 'mypassword' USING postgres_fdw
+  'host=127.0.0.1 port=5444 dbname=marketing';
 
 **Note**: You can specify a hostname in the connection string (in place
 of an IP address).
@@ -325,14 +322,14 @@ Create a public database link named, `oralink`, to an Oracle database
 named, `xe`, located at `127.0.0.1` on port `1521`. Connect to the
 Oracle database with username, `edb`, and password, `password`.
 
-``` text
+```text
 CREATE PUBLIC DATABASE LINK oralink CONNECT TO edb IDENTIFIED BY 'password' USING '//127.0.0.1:1521/xe';
 ```
 
 Issue a `SELECT` command on the `emp` table in the Oracle database using
 database link, `oralink`.
 
-``` text
+```text
 SELECT * FROM emp@oralink;
 
  empno | ename  |    job    | mgr  |      hiredate      | sal  | comm | deptno
@@ -359,14 +356,14 @@ database named, `edb`, located on host `192.168.2.22` running on port
 `5444`. Connect to the Advanced Server database with username,
 `enterprisedb`, and password, `password`.
 
-``` text
+```text
 CREATE DATABASE LINK fdwlink CONNECT TO enterprisedb IDENTIFIED BY 'password' USING postgres_fdw 'host=192.168.2.22 port=5444 dbname=edb';
 ```
 
 Display attributes of database links, `oralink` and `fdwlink`, from the
 local `edb_dblink` system table:
 
-``` text
+```text
 SELECT lnkname, lnkuser, lnkconnstr FROM pg_catalog.edb_dblink;
 
  lnkname |   lnkuser    |               lnkconnstr
@@ -379,7 +376,7 @@ SELECT lnkname, lnkuser, lnkconnstr FROM pg_catalog.edb_dblink;
 Perform a join of the `emp` table from the Oracle database with the
 `dept` table from the Advanced Server database:
 
-``` text
+```text
 SELECT d.deptno, d.dname, e.empno, e.ename, e.job, e.sal, e.comm FROM emp@oralink e, dept@fdwlink d WHERE e.deptno = d.deptno ORDER BY 1, 3;
 
  deptno |   dname    | empno | ename  |    job    | sal  | comm
@@ -421,8 +418,7 @@ data set.
 In order for pushdown to occur, certain basic conditions must be met.
 The tables involved in the join operation must belong to the same
 foreign server and use the identical connection information to the
-foreign server (that is, the same database link defined with the `CREATE
-DATABASE LINK` command).
+foreign server (that is, the same database link defined with the `CREATE DATABASE LINK` command).
 
 In order to determine if pushdown is to be used for a SQL statement,
 display the execution plan by using the `EXPLAIN` command.
@@ -435,13 +431,13 @@ Core documentation at:
 The following examples use the database link created as shown by the
 following:
 
-``` text
+```text
 CREATE PUBLIC DATABASE LINK oralink CONNECT TO edb IDENTIFIED BY 'password' USING '//192.168.2.23:1521/xe';
 ```
 
 The following example shows the execution plan of an inner join:
 
-``` text
+```text
 EXPLAIN (verbose,costs off) SELECT d.deptno, d.dname, e.empno, e.ename FROM dept@oralink d, emp@oralink e WHERE d.deptno = e.deptno ORDER BY 1, 3;
 
                                         QUERY PLAN
@@ -456,7 +452,7 @@ EXPLAIN (verbose,costs off) SELECT d.deptno, d.dname, e.empno, e.ename FROM dept
 Note that the `INNER JOIN` operation occurs under the Foreign Scan
 section. The output of this join is the following:
 
-``` text
+```text
 deptno |   dname    | empno | ename
 --------+------------+-------+--------
     10 | ACCOUNTING |  7782 | CLARK
@@ -478,7 +474,7 @@ deptno |   dname    | empno | ename
 
 The following shows the execution plan of a left outer join:
 
-``` text
+```text
 EXPLAIN (verbose,costs off) SELECT d.deptno, d.dname, e.empno, e.ename FROM dept@oralink d LEFT OUTER JOIN emp@oralink e ON d.deptno = e.deptno ORDER BY 1, 3;
 
                                         QUERY PLAN
@@ -492,7 +488,7 @@ EXPLAIN (verbose,costs off) SELECT d.deptno, d.dname, e.empno, e.ename FROM dept
 
 The output of this join is the following:
 
-``` text
+```text
 deptno |   dname    | empno | ename
 --------+------------+-------+--------
     10 | ACCOUNTING |  7782 | CLARK
@@ -517,7 +513,7 @@ The following example shows a case where the entire processing is not
 pushed down because the `emp` joined table resides locally instead of on
 the same foreign server.
 
-``` text
+```text
 EXPLAIN (verbose,costs off) SELECT d.deptno, d.dname, e.empno, e.ename FROM dept@oralink d LEFT OUTER JOIN emp e ON d.deptno = e.deptno ORDER BY 1, 3;
 
                             QUERY PLAN
@@ -564,13 +560,13 @@ First, create a database link as previously described. The following is
 the creation of a database link named `oralink` for connecting to the
 Oracle database.
 
-``` text
+```text
 CREATE PUBLIC DATABASE LINK oralink CONNECT TO edb IDENTIFIED BY 'password' USING '//127.0.0.1:1521/xe';
 ```
 
 The following query shows the database link:
 
-``` text
+```text
 SELECT lnkname, lnkuser, lnkconnstr FROM pg_catalog.edb_dblink;
 
  lnkname | lnkuser |     lnkconnstr
@@ -583,7 +579,7 @@ When you create the database link, Advanced Server creates a
 corresponding foreign server. The following query displays the foreign
 server:
 
-``` text
+```text
 SELECT srvname, srvowner, srvfdw, srvtype, srvoptions FROM pg_foreign_server;
 
  srvname | srvowner | srvfdw | srvtype |          srvoptions
@@ -592,14 +588,13 @@ SELECT srvname, srvowner, srvfdw, srvtype, srvoptions FROM pg_foreign_server;
 (1 row)
 ```
 
-For more information about foreign servers, please see the `CREATE
-SERVER` command in the PostgreSQL Core documentation at:
+For more information about foreign servers, please see the `CREATE SERVER` command in the PostgreSQL Core documentation at:
 
 > <https://www.postgresql.org/docs/12/static/sql-createserver.html>
 
 Create the foreign table as shown by the following:
 
-``` text
+```text
 CREATE FOREIGN TABLE emp_ora (
     empno           NUMERIC(4),
     ename           VARCHAR(10),
@@ -617,17 +612,16 @@ CREATE FOREIGN TABLE emp_ora (
 
 Note the following in the `CREATE FOREIGN TABLE` command:
 
-  - The name specified in the `SERVER` clause at the end of the `CREATE
-    FOREIGN TABLE` command is the name of the foreign server, which is
-    `oralink` in this example as displayed in the `srvname` column from
-    the query on `pg_foreign_server`.
-  - The table name and schema name are specified in the `OPTIONS` clause
-    by the `table` and `schema` options.
-  - The column names specified in the `CREATE FOREIGN TABLE` command
-    must match the column names in the remote table.
-  - Generally, `CONSTRAINT` clauses may not be accepted or enforced on
-    the foreign table as they are assumed to have been defined on the
-    remote table.
+- The name specified in the `SERVER` clause at the end of the `CREATE FOREIGN TABLE` command is the name of the foreign server, which is
+  `oralink` in this example as displayed in the `srvname` column from
+  the query on `pg_foreign_server`.
+- The table name and schema name are specified in the `OPTIONS` clause
+  by the `table` and `schema` options.
+- The column names specified in the `CREATE FOREIGN TABLE` command
+  must match the column names in the remote table.
+- Generally, `CONSTRAINT` clauses may not be accepted or enforced on
+  the foreign table as they are assumed to have been defined on the
+  remote table.
 
 For more information about the `CREATE FOREIGN TABLE` command, please
 see the PostgreSQL Core documentation at:
@@ -636,7 +630,7 @@ see the PostgreSQL Core documentation at:
 
 The following is a query on the foreign table:
 
-``` text
+```text
 SELECT * FROM emp_ora;
 
  empno | ename  |    job    | mgr  |      hiredate      |   sal   |  comm   | deptno
@@ -661,7 +655,7 @@ SELECT * FROM emp_ora;
 In contrast, the following is a query on the same remote table, but
 using the database link instead of the foreign table:
 
-``` text
+```text
 SELECT * FROM emp@oralink;
 
  empno | ename  |    job    | mgr  |      hiredate      | sal  | comm | deptno
