@@ -59,6 +59,7 @@ const Sidebar = styled('aside')`
   position: -moz-sticky;
   position: sticky;
   top: 0;
+  background-color: #f9fafc;
   padding-right: 0;
   -webkit-box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, 0.4);
 
