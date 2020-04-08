@@ -4,9 +4,8 @@ import styled from '@emotion/styled';
 
 const ProductTile = styled('div')`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.04);
-  /* width: calc((100% / 3) - 40px); */
-  width: 300px;
-  margin-right: 20px;
+  width: calc(100% - 20px);
+  min-width: 200px;
   margin-bottom: 20px;
   padding: 20px 15px 10px 15px;
   border: 1px solid rgba(0, 0, 0, 0.07);

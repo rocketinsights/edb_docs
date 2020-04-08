@@ -4,8 +4,8 @@ import ProductGroup from './productGroup';
 import styled from '@emotion/styled';
 
 const FlexGroups = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto auto;
 `;
 
 const ProductGroups = ({ linkGroups }) => (
