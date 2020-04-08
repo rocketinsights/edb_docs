@@ -8,7 +8,6 @@ const TreeNode = ({ className = '', setCollapsed, collapsed, url, title, items, 
   const isCollapsed = collapsed[url];
 
   const collapse = e => {
-    e.preventDefault();
     if (e.key !== 'Tab') {
       setCollapsed(url);
     }
