@@ -18,10 +18,7 @@ const Wrapper = styled('div')`
   }
 
   .sideBarUL .item > a:hover {
-    background-color: #00adf2;
-    color: #fff !important;
-
-    /* background: #F8F8F8 */
+    text-decoration: underline;
   }
 
   @media only screen and (max-width: 767px) {

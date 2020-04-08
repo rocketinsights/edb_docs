@@ -11,6 +11,7 @@ export const Sidebar = styled('aside')`
   position: -moz-sticky;
   position: sticky;
   top: 0;
+  background-color: #f9fafc;
 
   background: ${props => props.theme.colors.background};
 
