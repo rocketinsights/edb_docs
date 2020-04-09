@@ -3,7 +3,7 @@ import config from '../../../config';
 import TreeNode from './treeNode';
 
 const calculateTreeData = edges => {
-  const originalData = config.sidebar.ignoreIndex
+  let originalData = config.sidebar.ignoreIndex
     ? edges.filter(
         ({
           node: {
@@ -12,6 +12,12 @@ const calculateTreeData = edges => {
         }) => slug !== '/'
       )
     : edges;
+
+  originalData = originalData.sort((a, b) => {
+    if (a.node.fields.slug < b.node.fields.slug) return -1;
+    if (a.node.fields.slug > b.node.fields.slug) return 1;
+    return 0;
+  });
 
   const tree = originalData.reduce(
     (
@@ -69,8 +75,6 @@ const calculateTreeData = edges => {
 
   const tmp = [...forcedNavOrder];
 
-  if (config.gatsby && config.gatsby.trailingSlash) {
-  }
   tmp.reverse();
   return tmp.reduce((accu, slug) => {
     const parts = slug.split('/');
@@ -124,10 +128,11 @@ const Tree = ({ edges }) => {
 
   treeData.items.forEach(item => {
     if (config.sidebar.collapsedNav && config.sidebar.collapsedNav.includes(item.url)) {
-      defaultCollapsed[item.url] = true;
-    } else {
       defaultCollapsed[item.url] = false;
+    } else {
+      defaultCollapsed[item.url] = true;
     }
+    item.items.forEach(item => (defaultCollapsed[item.url] = true));
   });
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
 

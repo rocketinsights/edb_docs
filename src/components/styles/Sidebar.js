@@ -6,11 +6,11 @@ export const Sidebar = styled('aside')`
   height: 100vh;
   overflow: auto;
   position: fixed;
-  padding-left: 24px;
   position: -webkit-sticky;
   position: -moz-sticky;
   position: sticky;
   top: 0;
+  background-color: #f9fafc;
 
   background: ${props => props.theme.colors.background};
 
@@ -72,19 +72,20 @@ export const ListItem = styled(({ className, ...props }) => {
     position: relative;
 
     &:hover {
-      color: #1ed3c6 !important;
+      color: #00adf2 !important;
     }
 
     ${props =>
       props.active &&
       `
-      color: #1ED3C6;
+      color: #00adf2;
       border-color: rgb(230,236,241) !important;
       border-style: solid none solid solid;
       border-width: 1px 0px 1px 1px;
       background-color: #fff;
     `} // external link icon
     svg {
+      color: #00adf2;
       float: right;
       margin-right: 1rem;
     }

@@ -427,7 +427,7 @@ export const baseStyles = injectGlobal`
   }
 
   .sideBarUL li a {
-    /* color: #fff; */
+    color: #00adf2;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.5;
@@ -450,11 +450,12 @@ export const baseStyles = injectGlobal`
   }
 
   .hideFrontLine .active > a {
-    background-color: #1ed3c6;
-    color: #fff !important;
+    /* background-color: #00adf2;
+    color: #fff !important; */
+    text-decoration: underline;
   }
   .firstLevel ul li .collapser svg path {
-    fill: #fff !important;
+    fill: #00adf2 !important;
   }
   .active .collapser > svg > path {
     fill: #001933 !important;
@@ -470,7 +471,7 @@ export const baseStyles = injectGlobal`
   }
 
   .sideBarUL .item > a {
-    color: #1ED3C6;
+    color: #00adf2;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -508,7 +509,7 @@ export const baseStyles = injectGlobal`
     border-color: rgb(230, 236, 241) !important;
     border-style: solid none solid solid;
     border-width: 1px 0px 1px 1px;
-    background-color: #1ed3c6 !important;
+    background-color: #00adf2 !important;
     color: #fff;
   }
 

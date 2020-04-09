@@ -7,8 +7,10 @@ import Link from '../link';
 const TreeNode = ({ className = '', setCollapsed, collapsed, url, title, items, ...rest }) => {
   const isCollapsed = collapsed[url];
 
-  const collapse = () => {
-    setCollapsed(url);
+  const collapse = e => {
+    if (e.key !== 'Tab') {
+      setCollapsed(url);
+    }
   };
 
   const hasChildren = items.length !== 0;
@@ -27,12 +29,16 @@ const TreeNode = ({ className = '', setCollapsed, collapsed, url, title, items, 
     <li className={calculatedClassName}>
       {title && (
         <Link to={url}>
-          {title}
           {!config.sidebar.frontLine && title && hasChildren ? (
-            <button onClick={collapse} aria-label="collapse" className="collapser">
-              {!isCollapsed ? <OpenedSvg /> : <ClosedSvg />}
-            </button>
-          ) : null}
+            <div onClick={collapse} role="button" tabIndex={0} onKeyDown={collapse}>
+              {title}
+              <button aria-label="collapse" className="collapser">
+                {!isCollapsed ? <OpenedSvg /> : <ClosedSvg />}
+              </button>
+            </div>
+          ) : (
+            <>{title}</>
+          )}
         </Link>
       )}
 

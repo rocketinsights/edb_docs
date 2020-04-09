@@ -4,6 +4,8 @@ import { StaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 import { ExternalLink } from 'react-feather';
 import config from '../../../config';
+import Link from '../link';
+import constants from '../../constants';
 
 // eslint-disable-next-line no-unused-vars
 const ListItem = styled(({ className, active, level, ...props }) => {
@@ -18,7 +20,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
   list-style: none;
 
   a {
-    color: #5c6975;
+    color: ${constants.brand_accent} !important;
     text-decoration: none;
     font-weight: ${({ level }) => (level === 0 ? 700 : 400)};
     padding: 0.45rem 0 0.45rem ${props => 2 + (props.level || 0) * 1}rem;
@@ -26,7 +28,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
     position: relative;
 
     &:hover {
-      color: #1ed3c6 !important;
+      text-decoration: underline;
     }
 
     ${props =>
@@ -39,6 +41,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
       background-color: #fff;
     `} // external link icon
     svg {
+      color: #00adf2;
       float: right;
       margin-right: 1rem;
     }
@@ -48,6 +51,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
 const Sidebar = styled('aside')`
   width: 100%;
   height: 100vh;
+  min-width: 300px;
   overflow: auto;
   position: fixed;
   padding-left: 0px;
@@ -55,6 +59,7 @@ const Sidebar = styled('aside')`
   position: -moz-sticky;
   position: sticky;
   top: 0;
+  background-color: #f9fafc;
   padding-right: 0;
   -webkit-box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, 0.4);
 
@@ -71,6 +76,19 @@ const Sidebar = styled('aside')`
   @media only screen and (max-width: 767px) {
     padding-left: 0px;
     height: auto;
+  }
+`;
+
+const SectionTitle = styled(props => (
+  <li {...props}>
+    <div>{props.children}</div>
+  </li>
+))`
+  list-style: none;
+
+  div {
+    font-weight: 700;
+    padding: 0.5rem 1rem;
   }
 `;
 
@@ -110,12 +128,15 @@ const SidebarLayout = ({ location }) => (
       return (
         <Sidebar>
           {config.sidebar.title ? (
-            <div
-              className={'sidebarTitle hiddenMobile'}
-              dangerouslySetInnerHTML={{ __html: config.sidebar.title }}
-            />
+            <Link to="/">
+              <div
+                className={'sidebarTitle hiddenMobile'}
+                dangerouslySetInnerHTML={{ __html: config.sidebar.title }}
+              />
+            </Link>
           ) : null}
           <ul className={'sideBarUL'}>
+            <SectionTitle>Products</SectionTitle>
             <Tree edges={allMdx.edges} />
             {config.sidebar.links && config.sidebar.links.length > 0 && <Divider />}
             {config.sidebar.links.map((link, key) => {

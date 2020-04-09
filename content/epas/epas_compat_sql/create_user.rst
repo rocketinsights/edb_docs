@@ -1,0 +1,54 @@
+.. _create_user:
+
+********************
+`CREATE USER`:index:
+********************
+
+**Name**
+
+``CREATE USER --`` define a new database user account
+
+**Synopsis**
+
+.. code-block:: text
+
+    CREATE USER name [IDENTIFIED BY password]
+
+**Description**
+
+``CREATE USER`` adds a new user to an Advanced Server database cluster. You
+must be a database superuser to use this command.
+
+When the ``CREATE USER`` command is given, a schema will also be created
+with the same name as the new user and owned by the new user. Objects
+with unqualified names created by this user will be created in this
+schema.
+
+**Parameters**
+
+``name``
+
+    The name of the user.
+
+``password``
+
+    The user’s password. The password can be changed later using ``ALTER USER``.
+
+**Notes**
+
+The maximum length allowed for the user name and password is ``63``
+characters.
+
+**Examples**
+
+Create a user named, ``john``.
+
+.. code-block:: text
+
+    CREATE USER john IDENTIFIED BY abc;
+
+**See Also**
+
+
+`DROP USER <drop_user>`_
+

@@ -18,10 +18,7 @@ const Wrapper = styled('div')`
   }
 
   .sideBarUL .item > a:hover {
-    background-color: #1ed3c6;
-    color: #fff !important;
-
-    /* background: #F8F8F8 */
+    text-decoration: underline;
   }
 
   @media only screen and (max-width: 767px) {
@@ -32,7 +29,7 @@ const Wrapper = styled('div')`
 const Content = styled('main')`
   display: flex;
   flex-grow: 1;
-  margin: 0px 88px;
+  margin: 0px 40px;
   padding-top: 3rem;
   background: ${({ theme }) => theme.colors.background};
 
