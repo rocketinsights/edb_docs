@@ -15,10 +15,10 @@ const Layout = ({ children, location }) => (
     <MDXProvider components={mdxComponents}>
       <Container fluid>
         <Row>
-          <Col sm={0} md={4} lg={3} xl={3}>
+          <Col md={4} lg={3} xl={3}>
             <Sidebar location={location} />
           </Col>
-          <Col sm={12} md={8} lg={9} xl={7}>
+          <Col md={8} lg={9} xl={7}>
             {config.sidebar.title ? (
               <div
                 className={'sidebarTitle sideBarShow'}
@@ -27,7 +27,7 @@ const Layout = ({ children, location }) => (
             ) : null}
             {children}
           </Col>
-          <Col md={0} lg={0} xl={2}>
+          <Col sm={{ span: 0, order: 4 }} md={0} lg={0} xl={2}>
             <RightSidebar location={location} />
           </Col>
         </Row>

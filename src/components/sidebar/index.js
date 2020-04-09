@@ -60,6 +60,9 @@ const Sidebar = styled('aside')`
   background-color: #f9fafc;
   padding-right: 0;
   -webkit-box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, 0.4);
+  @media (max-width: 760px) {
+    display: none;
+  }
 `;
 
 const SectionTitle = styled(props => (
