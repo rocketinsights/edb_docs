@@ -1,5 +1,5 @@
 ---
-title: epas
+title: EDB Postgres™ Advanced Server
 ---
 
-epas
+EDB Postgres™ Advanced Server
