@@ -5,6 +5,13 @@ metaDescription: ark description
 ---
 
 import ProductGroups from '../src/components/frontpage/productGroups';
-import linkGroups from './frontlinks.js';
+import ArticleStubs from '../src/components/frontpage/articleStubs';
+import HeadlineWithStrap from '../src/components/frontpage/headlineWithStrap';
+import { linkGroups, articles } from './frontlinks.js';
 
 <ProductGroups linkGroups={linkGroups} />
+<HeadlineWithStrap
+  headline="Learn EDB Postgres"
+  strap="Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, asperiores!"
+/>
+<ArticleStubs articles={articles} />

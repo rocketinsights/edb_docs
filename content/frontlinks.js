@@ -1,4 +1,4 @@
-export default [
+export const linkGroups = [
   {
     name: 'EDB Postgres Advanced Server',
     links: [
@@ -46,5 +46,28 @@ export default [
       { name: 'Installation Guide for Windows', link: '/epas/epas_inst_windows' },
       { name: 'User Guide', link: '/epas/edb_plus_guide' },
     ],
+  },
+];
+
+export const articles = [
+  {
+    title: 'Node.js Recipes',
+    summary:
+      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quibusdam laudantium architecto nobis fugiat magnam!',
+  },
+  {
+    title: 'Configuring a Postgres Docker container',
+    summary:
+      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quibusdam laudantium architecto nobis fugiat magnam!',
+  },
+  {
+    title: 'Making Postgres queries faster',
+    summary:
+      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quibusdam laudantium architecto nobis fugiat magnam!',
+  },
+  {
+    title: 'Getting Started with Connectors',
+    summary:
+      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quibusdam laudantium architecto nobis fugiat magnam!',
   },
 ];
