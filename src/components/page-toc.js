@@ -5,12 +5,22 @@ const FixedCol = styled('div')`
   position: fixed;
 `;
 
+const AnchorLink = styled('a')`
+  text-decoration: none !important;
+  color: #999;
+  font-size: 0.875rem;
+
+  && :hover {
+    color: black;
+  }
+`;
+
 const PageTableOfContents = ({ toc }) => {
   return (
     <FixedCol>
       {toc.map(item => (
         <div key={item.title}>
-          <a href={item.url}>{item.title}</a>
+          <AnchorLink href={item.url}>{item.title}</AnchorLink>
         </div>
       ))}
     </FixedCol>

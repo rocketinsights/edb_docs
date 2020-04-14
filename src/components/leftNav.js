@@ -32,10 +32,20 @@ const FilterAndSort = (edges, url) => {
     });
 };
 
+const ProductTitle = styled('h3')`
+  font-size: 1rem;
+  font-weight: 700;
+  padding-top: 1rem;
+`;
+
 const LeftNav = ({ edges, path }) => {
   const newList = FilterAndSort(edges, baseUrl(path));
+  console.log(newList);
   return (
     <FixedCol>
+      <h2>edbdocs</h2>
+      <Link to="/">← Back</Link>
+      <ProductTitle>{newList[0].node.frontmatter.title}</ProductTitle>
       <List>
         {newList.map(edge => (
           <li key={edge.node.title}>

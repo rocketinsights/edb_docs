@@ -17,9 +17,9 @@ const Layout = ({ children }) => {
           }
 
           /* More info: https://bit.ly/2PsCnzk */
-          * + * {
+          /* * + * {
             margin-top: 1rem;
-          }
+          } */
 
           html,
           body {
@@ -31,9 +31,7 @@ const Layout = ({ children }) => {
             font-size: 14px;
             line-height: 1.4;
             scroll-behavior: smooth;
-            @media (min-width: calc(550px + 10vw)) {
-              font-size: 18px;
-            }
+            background-color: #f9fafc;
 
             /* remove margin for the main div that Gatsby mounts into */
             > div {
@@ -63,7 +61,7 @@ const Layout = ({ children }) => {
             margin-top: 0.25rem;
           }
           a {
-            color: #00adf2 !important;
+            color: #00adf2;
           }
         `}
       />
@@ -75,7 +73,7 @@ const Layout = ({ children }) => {
       {/* <Header /> */}
       <main
         css={css`
-          margin: 2rem auto;
+          margin: 0 auto;
           max-width: 1200px;
           width: 100%;
         `}
