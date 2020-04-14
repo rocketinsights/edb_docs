@@ -1,39 +1,87 @@
 import React from 'react';
-import { MDXProvider } from '@mdx-js/react';
-
-import ThemeProvider from './theme/themeProvider';
-import mdxComponents from './mdxComponents';
-import Sidebar from './sidebar';
-import RightSidebar from './rightSidebar';
-import config from '../../config.js';
-
+import { Global, css } from '@emotion/core';
+import Helmet from 'react-helmet';
+import Header from './header';
+import useSiteMetadata from '../hooks/use-sitemetadata';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col } from 'react-bootstrap';
 
-const Layout = ({ children, location }) => (
-  <ThemeProvider location={location}>
-    <MDXProvider components={mdxComponents}>
-      <Container fluid>
-        <Row>
-          <Col md={4} lg={3} xl={3}>
-            <Sidebar location={location} />
-          </Col>
-          <Col md={8} lg={9} xl={7}>
-            {config.sidebar.title ? (
-              <div
-                className={'sidebarTitle sideBarShow'}
-                dangerouslySetInnerHTML={{ __html: config.sidebar.title }}
-              />
-            ) : null}
-            {children}
-          </Col>
-          <Col sm={{ span: 0, order: 4 }} md={0} lg={0} xl={2}>
-            <RightSidebar location={location} />
-          </Col>
-        </Row>
-      </Container>
-    </MDXProvider>
-  </ThemeProvider>
-);
+const Layout = ({ children }) => {
+  const { title, description } = useSiteMetadata();
+
+  return (
+    <>
+      <Global
+        styles={css`
+          * {
+            box-sizing: border-box;
+            margin: 0;
+          }
+
+          /* More info: https://bit.ly/2PsCnzk */
+          * + * {
+            margin-top: 1rem;
+          }
+
+          html,
+          body {
+            margin: 0;
+            color: #555;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+              Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+              'Segoe UI Emoji', 'Segoe UI Symbol';
+            font-size: 14px;
+            line-height: 1.4;
+            scroll-behavior: smooth;
+            @media (min-width: calc(550px + 10vw)) {
+              font-size: 18px;
+            }
+
+            /* remove margin for the main div that Gatsby mounts into */
+            > div {
+              margin-top: 0;
+            }
+          }
+
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6 {
+            color: #222;
+            line-height: 1.1;
+
+            + * {
+              margin-top: 0.5rem;
+            }
+          }
+
+          strong {
+            color: #222;
+          }
+
+          li {
+            margin-top: 0.25rem;
+          }
+        `}
+      />
+      <Helmet>
+        <html lang="en" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Helmet>
+      <Header />
+      <main
+        css={css`
+          margin: 2rem auto;
+          max-width: 1200px;
+          width: 100%;
+        `}
+      >
+        {children}
+      </main>
+    </>
+  );
+};
 
 export default Layout;
