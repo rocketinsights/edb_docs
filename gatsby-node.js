@@ -8,7 +8,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     const relativeFilePath = createFilePath({
       node,
       getNode,
-      basePath: 'posts',
+      basePath: 'docs',
     });
     console.log(relativeFilePath);
     // Creates new query'able field with name of 'slug'

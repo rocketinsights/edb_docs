@@ -1,7 +1,6 @@
 import React from 'react';
 import { Global, css } from '@emotion/core';
 import Helmet from 'react-helmet';
-import Header from './header';
 import useSiteMetadata from '../hooks/use-sitemetadata';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -63,6 +62,9 @@ const Layout = ({ children }) => {
           li {
             margin-top: 0.25rem;
           }
+          a {
+            color: #00adf2 !important;
+          }
         `}
       />
       <Helmet>
@@ -70,7 +72,7 @@ const Layout = ({ children }) => {
         <title>{title}</title>
         <meta name="description" content={description} />
       </Helmet>
-      <Header />
+      {/* <Header /> */}
       <main
         css={css`
           margin: 2rem auto;
