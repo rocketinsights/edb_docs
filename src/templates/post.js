@@ -3,10 +3,10 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/leftNav';
+import ContentCol from '../components/contentCol';
 import PageTableOfContents from '../components/page-toc';
 import { Container, Row, Col } from 'react-bootstrap';
 import VersionDropdown from '../components/versionDropdown';
-import styled from '@emotion/styled';
 
 export const query = graphql`
   query($path: String!) {
@@ -64,13 +64,6 @@ const makeVersionArray = edges => {
     }));
 };
 
-const Content = styled(Col)`
-  background-color: white;
-  height: 100%;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-  z-index: 2;
-`;
-
 const DocTemplate = ({ data }) => {
   const { allMdx, mdx } = data;
   const versionArray = makeVersionArray(allMdx.edges);
@@ -82,7 +75,7 @@ const DocTemplate = ({ data }) => {
           <Col md={2}>
             <LeftNav edges={allMdx.edges} path={mdx.fields.path} />
           </Col>
-          <Content md={8}>
+          <ContentCol md={8}>
             <h1>{mdx.frontmatter.title}</h1>
             {versionArray.length > 1 && (
               <VersionDropdown
@@ -91,7 +84,7 @@ const DocTemplate = ({ data }) => {
               />
             )}
             <MDXRenderer>{mdx.body}</MDXRenderer>
-          </Content>
+          </ContentCol>
           <Col md={2}>
             {mdx.tableOfContents.items && (
               <PageTableOfContents toc={mdx.tableOfContents.items} />

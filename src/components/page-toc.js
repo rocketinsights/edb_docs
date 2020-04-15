@@ -2,7 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const FixedCol = styled('div')`
-  position: fixed;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 `;
 
 const AnchorLink = styled('a')`

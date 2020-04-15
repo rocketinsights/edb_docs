@@ -3,7 +3,11 @@ import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 
 const FixedCol = styled('div')`
-  position: fixed;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 `;
 
 const List = styled('ul')`
