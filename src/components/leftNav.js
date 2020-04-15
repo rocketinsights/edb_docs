@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
+import EdbLogo from './edbLogo';
 
 const FixedCol = styled('div')`
   position: -webkit-sticky;
@@ -44,10 +45,9 @@ const ProductTitle = styled('h3')`
 
 const LeftNav = ({ edges, path }) => {
   const newList = FilterAndSort(edges, baseUrl(path));
-  console.log(newList);
   return (
     <FixedCol>
-      <h2>edbdocs</h2>
+      <EdbLogo />
       <Link to="/">← Back</Link>
       <ProductTitle>{newList[0].node.frontmatter.title}</ProductTitle>
       <List>

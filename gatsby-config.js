@@ -1,4 +1,7 @@
+const config = require('./config');
+
 module.exports = {
+  pathPrefix: config.gatsby.pathPrefix,
   siteMetadata: {
     title: 'Docs Site',
     description: 'A docs site',

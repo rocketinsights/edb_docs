@@ -7,12 +7,16 @@ const List = styled('ul')`
   list-style: none;
 `;
 
+const SectionName = styled('div')`
+  font-weight: 700;
+`;
+
 const IndexLinks = ({ indexLinkList }) => (
   <>
     {indexLinkList.map(section => {
       return (
         <>
-          <div>{section.sectionName}</div>
+          <SectionName>{section.sectionName}</SectionName>
           <List>
             {section.links.map(link => {
               return (
