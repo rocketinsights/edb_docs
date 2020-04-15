@@ -15,18 +15,18 @@ const IndexLinks = ({ indexLinkList }) => (
   <>
     {indexLinkList.map(section => {
       return (
-        <>
+        <div key={section.sectionName}>
           <SectionName>{section.sectionName}</SectionName>
           <List>
             {section.links.map(link => {
               return (
-                <li>
+                <li key={link.title}>
                   <Link to={link.url}>{link.title}</Link>
                 </li>
               );
             })}
           </List>
-        </>
+        </div>
       );
     })}
   </>

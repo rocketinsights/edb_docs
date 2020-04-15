@@ -23,14 +23,19 @@ const baseUrl = path => {
     .join('/');
 };
 
-const FilterAndSort = (edges, url) => {
+const filterAndSort = (edges, url) => {
   return edges
-    .filter(edge => edge.node.fields.path.includes(url))
+    .map(edge => ({
+      title: edge.node.frontmatter.title,
+      path: edge.node.fields.path,
+      items: [],
+    }))
+    .filter(edge => edge.path.includes(url))
     .sort((a, b) => {
-      if (a.node.fields.path < b.node.fields.path) {
+      if (a.path < b.path) {
         return -1;
       }
-      if (a.node.fields.path > b.node.fields.path) {
+      if (a.path > b.path) {
         return 1;
       }
       return 0;
@@ -43,19 +48,36 @@ const ProductTitle = styled('h3')`
   padding-top: 1rem;
 `;
 
+const makeTree = edges => {
+  const result = [];
+  let idx = -1;
+  let tempObject = {};
+  for (let i = 1; i < edges.length; i++) {
+    let { path } = edges[i];
+    console.log(path);
+    if (path.split('/').length === 5) {
+      result.push(edges[i]);
+      idx++;
+    } else {
+      result[idx].items.push(edges[i]);
+    }
+  }
+  console.log(result);
+};
+
 const LeftNav = ({ edges, path }) => {
-  const newList = FilterAndSort(edges, baseUrl(path));
+  const newList = filterAndSort(edges, baseUrl(path));
+  // console.log(newList);
+  makeTree(newList);
   return (
     <FixedCol>
       <EdbLogo />
       <Link to="/">← Back</Link>
-      <ProductTitle>{newList[0].node.frontmatter.title}</ProductTitle>
+      <ProductTitle>{newList[0].title}</ProductTitle>
       <List>
         {newList.map(edge => (
-          <li key={edge.node.title}>
-            <Link to={edge.node.fields.path}>
-              {edge.node.frontmatter.title}
-            </Link>
+          <li key={edge.path}>
+            <Link to={edge.path}>{edge.title}</Link>
           </li>
         ))}
       </List>

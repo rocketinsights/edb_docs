@@ -23,7 +23,7 @@ const VersionDropdown = ({ versionArray, path }) => {
 
       <Dropdown.Menu>
         {versionArray.map(version => (
-          <Dropdown.Item>
+          <Dropdown.Item key={version.url}>
             <Link to={version.url}>
               <div
                 css={css`
