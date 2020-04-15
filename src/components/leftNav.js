@@ -16,6 +16,11 @@ const List = styled('ul')`
   padding: 0;
 `;
 
+const SubList = styled('ul')`
+  list-style-type: none;
+  padding-left: 20px;
+`;
+
 const baseUrl = path => {
   return path
     .split('/')
@@ -51,10 +56,8 @@ const ProductTitle = styled('h3')`
 const makeTree = edges => {
   const result = [];
   let idx = -1;
-  let tempObject = {};
   for (let i = 1; i < edges.length; i++) {
     let { path } = edges[i];
-    console.log(path);
     if (path.split('/').length === 5) {
       result.push(edges[i]);
       idx++;
@@ -62,24 +65,40 @@ const makeTree = edges => {
       result[idx].items.push(edges[i]);
     }
   }
-  console.log(result);
+  return result;
 };
 
 const LeftNav = ({ edges, path }) => {
   const newList = filterAndSort(edges, baseUrl(path));
-  // console.log(newList);
-  makeTree(newList);
+  const tree = makeTree(newList);
   return (
     <FixedCol>
       <EdbLogo />
       <Link to="/">← Back</Link>
       <ProductTitle>{newList[0].title}</ProductTitle>
       <List>
-        {newList.map(edge => (
-          <li key={edge.path}>
-            <Link to={edge.path}>{edge.title}</Link>
-          </li>
-        ))}
+        {tree.map(edge => {
+          if (edge.items.length === 0) {
+            return (
+              <li key={edge.path}>
+                <Link to={edge.path}>{edge.title}</Link>
+              </li>
+            );
+          } else {
+            return (
+              <li key={edge.path}>
+                <Link to={edge.path}>{edge.title}</Link>
+                <SubList>
+                  {edge.items.map(item => (
+                    <li key={item.path}>
+                      <Link to={item.path}>{item.title}</Link>
+                    </li>
+                  ))}
+                </SubList>
+              </li>
+            );
+          }
+        })}
       </List>
     </FixedCol>
   );
