@@ -16,10 +16,26 @@ const List = styled('ul')`
   padding: 0;
 `;
 
-const SubList = styled('ul')`
+const SubListContainer = styled('ul')`
   list-style-type: none;
   padding-left: 20px;
 `;
+
+const DisplayNone = styled('div')`
+  display: none;
+`;
+
+const SubList = ({ children, collapsed }) => {
+  if (collapsed) {
+    return (
+      <DisplayNone>
+        <ul>{children}</ul>
+      </DisplayNone>
+    );
+  } else {
+    return <SubListContainer>{children}</SubListContainer>;
+  }
+};
 
 const baseUrl = path => {
   return path
@@ -88,7 +104,7 @@ const LeftNav = ({ edges, path }) => {
             return (
               <li key={edge.path}>
                 <Link to={edge.path}>{edge.title}</Link>
-                <SubList>
+                <SubList collapsed={!path.includes(edge.path)}>
                   {edge.items.map(item => (
                     <li key={item.path}>
                       <Link to={item.path}>{item.title}</Link>

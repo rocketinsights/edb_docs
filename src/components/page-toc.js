@@ -19,16 +19,14 @@ const AnchorLink = styled('a')`
   }
 `;
 
-const PageTableOfContents = ({ toc }) => {
-  return (
-    <FixedCol>
-      {toc.map(item => (
-        <div key={item.title}>
-          <AnchorLink href={item.url}>{item.title}</AnchorLink>
-        </div>
-      ))}
-    </FixedCol>
-  );
-};
+const PageTableOfContents = ({ toc }) => (
+  <FixedCol>
+    {toc.map(item => (
+      <div key={item.title}>
+        <AnchorLink href={item.url}>{item.title}</AnchorLink>
+      </div>
+    ))}
+  </FixedCol>
+);
 
 export default PageTableOfContents;
