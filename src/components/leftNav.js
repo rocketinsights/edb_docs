@@ -44,14 +44,14 @@ const baseUrl = path => {
     .join('/');
 };
 
-const filterAndSort = (edges, url) => {
-  return edges
-    .map(edge => ({
-      title: edge.node.frontmatter.title,
-      path: edge.node.fields.path,
+const filterAndSort = (nodes, url) => {
+  return nodes
+    .map(node => ({
+      title: node.frontmatter.title,
+      path: node.fields.path,
       items: [],
     }))
-    .filter(edge => edge.path.includes(url))
+    .filter(node => node.path.includes(url))
     .sort((a, b) => {
       if (a.path < b.path) {
         return -1;
@@ -84,9 +84,8 @@ const makeTree = edges => {
   return result;
 };
 
-const LeftNav = ({ edges, path }) => {
-  const newList = filterAndSort(edges, baseUrl(path));
-  console.log(newList);
+const LeftNav = ({ navLinks, path }) => {
+  const newList = filterAndSort(navLinks, baseUrl(path));
   const tree = makeTree(newList);
   return (
     <FixedCol>

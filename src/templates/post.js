@@ -20,18 +20,6 @@ export const query = graphql`
       body
       tableOfContents
     }
-    allMdx {
-      edges {
-        node {
-          frontmatter {
-            title
-          }
-          fields {
-            path
-          }
-        }
-      }
-    }
   }
 `;
 
@@ -64,16 +52,17 @@ const makeVersionArray = edges => {
     }));
 };
 
-const DocTemplate = ({ data }) => {
+const DocTemplate = ({ data, pageContext }) => {
   const { allMdx, mdx } = data;
+  const { navLinks } = pageContext;
+  console.log(navLinks);
   const versionArray = makeVersionArray(allMdx.edges);
-  console.log(allMdx.edges);
   return (
     <Layout>
       <Container fluid>
         <Row>
           <Col md={2}>
-            <LeftNav edges={allMdx.edges} path={mdx.fields.path} />
+            <LeftNav navLinks={navLinks} path={mdx.fields.path} />
           </Col>
           <ContentCol md={8}>
             <h1>{mdx.frontmatter.title}</h1>
