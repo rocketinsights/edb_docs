@@ -1,0 +1,52 @@
+.. _rollback_to_savepoint:
+
+******************************
+`ROLLBACK TO SAVEPOINT`:index:
+******************************
+
+**Name**
+
+``ROLLBACK TO SAVEPOINT --`` roll back to a savepoint
+
+**Synopsis**
+
+.. code-block:: text
+
+    ROLLBACK [ WORK ] TO [ SAVEPOINT ] savepoint_name
+
+**Description**
+
+Roll back all commands that were executed after the savepoint was
+established. The savepoint remains valid and can be rolled back to again, 
+if needed.  ``ROLLBACK TO SAVEPOINT`` destroys all savepoints that were
+established after the named savepoint.
+
+**Parameters**
+
+``savepoint_name``
+
+    The savepoint to which to roll back.
+
+**Notes**
+
+Specifying a savepoint name that has not been established is an error.  
+``ROLLBACK TO SAVEPOINT`` is not supported within SPL programs.
+
+**Examples**
+
+To undo the effects of the commands executed savepoint ``depts`` was
+established:
+
+.. code-block:: text
+
+    \set AUTOCOMMIT off
+    INSERT INTO dept VALUES (50, 'HR', 'NEW YORK');
+    SAVEPOINT depts;
+    INSERT INTO emp (empno, ename, deptno) VALUES (9001, 'JONES', 50);
+    INSERT INTO emp (empno, ename, deptno) VALUES (9002, 'ALICE', 50);
+    ROLLBACK TO SAVEPOINT depts;
+
+**See Also**
+
+
+`COMMIT <commit>`_, 

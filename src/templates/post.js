@@ -67,6 +67,7 @@ const makeVersionArray = edges => {
 const DocTemplate = ({ data }) => {
   const { allMdx, mdx } = data;
   const versionArray = makeVersionArray(allMdx.edges);
+  console.log(allMdx.edges);
   return (
     <Layout>
       <Container fluid>

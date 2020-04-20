@@ -86,6 +86,7 @@ const makeTree = edges => {
 
 const LeftNav = ({ edges, path }) => {
   const newList = filterAndSort(edges, baseUrl(path));
+  console.log(newList);
   const tree = makeTree(newList);
   return (
     <FixedCol>

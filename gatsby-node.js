@@ -10,7 +10,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       getNode,
       basePath: 'docs',
     });
-    // Creates new query'able field with name of 'slug'
+    // Creates new query'able field with name of 'path'
     createNodeField({
       node,
       name: 'path',
@@ -27,9 +27,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           fields {
             path
           }
-          frontmatter {
-            slug
-          }
         }
       }
     }
@@ -42,6 +39,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const posts = result.data.allMdx.nodes;
 
   posts.forEach(post => {
+    console.log(post.fields.path);
     actions.createPage({
       path: post.fields.path,
       component: require.resolve('./src/templates/post.js'),

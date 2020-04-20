@@ -2,7 +2,7 @@ export const indexLinkList = [
   {
     sectionName: 'Products',
     links: [
-      { title: 'EDB Postgres Advanced Server', url: '/epas/2' },
+      { title: 'EDB Postgres Advanced Server', url: '/epas/1' },
       { title: 'EDB Postgres Ark Platform', url: '/epas/2' },
       { title: 'EDB Postgres Backup and Recovery Tool', url: '/epas/2' },
       { title: 'EDB Postgres Cloud Database Service', url: '/epas/2' },
