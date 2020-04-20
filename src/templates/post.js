@@ -20,6 +20,19 @@ export const query = graphql`
       body
       tableOfContents
     }
+    allMdx {
+      edges {
+        node {
+          frontmatter {
+            title
+          }
+          fields {
+            path
+            productVersion
+          }
+        }
+      }
+    }
   }
 `;
 
