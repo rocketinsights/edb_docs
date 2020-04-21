@@ -73,10 +73,10 @@ const DocTemplate = ({ data, pageContext }) => {
     <Layout>
       <Container fluid>
         <Row>
-          <Col md={2}>
+          <Col md={3}>
             <LeftNav navLinks={navLinks} path={mdx.fields.path} />
           </Col>
-          <ContentCol md={8}>
+          <ContentCol md={7}>
             <h1>{mdx.frontmatter.title}</h1>
             {versionArray.length > 1 && (
               <VersionDropdown

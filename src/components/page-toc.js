@@ -7,6 +7,7 @@ const FixedCol = styled('div')`
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  padding-top: 1.5rem;
 `;
 
 const AnchorLink = styled('a')`

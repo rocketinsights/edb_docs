@@ -9,11 +9,16 @@ const FixedCol = styled('div')`
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  padding-top: 1.5rem;
 `;
 
 const List = styled('ul')`
   list-style-type: none;
   padding: 0;
+`;
+
+const ListItem = styled('li')`
+  padding: 0.25rem 0;
 `;
 
 const SubListContainer = styled('ul')`
@@ -96,22 +101,22 @@ const LeftNav = ({ navLinks, path }) => {
         {tree.map(edge => {
           if (edge.items.length === 0) {
             return (
-              <li key={edge.path}>
+              <ListItem key={edge.path}>
                 <Link to={edge.path}>{edge.title}</Link>
-              </li>
+              </ListItem>
             );
           } else {
             return (
-              <li key={edge.path}>
+              <ListItem key={edge.path}>
                 <Link to={edge.path}>{edge.title}</Link>
                 <SubList collapsed={!path.includes(edge.path)}>
                   {edge.items.map(item => (
-                    <li key={item.path}>
+                    <ListItem key={item.path}>
                       <Link to={item.path}>{item.title}</Link>
-                    </li>
+                    </ListItem>
                   ))}
                 </SubList>
-              </li>
+              </ListItem>
             );
           }
         })}
