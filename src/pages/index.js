@@ -20,6 +20,10 @@ const FlexColumn = styled('div')`
   }
 `;
 
+const PaddedCol = styled(Col)`
+  padding-top: 1.5rem;
+`;
+
 const HeadlineWithStrap = ({ headline, strap }) => {
   return (
     <FlexColumn>
@@ -35,10 +39,10 @@ export default () => {
       <Layout>
         <Container fluid>
           <Row>
-            <Col md={3}>
+            <PaddedCol md={3}>
               <EdbLogo />
               <IndexLinks indexLinkList={indexLinkList} />
-            </Col>
+            </PaddedCol>
             <ContentCol md={9}>
               <h1>welcome to docs</h1>
               <ProductGroups linkGroups={linkGroups} />
