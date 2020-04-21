@@ -10,10 +10,9 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       getNode,
       basePath: 'docs',
     });
-    const productVersion = relativeFilePath
-      .split('/')
-      .slice(1, 3)
-      .join('_v');
+    const product = relativeFilePath.split('/')[1];
+
+    const version = relativeFilePath.split('/')[2];
 
     // Creates new query'able field with name of 'path'
     createNodeField({
@@ -24,8 +23,13 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     // Creates new query'able field with name of 'path'
     createNodeField({
       node,
-      name: 'productVersion',
-      value: productVersion,
+      name: 'product',
+      value: product,
+    });
+    createNodeField({
+      node,
+      name: 'version',
+      value: version,
     });
   }
 };
@@ -40,7 +44,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           }
           fields {
             path
-            productVersion
+            product
+            version
           }
         }
       }
@@ -52,10 +57,28 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const docs = result.data.allMdx.nodes;
-  console.log('creating pages"');
+
+  const versionIndex = {};
+  docs.forEach(doc => {
+    const { product, version } = doc.fields;
+    if (!versionIndex[product]) {
+      versionIndex[product] = [version];
+    } else {
+      if (!versionIndex[product].includes(version)) {
+        versionIndex[product].push(version);
+      }
+    }
+  });
+
+  for (const product in versionIndex) {
+    versionIndex[product] = versionIndex[product].sort().reverse();
+  }
+
   docs.forEach(doc => {
     const navLinks = docs.filter(
-      node => node.fields.productVersion === doc.fields.productVersion,
+      node =>
+        node.fields.product === doc.fields.product &&
+        node.fields.version === doc.fields.version,
     );
     console.log(doc.fields.path);
     actions.createPage({
@@ -63,6 +86,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       component: require.resolve('./src/templates/post.js'),
       context: {
         navLinks: navLinks,
+        versions: versionIndex[doc.fields.product],
       },
     });
   });

@@ -20,55 +20,27 @@ export const query = graphql`
       body
       tableOfContents
     }
-    allMdx {
-      edges {
-        node {
-          frontmatter {
-            title
-          }
-          fields {
-            path
-            productVersion
-          }
-        }
-      }
-    }
   }
 `;
 
-const getEdgeVersion = edge => {
-  return edge.node.fields.path.split('/')[2];
-};
-
-const getProductUrlBase = edge => {
-  return edge.node.fields.path
+const getProductUrlBase = path => {
+  return path
     .split('/')
     .slice(0, 2)
     .join('/');
 };
 
-const makeVersionArray = edges => {
-  let result = [];
-  const productVersionUrlBase = getProductUrlBase(edges[0]);
-  edges.forEach(edge => {
-    const edgeVersion = getEdgeVersion(edge);
-    if (!result.includes(edgeVersion)) {
-      result.push(edgeVersion);
-    }
-  });
-  return result
-    .sort()
-    .reverse()
-    .map(version => ({
-      version: version,
-      url: `${productVersionUrlBase}/${version}`,
-    }));
+const makeVersionArray = (versions, path) => {
+  return versions.map(version => ({
+    version: version,
+    url: `${getProductUrlBase(path)}/${version}`,
+  }));
 };
 
 const DocTemplate = ({ data, pageContext }) => {
-  const { allMdx, mdx } = data;
-  const { navLinks } = pageContext;
-  const versionArray = makeVersionArray(allMdx.edges);
+  const { mdx } = data;
+  const { navLinks, versions } = pageContext;
+  const versionArray = makeVersionArray(versions, mdx.fields.path);
   return (
     <Layout>
       <Container fluid>
