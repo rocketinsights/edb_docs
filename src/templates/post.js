@@ -68,7 +68,6 @@ const makeVersionArray = edges => {
 const DocTemplate = ({ data, pageContext }) => {
   const { allMdx, mdx } = data;
   const { navLinks } = pageContext;
-  console.log(navLinks);
   const versionArray = makeVersionArray(allMdx.edges);
   return (
     <Layout>

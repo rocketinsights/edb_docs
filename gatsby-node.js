@@ -52,7 +52,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const docs = result.data.allMdx.nodes;
-
+  console.log('creating pages"');
   docs.forEach(doc => {
     const navLinks = docs.filter(
       node => node.fields.productVersion === doc.fields.productVersion,

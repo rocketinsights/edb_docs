@@ -1,0 +1,19 @@
+.. _whats_new:
+
+.. raw:: latex
+
+    \newpage
+
+*******************
+`What’s New`:index:
+*******************
+
+In BART 2.5.2, the following configuration parameters have been added in the ``bart.cfg`` file:
+
+-   The ``bart_socket_directory`` parameter is added in the global section of the BART configuration file. Using this parameter, you can specify the socket directory path where all BART sockets will be stored. The default directory is ``/tmp``.
+
+-   The ``archive_path`` parameter is added in the server section of the BART configuration file. Using this parameter, you can specify the path where archived WAL files will be stored. The default location of the archived WAL files is the BART backup catalog (``<backup_path>/<server_name>/archived_wals``).
+
+For more details about these parameters, please see the *EDB Postgres Backup and Recovery Installation and Upgrade Guide*  available at:
+
+      `<https://www.enterprisedb.com/edb-docs/>`_

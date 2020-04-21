@@ -1,0 +1,68 @@
+.. raw:: latex
+
+    \newpage
+
+.. _delete:
+
+.. index:: DELETE Subcommand
+
+******
+DELETE
+******
+
+The ``DELETE`` subcommand removes the subdirectory and data files from the
+BART backup catalog for the specified backups along with its archived
+WAL files. To view examples of ``DELETE`` subcommand, see the
+*EDB Postgres Backup and Recovery Reference Guide* available at:
+
+   `<https://www.enterprisedb.com/edb-docs/>`_
+
+**Syntax:**
+
+.. code-block:: text
+
+    bart DELETE –s <server_name>
+      -i { all |
+           [']{ <backup_id> | <backup_name> },... }[']
+         }
+      [ -n ]
+
+.. note:: While invoking the ``DELETE`` subcommand, you must specify a specific database server.
+
+For database servers under a retention policy, there are conditions
+where certain backups may not be deleted. See the 
+`Section - Deletions Permitted Under a Retention Policy <deletions_permitted_under_retention_policy>`_  for
+
+information regarding permitted backup deletions.
+
+**Options**
+
+-  ``-s`` or ``--server <server_name>``
+
+  ``<server_name>`` is the name of the database server whose backups are
+  to be deleted.
+
+-  ``-i`` or ``--backupid`` ``{ all | [']{ <backup_id> | <backup_name> },... }['] }``
+
+     -  ``<backup_id>`` is the backup identifier of the backup to be deleted.
+
+        ``<backup_name>`` is the user-defined alphanumeric name for the backup.
+
+     -  Multiple backup identifiers and backup names may be specified in a
+        comma-separated list. The list must be enclosed within single quotes
+        if there is any white space appearing before or after each comma.
+
+     -  If ``all`` is specified, all of the backups and their archived WAL files
+        for the specified database server are deleted.
+
+-  ``-n`` or ``--dry-run``
+
+    Displays the results as if the deletions were done, however, no
+    physical removal of the files are actually performed. In other
+    words, a test run is performed so that you can see the potential
+    results prior to actually initiating the action.
+
+    After the deletion, the BART backup catalog for the database server
+    no longer contains the corresponding directory for the deleted
+    backup ID. The ``archived_wals`` subdirectory no longer contains the
+    WAL files of the backup.

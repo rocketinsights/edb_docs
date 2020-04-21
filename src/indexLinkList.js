@@ -3,11 +3,11 @@ export const indexLinkList = [
     sectionName: 'Products',
     links: [
       { title: 'EDB Postgres Advanced Server', url: '/epas/1' },
-      { title: 'EDB Postgres Ark Platform', url: '/epas/2' },
-      { title: 'EDB Postgres Backup and Recovery Tool', url: '/epas/2' },
-      { title: 'EDB Postgres Cloud Database Service', url: '/epas/2' },
-      { title: 'EDB Postgres Enterprise Manager', url: '/epas/2' },
-      { title: 'EDB Postgres Failover Manager', url: '/epas/2' },
+      { title: 'EDB Postgres Ark Platform', url: '/ark/1' },
+      { title: 'EDB Postgres Backup and Recovery Tool', url: '/bart/1' },
+      { title: 'EDB Postgres Cloud Database Service', url: '/cds/1' },
+      { title: 'EDB Postgres Enterprise Manager', url: '/epas/1' },
+      { title: 'EDB Postgres Failover Manager', url: '/epas/1' },
     ],
   },
   {
