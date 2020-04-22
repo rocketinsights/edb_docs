@@ -8,7 +8,6 @@ def numberprefix(int):
   return result
 
 class Node:
-    # Initializer / Instance Attributes
     def __init__(self, filename):
         self.filename = filename
         self.items = []
@@ -24,7 +23,7 @@ def extractToc(readfile):
         toc.append(Node(filename))
         tocItems[filename] = "1"
     if "maxdepth" in line:
-          appending = True
+      appending = True
   return toc
 
 def scanNode(path, root):
@@ -44,6 +43,11 @@ def countItems(tree):
     total += countItems(leaf)
   return total
 
+def printItems(tree, depth):
+  print(">" * depth + " " + tree.filename)
+  for leaf in tree.items:
+    printItems(leaf, depth + 1)
+
 for path in Path('content').rglob('index.rst'):
     root = str(path.parents[0]) + '/'
     idx = 1
@@ -57,10 +61,12 @@ for path in Path('content').rglob('index.rst'):
 
     total = len(toc)
     for node in toc:
-      print(node.filename)
-      print(node.items)
+      printItems(node, 0)
       total += countItems(node)
     print(total)
+
+
+  
     # for item in toc:
     #   os.rename(str(path.parents[0]) + "/" + item + ".mdx", str(path.parents[0]) + "/" + numberprefix(idx) + item + ".mdx") 
     #   idx += 1
