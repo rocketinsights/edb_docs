@@ -200,13 +200,13 @@ Where `<procedure_definition>` :=
 > > 
 > > > `<procedure_body>`
 > > 
-> > `END [ <proc_name>` \] ;
+> > `END [ <proc_name> ]` ;
 
 Where `<procedure_body>` :=
 
 > `[ PRAGMA AUTONOMOUS_TRANSACTION; ]`
 > 
-> \[ `<declaration>`; \] \[, ...\]
+> [ `<declaration>`; \] \[, ...\]
 > 
 > `BEGIN`
 > 
@@ -217,8 +217,7 @@ Where `<procedure_body>` :=
 > > > `{WHEN <exception> [OR <exception>] [...]] THEN <statement>; }`
 > > 
 > > \[...\]
-> 
-> \]
+
 
 Where `<function_definition>` :=
 
@@ -232,13 +231,13 @@ Where `<function_definition>` :=
 > > 
 > > `<function_body>`
 > > 
-> > `END [ <func_name>` \] ;
+> > `END [ <func_name> ]` ;
 
 Where `<function_body>` :=
 
 > `[ PRAGMA AUTONOMOUS_TRANSACTION; ]`
 > 
-> \[ `<declaration>`; \] \[, ...\]
+> [ `<declaration>`; \] \[, ...\]
 > 
 > `BEGIN`
 > 
@@ -249,8 +248,7 @@ Where `<function_body>` :=
 > > { `WHEN <exception> [ OR <exception> ] [...] THEN <statement>; }`
 > > 
 > > \[...\]
-> 
-> \]
+
 
 Where `<argument_list>` :=
 
