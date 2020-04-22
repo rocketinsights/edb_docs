@@ -46,8 +46,7 @@ Where `<procedure_or_function_declaration>` :=
 
 Where `<procedure_declaration>` :=
 
-> `PROCEDURE <proc_name> [ <argument_list> ]`; `[ <restriction_pragma>;
-> ]`
+> `PROCEDURE <proc_name> [ <argument_list> ]`; `[ <restriction_pragma>; ]`
 
 Where `<function_declaration>` :=
 
@@ -129,7 +128,7 @@ The data type(s) of an argument. An argument type may be a base data
 type, a copy of the type of an existing column using `%TYPE`, or a
 user-defined type such as a nested table or an object type. A length
 must not be specified for any base type - for example, specify
-`VARCHAR2`, not `VARCHAR2(10`).
+`VARCHAR2`, not `VARCHAR2(10)`.
 
 The type of a column is referenced by writing `<tablename.columnname>`
 `%TYPE`; using this can sometimes help make a procedure independent from
