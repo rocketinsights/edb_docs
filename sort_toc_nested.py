@@ -85,18 +85,30 @@ for path in Path('content').rglob('index.rst'):
     print(os.getcwd())
     result_path = root_path + "result"
 
+    dest_path = result_path + "/" + path.parts[-2]
+    print(dest_path)
     # clear out previous results, if any
-    shutil.rmtree(result_path)
+    if os.path.exists(dest_path):
+      shutil.rmtree(dest_path)
     try:
-      os.mkdir(result_path)
+      if not os.path.exists(result_path):
+        os.mkdir(result_path)
     except OSError:
       print ("Creation of the directory %s failed" % result_path)
     else:
       print ("Successfully created the directory %s " % result_path)
 
+    try:
+      os.mkdir(dest_path)
+    except OSError:
+      print ("Creation of the directory %s failed" % dest_path)
+    else:
+      print ("Successfully created the directory %s " % dest_path)
+
+
     idx = 1
     for node in toc:
-      process_node(node, root_path, result_path + "/", idx)
+      process_node(node, root_path, dest_path + "/", idx)
       idx += 1
 
     # for item in len(toc:
