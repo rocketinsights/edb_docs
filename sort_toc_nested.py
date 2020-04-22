@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import shutil
 
 def numberprefix(int):
   result = str(int) + "_"
@@ -49,13 +50,13 @@ def printItems(tree, depth):
     printItems(leaf, depth + 1)
 
 for path in Path('content').rglob('index.rst'):
-    root = str(path.parents[0]) + '/'
+    root_path = str(path.parents[0]) + '/'
     idx = 1
     f = path.open()
     toc = extractToc(f)
     for idx, item in enumerate(toc):
-      item_path = root + item.filename + ".rst"
-      subToc = scanNode(item_path, root)
+      item_path = root_path + item.filename + ".rst"
+      subToc = scanNode(item_path, root_path)
       if len(subToc) > 0:
         toc[idx].items = subToc
 
@@ -64,10 +65,27 @@ for path in Path('content').rglob('index.rst'):
       printItems(node, 0)
       total += countItems(node)
     print(total)
+    print(root_path)
+    print(os.getcwd())
+    result_path = root_path + "result"
 
+    # clear out previous results, if any
+    shutil.rmtree(result_path)
+    try:
+      os.mkdir(result_path)
+    except OSError:
+      print ("Creation of the directory %s failed" % result_path)
+    else:
+      print ("Successfully created the directory %s " % result_path)
 
+    idx = 1
+    for node in toc:
+      if len(node.items) == 0:
+        print(node.filename)
+        os.rename(root_path + node.filename + ".mdx", result_path + "/" + numberprefix(idx) + node.filename + ".mdx")
+      idx += 1
   
-    # for item in toc:
+    # for item in len(toc:
     #   os.rename(str(path.parents[0]) + "/" + item + ".mdx", str(path.parents[0]) + "/" + numberprefix(idx) + item + ".mdx") 
     #   idx += 1
     # os.rename(str(path.parents[0]) + "/index.mdx", str(path.parents[1]) + "/" + path.parts[-2] + ".mdx") 
