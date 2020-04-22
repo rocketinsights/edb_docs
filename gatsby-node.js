@@ -5,11 +5,16 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   // Ensures we are processing only markdown files
   if (node.internal.type === 'Mdx') {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
-    const relativeFilePath = createFilePath({
+    let relativeFilePath = createFilePath({
       node,
       getNode,
       basePath: 'docs',
     });
+
+    relativeFilePath = relativeFilePath.substring(
+      0,
+      relativeFilePath.length - 1,
+    );
     const product = relativeFilePath.split('/')[1];
 
     const version = relativeFilePath.split('/')[2];

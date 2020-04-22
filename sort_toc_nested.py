@@ -80,13 +80,10 @@ for path in Path('content').rglob('index.rst'):
     for node in toc:
       printItems(node, 0)
       total += countItems(node)
-    print(total)
-    print(root_path)
-    print(os.getcwd())
-    result_path = root_path + "result"
+    print(str(total) + " files logged in ToC")
 
+    result_path = root_path + "result"
     dest_path = result_path + "/" + path.parts[-2]
-    print(dest_path)
     # clear out previous results, if any
     if os.path.exists(dest_path):
       shutil.rmtree(dest_path)
@@ -104,7 +101,6 @@ for path in Path('content').rglob('index.rst'):
       print ("Creation of the directory %s failed" % dest_path)
     else:
       print ("Successfully created the directory %s " % dest_path)
-
 
     idx = 1
     for node in toc:

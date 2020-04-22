@@ -55,6 +55,7 @@ const filterAndSort = (nodes, url) => {
       title: node.frontmatter.title,
       path: node.fields.path,
       items: [],
+      itemObj: {},
     }))
     .filter(node => node.path.includes(url))
     .sort((a, b) => {
@@ -75,18 +76,40 @@ const ProductTitle = styled('h3')`
 `;
 
 const makeTree = edges => {
-  const result = [];
-  let idx = -1;
-  for (let i = 1; i < edges.length; i++) {
-    let { path } = edges[i];
-    if (path.split('/').length === 5) {
-      result.push(edges[i]);
-      idx++;
-    } else {
-      result[idx].items.push(edges[i]);
+  let newEdges = edges;
+  for (let i = 0; i < newEdges.length - 1; i++) {
+    const { path } = newEdges[i];
+    const tiers = path.split('/').length;
+    for (let j = i + 1; j < newEdges.length; j++) {
+      const innerPath = newEdges[j].path;
+      const innerTiers = innerPath.split('/').length;
+      if (innerPath.includes(path) && innerTiers - 1 === tiers) {
+        newEdges[i].items.push(newEdges[j]);
+      }
     }
   }
-  return result;
+  return newEdges[0].items;
+};
+
+const TreeNode = ({ node, path }) => {
+  if (node.items.length === 0) {
+    return (
+      <ListItem key={node.path}>
+        <Link to={node.path}>{node.title}</Link>
+      </ListItem>
+    );
+  } else {
+    return (
+      <ListItem key={node.path}>
+        <Link to={node.path}>{node.title}</Link>
+        <SubList collapsed={!path.includes(node.path)}>
+          {node.items.map(subNode => (
+            <TreeNode node={subNode} path={path} key={subNode.path} />
+          ))}
+        </SubList>
+      </ListItem>
+    );
+  }
 };
 
 const LeftNav = ({ navLinks, path }) => {
@@ -98,28 +121,9 @@ const LeftNav = ({ navLinks, path }) => {
       <Link to="/">← Back</Link>
       <ProductTitle>{newList[0].title}</ProductTitle>
       <List>
-        {tree.map(edge => {
-          if (edge.items.length === 0) {
-            return (
-              <ListItem key={edge.path}>
-                <Link to={edge.path}>{edge.title}</Link>
-              </ListItem>
-            );
-          } else {
-            return (
-              <ListItem key={edge.path}>
-                <Link to={edge.path}>{edge.title}</Link>
-                <SubList collapsed={!path.includes(edge.path)}>
-                  {edge.items.map(item => (
-                    <ListItem key={item.path}>
-                      <Link to={item.path}>{item.title}</Link>
-                    </ListItem>
-                  ))}
-                </SubList>
-              </ListItem>
-            );
-          }
-        })}
+        {tree.map(node => (
+          <TreeNode node={node} path={path} key={node.path} />
+        ))}
       </List>
     </FixedCol>
   );
