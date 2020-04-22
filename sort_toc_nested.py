@@ -49,6 +49,22 @@ def printItems(tree, depth):
   for leaf in tree.items:
     printItems(leaf, depth + 1)
 
+def process_node(node, root_path, result_path, index):
+  if len(node.items) == 0:
+    source = root_path + node.filename + ".mdx"
+    destination = result_path + numberprefix(index) + node.filename + ".mdx"
+    dest = shutil.copyfile(source, destination) 
+  else:
+    folder_path = result_path + numberprefix(index) + node.filename
+    os.mkdir(folder_path)
+    source = root_path + node.filename + ".mdx"
+    destination = folder_path + "/index.mdx"
+    dest = shutil.copyfile(source, destination)
+    idx = 1
+    for sub_node in node.items:
+      process_node(sub_node, root_path, folder_path + "/", idx)
+      idx += 1
+
 for path in Path('content').rglob('index.rst'):
     root_path = str(path.parents[0]) + '/'
     idx = 1
@@ -80,11 +96,9 @@ for path in Path('content').rglob('index.rst'):
 
     idx = 1
     for node in toc:
-      if len(node.items) == 0:
-        print(node.filename)
-        os.rename(root_path + node.filename + ".mdx", result_path + "/" + numberprefix(idx) + node.filename + ".mdx")
+      process_node(node, root_path, result_path + "/", idx)
       idx += 1
-  
+
     # for item in len(toc:
     #   os.rename(str(path.parents[0]) + "/" + item + ".mdx", str(path.parents[0]) + "/" + numberprefix(idx) + item + ".mdx") 
     #   idx += 1
