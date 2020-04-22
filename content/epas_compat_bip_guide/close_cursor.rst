@@ -1,0 +1,33 @@
+.. raw:: latex
+
+   \newpage
+
+`CLOSE_CURSOR`:index:
+---------------------
+
+The ``CLOSE_CURSOR`` procedure closes an open cursor. The resources
+allocated to the cursor are released and it can no longer be used.
+
+    ``CLOSE_CURSOR(<c> IN OUT INTEGER)``
+
+**Parameters**
+
+``<c>``
+
+    Cursor ID of the cursor to be closed.
+
+**Examples**
+
+The following example closes a previously opened cursor:
+
+.. code-block:: text
+
+    DECLARE
+        curid           INTEGER;
+    BEGIN
+        curid := DBMS_SQL.OPEN_CURSOR;
+                .
+                .
+                .
+        DBMS_SQL.CLOSE_CURSOR(curid);
+    END;

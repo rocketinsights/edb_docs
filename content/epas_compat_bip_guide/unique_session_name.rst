@@ -1,0 +1,33 @@
+.. raw:: latex
+
+   \newpage
+
+`UNIQUE_SESSION_NAME`:index:
+----------------------------
+
+The ``UNIQUE_SESSION_NAME`` function returns a name, unique to the current
+session.
+
+``<name> VARCHAR2 UNIQUE_SESSION_NAME``
+
+**Parameters**
+
+``<name>``
+
+Unique session name.
+
+**Examples**
+
+The following anonymous block retrieves and displays a unique session
+name.
+
+.. code-block:: text
+
+    DECLARE
+        v_session       VARCHAR2(30);
+    BEGIN
+        v_session := DBMS_PIPE.UNIQUE_SESSION_NAME;
+        DBMS_OUTPUT.PUT_LINE('Session Name: ' || v_session);
+    END;
+
+    Session Name: PG$PIPE$5$2752

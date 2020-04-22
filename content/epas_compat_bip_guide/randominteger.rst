@@ -1,0 +1,25 @@
+.. raw:: latex
+
+   \newpage
+
+`RANDOMINTEGER`:index:
+----------------------
+
+The ``RANDOMINTEGER()`` function returns a random ``INTEGER`` between ``0`` and
+``268,435,455``. The signature is:
+
+    ``RANDOMINTEGER() RETURNS INTEGER``
+
+**Examples**
+
+The following example uses the ``RANDOMINTEGER`` function to return a
+cryptographically strong random ``INTEGER`` value:
+
+.. code-block:: text
+
+   DECLARE
+     result INTEGER;
+   BEGIN
+     result := DBMS_CRYPTO.RANDOMINTEGER();
+     DBMS_OUTPUT.PUT_LINE(result);
+   END;

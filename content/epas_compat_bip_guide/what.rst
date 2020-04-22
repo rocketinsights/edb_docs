@@ -1,0 +1,33 @@
+.. raw:: latex
+
+   \newpage
+
+`WHAT`:index:
+-------------
+
+The ``WHAT`` procedure changes the stored procedure that the job will
+execute.
+
+``WHAT(<job> BINARY_INTEGER, <what> VARCHAR2)``
+
+**Parameters**
+
+``<job>``
+
+    Identifier of the job for which the stored procedure is to be changed.
+
+``<what>``
+
+    Name of the stored procedure to be executed.
+
+Examples
+
+Change the job to run the ``list_emp`` procedure:
+
+.. code-block:: text
+
+    BEGIN
+
+       DBMS_JOB.WHAT(104,'list_emp;');
+
+    END;

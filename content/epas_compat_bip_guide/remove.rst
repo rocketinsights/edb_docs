@@ -1,0 +1,33 @@
+.. raw:: latex
+
+   \newpage
+
+.. index:: DBMS_JOB_Remove
+
+REMOVE
+------
+
+The ``REMOVE`` procedure deletes the specified job from the database. The
+job must be resubmitted using the ``SUBMIT`` procedure in order to have it
+executed again. Note that the stored procedure that was associated with
+the job is not deleted.
+
+``REMOVE(<job> BINARY_INTEGER)``
+
+**Parameter**
+
+``<job>``
+
+    Identifier of the job that is to be removed from the database.
+
+**Examples**
+
+Remove a job from the database:
+
+.. code-block:: text
+
+    BEGIN
+
+       DBMS_JOB.REMOVE(104);
+
+    END;

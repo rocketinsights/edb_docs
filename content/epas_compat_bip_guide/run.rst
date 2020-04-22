@@ -1,0 +1,28 @@
+.. raw:: latex
+
+   \newpage
+
+`RUN`:index:
+------------
+
+The ``RUN`` procedure forces the job to be run, even if its state is broken.
+
+``RUN(<job> BINARY_INTEGER)``
+
+**Parameter**
+
+``<job>``
+
+    Identifier of the job to be run.
+
+**Examples**
+
+Force a job to be run.
+
+.. code-block:: text
+
+    BEGIN
+
+       DBMS_JOB.RUN(104);
+
+    END;

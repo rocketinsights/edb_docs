@@ -1,0 +1,24 @@
+.. raw:: latex
+
+   \newpage
+
+`APPEND`:index:
+---------------
+
+The ``APPEND`` procedure provides the capability to append one large object
+to another. Both large objects must be of the same type.
+
+``APPEND(<dest_lob> IN OUT { BLOB | CLOB }, <src_lob> { BLOB | CLOB
+})``
+
+**Parameters**
+
+``<dest_lob>``
+
+    Large object locator for the destination object. Must be the same data
+    type as ``<src_lob>``.
+
+``<src_lob>``
+
+    Large object locator for the source object. Must be the same data type
+    as ``<dest_lob>``.

@@ -9,8 +9,6 @@ def numberprefix(int):
 
 for path in Path('content').rglob('index.rst'):
     print(path.name)
-    print(path.parents[0])
-    print(path.parents[1])
     idx = 1
     appending = False
     toc = []
