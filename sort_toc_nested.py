@@ -69,6 +69,7 @@ def process_node(node, root_path, result_path, index):
 
 for path in Path('content').rglob('index.rst'):
     root_path = str(path.parents[0]) + '/'
+    content_path = str(path.parents[2]) + '/'
     f = path.open()
 
     # get top level of ToC
@@ -88,7 +89,7 @@ for path in Path('content').rglob('index.rst'):
       total += countItems(node)
     print(str(total) + " files logged in ToC")
 
-    result_path = root_path + "result"
+    result_path = content_path + "content_build"
     dest_path = result_path + "/" + path.parts[-2]
 
     # clear out previous results, if any
