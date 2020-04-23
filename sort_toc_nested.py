@@ -13,6 +13,7 @@ class Node:
         self.filename = filename
         self.items = []
 
+# return an array of Nodes that are included in page's ToC section
 def extractToc(readfile):
   appending = False
   toc = []
@@ -27,6 +28,7 @@ def extractToc(readfile):
       appending = True
   return toc
 
+# recursive function for building ToC tree
 def scanNode(path, root):
   g = open(path, "r")
   toc = extractToc(g)
@@ -49,15 +51,15 @@ def printItems(tree, depth):
   for leaf in tree.items:
     printItems(leaf, depth + 1)
 
+# use ToC to move files to correct folder, building a new one if necessary
 def process_node(node, root_path, result_path, index):
+  source = root_path + node.filename + ".mdx"
   if len(node.items) == 0:
-    source = root_path + node.filename + ".mdx"
     destination = result_path + numberprefix(index) + node.filename + ".mdx"
     dest = shutil.copyfile(source, destination) 
   else:
     folder_path = result_path + numberprefix(index) + node.filename
     os.mkdir(folder_path)
-    source = root_path + node.filename + ".mdx"
     destination = folder_path + "/index.mdx"
     dest = shutil.copyfile(source, destination)
     idx = 1
@@ -79,7 +81,7 @@ for path in Path('content').rglob('index.rst'):
       if len(subToc) > 0:
         toc[idx].items = subToc
 
-    # Check to see how many files logged in ToC
+    # Print ToC structure and check to see how many files logged in ToC
     total = len(toc)
     for node in toc:
       printItems(node, 0)
