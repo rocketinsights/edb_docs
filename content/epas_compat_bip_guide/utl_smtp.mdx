@@ -2,8 +2,7 @@
 title: UTL_SMTP
 ---
 
-The `UTL_SMTP` package provides the capability to send e-mails over the
-Simple Mail Transfer Protocol (SMTP).
+The `UTL_SMTP` package provides the capability to send e-mails over the Simple Mail Transfer Protocol (SMTP).
 
 <div class="note">
 
@@ -13,8 +12,7 @@ Note
 
 </div>
 
-An administrator must grant execute privileges to each user or group
-before they can use this package.
+An administrator must grant execute privileges to each user or group before they can use this package.
 
 </div>
 
@@ -44,12 +42,9 @@ Y{0.2}Y{0.3}|
 | VRFY(c IN OUT, recipient)                            | Function              | REPLY       | Validate an e-mail address.                                                      |
 | WRITE_DATA(c IN OUT, data)                          | Procedure             | n/a         | Write a portion of the e-mail message.                                           |
 
-Advanced Server's implementation of `UTL_SMTP` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `UTL_SMTP` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
-The following table lists the public variables available in the
-`UTL_SMTP` package.
+The following table lists the public variables available in the `UTL_SMTP` package.
 
 |                  |           |       |                                    |
 | ---------------- | --------- | ----- | ---------------------------------- |
@@ -59,8 +54,7 @@ The following table lists the public variables available in the
 
 ## CONNECTION
 
-The `CONNECTION` record type provides a description of an SMTP
-connection.
+The `CONNECTION` record type provides a description of an SMTP connection.
 
 ``` text
 TYPE connection IS RECORD (
@@ -72,8 +66,7 @@ TYPE connection IS RECORD (
 
 ## REPLY/REPLIES
 
-The `REPLY` record type provides a description of an SMTP reply line.
-`REPLIES` is a table of multiple SMTP reply lines.
+The `REPLY` record type provides a description of an SMTP reply line. `REPLIES` is a table of multiple SMTP reply lines.
 
 ``` text
 TYPE reply IS RECORD (
@@ -85,8 +78,7 @@ TYPE replies IS TABLE OF reply INDEX BY BINARY_INTEGER;
 
 ## CLOSE_DATA
 
-The `CLOSE_DATA` procedure terminates an e-mail message by sending the
-following sequence:
+The `CLOSE_DATA` procedure terminates an e-mail message by sending the following sequence:
 
 > `<CR><LF>.<CR><LF>`
 
@@ -102,9 +94,7 @@ This is a single period at the beginning of a line.
 
 ## COMMAND
 
-The `COMMAND` procedure provides the capability to execute an SMTP
-command. If you are expecting multiple reply lines, use
-`COMMAND_REPLIES`.
+The `COMMAND` procedure provides the capability to execute an SMTP command. If you are expecting multiple reply lines, use `COMMAND_REPLIES`.
 
 > `<reply> REPLY COMMAND(<c> IN OUT CONNECTION, <cmd> VARCHAR2`  
 > `[, <arg> VARCHAR2 ])`  
@@ -126,19 +116,15 @@ command. If you are expecting multiple reply lines, use
 
 `<reply>`
 
-> SMTP reply to the command. If SMTP returns multiple replies, only the
-> last one is returned in `<reply>`.
+> SMTP reply to the command. If SMTP returns multiple replies, only the last one is returned in `<reply>`.
 > 
 > See
 
-[Reply/Replies](reply/replies) for a description of `REPLY` and
-`REPLIES`.
+[Reply/Replies](reply/replies) for a description of `REPLY` and `REPLIES`.
 
 ## COMMAND_REPLIES
 
-The `COMMAND_REPLIES` function processes an SMTP command that returns
-multiple reply lines. Use `COMMAND` if only a single reply line is
-expected.
+The `COMMAND_REPLIES` function processes an SMTP command that returns multiple reply lines. Use `COMMAND` if only a single reply line is expected.
 
 > `<replies> REPLIES COMMAND(<c> IN OUT CONNECTION, <cmd> VARCHAR2`
 > 
@@ -168,9 +154,7 @@ expected.
 
 ## DATA
 
-The `DATA` procedure provides the capability to specify the body of the
-e-mail message. The message is terminated with a `<CR><LF>.<CR><LF>`
-sequence.
+The `DATA` procedure provides the capability to specify the body of the e-mail message. The message is terminated with a `<CR><LF>.<CR><LF>` sequence.
 
 > `DATA(<c> IN OUT CONNECTION, <body> VARCHAR2)`
 
@@ -186,12 +170,7 @@ sequence.
 
 ## EHLO
 
-The `EHLO` procedure performs initial handshaking with the SMTP server
-after establishing the connection. The `EHLO` procedure allows the
-client to identify itself to the SMTP server according to RFC 821. RFC
-1869 specifies the format of the information returned in the server’s
-reply. The *HELO* procedure performs the equivalent functionality, but
-returns less information about the server.
+The `EHLO` procedure performs initial handshaking with the SMTP server after establishing the connection. The `EHLO` procedure allows the client to identify itself to the SMTP server according to RFC 821. RFC 1869 specifies the format of the information returned in the server’s reply. The *HELO* procedure performs the equivalent functionality, but returns less information about the server.
 
 > `EHLO(<c> IN OUT CONNECTION, <domain> VARCHAR2)`
 
@@ -207,11 +186,7 @@ returns less information about the server.
 
 ## HELO
 
-The `HELO` procedure performs initial handshaking with the SMTP server
-after establishing the connection. The `HELO` procedure allows the
-client to identify itself to the SMTP server according to RFC 821. The
-*EHLO* procedure performs the equivalent functionality, but returns more
-information about the server.
+The `HELO` procedure performs initial handshaking with the SMTP server after establishing the connection. The `HELO` procedure allows the client to identify itself to the SMTP server according to RFC 821. The *EHLO* procedure performs the equivalent functionality, but returns more information about the server.
 
 > `HELO(<c> IN OUT, <domain*> VARCHAR2)`
 
@@ -227,11 +202,9 @@ information about the server.
 
 ## HELP
 
-The `HELP` function provides the capability to send the `HELP` command
-to the SMTP server.
+The `HELP` function provides the capability to send the `HELP` command to the SMTP server.
 
-> `<replies> REPLIES HELP(<c> IN OUT CONNECTION [, <command>
-> VARCHAR2`\])
+> `<replies> REPLIES HELP(<c> IN OUT CONNECTION [, <command> VARCHAR2`\])
 
 **Parameters**
 
@@ -271,14 +244,11 @@ The `MAIL` procedure initiates a mail transaction.
 
 `<parameters>`
 
-> Mail command parameters in the format, `key=value` as defined in RFC
-> 1869.
+> Mail command parameters in the format, `key=value` as defined in RFC 1869.
 
 ## NOOP
 
-The `NOOP` function/procedure sends the null command to the SMTP server.
-The `NOOP` has no effect upon the server except to obtain a successful
-response.
+The `NOOP` function/procedure sends the null command to the SMTP server. The `NOOP` has no effect upon the server except to obtain a successful response.
 
 > `<reply> REPLY NOOP(<c> IN OUT CONNECTION)`
 > 
@@ -292,8 +262,7 @@ response.
 
 `<reply>`
 
-> SMTP reply to the command. If SMTP returns multiple replies, only the
-> last one is returned in `<reply>`. See
+> SMTP reply to the command. If SMTP returns multiple replies, only the last one is returned in `<reply>`. See
 
 [Reply/Replies](reply/replies) for a description
 
@@ -318,9 +287,7 @@ The `OPEN_CONNECTION` functions open a connection to an SMTP server.
 
 `<tx_timeout>`
 
-> Time out value in seconds. Do not wait is indicated by specifying 0.
-> Wait indefinitely is indicated by setting timeout to null. The default
-> is null.
+> Time out value in seconds. Do not wait is indicated by specifying 0. Wait indefinitely is indicated by setting timeout to null. The default is null.
 
 `<c>`
 
@@ -352,8 +319,7 @@ The `QUIT` procedure closes the session with an SMTP server.
 
 ## RCPT
 
-The `RCPT` procedure provides the e-mail address of the recipient. To
-schedule multiple recipients, invoke `RCPT` multiple times.
+The `RCPT` procedure provides the e-mail address of the recipient. To schedule multiple recipients, invoke `RCPT` multiple times.
 
 > `RCPT(<c> IN OUT CONNECTION, <recipient> VARCHAR2`
 > 
@@ -371,13 +337,11 @@ schedule multiple recipients, invoke `RCPT` multiple times.
 
 `<parameters>`
 
-> Mail command parameters in the format, key=value as defined in RFC
-> 1869.
+> Mail command parameters in the format, key=value as defined in RFC 1869.
 
 ## RSET
 
-The `RSET` procedure provides the capability to terminate the current
-mail transaction.
+The `RSET` procedure provides the capability to terminate the current mail transaction.
 
 > `RSET(<c> IN OUT CONNECTION)`
 
@@ -389,9 +353,7 @@ mail transaction.
 
 ## VRFY
 
-The `VRFY` function provides the capability to validate and verify the
-recipient’s e-mail address. If valid, the recipient’s full name and
-fully qualified mailbox is returned.
+The `VRFY` function provides the capability to validate and verify the recipient’s e-mail address. If valid, the recipient’s full name and fully qualified mailbox is returned.
 
 > `<reply> REPLY VRFY(<c> IN OUT CONNECTION, <recipient> VARCHAR2)`
 
@@ -407,8 +369,7 @@ fully qualified mailbox is returned.
 
 `<reply>`
 
-> SMTP reply to the command. If SMTP returns multiple replies, only the
-> last one is returned in *reply*. See
+> SMTP reply to the command. If SMTP returns multiple replies, only the last one is returned in *reply*. See
 
 [Reply/Replies](reply/replies) for a description
 
@@ -416,9 +377,7 @@ fully qualified mailbox is returned.
 
 ## WRITE_DATA
 
-The `WRITE_DATA` procedure provides the capability to add `VARCHAR2`
-data to an e-mail message. The `WRITE_DATA` procedure may be
-repetitively called to add data.
+The `WRITE_DATA` procedure provides the capability to add `VARCHAR2` data to an e-mail message. The `WRITE_DATA` procedure may be repetitively called to add data.
 
 > `WRITE_DATA(<c> IN OUT CONNECTION, <data> VARCHAR2)`
 
@@ -430,8 +389,7 @@ repetitively called to add data.
 
 `<data>`
 
-Data to be added to the e-mail message. The data must conform to the RFC
-822 specification.
+Data to be added to the e-mail message. The data must conform to the RFC 822 specification.
 
 <div class="index">
 
@@ -441,8 +399,7 @@ UTL_SMTP_Comprehensive_example
 
 ## Comprehensive Example
 
-The following procedure constructs and sends a text e-mail message using
-the `UTL_SMTP` package.
+The following procedure constructs and sends a text e-mail message using the `UTL_SMTP` package.
 
 ``` text
 CREATE OR REPLACE PROCEDURE send_mail (
@@ -475,8 +432,7 @@ END;
 EXEC send_mail('asmith@enterprisedb.com','pjones@enterprisedb.com','Holiday Party','Are you planning to attend?','smtp.enterprisedb.com');
 ```
 
-The following example uses the OPEN_DATA, WRITE_DATA, and CLOSE_DATA
-procedures instead of the DATA procedure.
+The following example uses the OPEN_DATA, WRITE_DATA, and CLOSE_DATA procedures instead of the DATA procedure.
 
 ``` text
 CREATE OR REPLACE PROCEDURE send_mail_2 (

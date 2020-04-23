@@ -2,9 +2,7 @@
 title: DBMS_SCHEDULER
 ---
 
-The `DBMS_SCHEDULER` package provides a way to create and manage
-Oracle-styled jobs, programs and job schedules. The `DBMS_SCHEDULER`
-package implements the following functions and procedures:
+The `DBMS_SCHEDULER` package provides a way to create and manage Oracle-styled jobs, programs and job schedules. The `DBMS_SCHEDULER` package implements the following functions and procedures:
 
 |                                                                                                                                                                                                        |             |                                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,34 +25,20 @@ package implements the following functions and procedures:
 | SET_JOB_ARGUMENT_VALUE( \<job_name\>, \<argument_position\>, \<argument_value\>)                                                                                                                 | n/a         | Use the first form of SET_JOB_ARGUMENT value to set the value of a job argument described by the argument's position.          |
 | SET_JOB_ARGUMENT_VALUE( \<job_name\>, \<argument_name\>, \<argument_value\>)                                                                                                                     | n/a         | Use the second form of SET_JOB_ARGUMENT value to set the value of a job argument described by the argument's name.             |
 
-Advanced Server's implementation of `DBMS_SCHEDULER` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `DBMS_SCHEDULER` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
-The `DBMS_SCHEDULER` package is dependent on the pgAgent service; you
-must have a pgAgent service installed and running on your server before
-using `DBMS_SCHEDULER`.
+The `DBMS_SCHEDULER` package is dependent on the pgAgent service; you must have a pgAgent service installed and running on your server before using `DBMS_SCHEDULER`.
 
-Before using `DBMS_SCHEDULER`, a database superuser must create the
-catalog tables in which the `DBMS_SCHEDULER` programs, schedules and
-jobs are stored. Use the `psql` client to connect to the database, and
-invoke the command:
+Before using `DBMS_SCHEDULER`, a database superuser must create the catalog tables in which the `DBMS_SCHEDULER` programs, schedules and jobs are stored. Use the `psql` client to connect to the database, and invoke the command:
 
 > `CREATE EXTENSION dbms_scheduler`;
 
-By default, the `dbms_scheduler` extension resides in the
-`contrib/dbms_scheduler_ext` subdirectory (under the Advanced Server
-installation).
+By default, the `dbms_scheduler` extension resides in the `contrib/dbms_scheduler_ext` subdirectory (under the Advanced Server installation).
 
-Note that after creating the `DBMS_SCHEDULER` tables, only a superuser
-will be able to perform a dump or reload of the database.
+Note that after creating the `DBMS_SCHEDULER` tables, only a superuser will be able to perform a dump or reload of the database.
 
 <div class="toctree" data-maxdepth="6">
 
-using_calendar_syntax_to_specify_a_repeating_interval create_job
-create_program create_schedule define_program_argument
-dbms_scheduler_disable drop_job drop_program drop_program_argument
-drop_schedule dbms_scheduler_enable evaluate_calendar_string
-run_job set_job_argument_value
+using_calendar_syntax_to_specify_a_repeating_interval create_job create_program create_schedule define_program_argument dbms_scheduler_disable drop_job drop_program drop_program_argument drop_schedule dbms_scheduler_enable evaluate_calendar_string run_job set_job_argument_value
 
 </div>

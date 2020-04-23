@@ -2,13 +2,9 @@
 title: REFRESH_DEPENDENT
 ---
 
-Use the `REFRESH_DEPENDENT` procedure to refresh all material views that
-are dependent on the views specified in the call to the procedure. You
-can specify a comma-separated list or provide the view names in a table
-of `DBMS_UTILITY.UNCL_ARRAY` values.
+Use the `REFRESH_DEPENDENT` procedure to refresh all material views that are dependent on the views specified in the call to the procedure. You can specify a comma-separated list or provide the view names in a table of `DBMS_UTILITY.UNCL_ARRAY` values.
 
-Use the first form of the procedure to refresh all material views that
-are dependent on the views specified in a comma-separated list:
+Use the first form of the procedure to refresh all material views that are dependent on the views specified in a comma-separated list:
 
 > `REFRESH_DEPENDENT(`
 > 
@@ -26,9 +22,7 @@ are dependent on the views specified in a comma-separated list:
 > > 
 > > `<nested> IN BOOLEAN DEFAULT FALSE);`
 
-Use the second form of the procedure to refresh all material views that
-are dependent on the views specified in a table of
-`DBMS_UTILITY.UNCL_ARRAY` values:
+Use the second form of the procedure to refresh all material views that are dependent on the views specified in a table of `DBMS_UTILITY.UNCL_ARRAY` values:
 
 > `REFRESH_DEPENDENT(`
 > 
@@ -50,51 +44,39 @@ are dependent on the views specified in a table of
 
 `<number_of_failures>`
 
-> `<number_of_failures>` is a `BINARY_INTEGER` that contains the number
-> of failures that occurred during the refresh operation.
+> `<number_of_failures>` is a `BINARY_INTEGER` that contains the number of failures that occurred during the refresh operation.
 
 `<list>`
 
-> `<list>` is a `VARCHAR2` value that specifies the name of a
-> materialized view, or a comma-separated list of materialized view
-> names. The names may be schema-qualified.
+> `<list>` is a `VARCHAR2` value that specifies the name of a materialized view, or a comma-separated list of materialized view names. The names may be schema-qualified.
 
 `<tab>`
 
-> `<tab>` is a table of `DBMS_UTILITY.UNCL_ARRAY` values that specify
-> the name (or names) of a materialized view.
+> `<tab>` is a table of `DBMS_UTILITY.UNCL_ARRAY` values that specify the name (or names) of a materialized view.
 
 `<method>`
 
-> `<method>` is a `VARCHAR2` value that specifies the refresh method
-> that will be applied to the specified view (or views). The only
-> supported method is `C`; this performs a complete refresh of the view.
+> `<method>` is a `VARCHAR2` value that specifies the refresh method that will be applied to the specified view (or views). The only supported method is `C`; this performs a complete refresh of the view.
 
 `<rollback_seg>`
 
-> `<rollback_seg>` is accepted for compatibility and ignored. The
-> default is `NULL`.
+> `<rollback_seg>` is accepted for compatibility and ignored. The default is `NULL`.
 
 `<refresh_after_errors>`
 
-> `<refresh_after_errors>` is accepted for compatibility and ignored.
-> The default is `FALSE`.
+> `<refresh_after_errors>` is accepted for compatibility and ignored. The default is `FALSE`.
 
 `<atomic_refresh>`
 
-> `<atomic_refresh>` is accepted for compatibility and ignored. The
-> default is `TRUE`.
+> `<atomic_refresh>` is accepted for compatibility and ignored. The default is `TRUE`.
 
 `<nested>`
 
-> `<nested>` is accepted for compatibility and ignored. The default is
-> `FALSE`.
+> `<nested>` is accepted for compatibility and ignored. The default is `FALSE`.
 
 **Examples**
 
-The following example performs a `COMPLETE` refresh on all materialized
-views dependent on a materialized view named `emp_view` that resides in
-the public schema:
+The following example performs a `COMPLETE` refresh on all materialized views dependent on a materialized view named `emp_view` that resides in the public schema:
 
 ``` text
 DECLARE

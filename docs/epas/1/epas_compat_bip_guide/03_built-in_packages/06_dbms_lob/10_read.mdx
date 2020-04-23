@@ -2,8 +2,7 @@
 title: READ
 ---
 
-The `READ` procedure provides the capability to read a portion of a
-large object into a buffer.
+The `READ` procedure provides the capability to read a portion of a large object into a buffer.
 
 > `READ(<lob_loc> { BLOB | CLOB }, <amount> IN OUT BINARY_INTEGER`,
 > 
@@ -21,9 +20,7 @@ large object into a buffer.
 
 `<amount> OUT`
 
-> Number of bytes/characters actually read. If there is no more data to
-> be read, then `<amount>` returns 0 and a `DATA_NOT_FOUND` exception is
-> thrown.
+> Number of bytes/characters actually read. If there is no more data to be read, then `<amount>` returns 0 and a `DATA_NOT_FOUND` exception is thrown.
 
 `<offset>`
 
@@ -31,6 +28,4 @@ large object into a buffer.
 
 `<buffer>`
 
-> Variable to receive the large object. If `<lob_loc>` is a `BLOB`, then
-> `<buffer>` must be `RAW`. If `<lob_loc>` is a `CLOB`, then `<buffer>`
-> must be `VARCHAR2`.
+> Variable to receive the large object. If `<lob_loc>` is a `BLOB`, then `<buffer>` must be `RAW`. If `<lob_loc>` is a `CLOB`, then `<buffer>` must be `VARCHAR2`.

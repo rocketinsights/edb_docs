@@ -2,9 +2,7 @@
 title: ENCRYPT
 ---
 
-The `ENCRYPT` function or procedure uses a user-specified algorithm,
-key, and optional initialization vector to encrypt `RAW`, `BLOB` or
-`CLOB` data. The signature of the `ENCRYPT` function is:
+The `ENCRYPT` function or procedure uses a user-specified algorithm, key, and optional initialization vector to encrypt `RAW`, `BLOB` or `CLOB` data. The signature of the `ENCRYPT` function is:
 
 > `ENCRYPT`  
 >   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW`,  
@@ -13,39 +11,30 @@ key, and optional initialization vector to encrypt `RAW`, `BLOB` or
 The signature of the `ENCRYPT` procedure is:
 
 > `ENCRYPT`  
->   `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN
-> RAW`,  
+>   `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW`,  
 >   `<iv> IN RAW DEFAULT NULL)`
 
 or
 
 > `ENCRYPT`  
->   `(<dst> INOUT BLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN
-> RAW`,  
+>   `(<dst> INOUT BLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW`,  
 >   `<iv> IN RAW DEFAULT NULL)`
 
-When invoked as a procedure, `ENCRYPT` returns `BLOB` or `CLOB` data to
-a user-specified `BLOB`.
+When invoked as a procedure, `ENCRYPT` returns `BLOB` or `CLOB` data to a user-specified `BLOB`.
 
 **Parameters**
 
 `<dst>`
 
-> `<dst>` specifies the name of a `BLOB` to which the output of the
-> `ENCRYPT` procedure will be written. The `ENCRYPT` procedure will
-> overwrite any existing data currently in `<dst>`.
+> `<dst>` specifies the name of a `BLOB` to which the output of the `ENCRYPT` procedure will be written. The `ENCRYPT` procedure will overwrite any existing data currently in `<dst>`.
 
 `<src>`
 
-> `<src>` specifies the source data that will be encrypted. If you are
-> invoking `ENCRYPT` as a function, specify `RAW` data; if invoking
-> `ENCRYPT` as a procedure, specify `BLOB` or `CLOB` data.
+> `<src>` specifies the source data that will be encrypted. If you are invoking `ENCRYPT` as a function, specify `RAW` data; if invoking `ENCRYPT` as a procedure, specify `BLOB` or `CLOB` data.
 
 `<typ>`
 
-> `<typ>` specifies the block cipher type that will be used by
-> `ENCRYPT`, and any modifiers. Advanced Server supports the block
-> cipher algorithms, modifiers and cipher suites listed below:
+> `<typ>` specifies the block cipher type that will be used by `ENCRYPT`, and any modifiers. Advanced Server supports the block cipher algorithms, modifiers and cipher suites listed below:
 
 | **Block Cipher Algorithms**        |                                                             |
 | ---------------------------------- | ----------------------------------------------------------- |
@@ -70,14 +59,11 @@ a user-specified `BLOB`.
 
 `<iv>`
 
-> `<iv>` (optional) specifies an initialization vector. By default,
-> `<iv>` is `NULL`.
+> `<iv>` (optional) specifies an initialization vector. By default, `<iv>` is `NULL`.
 
 **Examples**
 
-The following example uses the `DBMS_CRYPTO.DES_CBC_PKCS5` Block Cipher
-Suite (a pre-defined set of algorithms and modifiers) to encrypt a value
-retrieved from the `passwords` table:
+The following example uses the `DBMS_CRYPTO.DES_CBC_PKCS5` Block Cipher Suite (a pre-defined set of algorithms and modifiers) to encrypt a value retrieved from the `passwords` table:
 
 ``` text
 CREATE TABLE passwords
@@ -97,7 +83,4 @@ BEGIN
 END;
 ```
 
-`ENCRYPT` uses a key value of `my secret key` and an initialization
-vector of `my initialization vector` when encrypting the `password`;
-specify the same key and initialization vector when decrypting the
-`password`.
+`ENCRYPT` uses a key value of `my secret key` and an initialization vector of `my initialization vector` when encrypting the `password`; specify the same key and initialization vector when decrypting the `password`.

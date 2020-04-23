@@ -2,11 +2,7 @@
 title: DBMS_REDACT
 ---
 
-The `DBMS_REDACT` package enables the redacting or masking of data
-returned by a query. The `DBMS_REDACT` package provides a procedure to
-create policies, alter policies, enable policies, disable policies, and
-drop policies. The procedures available in the `DBMS_REDACT` package are
-listed in the following table.
+The `DBMS_REDACT` package enables the redacting or masking of data returned by a query. The `DBMS_REDACT` package provides a procedure to create policies, alter policies, enable policies, disable policies, and drop policies. The procedures available in the `DBMS_REDACT` package are listed in the following table.
 
 <div class="tabularcolumns">
 
@@ -24,22 +20,13 @@ Y{0.1}Y{0.2}|
 | `DROP_POLICY(<object_schema>, <object_name>, <policy_name>)`                                                                                                                                                                                                                                                                       | Procedure             | n/a         | Drops a data redaction policy.                                        |
 | `UPDATE_FULL_REDACTION_VALUES(<number_val>, <binfloat_val>, <bindouble_val>, <char_val>, <varchar_val>, <nchar_val>, <nvarchar_val>, <datecol_val>, <ts_val>, <tswtz_val>, <blob_val>, <clob_val>, <nclob_val>)`                                                                                                                   | Procedure             | n/a         | Updates the full redaction default values for the specified datatype. |
 
-The data redaction feature uses the `DBMS_REDACT` package to define
-policies or conditions to redact data in a column based on the table
-column type and redaction type.
+The data redaction feature uses the `DBMS_REDACT` package to define policies or conditions to redact data in a column based on the table column type and redaction type.
 
-Note that you must be the owner of the table to create or change the
-data redaction policies. The users are exempted from all the column
-redaction policies, which the table owner or super-user is by default.
+Note that you must be the owner of the table to create or change the data redaction policies. The users are exempted from all the column redaction policies, which the table owner or super-user is by default.
 
 ## Using DBMS_REDACT Constants and Function Parameters
 
-The `DBMS_REDACT` package uses the constants and redacts the column data
-by using any one of the data redaction types. The redaction type can be
-decided based on the function_type parameter of
-`dbms_redact.add_policy` and `dbms_redact.alter_policy` procedure. The
-below table highlights the values for function_type parameters of
-`dbms_redact.add_policy` and `dbms_redact.alter_policy`.
+The `DBMS_REDACT` package uses the constants and redacts the column data by using any one of the data redaction types. The redaction type can be decided based on the function_type parameter of `dbms_redact.add_policy` and `dbms_redact.alter_policy` procedure. The below table highlights the values for function_type parameters of `dbms_redact.add_policy` and `dbms_redact.alter_policy`.
 
 <div class="tabularcolumns">
 
@@ -57,8 +44,7 @@ Y{0.2}Y{0.5}|
 | `REGEXP`     | `INTEGER` | `5`       | Regular Expression based redaction, searches for the pattern of data to redact.                           |
 | `CUSTOM`     | `INTEGER` | `99`      | Custom redaction type.                                                                                    |
 
-The following table shows the values for the `action` parameter of
-`dbms_redact.alter_policy`.
+The following table shows the values for the `action` parameter of `dbms_redact.alter_policy`.
 
 <div class="tabularcolumns">
 
@@ -76,24 +62,15 @@ Y{0.3}Y{0.4}|
 | `SET_POLICY_DESCRIPTION` | `INTEGER` | `5`   | Sets the redaction policy description.                                                                                                  |
 | `SET_COLUMN_DESCRIPTION` | `INTEGER` | `6`   | Sets a description for the redaction performed on the column.                                                                           |
 
-The partial data redaction enables you to redact only a portion of the
-column data. To use partial redaction, you must set the
-`dbms_redact.add_policy` procedure `function_type` parameter to
-`dbms_redact.partial` and use the `function_parameters` parameter to
-specify the partial redaction behavior.
+The partial data redaction enables you to redact only a portion of the column data. To use partial redaction, you must set the `dbms_redact.add_policy` procedure `function_type` parameter to `dbms_redact.partial` and use the `function_parameters` parameter to specify the partial redaction behavior.
 
-The data redaction feature provides a predefined format to configure
-policies that use the following datatype:
+The data redaction feature provides a predefined format to configure policies that use the following datatype:
 
   - `Character`
   - `Number`
   - `Datetime`
 
-The following table highlights the format descriptor for partial
-redaction with respect to datatype. The example described below shows
-how to perform a redaction for a string datatype (in this scenario, a
-Social Security Number (SSN)), a `Number` datatype, and a `DATE`
-datatype.
+The following table highlights the format descriptor for partial redaction with respect to datatype. The example described below shows how to perform a redaction for a string datatype (in this scenario, a Social Security Number (SSN)), a `Number` datatype, and a `DATE` datatype.
 
 |           |                                |                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                           |
 | --------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -113,8 +90,7 @@ datatype.
 |           | `REDACT_PARTIAL_DATE_MINUTE`   | `‘m’` redacts the minute. To mask with a minute, append `0-59` to a lowercase `m`.                                                                                                                                                | `m20` displays as `20`.                                                                                                                                                                                                                                                   |
 |           | `REDACT_PARTIAL_DATE_SECOND`   | `‘s’` redacts the second. To mask with a second, append `0-59` to a lowercase `s`.                                                                                                                                                | `s40` displays as `40`.                                                                                                                                                                                                                                                   |
 
-The following table represents `function_parameters` values that can be
-used in partial redaction.
+The following table represents `function_parameters` values that can be used in partial redaction.
 
 <table style="width:50%;">
 <colgroup>
@@ -292,11 +268,7 @@ used in partial redaction.
 </tbody>
 </table>
 
-A regular expression-based redaction searches for patterns of data to
-redact. The `regexp_pattern` search the values in order for the
-`regexp_replace_string` to change the value. The following table
-illustrates the `regexp_pattern` values that you can use during `REGEXP`
-based redaction.
+A regular expression-based redaction searches for patterns of data to redact. The `regexp_pattern` search the values in order for the `regexp_replace_string` to change the value. The following table illustrates the `regexp_pattern` values that you can use during `REGEXP` based redaction.
 
 | **Function Parameter and Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **Data Type** | **Value**                                                   |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------- |
@@ -311,8 +283,7 @@ based redaction.
 | | **RE_REDACT_CC_MIDDLE_DIGITS**: Redacts the middle digits of a credit card number according to the regexp_pattern parameter with the RE_PATTERN_CC_L6_T4 format and replaces each redacted character with an X. | Example: The credit card number 1234 5678 9000 2490 becomes 1234 56XX XXXX 2490.                                                                                                                                                                                                                                                    | VARCHAR2      | '1XXXXXX3'                                                  |
 | | **RE_REDACT_WITH_SINGLE_X**: Replaces the data with a single X character for each matching pattern as specified by setting                                                                                                                                                                                                                                                                                                                                                                                                                                 | VARCHAR2      | 'X'                                                         |
 
-The below table illustrates the `regexp_replace_string` values that you
-can use during `REGEXP` based redaction.
+The below table illustrates the `regexp_replace_string` values that you can use during `REGEXP` based redaction.
 
 <table style="width:35%;">
 <colgroup>
@@ -400,9 +371,7 @@ can use during `REGEXP` based redaction.
 </tbody>
 </table>
 
-The following tables show the `regexp_position` value and
-`regexp_occurence` values that you can use during `REGEXP` based
-redaction.
+The following tables show the `regexp_position` value and `regexp_occurence` values that you can use during `REGEXP` based redaction.
 
 <div class="tabularcolumns">
 
@@ -427,9 +396,7 @@ Y{0.15}Y{0.5}|
 | RE_ALL            | INTEGER   | 0     | Specifies the replacement occurrence of a substring. If the value is 0, then the replacement of each matching substring occurs.      |
 | RE_FIRST          | INTEGER   | 1     | Specifies the replacement occurrence of a substring. If the value is 1, then the replacement of the first matching substring occurs. |
 
-The following table shows the `regexp_match_parameter` values that you
-can use during `REGEXP` based redaction which lets you change the
-default matching behavior of a function.
+The following table shows the `regexp_match_parameter` values that you can use during `REGEXP` based redaction which lets you change the default matching behavior of a function.
 
 <div class="tabularcolumns">
 
@@ -454,9 +421,7 @@ Note
 
 </div>
 
-If you create a redaction policy based on a numeric type column, then
-make sure that the result after redaction is a number and accordingly
-set the replacement string to avoid runtime errors.
+If you create a redaction policy based on a numeric type column, then make sure that the result after redaction is a number and accordingly set the replacement string to avoid runtime errors.
 
 </div>
 
@@ -468,10 +433,7 @@ Note
 
 </div>
 
-If you create a redaction policy based on a character type column, then
-make sure that a length of the result after redaction is compatible with
-the column type and accordingly set the replacement string to avoid
-runtime errors.
+If you create a redaction policy based on a character type column, then make sure that a length of the result after redaction is compatible with the column type and accordingly set the replacement string to avoid runtime errors.
 
 </div>
 
@@ -483,8 +445,7 @@ DBMS_REDACT_ADD_POLICY
 
 ## ADD_POLICY
 
-The `add_policy` procedure creates a new data redaction policy for a
-table.
+The `add_policy` procedure creates a new data redaction policy for a table.
 
 ``` text
 PROCEDURE add_policy (
@@ -511,10 +472,7 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 
 `<object_schema>`
 
-> Specifies the name of the schema in which the object resides and on
-> which the data redaction policy will be applied. If you specify `NULL`
-> then the given object is searched by the order specified by
-> `search_path` setting.
+> Specifies the name of the schema in which the object resides and on which the data redaction policy will be applied. If you specify `NULL` then the given object is searched by the order specified by `search_path` setting.
 
 `<object_name>`
 
@@ -522,8 +480,7 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 
 `<policy_name>`
 
-> Name of the policy to be added. Ensure that the `policy_name` is
-> unique for the table on which the policy is created.
+> Name of the policy to be added. Ensure that the `policy_name` is unique for the table on which the policy is created.
 
 `<policy_description>`
 
@@ -531,42 +488,31 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 
 `<column_name>`
 
-> Name of the column to which the redaction policy applies. To redact
-> more than one column, use the `alter_policy` procedure to add
-> additional columns.
+> Name of the column to which the redaction policy applies. To redact more than one column, use the `alter_policy` procedure to add additional columns.
 
 `<column_description>`
 
-> Description of the column to be redacted. The `column_description` is
-> not supported, but if you specify the description for a column then,
-> you will get a warning message.
+> Description of the column to be redacted. The `column_description` is not supported, but if you specify the description for a column then, you will get a warning message.
 
 `<function_type>`
 
-> The type of redaction function to be used. The possible values are
-> `NONE, FULL, PARTIAL, RANDOM, REGEXP`, and `CUSTOM`.
+> The type of redaction function to be used. The possible values are `NONE, FULL, PARTIAL, RANDOM, REGEXP`, and `CUSTOM`.
 
 `<function_parameters>`
 
-> Specifies the function parameters for the partition redaction and is
-> applicable only for partial redaction.
+> Specifies the function parameters for the partition redaction and is applicable only for partial redaction.
 
 `<expression>`
 
-> Specifies the Boolean expression for the table and determines how the
-> policy is to be applied. The redaction occurs if this policy
-> expression is evaluated to `TRUE`.
+> Specifies the Boolean expression for the table and determines how the policy is to be applied. The redaction occurs if this policy expression is evaluated to `TRUE`.
 
 `<enable>`
 
-> When set to `TRUE`, the policy is enabled upon creation. The default
-> is set as `TRUE`. When set to `FALSE`, the policy is disabled but the
-> policy can be enabled by calling the `enable_policy` procedure.
+> When set to `TRUE`, the policy is enabled upon creation. The default is set as `TRUE`. When set to `FALSE`, the policy is disabled but the policy can be enabled by calling the `enable_policy` procedure.
 
 `<regexp_pattern>`
 
-> Specifies the regular expression pattern to redact data. If the
-> `regexp_pattern` does not match, then the `NULL` value is returned.
+> Specifies the regular expression pattern to redact data. If the `regexp_pattern` does not match, then the `NULL` value is returned.
 
 `<regexp_replace_string>`
 
@@ -574,22 +520,15 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 
 `<regexp_position>`
 
-> Specifies the position of a character where search must begin. By
-> default, the function parameter is `RE_BEGINNING`.
+> Specifies the position of a character where search must begin. By default, the function parameter is `RE_BEGINNING`.
 
 `<regexp_occurrence>`
 
-> Specifies the replacement occurrence of a substring. If the constant
-> is `RE_ALL`, then the replacement of each matching substring occurs.
-> If the constant is `RE_FIRST`, then the replacement of the first
-> matching substring occurs.
+> Specifies the replacement occurrence of a substring. If the constant is `RE_ALL`, then the replacement of each matching substring occurs. If the constant is `RE_FIRST`, then the replacement of the first matching substring occurs.
 
 `<regexp_match_parameter>`
 
-> Changes the default matching behavior of a function. The possible
-> regexp_match_parameter constants can be `‘RE_CASE_SENSITIVE’,
-> ‘RE_CASE_INSENSITIVE’, ‘RE_MULTIPLE_LINES’, ‘RE_NEWLINE_WILDCARD’,
-> ‘RE_IGNORE_WHITESPACE’`.
+> Changes the default matching behavior of a function. The possible regexp_match_parameter constants can be `‘RE_CASE_SENSITIVE’, ‘RE_CASE_INSENSITIVE’, ‘RE_MULTIPLE_LINES’, ‘RE_NEWLINE_WILDCARD’, ‘RE_IGNORE_WHITESPACE’`.
 > 
 > <div class="note">
 > 
@@ -599,25 +538,17 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 > 
 > </div>
 > 
-> For more information on `constants`, `function_parameters`, or
-> `regexp` (regular expressions) see, Using `DBMS_REDACT Constants` and
-> `Function Parameters`.
+> For more information on `constants`, `function_parameters`, or `regexp` (regular expressions) see, Using `DBMS_REDACT Constants` and `Function Parameters`.
 > 
 > </div>
 
 `<custom_function_expression>`
 
-> The `custom_function_expression` is applicable only for the `CUSTOM`
-> redaction type. The `custom_function_expression` is a function
-> expression that is, schema-qualified function with a parameter such as
-> `schema_name.function_name (argument1, …`)that allows a user to use
-> their redaction logic to redact the column data.
+> The `custom_function_expression` is applicable only for the `CUSTOM` redaction type. The `custom_function_expression` is a function expression that is, schema-qualified function with a parameter such as `schema_name.function_name (argument1, …`)that allows a user to use their redaction logic to redact the column data.
 
 **Example**
 
-The following example illustrates how to create a policy and use full
-redaction for values in the `payment_details_tab` table `customer id`
-column.
+The following example illustrates how to create a policy and use full redaction for values in the `payment_details_tab` table `customer id` column.
 
 ``` text
 edb=# CREATE TABLE payment_details_tab (
@@ -668,8 +599,7 @@ edb=> select customer_id from payment_details_tab order by 1;
 
 ## ALTER_POLICY
 
-The `alter_policy` procedure alters or modifies an existing data
-redaction policy for a table.
+The `alter_policy` procedure alters or modifies an existing data redaction policy for a table.
 
 ``` text
 PROCEDURE alter_policy (
@@ -696,10 +626,7 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<object_schema>`
 
-> Specifies the name of the schema in which the object resides and on
-> which the data redaction policy will be altered. If you specify `NULL`
-> then the given object is searched by the order specified by
-> `search_path` setting.
+> Specifies the name of the schema in which the object resides and on which the data redaction policy will be altered. If you specify `NULL` then the given object is searched by the order specified by `search_path` setting.
 
 `<object_name>`
 
@@ -711,8 +638,7 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<action>`
 
-> The action to perform. For more information about action parameters
-> see, `DBMS_REDACT Constants and Function Parameters`.
+> The action to perform. For more information about action parameters see, `DBMS_REDACT Constants and Function Parameters`.
 
 `<column_name>`
 
@@ -720,8 +646,7 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<function_type>`
 
-> The type of redaction function to be used. The possible values are
-> `NONE, FULL, PARTIAL, RANDOM, REGEXP`, and `CUSTOM`.
+> The type of redaction function to be used. The possible values are `NONE, FULL, PARTIAL, RANDOM, REGEXP`, and `CUSTOM`.
 
 `<function_parameters>`
 
@@ -729,15 +654,11 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<expression>`
 
-> Specifies the Boolean expression for the table and determines how the
-> policy is to be applied. The redaction occurs if this policy
-> expression is evaluated to `TRUE`.
+> Specifies the Boolean expression for the table and determines how the policy is to be applied. The redaction occurs if this policy expression is evaluated to `TRUE`.
 
 `<regexp_pattern>`
 
-> Enables the use of regular expressions to redact data. If the
-> `regexp_pattern` does not match the data, then the `NULL` value is
-> returned.
+> Enables the use of regular expressions to redact data. If the `regexp_pattern` does not match the data, then the `NULL` value is returned.
 
 `<regexp_replace_string>`
 
@@ -745,22 +666,15 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<regexp_position>`
 
-> Specifies the position of a character where search must begin. By
-> default, the function parameter is `RE_BEGINNING`.
+> Specifies the position of a character where search must begin. By default, the function parameter is `RE_BEGINNING`.
 
 `<regexp_occurence>`
 
-> Specifies the replacement occurrence of a substring. If the constant
-> is `RE_ALL`, then the replacement of each matching substring occurs.
-> If the constant is `RE_FIRST`, then the replacement of the first
-> matching substring occurs.
+> Specifies the replacement occurrence of a substring. If the constant is `RE_ALL`, then the replacement of each matching substring occurs. If the constant is `RE_FIRST`, then the replacement of the first matching substring occurs.
 
 `<regexp_match_parameter>`
 
-> Changes the default matching behavior of a function. The possible
-> regexp_match_parameter constants can be `‘RE_CASE_SENSITIVE’,
-> ‘RE_CASE_INSENSITIVE’, ‘RE_MULTIPLE_LINES’, ‘RE_NEWLINE_WILDCARD’,
-> ‘RE_IGNORE_WHITESPACE’`.
+> Changes the default matching behavior of a function. The possible regexp_match_parameter constants can be `‘RE_CASE_SENSITIVE’, ‘RE_CASE_INSENSITIVE’, ‘RE_MULTIPLE_LINES’, ‘RE_NEWLINE_WILDCARD’, ‘RE_IGNORE_WHITESPACE’`.
 > 
 > > 
 > > 
@@ -772,9 +686,7 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 > > 
 > > </div>
 > > 
-> > For more information on `constants, function_parameters`, or
-> > `regexp` (regular expressions) see, `Using DBMS_REDACT Constants and
-> > Function Parameters`.
+> > For more information on `constants, function_parameters`, or `regexp` (regular expressions) see, `Using DBMS_REDACT Constants and Function Parameters`.
 > > 
 > > </div>
 
@@ -784,23 +696,15 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<column_description>`
 
-> Description of the column to be redacted. The `column_description` is
-> not supported, but if you specify the description for a column then,
-> you will get a warning message.
+> Description of the column to be redacted. The `column_description` is not supported, but if you specify the description for a column then, you will get a warning message.
 
 `<custom_function_expression>`
 
-> The `custom_function_expression` is applicable only for the `CUSTOM`
-> redaction type. The `custom_function_expression` is a function
-> expression that is, schema-qualified function with a parameter such as
-> `schema_name.function_name (argument1`, …)that allows a user to use
-> their redaction logic to redact the column data.
+> The `custom_function_expression` is applicable only for the `CUSTOM` redaction type. The `custom_function_expression` is a function expression that is, schema-qualified function with a parameter such as `schema_name.function_name (argument1`, …)that allows a user to use their redaction logic to redact the column data.
 
 **Example**
 
-The following example illustrates to alter a policy partial redaction
-for values in the `payment_details_tab` table `card_string` (usually a
-credit card number) column.
+The following example illustrates to alter a policy partial redaction for values in the `payment_details_tab` table `card_string` (usually a credit card number) column.
 
 ``` text
 \c edb base _user
@@ -832,16 +736,15 @@ edb=> SELECT * FROM payment_details_tab;
 
 ## DISABLE_POLICY
 
-The `disable_policy` procedure disables an existing data redaction
-policy.
+The `disable_policy` procedure disables an existing data redaction policy.
 
 `PROCEDURE disable_policy` (
 
-> `<object_schema> IN VARCHAR2 DEFAULT NULL,`
+> `<object_schema>     IN VARCHAR2 DEFAULT NULL,`
 > 
-> `<object_name> IN VARCHAR2,`
+> `<object_name>       IN VARCHAR2,`
 > 
-> `<policy_name> IN VARCHAR2`
+> `<policy_name>       IN VARCHAR2`
 > 
 > )
 
@@ -849,10 +752,7 @@ policy.
 
 `<object_schema>`
 
-> Specifies the name of the schema in which the object resides and on
-> which the data redaction policy will be applied. If you specify `NULL`
-> then the given object is searched by the order specified by
-> `search_path` setting.
+> Specifies the name of the schema in which the object resides and on which the data redaction policy will be applied. If you specify `NULL` then the given object is searched by the order specified by `search_path` setting.
 
 `<object_name>`
 
@@ -887,8 +787,7 @@ DBMS_REDACT_ENABLE_POLICY
 
 ## ENABLE_POLICY
 
-The `enable_policy` procedure enables the previously disabled data
-redaction policy.
+The `enable_policy` procedure enables the previously disabled data redaction policy.
 
 `PROCEDURE enable_policy (`
 
@@ -904,10 +803,7 @@ redaction policy.
 
 `<object_schema>`
 
-> Specifies the name of the schema in which the object resides and on
-> which the data redaction policy will be applied. If you specify `NULL`
-> then the given object is searched by the order specified by
-> `search_path` setting.
+> Specifies the name of the schema in which the object resides and on which the data redaction policy will be applied. If you specify `NULL` then the given object is searched by the order specified by `search_path` setting.
 
 `<object_name>`
 
@@ -942,8 +838,7 @@ DBMS_REDACT_DROP_POLICY
 
 ## DROP_POLICY
 
-The `drop_policy` procedure drops a data redaction policy by removing
-the masking policy from a table.
+The `drop_policy` procedure drops a data redaction policy by removing the masking policy from a table.
 
 `PROCEDURE drop_policy` (
 
@@ -959,10 +854,7 @@ the masking policy from a table.
 
 `<object_schema>`
 
-> Specifies the name of the schema in which the object resides and on
-> which the data redaction policy will be applied. If you specify `NULL`
-> then the given object is searched by the order specified by
-> `search_path` setting.
+> Specifies the name of the schema in which the object resides and on which the data redaction policy will be applied. If you specify `NULL` then the given object is searched by the order specified by `search_path` setting.
 
 `<object_name>`
 
@@ -990,10 +882,7 @@ Redacted Result: The server drops the specified policy.
 
 ## UPDATE_FULL_REDACTION_VALUES
 
-The `update_full_redaction_values` procedure updates the default
-displayed values for a data redaction policy and these default values
-can be viewed using the `redaction_values_for_type_full` view that use
-the full redaction type.
+The `update_full_redaction_values` procedure updates the default displayed values for a data redaction policy and these default values can be viewed using the `redaction_values_for_type_full` view that use the full redaction type.
 
 ``` TEXT
 PROCEDURE update_full_redaction_values (
@@ -1021,13 +910,11 @@ nclob_val       IN CLOB              DEFAULT NULL
 
 `<binfloat_val>`
 
-> The `FLOAT4` datatype is a random value. The binary float datatype is
-> not supported.
+> The `FLOAT4` datatype is a random value. The binary float datatype is not supported.
 
 `<bindouble_val>`
 
-> The `FLOAT8` datatype is a random value. The binary double datatype is
-> not supported.
+> The `FLOAT8` datatype is a random value. The binary double datatype is not supported.
 
 `<char_val>`
 
@@ -1039,13 +926,11 @@ nclob_val       IN CLOB              DEFAULT NULL
 
 `<nchar_val>`
 
-> The `nchar_val` is mapped to `CHAR` datatype and returns the `CHAR`
-> value.
+> The `nchar_val` is mapped to `CHAR` datatype and returns the `CHAR` value.
 
 `<nvarchar_val>`
 
-> The `nvarchar_val` is mapped to `VARCHAR2` datatype and returns the
-> `VARCHAR` value.
+> The `nvarchar_val` is mapped to `VARCHAR2` datatype and returns the `VARCHAR` value.
 
 `<datecol_val>`
 
@@ -1069,16 +954,13 @@ nclob_val       IN CLOB              DEFAULT NULL
 
 `<nclob_val>`
 
-> The `nclob_val` is mapped to `CLOB` datatype and returns the `CLOB`
-> value.
+> The `nclob_val` is mapped to `CLOB` datatype and returns the `CLOB` value.
 
 **Example**
 
-The following example illustrates how to update the full redaction
-values but before updating the values, you can:
+The following example illustrates how to update the full redaction values but before updating the values, you can:
 
-1\. View the default values using `redaction_values_for_type_full` view
-as shown below:
+1\. View the default values using `redaction_values_for_type_full` view as shown below:
 
 ``` text
 edb=# \x
@@ -1098,8 +980,7 @@ clob_value                     | [redacted]
 (1 row)
 ```
 
-2\. Now, update the default values for full redaction type. The NULL
-values will be ignored. c edb base_user
+2\. Now, update the default values for full redaction type. The NULL values will be ignored. c edb base_user
 
 ``` text
 edb=# BEGIN
@@ -1115,8 +996,7 @@ edb=# BEGIN
 END;
 ```
 
-3.  You can now see the updated values using
-    redaction_values_for_type_full view.
+3.  You can now see the updated values using redaction_values_for_type_full view.
 
 <!-- end list -->
 

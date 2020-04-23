@@ -2,8 +2,7 @@
 title: UTL_MAIL
 ---
 
-The `UTL_MAIL` package provides the capability to manage e-mail.
-Advanced Server supports the following procedures:
+The `UTL_MAIL` package provides the capability to manage e-mail. Advanced Server supports the following procedures:
 
 |                                                                                                                                                                                                                      |             |                                                                         |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------- |
@@ -20,19 +19,15 @@ Note
 
 </div>
 
-An administrator must grant execute privileges to each user or group
-before they can use this package.
+An administrator must grant execute privileges to each user or group before they can use this package.
 
 </div>
 
 ## SEND
 
-The `SEND` procedure provides the capability to send an e-mail to an
-SMTP server.
+The `SEND` procedure provides the capability to send an e-mail to an SMTP server.
 
-`SEND(<sender> VARCHAR2, <recipients> VARCHAR2, <cc> VARCHAR2, <bcc>
-VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2 [, <mime_type> VARCHAR2
-[, <priority> PLS_INTEGER ]])`
+`SEND(<sender> VARCHAR2, <recipients> VARCHAR2, <cc> VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2 [, <mime_type> VARCHAR2 [, <priority> PLS_INTEGER ]])`
 
 **Parameters**
 
@@ -62,8 +57,7 @@ VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2 [, <mime_type> VARCHAR2
 
 `<mime_type>`
 
-> Mime type of the message. The default is `text/plain;
-> charset=us-ascii`.
+> Mime type of the message. The default is `text/plain; charset=us-ascii`.
 
 `<priority>`
 
@@ -91,24 +85,13 @@ END;
 
 ## SEND_ATTACH_RAW
 
-The `SEND_ATTACH_RAW` procedure provides the capability to send an
-e-mail to an SMTP server with an attachment containing either `BYTEA`
-data or a large object (identified by the large object's `OID`). The
-call to `SEND_ATTACH_RAW` can be written in two ways:
+The `SEND_ATTACH_RAW` procedure provides the capability to send an e-mail to an SMTP server with an attachment containing either `BYTEA` data or a large object (identified by the large object's `OID`). The call to `SEND_ATTACH_RAW` can be written in two ways:
 
-`SEND_ATTACH_RAW(<sender> VARCHAR2, <recipients> VARCHAR2, <cc>
-VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2,
-<mime_type> VARCHAR2, <priority> PLS_INTEGER, <attachment> BYTEA[,
-<att_inline> BOOLEAN [, <att_mime_type> VARCHAR2[, <att_filename>
-VARCHAR2 ]]])`
+`SEND_ATTACH_RAW(<sender> VARCHAR2, <recipients> VARCHAR2, <cc> VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2, <mime_type> VARCHAR2, <priority> PLS_INTEGER, <attachment> BYTEA[, <att_inline> BOOLEAN [, <att_mime_type> VARCHAR2[, <att_filename> VARCHAR2 ]]])`
 
 or
 
-`SEND_ATTACH_RAW(<sender> VARCHAR2, <recipients> VARCHAR2, <cc>
-VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2,
-<mime_type> VARCHAR2, <priority> PLS_INTEGER, <attachment> OID [,
-<att_inline> BOOLEAN [, <att_mime_type> VARCHAR2 [, <att_filename>
-VARCHAR2 ]]])`
+`SEND_ATTACH_RAW(<sender> VARCHAR2, <recipients> VARCHAR2, <cc> VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2, <mime_type> VARCHAR2, <priority> PLS_INTEGER, <attachment> OID  [, <att_inline> BOOLEAN [, <att_mime_type> VARCHAR2  [, <att_filename> VARCHAR2 ]]])`
 
 **Parameters**
 
@@ -138,8 +121,7 @@ VARCHAR2 ]]])`
 
 `<mime_type>`
 
-> Mime type of the message. The default is `text/plain;
-> charset=us-ascii`.
+> Mime type of the message. The default is `text/plain; charset=us-ascii`.
 
 `<priority>`
 
@@ -151,8 +133,7 @@ VARCHAR2 ]]])`
 
 `<att_inline>`
 
-> If set to `TRUE`, then the attachment is viewable inline, `FALSE`
-> otherwise. The default is `TRUE`.
+> If set to `TRUE`, then the attachment is viewable inline, `FALSE` otherwise. The default is `TRUE`.
 
 `<att_mime_type>`
 
@@ -164,14 +145,9 @@ VARCHAR2 ]]])`
 
 ## SEND_ATTACH_VARCHAR2
 
-The `SEND_ATTACH_VARCHAR2` procedure provides the capability to send an
-e-mail to an SMTP server with a text attachment.
+The `SEND_ATTACH_VARCHAR2` procedure provides the capability to send an e-mail to an SMTP server with a text attachment.
 
-`SEND_ATTACH_VARCHAR2(<sender> VARCHAR2, <recipients> VARCHAR2, <cc>
-VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2,
-<mime_type> VARCHAR2, <priority> PLS_INTEGER, <attachment> VARCHAR2 [,
-<att_inline> BOOLEAN [, <att_mime_type> VARCHAR2 [, <att_filename>
-VARCHAR2 ]]])`
+`SEND_ATTACH_VARCHAR2(<sender> VARCHAR2, <recipients> VARCHAR2, <cc> VARCHAR2, <bcc> VARCHAR2, <subject> VARCHAR2, <message> VARCHAR2, <mime_type> VARCHAR2, <priority> PLS_INTEGER, <attachment> VARCHAR2 [, <att_inline> BOOLEAN [, <att_mime_type> VARCHAR2 [, <att_filename> VARCHAR2 ]]])`
 
 **Parameters**
 
@@ -201,8 +177,7 @@ VARCHAR2 ]]])`
 
 `<mime_type>`
 
-> Mime type of the message. The default is `text/plain;
-> charset=us-ascii`.
+> Mime type of the message. The default is `text/plain; charset=us-ascii`.
 
 `<priority>`
 
@@ -214,13 +189,11 @@ VARCHAR2 ]]])`
 
 `<att_inline>`
 
-> If set to `TRUE`, then the attachment is viewable inline, `FALSE`
-> otherwise. The default is `TRUE`.
+> If set to `TRUE`, then the attachment is viewable inline, `FALSE` otherwise. The default is `TRUE`.
 
 `<att_mime_type>`
 
-> Mime type of the attachment. The default is `text/plain;
-> charset=us-ascii`.
+> Mime type of the attachment. The default is `text/plain; charset=us-ascii`.
 
 `<att_filename>`
 

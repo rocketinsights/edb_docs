@@ -2,8 +2,7 @@
 title: ALTER_QUEUE
 ---
 
-Use the `ALTER_QUEUE` procedure to modify an existing queue. The
-signature is:
+Use the `ALTER_QUEUE` procedure to modify an existing queue. The signature is:
 
 `ALTER_QUEUE(`
 
@@ -25,25 +24,15 @@ signature is:
 
 `<max_retries>`
 
-> `<max_retries>` specifies the maximum number of attempts to remove a
-> message with a dequeue statement. The value of `<max_retries>` is
-> incremented with each `ROLLBACK` statement. When the number of failed
-> attempts reaches the value specified by `<max_retries>`, the message
-> is moved to the exception queue. Specify `0` to indicate that no
-> retries are allowed.
+> `<max_retries>` specifies the maximum number of attempts to remove a message with a dequeue statement. The value of `<max_retries>` is incremented with each `ROLLBACK` statement. When the number of failed attempts reaches the value specified by `<max_retries>`, the message is moved to the exception queue. Specify `0` to indicate that no retries are allowed.
 
 `<retry_delay>`
 
-> `<retry_delay>` specifies the number of seconds until a message is
-> scheduled for re-processing after a `ROLLBACK`. Specify `0` to
-> indicate that the message should be retried immediately (the default).
+> `<retry_delay>` specifies the number of seconds until a message is scheduled for re-processing after a `ROLLBACK`. Specify `0` to indicate that the message should be retried immediately (the default).
 
 `<retention_time>`
 
-> `<retention_time>` specifies the length of time (in seconds) that a
-> message will be stored after being dequeued. You can also specify `0`
-> (the default) to indicate the message should not be retained after
-> dequeueing, or `INFINITE` to retain the message forever.
+> `<retention_time>` specifies the length of time (in seconds) that a message will be stored after being dequeued. You can also specify `0` (the default) to indicate the message should not be retained after dequeueing, or `INFINITE` to retain the message forever.
 
 `<auto_commit>`
 
@@ -55,8 +44,7 @@ signature is:
 
 **Example**
 
-The following command alters a queue named `work_order`, setting the
-`retry_delay` parameter to 5 seconds:
+The following command alters a queue named `work_order`, setting the `retry_delay` parameter to 5 seconds:
 
 ``` text
 EXEC DBMS_AQADM.ALTER_QUEUE(queue_name => 'work_order', retry_delay

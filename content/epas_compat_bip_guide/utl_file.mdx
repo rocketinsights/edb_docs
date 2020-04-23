@@ -2,33 +2,17 @@
 title: UTL_FILE
 ---
 
-The `UTL_FILE` package provides the capability to read from, and write
-to files on the operating system’s file system. Non-superusers must be
-granted `EXECUTE` privilege on the `UTL_FILE` package by a superuser
-before using any of the functions or procedures in the package. For
-example the following command grants the privilege to user `mary`:
+The `UTL_FILE` package provides the capability to read from, and write to files on the operating system’s file system. Non-superusers must be granted `EXECUTE` privilege on the `UTL_FILE` package by a superuser before using any of the functions or procedures in the package. For example the following command grants the privilege to user `mary`:
 
 ``` text
 GRANT EXECUTE ON PACKAGE SYS.UTL_FILE TO mary;
 ```
 
-Also, the operating system username, `enterprisedb`, must have the
-appropriate read and/or write permissions on the directories and files
-to be accessed using the `UTL_FILE` functions and procedures. If the
-required file permissions are not in place, an exception is thrown in
-the `UTL_FILE` function or procedure.
+Also, the operating system username, `enterprisedb`, must have the appropriate read and/or write permissions on the directories and files to be accessed using the `UTL_FILE` functions and procedures. If the required file permissions are not in place, an exception is thrown in the `UTL_FILE` function or procedure.
 
-A handle to the file to be written to, or read from is used to reference
-the file. The *file handle* is defined by a public variable in the
-`UTL_FILE` package named, `UTL_FILE.FILE_TYPE`. A variable of type
-`FILE_TYPE` must be declared to receive the file handle returned by
-calling the `FOPEN` function. The file handle is then used for all
-subsequent operations on the file.
+A handle to the file to be written to, or read from is used to reference the file. The *file handle* is defined by a public variable in the `UTL_FILE` package named, `UTL_FILE.FILE_TYPE`. A variable of type `FILE_TYPE` must be declared to receive the file handle returned by calling the `FOPEN` function. The file handle is then used for all subsequent operations on the file.
 
-References to directories on the file system are done using the
-directory name or alias that is assigned to the directory using the
-`CREATE DIRECTORY` command. The procedures and functions available in
-the `UTL_FILE` package are listed in the following table:
+References to directories on the file system are done using the directory name or alias that is assigned to the directory using the `CREATE DIRECTORY` command. The procedures and functions available in the `UTL_FILE` package are listed in the following table:
 
 <div class="tabularcolumns">
 
@@ -53,16 +37,11 @@ Y{0.2}
 | PUT_LINE(file, buffer)                                                              | n/a         | Writes buffer to the given file. An end-of-line character sequence is added by the PUT_LINE procedure.                                                    |
 | PUTF(file, format \[, arg1 \] \[, ...\])                                             | n/a         | Writes a formatted string to the given file. Up to five substitution parameters, arg1,...arg5 may be specified for replacement in format.                  |
 
-Advanced Server's implementation of `UTL_FILE` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `UTL_FILE` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
 **UTL_FILE Exception Codes**
 
-If a call to a `UTL_FILE` procedure or function raises an exception, you
-can use the condition name to catch the exception. The `UTL_FILE`
-package reports the following exception codes compatible with Oracle
-databases:
+If a call to a `UTL_FILE` procedure or function raises an exception, you can use the condition name to catch the exception. The `UTL_FILE` package reports the following exception codes compatible with Oracle databases:
 
 | **Exception Code** | **Condition name**   |
 | ------------------ | -------------------- |
@@ -76,24 +55,17 @@ databases:
 
 ## Setting File Permissions with utl_file.umask
 
-When a `UTL_FILE` function or procedure creates a file, there are
-default file permissions as shown by the following.
+When a `UTL_FILE` function or procedure creates a file, there are default file permissions as shown by the following.
 
 ``` text
 -rw------- 1 enterprisedb enterprisedb 21 Jul 24 16:08 utlfile
 ```
 
-Note that all permissions are denied on users belonging to the
-`enterprisedb` group as well as all other users. Only the `enterprisedb`
-user has read and write permissions on the created file.
+Note that all permissions are denied on users belonging to the `enterprisedb` group as well as all other users. Only the `enterprisedb` user has read and write permissions on the created file.
 
-If you wish to have a different set of file permissions on files created
-by the `UTL_FILE` functions and procedures, you can accomplish this by
-setting the `utl_file.umask` configuration parameter.
+If you wish to have a different set of file permissions on files created by the `UTL_FILE` functions and procedures, you can accomplish this by setting the `utl_file.umask` configuration parameter.
 
-The `utl_file.umask` parameter sets the *file mode creation mask* or
-simply, the *mask*, in a manner similar to the Linux `umask` command.
-This is for usage only within the Advanced Server `UTL_FILE` package.
+The `utl_file.umask` parameter sets the *file mode creation mask* or simply, the *mask*, in a manner similar to the Linux `umask` command. This is for usage only within the Advanced Server `UTL_FILE` package.
 
 <div class="note">
 
@@ -107,44 +79,30 @@ The `utl_file.umask` parameter is not supported on Windows systems.
 
 </div>
 
-The value specified for `utl_file.umask` is a 3 or 4-character octal
-string that would be valid for the Linux `umask` command. The setting
-determines the permissions on files created by the `UTL_FILE` functions
-and procedures. (Refer to any information source regarding Linux or Unix
-systems for information on file permissions and the usage of the `umask`
-command.)
+The value specified for `utl_file.umask` is a 3 or 4-character octal string that would be valid for the Linux `umask` command. The setting determines the permissions on files created by the `UTL_FILE` functions and procedures. (Refer to any information source regarding Linux or Unix systems for information on file permissions and the usage of the `umask` command.)
 
-The following is an example of setting the file permissions with
-`utl_file.umask`.
+The following is an example of setting the file permissions with `utl_file.umask`.
 
-First, set up the directory in the file system to be used by the
-`UTL_FILE` package. Be sure the operating system account, `enterprisedb`
-or `postgres`, whichever is applicable, can read and write in the
-directory.
+First, set up the directory in the file system to be used by the `UTL_FILE` package. Be sure the operating system account, `enterprisedb` or `postgres`, whichever is applicable, can read and write in the directory.
 
 ``` text
 mkdir /tmp/utldir
 chmod 777 /tmp/utldir
 ```
 
-The `CREATE DIRECTORY` command is issued in `psql` to create the
-directory database object using the file system directory created in the
-preceding step.
+The `CREATE DIRECTORY` command is issued in `psql` to create the directory database object using the file system directory created in the preceding step.
 
 ``` text
 CREATE DIRECTORY utldir AS '/tmp/utldir';
 ```
 
-Set the `utl_file.umask` configuration parameter. The following setting
-allows the file owner any permission. Group users and other users are
-permitted any permission except for the execute permission.
+Set the `utl_file.umask` configuration parameter. The following setting allows the file owner any permission. Group users and other users are permitted any permission except for the execute permission.
 
 ``` text
 SET utl_file.umask TO '0011';
 ```
 
-In the same session during which the `utl_file.umask` parameter is set
-to the desired value, run the `UTL_FILE` functions and procedures.
+In the same session during which the `utl_file.umask` parameter is set to the desired value, run the `UTL_FILE` functions and procedures.
 
 ``` text
 DECLARE
@@ -159,9 +117,7 @@ BEGIN
 END;
 ```
 
-The permission settings on the resulting file show that group users and
-other users have read and write permissions on the file as well as the
-file owner.
+The permission settings on the resulting file show that group users and other users have read and write permissions on the file as well as the file owner.
 
 ``` text
 $ pwd
@@ -171,10 +127,7 @@ total 4
 -rw-rw-rw- 1 enterprisedb enterprisedb 21 Jul 24 16:04 utlfile
 ```
 
-This parameter can also be set on a per role basis with the `ALTER ROLE`
-command, on a per database basis with the `ALTER DATABASE` command, or
-for the entire database server instance by setting it in the
-`postgresql.conf` file.
+This parameter can also be set on a per role basis with the `ALTER ROLE` command, on a per database basis with the `ALTER DATABASE` command, or for the entire database server instance by setting it in the `postgresql.conf` file.
 
 ## FCLOSE
 
@@ -186,13 +139,11 @@ The `FCLOSE` procedure closes an open file.
 
 `<file>`
 
-Variable of type `FILE_TYPE` containing a file handle of the file to be
-closed.
+Variable of type `FILE_TYPE` containing a file handle of the file to be closed.
 
 ## FCLOSE_ALL
 
-The `FLCLOSE_ALL` procedures closes all open files. The procedure
-executes successfully even if there are no open files to close.
+The `FLCLOSE_ALL` procedures closes all open files. The procedure executes successfully even if there are no open files to close.
 
 > `FCLOSE_ALL`
 
@@ -210,8 +161,7 @@ The `FCOPY` procedure copies text from one file to another.
 
 `<location>`
 
-> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the
-> directory containing the file to be copied.
+> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be copied.
 
 `<filename>`
 
@@ -219,8 +169,7 @@ The `FCOPY` procedure copies text from one file to another.
 
 `<dest_dir>`
 
-> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the
-> directory to which the file is to be copied.
+> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory to which the file is to be copied.
 
 `<dest_file>`
 
@@ -228,19 +177,15 @@ The `FCOPY` procedure copies text from one file to another.
 
 `<start_line>`
 
-> Line number in the source file from which copying will begin. The
-> default is 1.
+> Line number in the source file from which copying will begin. The default is 1.
 
 `<end_line>`
 
-> Line number of the last line in the source file to be copied. If
-> omitted or null, copying will go to the last line of the file.
+> Line number of the last line in the source file to be copied. If omitted or null, copying will go to the last line of the file.
 
 **Examples**
 
-The following makes a copy of a file, `C:\TEMP\EMPDIR\empfile.csv`,
-containing a comma-delimited list of employees from the `emp` table. The
-copy, `empcopy.csv`, is then listed.
+The following makes a copy of a file, `C:\TEMP\EMPDIR\empfile.csv`, containing a comma-delimited list of employees from the `emp` table. The copy, `empcopy.csv`, is then listed.
 
 ``` text
 CREATE DIRECTORY empdir AS 'C:/TEMP/EMPDIR';
@@ -292,8 +237,7 @@ The following is the destination file, 'empcopy.csv'
 
 ## FFLUSH
 
-The `FFLUSH` procedure flushes unwritten data from the write buffer to
-the file.
+The `FFLUSH` procedure flushes unwritten data from the write buffer to the file.
 
 > `FFLUSH(<file> FILE_TYPE)`
 
@@ -351,8 +295,7 @@ The `FOPEN` function opens a file for I/O.
 
 `<location>`
 
-> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the
-> directory containing the file to be opened.
+> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be opened.
 
 `<filename>`
 
@@ -360,23 +303,15 @@ The `FOPEN` function opens a file for I/O.
 
 `<open_mode>`
 
-> Mode in which the file will be opened. Modes are: `a` - append to
-> file; `r` - read from file; `w` - write to file.
+> Mode in which the file will be opened. Modes are: `a` - append to file; `r` - read from file; `w` - write to file.
 
 `<max_linesize>`
 
-> Maximum size of a line in characters. In read mode, an exception is
-> thrown if an attempt is made to read a line exceeding
-> `<max_linesize>`. In write and append modes, an exception is thrown if
-> an attempt is made to write a line exceeding `<max_linesize>`. The
-> end-of-line character(s) are not included in determining if the
-> maximum line size is exceeded. This behavior is not compatible with
-> Oracle databases; Oracle does count the end-of-line character(s).
+> Maximum size of a line in characters. In read mode, an exception is thrown if an attempt is made to read a line exceeding `<max_linesize>`. In write and append modes, an exception is thrown if an attempt is made to write a line exceeding `<max_linesize>`. The end-of-line character(s) are not included in determining if the maximum line size is exceeded. This behavior is not compatible with Oracle databases; Oracle does count the end-of-line character(s).
 
 `<filetype>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the opened
-> file.
+> Variable of type `FILE_TYPE` containing the file handle of the opened file.
 
 ## FREMOVE
 
@@ -390,8 +325,7 @@ An exception is thrown if the file to be removed does not exist.
 
 `<location>`
 
-> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the
-> directory containing the file to be removed.
+> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be removed.
 
 `<filename>`
 
@@ -419,8 +353,7 @@ Removed file: empfile.csv
 
 ## FRENAME
 
-The `FRENAME` procedure renames a given file. This effectively moves a
-file from one location to another.
+The `FRENAME` procedure renames a given file. This effectively moves a file from one location to another.
 
 > `FRENAME(<location> VARCHAR2, <filename> VARCHAR2`,
 > 
@@ -432,8 +365,7 @@ file from one location to another.
 
 `<location>`
 
-> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the
-> directory containing the file to be renamed.
+> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be renamed.
 
 `<filename>`
 
@@ -441,8 +373,7 @@ file from one location to another.
 
 `<dest_dir>`
 
-> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the
-> directory to which the renamed file is to exist.
+> Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory to which the renamed file is to exist.
 
 `<dest_file>`
 
@@ -450,15 +381,11 @@ file from one location to another.
 
 `<overwrite>`
 
-> Replaces any existing file named `<dest_file>` in `<dest_dir>` if set
-> to `TRUE`, otherwise an exception is thrown if set to `FALSE`. This is
-> the default.
+> Replaces any existing file named `<dest_file>` in `<dest_dir>` if set to `TRUE`, otherwise an exception is thrown if set to `FALSE`. This is the default.
 
 **Examples**
 
-The following renames a file, `C:\TEMP\EMPDIR\empfile.csv`, containing a
-comma-delimited list of employees from the `emp` table. The renamed
-file, `C:\TEMP\NEWDIR\newemp.csv`, is then listed.
+The following renames a file, `C:\TEMP\EMPDIR\empfile.csv`, containing a comma-delimited list of employees from the `emp` table. The renamed file, `C:\TEMP\NEWDIR\newemp.csv`, is then listed.
 
 ``` text
 CREATE DIRECTORY "newdir" AS 'C:/TEMP/NEWDIR';
@@ -512,9 +439,7 @@ The following is the renamed file, 'newemp.csv'
 
 ## GET_LINE
 
-The `GET_LINE` procedure reads a line of text from a given file up to,
-but not including the end-of-line terminator. A `NO_DATA_FOUND`
-exception is thrown when there are no more lines to read.
+The `GET_LINE` procedure reads a line of text from a given file up to, but not including the end-of-line terminator. A `NO_DATA_FOUND` exception is thrown when there are no more lines to read.
 
 > `GET_LINE(<file> FILE_TYPE, <buffer> OUT VARCHAR2)`
 
@@ -522,8 +447,7 @@ exception is thrown when there are no more lines to read.
 
 `<file>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the opened
-> file.
+> Variable of type `FILE_TYPE` containing the file handle of the opened file.
 
 `<buffer>`
 
@@ -531,8 +455,7 @@ exception is thrown when there are no more lines to read.
 
 **Examples**
 
-The following anonymous block reads through and displays the records in
-file `empfile.csv`.
+The following anonymous block reads through and displays the records in file `empfile.csv`.
 
 ``` text
 DECLARE
@@ -585,8 +508,7 @@ The `IS_OPEN` function determines whether or not the given file is open.
 
 `<file>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the file to
-> be tested.
+> Variable of type `FILE_TYPE` containing the file handle of the file to be tested.
 
 `<status>`
 
@@ -594,8 +516,7 @@ The `IS_OPEN` function determines whether or not the given file is open.
 
 ## NEW_LINE
 
-The `NEW_LINE` procedure writes an end-of-line character sequence in the
-file.
+The `NEW_LINE` procedure writes an end-of-line character sequence in the file.
 
 > `NEW_LINE(<file> FILE_TYPE [, <lines> INTEGER ])`
 
@@ -603,13 +524,11 @@ file.
 
 `<file>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the file to
-> which end-of-line character sequences are to be written.
+> Variable of type `FILE_TYPE` containing the file handle of the file to which end-of-line character sequences are to be written.
 
 `<lines>`
 
-> Number of end-of-line character sequences to be written. The default
-> is one.
+> Number of end-of-line character sequences to be written. The default is one.
 
 **Examples**
 
@@ -690,9 +609,7 @@ UTL_FILE_PUT
 
 ## PUT
 
-The `PUT` procedure writes a string to the given file. No end-of-line
-character sequence is written at the end of the string. Use the
-`NEW_LINE` procedure to add an end-of-line character sequence.
+The `PUT` procedure writes a string to the given file. No end-of-line character sequence is written at the end of the string. Use the `NEW_LINE` procedure to add an end-of-line character sequence.
 
 > `PUT(<file> FILE_TYPE, <buffer> { DATE | NUMBER | TIMESTAMP |`
 > 
@@ -702,8 +619,7 @@ character sequence is written at the end of the string. Use the
 
 `<file>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the file to
-> which the given string is to be written.
+> Variable of type `FILE_TYPE` containing the file handle of the file to which the given string is to be written.
 
 `<buffer>`
 
@@ -711,8 +627,7 @@ character sequence is written at the end of the string. Use the
 
 **Examples**
 
-The following example uses the `PUT` procedure to create a
-comma-delimited file of employees from the `emp` table.
+The following example uses the `PUT` procedure to create a comma-delimited file of employees from the `emp` table.
 
 ``` text
 DECLARE
@@ -776,8 +691,7 @@ UTL_FILE_PUT_LINE
 
 ## PUT_LINE
 
-The `PUT_LINE` procedure writes a single line to the given file
-including an end-of-line character sequence.
+The `PUT_LINE` procedure writes a single line to the given file including an end-of-line character sequence.
 
 > `PUT_LINE(<file> FILE_TYPE`,  
 > `<buffer> {DATE|NUMBER|TIMESTAMP|VARCHAR2})`
@@ -786,8 +700,7 @@ including an end-of-line character sequence.
 
 `<file>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the file to
-> which the given line is to be written.
+> Variable of type `FILE_TYPE` containing the file handle of the file to which the given line is to be written.
 
 `<buffer>`
 
@@ -795,8 +708,7 @@ including an end-of-line character sequence.
 
 **Examples**
 
-The following example uses the `PUT_LINE` procedure to create a
-comma-delimited file of employees from the `emp` table.
+The following example uses the `PUT_LINE` procedure to create a comma-delimited file of employees from the `emp` table.
 
 ``` text
 DECLARE
@@ -852,31 +764,19 @@ The `PUTF` procedure writes a formatted string to the given file.
 
 `<file>`
 
-> Variable of type `FILE_TYPE` containing the file handle of the file to
-> which the formatted line is to be written.
+> Variable of type `FILE_TYPE` containing the file handle of the file to which the formatted line is to be written.
 
 `<format>`
 
-> String to format the text written to the file. The special character
-> sequence, `%s`, is substituted by the value of arg. The special
-> character sequence, `\n`, indicates a new line. Note, however, in
-> Advanced Server, a new line character must be specified with two
-> consecutive backslashes instead of one - `\\n`. This characteristic is
-> not compatible with Oracle databases.
+> String to format the text written to the file. The special character sequence, `%s`, is substituted by the value of arg. The special character sequence, `\n`, indicates a new line. Note, however, in Advanced Server, a new line character must be specified with two consecutive backslashes instead of one - `\\n`. This characteristic is not compatible with Oracle databases.
 
 `<arg1>`
 
-> Up to five arguments, `<arg1>`,...`<arg5>`, to be substituted in the
-> format string for each occurrence of `%s`. The first arg is
-> substituted for the first occurrence of `%s`, the second arg is
-> substituted for the second occurrence of `%s`, etc.
+> Up to five arguments, `<arg1>`,...`<arg5>`, to be substituted in the format string for each occurrence of `%s`. The first arg is substituted for the first occurrence of `%s`, the second arg is substituted for the second occurrence of `%s`, etc.
 
 **Examples**
 
-The following anonymous block produces formatted output containing data
-from the `emp` table. Note the use of the E literal syntax and double
-backslashes for the new line character sequence in the format string
-which are not compatible with Oracle databases.
+The following anonymous block produces formatted output containing data from the `emp` table. Note the use of the E literal syntax and double backslashes for the new line character sequence in the format string which are not compatible with Oracle databases.
 
 ``` text
 DECLARE

@@ -2,8 +2,7 @@
 title: DBMS_ALERT
 ---
 
-The `DBMS_ALERT` package provides the capability to register for, send,
-and receive alerts. The following table lists the supported procedures:
+The `DBMS_ALERT` package provides the capability to register for, send, and receive alerts. The following table lists the supported procedures:
 
 |                                                               |             |                                                       |
 | ------------------------------------------------------------- | ----------- | ----------------------------------------------------- |
@@ -15,35 +14,23 @@ and receive alerts. The following table lists the supported procedures:
 | `WAITANY(<name> OUT, <message> OUT, <status> OUT, <timeout>)` | n/a         | Wait for any registered alert to occur.               |
 | `WAITONE(<name>, <message. OUT, <status> OUT, <timeout>)`     | n/a         | Wait for the specified alert, `<name>`, to occur.     |
 
-Advanced Server's implementation of `DBMS_ALERT` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `DBMS_ALERT` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
-Advanced Server allows a maximum of `500` concurrent alerts. You can use
-the `dbms_alert.max_alerts` GUC variable (located in the
-`postgresql.conf` file) to specify the maximum number of concurrent
-alerts allowed on a system.
+Advanced Server allows a maximum of `500` concurrent alerts. You can use the `dbms_alert.max_alerts` GUC variable (located in the `postgresql.conf` file) to specify the maximum number of concurrent alerts allowed on a system.
 
-To set a value for the `dbms_alert.max_alerts` variable, open the
-`postgresql.conf` file (located by default in
-`/opt/PostgresPlus/10AS/data`) with your choice of editor, and edit the
-`dbms_alert.max_alerts` parameter as shown:
+To set a value for the `dbms_alert.max_alerts` variable, open the `postgresql.conf` file (located by default in `/opt/PostgresPlus/10AS/data`) with your choice of editor, and edit the `dbms_alert.max_alerts` parameter as shown:
 
 > `dbms_alert.max_alerts = <alert_count>`
 
 `<alert_count>`
 
-`alert_count` specifies the maximum number of concurrent alerts. By
-default, the value of `dbms_alert.max_alerts` is `100`. To disable this
-feature, set `dbms_alert.max_alerts` to `0`.
+`alert_count` specifies the maximum number of concurrent alerts. By default, the value of `dbms_alert.max_alerts` is `100`. To disable this feature, set `dbms_alert.max_alerts` to `0`.
 
-For the `dbms_alert.max_alerts` GUC to function correctly, the
-`custom_variable_classes` parameter must contain `dbms_alerts`:
+For the `dbms_alert.max_alerts` GUC to function correctly, the `custom_variable_classes` parameter must contain `dbms_alerts`:
 
 > `custom_variable_classes = 'dbms_alert, …'`
 
-After editing the `postgresql.conf` file parameters, you must restart
-the server for the changes to take effect.
+After editing the `postgresql.conf` file parameters, you must restart the server for the changes to take effect.
 
 <div class="index">
 
@@ -53,8 +40,7 @@ DBMS_ALERT_Register
 
 ## REGISTER
 
-The `REGISTER` procedure enables the current session to be notified of
-the specified alert.
+The `REGISTER` procedure enables the current session to be notified of the specified alert.
 
 > `REGISTER(<name> VARCHAR2)`
 
@@ -66,8 +52,7 @@ Name of the alert to be registered.
 
 **Examples**
 
-The following anonymous block registers for an alert named,
-`alert_test`, then waits for the signal.
+The following anonymous block registers for an alert named, `alert_test`, then waits for the signal.
 
 ``` text
 DECLARE
@@ -165,8 +150,7 @@ Variable receiving the message sent by the `SIGNAL` procedure.
 
 `<status>`
 
-Status code returned by the operation. Possible values are: 0 – alert
-occurred; 1 – timeout occurred.
+Status code returned by the operation. Possible values are: 0 – alert occurred; 1 – timeout occurred.
 
 `<timeout>`
 
@@ -174,8 +158,7 @@ Time to wait for an alert in seconds.
 
 **Examples**
 
-The following anonymous block uses the `WAITANY` procedure to receive an
-alert named, `alert_test` or `any_alert`:
+The following anonymous block uses the `WAITANY` procedure to receive an alert named, `alert_test` or `any_alert`:
 
 ``` text
 DECLARE
@@ -213,8 +196,7 @@ END;
 Issued alert for any_alert
 ```
 
-Control returns to the first anonymous block and the remainder of the
-code is executed:
+Control returns to the first anonymous block and the remainder of the code is executed:
 
 ``` text
 Registered for alert alert_test and any_alert
@@ -227,8 +209,7 @@ Alert timeout: 120 seconds
 
 ## WAITONE
 
-The `WAITONE` procedure waits for the specified registered alert to
-occur.
+The `WAITONE` procedure waits for the specified registered alert to occur.
 
 `WAITONE(<name> VARCHAR2, <message> OUT VARCHAR2`,
 
@@ -246,8 +227,7 @@ Name of the alert.
 
 `<status>`
 
-> Status code returned by the operation. Possible values are: 0 – alert
-> occurred; 1 – timeout occurred.
+> Status code returned by the operation. Possible values are: 0 – alert occurred; 1 – timeout occurred.
 
 `<timeout>`
 
@@ -255,9 +235,7 @@ Name of the alert.
 
 **Examples**
 
-The following anonymous block is similar to the one used in the
-`WAITANY` example except the `WAITONE` procedure is used to receive the
-alert named, `alert_test`.
+The following anonymous block is similar to the one used in the `WAITANY` example except the `WAITONE` procedure is used to receive the alert named, `alert_test`.
 
 ``` text
 DECLARE
@@ -289,8 +267,7 @@ BEGIN
    Waiting for signal...
 ```
 
-Signal sent for `alert_test` sent by an anonymous block in a second
-session:
+Signal sent for `alert_test` sent by an anonymous block in a second session:
 
 ``` text
 DECLARE
@@ -303,8 +280,7 @@ END;
 Issued alert for alert_test
 ```
 
-First session is alerted, control returns to the anonymous block, and
-the remainder of the code is executed:
+First session is alerted, control returns to the anonymous block, and the remainder of the code is executed:
 
 ``` text
 Registered for alert alert_test
@@ -323,9 +299,7 @@ DBMS_ALERT_Comprehensive_example
 
 ## Comprehensive Example
 
-The following example uses two triggers to send alerts when the `dept`
-table or the `emp` table is changed. An anonymous block listens for
-these alerts and displays messages when an alert is received.
+The following example uses two triggers to send alerts when the `dept` table or the `emp` table is changed. An anonymous block listens for these alerts and displays messages when an alert is received.
 
 The following are the triggers on the `dept` and `emp` tables:
 
@@ -363,8 +337,7 @@ BEGIN
 END;
 ```
 
-The following anonymous block is executed in a session while updates to
-the `dept` and `emp` tables occur in other sessions:
+The following anonymous block is executed in a session while updates to the `dept` and `emp` tables occur in other sessions:
 
 ``` text
 DECLARE
@@ -409,8 +382,7 @@ The following change is made by user, john:
 INSERT INTO dept VALUES (60,'HR','LOS ANGELES');
 ```
 
-The following is the output displayed by the anonymous block receiving
-the signals from the triggers:
+The following is the output displayed by the anonymous block receiving the signals from the triggers:
 
 ``` text
 Registered for alerts dept_alert and emp_alert

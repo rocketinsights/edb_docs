@@ -2,8 +2,7 @@
 title: DBMS_UTILITY
 ---
 
-The `DBMS_UTILITY` package provides support for the following various
-utility programs:
+The `DBMS_UTILITY` package provides support for the following various utility programs:
 
 <div class="tabularcolumns">
 
@@ -30,12 +29,9 @@ Y{0.1}Y{0.3}|
 | NAME_TOKENIZE(name, a OUT, b OUT, c OUT, dblink OUT, nextpos OUT)                                                          | Procedure             | n/a               | Parse the given name into its component parts.               |
 | TABLE_TO_COMMA(tab, tablen OUT, list OUT)                                                                                 | Procedure             | n/a               | Convert a table of names to a comma-delimited list.          |
 
-Advanced Server's implementation of `DBMS_UTILITY` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `DBMS_UTILITY` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
-The following table lists the public variables available in the
-`DBMS_UTILITY` package.
+The following table lists the public variables available in the `DBMS_UTILITY` package.
 
 <div class="tabularcolumns">
 
@@ -52,8 +48,7 @@ Y{0.2}Y{0.3}|
 
 ## LNAME_ARRAY
 
-The `LNAME_ARRAY` is for storing lists of long names including
-fully-qualified names.
+The `LNAME_ARRAY` is for storing lists of long names including fully-qualified names.
 
 ``` text
 TYPE lname_array IS `TABLE OF VARCHAR2(4000) INDEX BY BINARY_INTEGER;
@@ -69,19 +64,12 @@ TYPE uncl_array IS TABLE OF VARCHAR2(227) INDEX BY BINARY_INTEGER;
 
 ## ANALYZE_DATABASE, ANALYZE SCHEMA and ANALYZE PART_OBJECT
 
-The `ANALYZE_DATABASE(), ANALYZE_SCHEMA() and ANALYZE_PART_OBJECT()`
-procedures provide the capability to gather statistics on tables in the
-database. When you execute the `ANALYZE` statement, Postgres samples the
-data in a table and records distribution statistics in the
-`pg_statistics system` table.
+The `ANALYZE_DATABASE(), ANALYZE_SCHEMA() and ANALYZE_PART_OBJECT()` procedures provide the capability to gather statistics on tables in the database. When you execute the `ANALYZE` statement, Postgres samples the data in a table and records distribution statistics in the `pg_statistics system` table.
 
-`ANALYZE_DATABASE, ANALYZE_SCHEMA`, and `ANALYZE_PART_OBJECT` differ
-primarily in the number of tables that are processed:
+`ANALYZE_DATABASE, ANALYZE_SCHEMA`, and `ANALYZE_PART_OBJECT` differ primarily in the number of tables that are processed:
 
-  - `ANALYZE_DATABASE` analyzes all tables in all schemas within the
-    current database.
-  - `ANALYZE_SCHEMA` analyzes all tables in a given schema (within the
-    current database).
+  - `ANALYZE_DATABASE` analyzes all tables in all schemas within the current database.
+  - `ANALYZE_SCHEMA` analyzes all tables in a given schema (within the current database).
   - `ANALYZE_PART_OBJECT` analyzes a single table.
 
 The syntax for the `ANALYZE` commands are:
@@ -106,29 +94,17 @@ The syntax for the `ANALYZE` commands are:
 
 `<method>`
 
-> method determines whether the `ANALYZE` procedure populates the
-> `pg_statistics` table or removes entries from the `pg_statistics`
-> table. If you specify a method of `DELETE`, the `ANALYZE` procedure
-> removes the relevant rows from `pg_statistics`. If you specify a
-> method of `COMPUTE` or `ESTIMATE`, the `ANALYZE` procedure analyzes a
-> table (or multiple tables) and records the distribution information in
-> pg_statistics. There is no difference between `COMPUTE` and
-> `ESTIMATE`; both methods execute the Postgres `ANALYZE` statement. All
-> other parameters are validated and then ignored.
+> method determines whether the `ANALYZE` procedure populates the `pg_statistics` table or removes entries from the `pg_statistics` table. If you specify a method of `DELETE`, the `ANALYZE` procedure removes the relevant rows from `pg_statistics`. If you specify a method of `COMPUTE` or `ESTIMATE`, the `ANALYZE` procedure analyzes a table (or multiple tables) and records the distribution information in pg_statistics. There is no difference between `COMPUTE` and `ESTIMATE`; both methods execute the Postgres `ANALYZE` statement. All other parameters are validated and then ignored.
 
 `<estimate_rows>`
 
-> Number of rows upon which to base estimated statistics. One of
-> `<estimate_rows>` or `<estimate_percent>` must be specified if method
-> is `ESTIMATE`.
+> Number of rows upon which to base estimated statistics. One of `<estimate_rows>` or `<estimate_percent>` must be specified if method is `ESTIMATE`.
 > 
 > > This argument is ignored, but is included for compatibility.
 
 `<estimate_percent>`
 
-> Percentage of rows upon which to base estimated statistics. One of
-> `<estimate_rows>` or `<estimate_percent>` must be specified if method
-> is `ESTIMATE`.
+> Percentage of rows upon which to base estimated statistics. One of `<estimate_rows>` or `<estimate_percent>` must be specified if method is `ESTIMATE`.
 > 
 > This argument is ignored, but is included for compatibility.
 
@@ -156,18 +132,13 @@ The syntax for the `ANALYZE` commands are:
 
 `<object_type>`
 
-> Type of object to be analyzed. Valid values are: `T` – table, `I` –
-> index.
+> Type of object to be analyzed. Valid values are: `T` – table, `I` – index.
 > 
 > This argument is ignored, but is included for compatibility.
 
 `<command_type>`
 
-> Type of analyze functionality to perform. Valid values are: `E` -
-> gather estimated statistics based upon on a specified number of rows
-> or a percentage of rows in the `<sample_clause>` clause; `C` - compute
-> exact statistics; or `V` – validate the structure and integrity of the
-> partitions.
+> Type of analyze functionality to perform. Valid values are: `E` - gather estimated statistics based upon on a specified number of rows or a percentage of rows in the `<sample_clause>` clause; `C` - compute exact statistics; or `V` – validate the structure and integrity of the partitions.
 > 
 > This argument is ignored, but is included for compatibility.
 
@@ -187,9 +158,7 @@ The syntax for the `ANALYZE` commands are:
 
 `<sample_clause>`
 
-> If `<command_type>` is `E`, contains the following clause to specify
-> the number of rows or percentage or rows on which to base the
-> estimate.
+> If `<command_type>` is `E`, contains the following clause to specify the number of rows or percentage or rows on which to base the estimate.
 
 `SAMPLE <n> { ROWS | PERCENT }`
 
@@ -197,28 +166,17 @@ The syntax for the `ANALYZE` commands are:
 
 ## CANONICALIZE
 
-The `CANONICALIZE` procedure performs the following operations on an
-input string:
+The `CANONICALIZE` procedure performs the following operations on an input string:
 
-  - If the string is not double-quoted, verifies that it uses the
-    characters of a legal identifier. If not, an exception is thrown. If
-    the string is double-quoted, all characters are allowed.
+  - If the string is not double-quoted, verifies that it uses the characters of a legal identifier. If not, an exception is thrown. If the string is double-quoted, all characters are allowed.
 
-  - If the string is not double-quoted and does not contain periods,
-    uppercases all alphabetic characters and eliminates leading and
-    trailing spaces.
+  - If the string is not double-quoted and does not contain periods, uppercases all alphabetic characters and eliminates leading and trailing spaces.
 
-  - If the string is double-quoted and does not contain periods, strips
-    off the double quotes.
+  - If the string is double-quoted and does not contain periods, strips off the double quotes.
 
-  - If the string contains periods and no portion of the string is
-    double-quoted, uppercases each portion of the string and encloses
-    each portion in double quotes.
+  - If the string contains periods and no portion of the string is double-quoted, uppercases each portion of the string and encloses each portion in double quotes.
 
-  - If the string contains periods and portions of the string are
-    double-quoted, returns the double-quoted portions unchanged
-    including the double quotes and returns the non-double-quoted
-    portions uppercased and enclosed in double quotes.
+  - If the string contains periods and portions of the string are double-quoted, returns the double-quoted portions unchanged including the double quotes and returns the non-double-quoted portions uppercased and enclosed in double quotes.
     
     `CANONICALIZE(<name> VARCHAR2, <canon_name> OUT VARCHAR2`,
     
@@ -236,13 +194,11 @@ input string:
 
 `<canon_len>`
 
-> Number of bytes in `<name>` to canonicalize starting from the first
-> character.
+> Number of bytes in `<name>` to canonicalize starting from the first character.
 
 **Examples**
 
-The following procedure applies the `CANONICALIZE` procedure on its
-input parameter and displays the results.
+The following procedure applies the `CANONICALIZE` procedure on its input parameter and displays the results.
 
 ``` text
 CREATE OR REPLACE PROCEDURE canonicalize (
@@ -292,9 +248,7 @@ Length: 15
 
 ## COMMA_TO_TABLE
 
-The `COMMA_TO_TABLE` procedure converts a comma-delimited list of names
-into a table of names. Each entry in the list becomes a table entry. The
-names must be formatted as valid identifiers.
+The `COMMA_TO_TABLE` procedure converts a comma-delimited list of names into a table of names. Each entry in the list becomes a table entry. The names must be formatted as valid identifiers.
 
 > `COMMA_TO_TABLE(<list> VARCHAR2, <tablen> OUT BINARY_INTEGER`,
 > 
@@ -328,8 +282,7 @@ names must be formatted as valid identifiers.
 
 **Examples**
 
-The following procedure uses the `COMMA_TO_TABLE` procedure to convert a
-list of names to a table. The table entries are then displayed.
+The following procedure uses the `COMMA_TO_TABLE` procedure to convert a list of names to a table. The table entries are then displayed.
 
 ``` text
 CREATE OR REPLACE PROCEDURE comma_to_table (
@@ -366,8 +319,7 @@ The `DB_VERSION` procedure returns the version number of the database.
 
 `<compatibility>`
 
-> Compatibility setting of the database. (To be implementation-defined
-> as to its meaning.)
+> Compatibility setting of the database. (To be implementation-defined as to its meaning.)
 
 **Examples**
 
@@ -389,8 +341,7 @@ Compatibility: EnterpriseDB 10.0.0 on i686-pc-linux-gnu, compiled by GCC gcc (GC
 
 ## EXEC_DDL_STATEMENT
 
-The `EXEC_DDL_STATEMENT` provides the capability to execute a `DDL`
-command.
+The `EXEC_DDL_STATEMENT` provides the capability to execute a `DDL` command.
 
 > `EXEC_DDL_STATEMENT(<parse_string> VARCHAR2)`
 
@@ -414,33 +365,27 @@ BEGIN
 END;
 ```
 
-If the `<parse_string>` does not include a valid DDL statement, Advanced
-Server returns the following error:
+If the `<parse_string>` does not include a valid DDL statement, Advanced Server returns the following error:
 
 ``` text
 edb=#  exec dbms_utility.exec_ddl_statement('select rownum from dual');
 ERROR:  EDB-20001: 'parse_string' must be a valid DDL statement
 ```
 
-In this case, Advanced Server's behavior differs from Oracle's; Oracle
-accepts the invalid `<parse_string>` without complaint.
+In this case, Advanced Server's behavior differs from Oracle's; Oracle accepts the invalid `<parse_string>` without complaint.
 
 ## FORMAT_CALL_STACK
 
-The `FORMAT_CALL_STACK` function returns the formatted contents of the
-current call stack.
+The `FORMAT_CALL_STACK` function returns the formatted contents of the current call stack.
 
 > `DBMS_UTILITY.FORMAT_CALL_STACK`  
 > `return VARCHAR2`
 
-This function can be used in a stored procedure, function or package to
-return the current call stack in a readable format. This function is
-useful for debugging purposes.
+This function can be used in a stored procedure, function or package to return the current call stack in a readable format. This function is useful for debugging purposes.
 
 ## GET_CPU_TIME
 
-The `GET_CPU_TIME` function returns the CPU time in hundredths of a
-second from some arbitrary point in time.
+The `GET_CPU_TIME` function returns the CPU time in hundredths of a second from some arbitrary point in time.
 
 > `<cputime> NUMBER GET_CPU_TIME`
 
@@ -452,8 +397,7 @@ second from some arbitrary point in time.
 
 **Examples**
 
-The following `SELECT` command retrieves the current CPU time, which is
-603 hundredths of a second or .0603 seconds.
+The following `SELECT` command retrieves the current CPU time, which is 603 hundredths of a second or .0603 seconds.
 
 ``` text
 SELECT DBMS_UTILITY.GET_CPU_TIME FROM DUAL;
@@ -467,9 +411,7 @@ get_cpu_time
 
 ## GET_DEPENDENCY
 
-The `GET_DEPENDENCY` procedure provides the capability to list the
-objects that are dependent upon the specified object. `GET_DEPENDENCY`
-does not show dependencies for functions or procedures.
+The `GET_DEPENDENCY` procedure provides the capability to list the objects that are dependent upon the specified object. `GET_DEPENDENCY` does not show dependencies for functions or procedures.
 
 > `GET_DEPENDENCY(<type> VARCHAR2, <schema> VARCHAR2`,
 > 
@@ -479,8 +421,7 @@ does not show dependencies for functions or procedures.
 
 `<type>`
 
-> The object type of `<name>`. Valid values are `INDEX, PACKAGE, PACKAGE
-> BODY, SEQUENCE, TABLE, TRIGGER, TYPE` and `VIEW`.
+> The object type of `<name>`. Valid values are `INDEX, PACKAGE, PACKAGE BODY, SEQUENCE, TABLE, TRIGGER, TYPE` and `VIEW`.
 
 `<schema>`
 
@@ -513,8 +454,7 @@ DEPENDENCIES ON public.EMP
 
 ## GET_HASH_VALUE
 
-The `GET_HASH_VALUE` function provides the capability to compute a hash
-value for a given string.
+The `GET_HASH_VALUE` function provides the capability to compute a hash value for a given string.
 
 > `<hash> NUMBER GET_HASH_VALUE(<name> VARCHAR2, <base> NUMBER`,
 > 
@@ -540,10 +480,7 @@ value for a given string.
 
 **Examples**
 
-The following anonymous block creates a table of hash values using the
-`ename` column of the `emp` table and then displays the key along with
-the hash value. The hash values start at 100 with a maximum of 1024
-distinct values.
+The following anonymous block creates a table of hash values using the `ename` column of the `emp` table and then displays the key along with the hash value. The hash values start at 100 with a maximum of 1024 distinct values.
 
 ``` text
 DECLARE
@@ -580,8 +517,7 @@ MILLER     148
 
 ## GET_PARAMETER_VALUE
 
-The `GET_PARAMETER_VALUE` procedure provides the capability to retrieve
-database initialization parameter settings.
+The `GET_PARAMETER_VALUE` procedure provides the capability to retrieve database initialization parameter settings.
 
 > `<status> BINARY_INTEGER GET_PARAMETER_VALUE(<parnam> VARCHAR2`,
 > 
@@ -591,8 +527,7 @@ database initialization parameter settings.
 
 `<parnam>`
 
-> Name of the parameter whose value is to be returned. The parameters
-> are listed in the `pg_settings` system view.
+> Name of the parameter whose value is to be returned. The parameters are listed in the `pg_settings` system view.
 
 `<intval>`
 
@@ -604,13 +539,11 @@ database initialization parameter settings.
 
 `<status>`
 
-> Returns 0 if the parameter value is `INTEGER` or `BOOLEAN`. Returns 1
-> if the parameter value is a string.
+> Returns 0 if the parameter value is `INTEGER` or `BOOLEAN`. Returns 1 if the parameter value is a string.
 
 **Examples**
 
-The following anonymous block shows the values of two initialization
-parameters.
+The following anonymous block shows the values of two initialization parameters.
 
 ``` text
 DECLARE
@@ -629,8 +562,7 @@ client_encoding: SQL_ASCII
 
 ## GET_TIME
 
-The `GET_TIME` function provides the capability to return the current
-time in hundredths of a second.
+The `GET_TIME` function provides the capability to return the current time in hundredths of a second.
 
 > `<time> NUMBER GET_TIME`
 
@@ -638,8 +570,7 @@ time in hundredths of a second.
 
 `<time>`
 
-> Number of hundredths of a second from the time in which the program is
-> started.
+> Number of hundredths of a second from the time in which the program is started.
 
 **Examples**
 
@@ -661,9 +592,7 @@ SELECT DBMS_UTILITY.GET_TIME FROM DUAL;
 
 ## NAME_TOKENIZE
 
-The `NAME_TOKENIZE` procedure parses a name into its component parts.
-Names without double quotes are uppercased. The double quotes are
-stripped from names with double quotes.
+The `NAME_TOKENIZE` procedure parses a name into its component parts. Names without double quotes are uppercased. The double quotes are stripped from names with double quotes.
 
 > `NAME_TOKENIZE(<name> VARCHAR2, <a> OUT VARCHAR2`,  
 > `<b> OUT VARCHAR2, <c> OUT VARCHAR2, <dblink> OUT VARCHAR2`,  
@@ -699,8 +628,7 @@ stripped from names with double quotes.
 
 **Examples**
 
-The following stored procedure is used to display the returned parameter
-values of the `NAME_TOKENIZE` procedure for various names.
+The following stored procedure is used to display the returned parameter values of the `NAME_TOKENIZE` procedure for various names.
 
 ``` text
 CREATE OR REPLACE PROCEDURE name_tokenize (
@@ -814,9 +742,7 @@ EDB_DBLINK
 
 ## TABLE_TO_COMMA
 
-The `TABLE_TO_COMMA` procedure converts table of names into a
-comma-delimited list of names. Each table entry becomes a list entry.
-The names must be formatted as valid identifiers.
+The `TABLE_TO_COMMA` procedure converts table of names into a comma-delimited list of names. Each table entry becomes a list entry. The names must be formatted as valid identifiers.
 
 `TABLE_TO_COMMA(<tab> { LNAME_ARRAY | UNCL_ARRAY }`,
 
@@ -850,10 +776,7 @@ The names must be formatted as valid identifiers.
 
 **Examples**
 
-The following example first uses the `COMMA_TO_TABLE` procedure to
-convert a comma-delimited list to a table. The `TABLE_TO_COMMA`
-procedure then converts the table back to a comma-delimited list that is
-displayed.
+The following example first uses the `COMMA_TO_TABLE` procedure to convert a comma-delimited list to a table. The `TABLE_TO_COMMA` procedure then converts the table back to a comma-delimited list that is displayed.
 
 ``` text
 CREATE OR REPLACE PROCEDURE table_to_comma (

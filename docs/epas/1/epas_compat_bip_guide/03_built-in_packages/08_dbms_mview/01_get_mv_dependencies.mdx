@@ -2,9 +2,7 @@
 title: GET_MV_DEPENDENCIES
 ---
 
-When given the name of a materialized view, `GET_MV_DEPENDENCIES`
-returns a list of items that depend on the specified view. The signature
-is:
+When given the name of a materialized view, `GET_MV_DEPENDENCIES` returns a list of items that depend on the specified view. The signature is:
 
 > `GET_MV_DEPENDENCIES(`
 > 
@@ -16,13 +14,11 @@ is:
 
 `<list>`
 
-> `<list>` specifies the name of a materialized view, or a
-> comma-separated list of materialized view names.
+> `<list>` specifies the name of a materialized view, or a comma-separated list of materialized view names.
 
 `<deplist>`
 
-> `<deplist>` is a comma-separated list of schema-qualified
-> dependencies. `<deplist>` is a `VARCHAR2` value.
+> `<deplist>` is a comma-separated list of schema-qualified dependencies. `<deplist>` is a `VARCHAR2` value.
 
 **Examples**
 
@@ -37,5 +33,4 @@ BEGIN
 END;
 ```
 
-Displays a list of the dependencies on a materialized view named
-`public.emp_view`.
+Displays a list of the dependencies on a materialized view named `public.emp_view`.

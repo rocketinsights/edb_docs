@@ -2,9 +2,7 @@
 title: REGISTER
 ---
 
-Use the `REGISTER` procedure to register an email address, procedure or
-URL that will be notified when an item is enqueued or dequeued. The
-signature is:
+Use the `REGISTER` procedure to register an email address, procedure or URL that will be notified when an item is enqueued or dequeued. The signature is:
 
 > `REGISTER(`
 > 
@@ -16,10 +14,7 @@ signature is:
 
 `<reg_list>`
 
-> `<reg_list>` is a list of type `AQ$_REG_INFO_LIST`; that provides
-> information about each subscription that you would like to register.
-> Each entry within the list is of the type `AQ$_REG_INFO`, and may
-> contain:
+> `<reg_list>` is a list of type `AQ$_REG_INFO_LIST`; that provides information about each subscription that you would like to register. Each entry within the list is of the type `AQ$_REG_INFO`, and may contain:
 > 
 > <div class="tabularcolumns">
 > 
@@ -74,10 +69,7 @@ signature is:
 
 **Example**
 
-The following anonymous block calls `DBMS_AQ.REGISTER`, registering
-procedures that will be notified when an item is added to or removed
-from a queue. A set of attributes (of `sys.aq$_reg_info` type) is
-provided for each subscription identified in the `DECLARE` section:
+The following anonymous block calls `DBMS_AQ.REGISTER`, registering procedures that will be notified when an item is added to or removed from a queue. A set of attributes (of `sys.aq$_reg_info` type) is provided for each subscription identified in the `DECLARE` section:
 
 ``` text
 DECLARE
@@ -102,6 +94,4 @@ commit;
     /
 ```
 
-The `subscriptionlist` is of type `sys.aq$_reg_info_list`, and contains
-the previously described `sys.aq$_reg_info` objects. The list name and
-an object count are passed to `dbms_aq.register`.
+The `subscriptionlist` is of type `sys.aq$_reg_info_list`, and contains the previously described `sys.aq$_reg_info` objects. The list name and an object count are passed to `dbms_aq.register`.

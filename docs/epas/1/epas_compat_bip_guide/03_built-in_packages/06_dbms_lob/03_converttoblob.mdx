@@ -2,8 +2,7 @@
 title: CONVERTTOBLOB
 ---
 
-The `CONVERTTOBLOB` procedure provides the capability to convert
-character data to binary.
+The `CONVERTTOBLOB` procedure provides the capability to convert character data to binary.
 
 > `CONVERTTOBLOB(<dest_lob> IN OUT BLOB, <src_clob> CLOB,`
 > 
@@ -17,8 +16,7 @@ character data to binary.
 
 `<dest_lob>`
 
-> `BLOB` large object locator to which the character data is to be
-> converted.
+> `BLOB` large object locator to which the character data is to be converted.
 
 `<src_clob>`
 
@@ -30,23 +28,19 @@ character data to binary.
 
 `<dest_offset> IN`
 
-> Position in bytes in the destination `BLOB` where writing of the
-> source `CLOB` should begin. The first byte is offset 1.
+> Position in bytes in the destination `BLOB` where writing of the source `CLOB` should begin. The first byte is offset 1.
 
 `<dest_offset> OUT`
 
-> Position in bytes in the destination `BLOB` after the write operation
-> completes. The first byte is offset 1.
+> Position in bytes in the destination `BLOB` after the write operation completes. The first byte is offset 1.
 
 `<src_offset> IN`
 
-> Position in characters in the source `CLOB` where conversion to the
-> destination `BLOB` should begin. The first character is offset 1.
+> Position in characters in the source `CLOB` where conversion to the destination `BLOB` should begin. The first character is offset 1.
 
 `<src_offset> OUT`
 
-> Position in characters in the source `CLOB` after the conversion
-> operation completes. The first character is offset 1.
+> Position in characters in the source `CLOB` after the conversion operation completes. The first character is offset 1.
 
 `<blob_csid>`
 
@@ -54,8 +48,7 @@ character data to binary.
 
 `<lang_context> IN`
 
-> Language context for the conversion. The default value of 0 is
-> typically used for this setting.
+> Language context for the conversion. The default value of 0 is typically used for this setting.
 
 `<lang_context> OUT`
 
@@ -63,5 +56,4 @@ character data to binary.
 
 `<warning>`
 
-> 0 if the conversion was successful, 1 if an inconvertible character
-> was encountered.
+> 0 if the conversion was successful, 1 if an inconvertible character was encountered.

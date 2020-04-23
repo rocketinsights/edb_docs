@@ -2,9 +2,7 @@
 title: PARSE
 ---
 
-The `PARSE` procedure parses a SQL command or SPL block. If the SQL
-command is a DDL command, it is immediately executed and does not
-require running the `EXECUTE` function.
+The `PARSE` procedure parses a SQL command or SPL block. If the SQL command is a DDL command, it is immediately executed and does not require running the `EXECUTE` function.
 
 > `PARSE(<c> INTEGER, <statement> VARCHAR2, <language_flag> INTEGER)`
 
@@ -16,21 +14,15 @@ require running the `EXECUTE` function.
 
 `<statement>`
 
-> SQL command or SPL block to be parsed. A SQL command must not end with
-> the semi-colon terminator, however an SPL block does require the
-> semi-colon terminator.
+> SQL command or SPL block to be parsed. A SQL command must not end with the semi-colon terminator, however an SPL block does require the semi-colon terminator.
 
 `<language_flag>`
 
-> Language flag provided for compatibility with Oracle syntax. Use
-> `DBMS_SQL.V6, DBMS_SQL.V7` or `DBMS_SQL.native`. This flag is ignored,
-> and all syntax is assumed to be in EnterpriseDB Advanced Server form.
+> Language flag provided for compatibility with Oracle syntax. Use `DBMS_SQL.V6, DBMS_SQL.V7` or `DBMS_SQL.native`. This flag is ignored, and all syntax is assumed to be in EnterpriseDB Advanced Server form.
 
 **Examples**
 
-The following anonymous block creates a table named, `job`. Note that
-DDL statements are executed immediately by the `PARSE` procedure and do
-not require a separate `EXECUTE` step.
+The following anonymous block creates a table named, `job`. Note that DDL statements are executed immediately by the `PARSE` procedure and do not require a separate `EXECUTE` step.
 
 ``` text
 DECLARE
@@ -67,10 +59,7 @@ Number of rows processed: 1
 Number of rows processed: 1
 ```
 
-The following anonymous block uses the `DBMS_SQL` package to execute a
-block containing two `INSERT` statements. Note that the end of the block
-contains a terminating semi-colon, while in the prior example, each
-individual `INSERT` statement does not have a terminating semi-colon.
+The following anonymous block uses the `DBMS_SQL` package to execute a block containing two `INSERT` statements. Note that the end of the block contains a terminating semi-colon, while in the prior example, each individual `INSERT` statement does not have a terminating semi-colon.
 
 ``` text
 DECLARE

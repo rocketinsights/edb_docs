@@ -2,9 +2,7 @@
 title: DBMS_LOB
 ---
 
-The `DBMS_LOB` package provides the capability to operate on large
-objects. The following table lists the supported functions and
-procedures:
+The `DBMS_LOB` package provides the capability to operate on large objects. The following table lists the supported functions and procedures:
 
 <div class="tabularcolumns">
 
@@ -30,9 +28,7 @@ Y{0.2}
 | `WRITE(<lob_loc> IN OUT, <amount>, <offset>, <buffer>)`                                                                                                | n/a             | Write data to a large object.                                                                  |
 | `WRITEAPPEND(<lob_loc> IN OUT, <amount>, <buffer>)`                                                                                                    | n/a             | Write data from the buffer to the end of a large object.                                       |
 
-Advanced Server's implementation of `DBMS_LOB` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `DBMS_LOB` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
 The following table lists the public variables available in the package.
 
@@ -57,13 +53,10 @@ The following table lists the public variables available in the package.
 | `opt_encrypt`             | `INTEGER`     | `2`          |
 | `warn_inconvertible_char` | `INTEGER`     | `1`          |
 
-In the following sections, lengths and offsets are measured in bytes if
-the large objects are `BLOBs`. Lengths and offsets are measured in
-characters if the large objects are `CLOBs`.
+In the following sections, lengths and offsets are measured in bytes if the large objects are `BLOBs`. Lengths and offsets are measured in characters if the large objects are `CLOBs`.
 
 <div class="toctree" data-maxdepth="5">
 
-append compare converttoblob converttoclob copy erase
-get_storage_limit getlength instr read substr trim write writeappend
+append compare converttoblob converttoclob copy erase get_storage_limit getlength instr read substr trim write writeappend
 
 </div>

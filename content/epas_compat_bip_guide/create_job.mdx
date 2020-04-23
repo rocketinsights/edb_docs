@@ -2,10 +2,7 @@
 title: CREATE_JOB
 ---
 
-Use the `CREATE_JOB` procedure to create a job. The procedure comes in
-two forms; the first form of the procedure specifies a schedule within
-the job definition, as well as a job action that will be invoked when
-the job executes:
+Use the `CREATE_JOB` procedure to create a job. The procedure comes in two forms; the first form of the procedure specifies a schedule within the job definition, as well as a job action that will be invoked when the job executes:
 
 > `create_job(`  
 > `<job_name> IN VARCHAR2`,  
@@ -20,9 +17,7 @@ the job executes:
 > `<auto_drop> IN BOOLEAN DEFAULT TRUE`,  
 > `<comments> IN VARCHAR2 DEFAULT NULL)`
 
-The second form uses a job schedule to specify the schedule on which the
-job will execute, and specifies the name of a program that will execute
-when the job runs:
+The second form uses a job schedule to specify the schedule on which the job will execute, and specifies the name of a program that will execute when the job runs:
 
 > `create_job(`  
 > `<job_name> IN VARCHAR2`,  
@@ -37,57 +32,39 @@ when the job runs:
 
 `<job_ame>`
 
-> `<job_name>` specifies the optionally schema-qualified name of the job
-> being created.
+> `<job_name>` specifies the optionally schema-qualified name of the job being created.
 
 `<job_type>`
 
-> `<job_type>` specifies the type of job. The current implementation of
-> `CREATE_JOB` supports a job type of `PLSQL_BLOCK` or
-> `STORED_PROCEDURE`.
+> `<job_type>` specifies the type of job. The current implementation of `CREATE_JOB` supports a job type of `PLSQL_BLOCK` or `STORED_PROCEDURE`.
 
 `<job_action>`
 
-> If `<job_type>` is `PLSQL_BLOCK`, `<job_action>` specifies the content
-> of the PL/SQL block that will be invoked when the job executes. The
-> block must be terminated with a semi-colon (;).
+> If `<job_type>` is `PLSQL_BLOCK`, `<job_action>` specifies the content of the PL/SQL block that will be invoked when the job executes. The block must be terminated with a semi-colon (;).
 > 
-> If `<job_type>` is `STORED_PROCEDURE`, `<job_action>` specifies the
-> optionally schema-qualified name of the procedure.
+> If `<job_type>` is `STORED_PROCEDURE`, `<job_action>` specifies the optionally schema-qualified name of the procedure.
 
 `<number_of_arguments>`
 
-> `<number_of_arguments>` is an `INTEGER` value that specifies the
-> number of arguments expected by the job. The default is `0`.
+> `<number_of_arguments>` is an `INTEGER` value that specifies the number of arguments expected by the job. The default is `0`.
 
 `<start_date>`
 
-> `<start_date>` is a `TIMESTAMP WITH TIME ZONE` value that specifies
-> the first time that the job is scheduled to execute. The default value
-> is `NULL`, indicating that the job should be scheduled to execute when
-> the job is enabled.
+> `<start_date>` is a `TIMESTAMP WITH TIME ZONE` value that specifies the first time that the job is scheduled to execute. The default value is `NULL`, indicating that the job should be scheduled to execute when the job is enabled.
 
 `<repeat_interval>`
 
-> `<repeat_interval>` is a `VARCHAR2` value that specifies how often the
-> job will repeat. If a `<repeat_interval>` is not specified, the job
-> will execute only once. The default value is `NULL`.
+> `<repeat_interval>` is a `VARCHAR2` value that specifies how often the job will repeat. If a `<repeat_interval>` is not specified, the job will execute only once. The default value is `NULL`.
 
 `<end_date>`
 
-> `<end_date>` is a `TIMESTAMP WITH TIME ZONE` value that specifies a
-> time after which the job will no longer execute. If a date is
-> specified, the `<end_date>` must be after `<start_date>`. The default
-> value is `NULL`.
+> `<end_date>` is a `TIMESTAMP WITH TIME ZONE` value that specifies a time after which the job will no longer execute. If a date is specified, the `<end_date>` must be after `<start_date>`. The default value is `NULL`.
 > 
-> Please note that if an `<end_date>` is not specified and a
-> `<repeat_interval>` is specified, the job will repeat indefinitely
-> until it is disabled.
+> Please note that if an `<end_date>` is not specified and a `<repeat_interval>` is specified, the job will repeat indefinitely until it is disabled.
 
 `<program_name>`
 
-> `<program_name>` is the name of a program that will be executed by the
-> job.
+> `<program_name>` is the name of a program that will be executed by the job.
 
 `<schedule_name>`
 
@@ -99,17 +76,11 @@ when the job runs:
 
 `<enabled>`
 
-> `<enabled>` is a `BOOLEAN` value that specifies if the job is enabled
-> when created. By default, a job is created in a disabled state, with
-> `<enabled>` set to `FALSE`. To enable a job, specify a value of `TRUE`
-> when creating the job, or enable the job with the
-> `DBMS_SCHEDULER.ENABLE` procedure.
+> `<enabled>` is a `BOOLEAN` value that specifies if the job is enabled when created. By default, a job is created in a disabled state, with `<enabled>` set to `FALSE`. To enable a job, specify a value of `TRUE` when creating the job, or enable the job with the `DBMS_SCHEDULER.ENABLE` procedure.
 
 `<auto_drop>`
 
-> The `<auto_drop>` parameter is accepted for compatibility and is
-> ignored. By default, a job's status will be changed to `DISABLED`
-> after the time specified in `<end_date>`.
+> The `<auto_drop>` parameter is accepted for compatibility and is ignored. By default, a job's status will be changed to `DISABLED` after the time specified in `<end_date>`.
 
 `<comments>`
 
@@ -132,8 +103,4 @@ EXEC
     comments        => 'This job adds a row to the my_log table.');
 ```
 
-The code fragment creates a job named `update_log` that executes each
-weeknight at 5:00. The job executes a PL/SQL block that inserts the
-current timestamp into a logfile (`my_log`). Since no `end_date` is
-specified, the job will execute until it is disabled by the
-`DBMS_SCHEDULER.DISABLE` procedure.
+The code fragment creates a job named `update_log` that executes each weeknight at 5:00. The job executes a PL/SQL block that inserts the current timestamp into a logfile (`my_log`). Since no `end_date` is specified, the job will execute until it is disabled by the `DBMS_SCHEDULER.DISABLE` procedure.

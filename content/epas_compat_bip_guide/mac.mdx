@@ -2,9 +2,7 @@
 title: MAC
 ---
 
-The `MAC` function uses a user-specified `MAC` function to return the
-hashed `MAC` value of a `RAW` or `CLOB` value. The `MAC` function is
-available in three forms:
+The `MAC` function uses a user-specified `MAC` function to return the hashed `MAC` value of a `RAW` or `CLOB` value. The `MAC` function is available in three forms:
 
 > `MAC`  
 >   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW) RETURN RAW`
@@ -16,13 +14,11 @@ available in three forms:
 
 `<src>`
 
-> `<src>` specifies the value for which the `MAC` value will be
-> generated. Specify a `RAW`, `BLOB`, or `CLOB` value.
+> `<src>` specifies the value for which the `MAC` value will be generated. Specify a `RAW`, `BLOB`, or `CLOB` value.
 
 `<typ>`
 
-> `<typ>` specifies the `MAC` function used. Advanced Server supports
-> the `MAC` functions listed below.
+> `<typ>` specifies the `MAC` function used. Advanced Server supports the `MAC` functions listed below.
 
 | **MAC Functions** |                          |
 | ----------------- | ------------------------ |
@@ -31,13 +27,11 @@ available in three forms:
 
 `<key>`
 
-> `<key>` specifies the key that will be used to calculate the hashed
-> `MAC` value.
+> `<key>` specifies the key that will be used to calculate the hashed `MAC` value.
 
 **Examples**
 
-The following example finds the hashed `MAC` value of the string
-cleartext source:
+The following example finds the hashed `MAC` value of the string cleartext source:
 
 ``` text
 DECLARE
@@ -51,5 +45,4 @@ BEGIN
 END;
 ```
 
-`DBMS_CRYPTO.MAC` uses a key value of `my secret` key when calculating
-the `MAC` value of `cleartext source`.
+`DBMS_CRYPTO.MAC` uses a key value of `my secret` key when calculating the `MAC` value of `cleartext source`.

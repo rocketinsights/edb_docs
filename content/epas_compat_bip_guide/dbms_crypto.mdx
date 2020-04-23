@@ -2,10 +2,7 @@
 title: DBMS_CRYPTO
 ---
 
-The `DBMS_CRYPTO` package provides functions and procedures that allow
-you to encrypt or decrypt `RAW, BLOB` or `CLOB` data. You can also use
-`DBMS_CRYPTO` functions to generate cryptographically strong random
-values.
+The `DBMS_CRYPTO` package provides functions and procedures that allow you to encrypt or decrypt `RAW, BLOB` or `CLOB` data. You can also use `DBMS_CRYPTO` functions to generate cryptographically strong random values.
 
 The following table lists the `DBMS_CRYPTO` Functions and Procedures.
 
@@ -32,8 +29,7 @@ Y{0.1}
 | `RANDOMINTEGER()`                       | `INTEGER`   | Returns a random `INTEGER`.                                                                         |
 | `RANDOMNUMBER()`                        | `NUMBER`    | Returns a random `NUMBER.`                                                                          |
 
-`DBMS_CRYPTO` functions and procedures support the following error
-messages:
+`DBMS_CRYPTO` functions and procedures support the following error messages:
 
 > `ORA-28239 - DBMS_CRYPTO.KeyNull`
 > 
@@ -41,11 +37,9 @@ messages:
 > 
 > `ORA-28827 - DBMS_CRYPTO.CipherSuiteInvalid`
 
-Unlike Oracle, Advanced Server will not return error `ORA-28233` if you
-re-encrypt previously encrypted information.
+Unlike Oracle, Advanced Server will not return error `ORA-28233` if you re-encrypt previously encrypted information.
 
-Please note that `RAW` and `BLOB` are synonyms for the PostgreSQL
-`BYTEA` data type, and `CLOB` is a synonym for `TEXT`.
+Please note that `RAW` and `BLOB` are synonyms for the PostgreSQL `BYTEA` data type, and `CLOB` is a synonym for `TEXT`.
 
 <div class="toctree" data-maxdepth="5">
 

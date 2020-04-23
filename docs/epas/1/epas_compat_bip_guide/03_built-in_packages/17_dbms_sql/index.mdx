@@ -2,16 +2,9 @@
 title: DBMS_SQL
 ---
 
-The `DBMS_SQL` package provides an application interface compatible with
-Oracle databases to the EnterpriseDB dynamic SQL functionality. With
-`DBMS_SQL` you can construct queries and other commands at run time
-(rather than when you write the application). EnterpriseDB Advanced
-Server offers native support for dynamic SQL; `DBMS_SQL` provides a way
-to use dynamic SQL in a fashion compatible with Oracle databases without
-modifying your application.
+The `DBMS_SQL` package provides an application interface compatible with Oracle databases to the EnterpriseDB dynamic SQL functionality. With `DBMS_SQL` you can construct queries and other commands at run time (rather than when you write the application). EnterpriseDB Advanced Server offers native support for dynamic SQL; `DBMS_SQL` provides a way to use dynamic SQL in a fashion compatible with Oracle databases without modifying your application.
 
-`DBMS_SQL` assumes the privileges of the current user when executing
-dynamic SQL statements.
+`DBMS_SQL` assumes the privileges of the current user when executing dynamic SQL statements.
 
 <div class="tabularcolumns">
 
@@ -41,12 +34,9 @@ Y{0.15}Y{0.3}|
 | OPEN_CURSOR                                                                                  | Function              | INTEGER     | Open a cursor.                               |
 | PARSE(c, statement, language_flag)                                                           | Procedure             | n/a         | Parse a statement.                           |
 
-Advanced Server's implementation of `DBMS_SQL` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `DBMS_SQL` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
-The following table lists the public variable available in the
-`DBMS_SQL` package.
+The following table lists the public variable available in the `DBMS_SQL` package.
 
 <div class="tabularcolumns">
 
@@ -63,10 +53,6 @@ Y{0.2}Y{0.6}|
 
 <div class="toctree" data-maxdepth="5">
 
-bind_variable bind_variable_char bind_variable_raw close_cursor
-column_value column_value_char column_value_raw define_column
-define_column_char define_column_raw describe_columns execute
-execute_and_fetch fetch_rows is_open last_row_count open_cursor
-parse
+bind_variable bind_variable_char bind_variable_raw close_cursor column_value column_value_char column_value_raw define_column define_column_char define_column_raw describe_columns execute execute_and_fetch fetch_rows is_open last_row_count open_cursor parse
 
 </div>

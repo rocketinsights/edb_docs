@@ -14,19 +14,15 @@ The signature of the `DROP_PROGRAM` procedure is:
 
 `<program_name>`
 
-> `<program_name>` specifies the name of the program that is being
-> dropped.
+> `<program_name>` specifies the name of the program that is being dropped.
 
 `<force>`
 
-> `<force>` is a `BOOLEAN` value that instructs the server how to handle
-> programs with dependent jobs.
+> `<force>` is a `BOOLEAN` value that instructs the server how to handle programs with dependent jobs.
 > 
-> > Specify `FALSE` to instruct the server to return an error if the
-> > program is referenced by a job.
+> > Specify `FALSE` to instruct the server to return an error if the program is referenced by a job.
 > > 
-> > Specify `TRUE` to instruct the server to disable any jobs that
-> > reference the program before dropping the program.
+> > Specify `TRUE` to instruct the server to disable any jobs that reference the program before dropping the program.
 > 
 > The default value is `FALSE`.
 

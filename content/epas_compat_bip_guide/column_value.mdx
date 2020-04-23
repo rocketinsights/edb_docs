@@ -2,8 +2,7 @@
 title: COLUMN_VALUE
 ---
 
-The `COLUMN_VALUE` procedure defines a variable to receive a value from
-a cursor.
+The `COLUMN_VALUE` procedure defines a variable to receive a value from a cursor.
 
 `COLUMN_VALUE(<c> INTEGER, <position> INTEGER, <value> OUT { BLOB |`
 
@@ -19,13 +18,11 @@ a cursor.
 
 `<position>`
 
-> Position within the cursor of the returned data. The first value in
-> the cursor is position 1.
+> Position within the cursor of the returned data. The first value in the cursor is position 1.
 
 `<value>`
 
-> Variable receiving the data returned in the cursor by a prior fetch
-> call.
+> Variable receiving the data returned in the cursor by a prior fetch call.
 
 `<column_error>`
 
@@ -37,8 +34,7 @@ a cursor.
 
 **Examples**
 
-The following example shows the portion of an anonymous block that
-receives the values from a cursor using the `COLUMN_VALUE` procedure.
+The following example shows the portion of an anonymous block that receives the values from a cursor using the `COLUMN_VALUE` procedure.
 
 ``` text
 DECLARE

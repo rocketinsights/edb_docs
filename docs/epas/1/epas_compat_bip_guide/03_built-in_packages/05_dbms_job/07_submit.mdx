@@ -2,10 +2,7 @@
 title: SUBMIT
 ---
 
-The `SUBMIT` procedure creates a job definition and stores it in the
-database. A job consists of a job identifier, the stored procedure to be
-executed, when the job is to be first run, and a date function that
-calculates the next date/time the job is to be run.
+The `SUBMIT` procedure creates a job definition and stores it in the database. A job consists of a job identifier, the stored procedure to be executed, when the job is to be first run, and a date function that calculates the next date/time the job is to be run.
 
 `SUBMIT(<job> OUT BINARY_INTEGER, <what> VARCHAR2`
 
@@ -27,15 +24,11 @@ calculates the next date/time the job is to be run.
 
 `<interval>`
 
-> Date function that when evaluated, provides the next date/time the job
-> is to run. If `<interval>` is set to null, then the job is run only
-> once. Null is the default.
+> Date function that when evaluated, provides the next date/time the job is to run. If `<interval>` is set to null, then the job is run only once. Null is the default.
 
 `<no_parse>`
 
-> If set to `TRUE`, do not syntax-check the stored procedure upon job
-> creation – check only when the job first executes. If set to `FALSE`,
-> check the procedure upon job creation. The default is `FALSE`.
+> If set to `TRUE`, do not syntax-check the stored procedure upon job creation – check only when the job first executes. If set to `FALSE`, check the procedure upon job creation. The default is `FALSE`.
 > 
 > <div class="note">
 > 
@@ -45,16 +38,13 @@ calculates the next date/time the job is to be run.
 > 
 > </div>
 > 
-> The `<no_parse>` option is not supported in this implementation of
-> `SUBMIT()`. It is included for compatibility only.
+> The `<no_parse>` option is not supported in this implementation of `SUBMIT()`. It is included for compatibility only.
 > 
 > </div>
 
 **Examples**
 
-The following example creates a job using stored procedure, `job_proc`.
-The job will execute immediately and run once a day thereafter as set by
-the `<interval>` parameter, `SYSDATE + 1`.
+The following example creates a job using stored procedure, `job_proc`. The job will execute immediately and run once a day thereafter as set by the `<interval>` parameter, `SYSDATE + 1`.
 
 ``` text
 DECLARE
@@ -68,8 +58,7 @@ END;
 jobid: 104
 ```
 
-The job immediately executes procedure, `job_proc`, populating table,
-jobrun, with a row:
+The job immediately executes procedure, `job_proc`, populating table, jobrun, with a row:
 
 ``` text
 SELECT * FROM jobrun;

@@ -2,18 +2,9 @@
 title: DBMS_AQ
 ---
 
-EDB Postgres Advanced Server Advanced Queueing provides message queueing
-and message processing for the Advanced Server database. User-defined
-messages are stored in a queue; a collection of queues is stored in a
-queue table. Procedures in the DBMS_AQADM package create and manage
-message queues and queue tables. Use the DBMS_AQ package to add
-messages to a queue or remove messages from a queue, or register or
-unregister a PL/SQL callback procedure.
+EDB Postgres Advanced Server Advanced Queueing provides message queueing and message processing for the Advanced Server database. User-defined messages are stored in a queue; a collection of queues is stored in a queue table. Procedures in the DBMS_AQADM package create and manage message queues and queue tables. Use the DBMS_AQ package to add messages to a queue or remove messages from a queue, or register or unregister a PL/SQL callback procedure.
 
-Advanced Server also provides extended (non-compatible) functionality
-for the DBMS_AQ package with SQL commands. Please see the *Database
-Compatibility for Oracle Developers Reference Guide* for detailed
-information about the following SQL commands:
+Advanced Server also provides extended (non-compatible) functionality for the DBMS_AQ package with SQL commands. Please see the *Database Compatibility for Oracle Developers Reference Guide* for detailed information about the following SQL commands:
 
   - `ALTER QUEUE`
   - `ALTER QUEUE TABLE`
@@ -22,9 +13,7 @@ information about the following SQL commands:
   - `DROP QUEUE`
   - `DROP QUEUE TABLE`
 
-The DBMS_AQ package provides procedures that allow you to enqueue a
-message, dequeue a message, and manage callback procedures. The
-supported procedures are:
+The DBMS_AQ package provides procedures that allow you to enqueue a message, dequeue a message, and manage callback procedures. The supported procedures are:
 
 |                    |             |                                                                    |
 | ------------------ | ----------- | ------------------------------------------------------------------ |
@@ -34,9 +23,7 @@ supported procedures are:
 | `REGISTER`         | n/a         | Register a callback procedure.                                     |
 | `UNREGISTER`       | n/a         | Unregister a callback procedure.                                   |
 
-Advanced Server's implementation of DBMS_AQ is a partial implementation
-when compared to Oracle's version. Only those procedures listed in the
-table above are supported.
+Advanced Server's implementation of DBMS_AQ is a partial implementation when compared to Oracle's version. Only those procedures listed in the table above are supported.
 
 Advanced Server supports use of the constants listed below:
 
@@ -65,10 +52,7 @@ Advanced Server supports use of the constants listed below:
 | DBMS_AQ.NAMESPACE_AQ (0)        | Accept notifications from DBMS_AQ queues.                                        | sys.aq$_reg_info.namespace                                   |
 | DBMS_AQ.NAMESPACE_ANONYMOUS (1) | This constant is defined, but will return an error if used                        | sys.aq$_reg_info.namespace                                   |
 
-The DBMS_AQ configuration parameters listed in the following table can
-be defined in the `postgresql.conf` file. After the configuration
-parameters are defined, you can invoke the DBMS_AQ package to use and
-manage messages held in queues and queue tables.
+The DBMS_AQ configuration parameters listed in the following table can be defined in the `postgresql.conf` file. After the configuration parameters are defined, you can invoke the DBMS_AQ package to use and manage messages held in queues and queue tables.
 
 <div class="tabularcolumns">
 

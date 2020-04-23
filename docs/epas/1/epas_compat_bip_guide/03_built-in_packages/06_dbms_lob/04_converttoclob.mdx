@@ -2,8 +2,7 @@
 title: CONVERTTOCLOB
 ---
 
-The `CONVERTTOCLOB` procedure provides the capability to convert binary
-data to character.
+The `CONVERTTOCLOB` procedure provides the capability to convert binary data to character.
 
 > `CONVERTTOCLOB(<dest_lob> IN OUT CLOB, <src_blob> BLOB`,
 > 
@@ -17,8 +16,7 @@ data to character.
 
 `<dest_lob>`
 
-> `CLOB` large object locator to which the binary data is to be
-> converted.
+> `CLOB` large object locator to which the binary data is to be converted.
 
 `<src_blob>`
 
@@ -30,23 +28,19 @@ data to character.
 
 `<dest_offset> IN`
 
-> Position in characters in the destination `CLOB` where writing of the
-> source `BLOB` should begin. The first character is offset 1.
+> Position in characters in the destination `CLOB` where writing of the source `BLOB` should begin. The first character is offset 1.
 
 `<dest_offset> OUT`
 
-> Position in characters in the destination `CLOB` after the write
-> operation completes. The first character is offset 1.
+> Position in characters in the destination `CLOB` after the write operation completes. The first character is offset 1.
 
 `<src_offset> IN`
 
-> Position in bytes in the source `BLOB` where conversion to the
-> destination `CLOB` should begin. The first byte is offset 1.
+> Position in bytes in the source `BLOB` where conversion to the destination `CLOB` should begin. The first byte is offset 1.
 
 `<src_offset> OUT`
 
-> Position in bytes in the source `BLOB` after the conversion operation
-> completes. The first byte is offset 1.
+> Position in bytes in the source `BLOB` after the conversion operation completes. The first byte is offset 1.
 
 `<blob_csid>`
 
@@ -54,8 +48,7 @@ data to character.
 
 `<lang_context> IN`
 
-> Language context for the conversion. The default value of 0 is
-> typically used for this setting.
+> Language context for the conversion. The default value of 0 is typically used for this setting.
 
 `<lang_context> OUT`
 
@@ -63,5 +56,4 @@ data to character.
 
 `<warning>`
 
-> 0 if the conversion was successful, 1 if an inconvertible character
-> was encountered.
+> 0 if the conversion was successful, 1 if an inconvertible character was encountered.

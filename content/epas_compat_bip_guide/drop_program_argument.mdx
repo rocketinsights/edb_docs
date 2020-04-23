@@ -2,9 +2,7 @@
 title: DROP_PROGRAM_ARGUMENT
 ---
 
-Use the `DROP_PROGRAM_ARGUMENT` procedure to drop a program argument.
-The `DROP_PROGRAM_ARGUMENT` procedure comes in two forms; the first form
-uses an argument position to specify which argument to drop:
+Use the `DROP_PROGRAM_ARGUMENT` procedure to drop a program argument. The `DROP_PROGRAM_ARGUMENT` procedure comes in two forms; the first form uses an argument position to specify which argument to drop:
 
 > `drop_program_argument(`  
 > `<program_name> IN VARCHAR2`,  
@@ -20,28 +18,23 @@ The second form takes the argument name:
 
 `<program_name>`
 
-> `<program_name>` specifies the name of the program that is being
-> modified.
+> `<program_name>` specifies the name of the program that is being modified.
 
 `<argument_position>`
 
-> `<argument_position>` specifies the position of the argument that is
-> being dropped.
+> `<argument_position>` specifies the position of the argument that is being dropped.
 
 `<argument_name>`
 
-> `<argument_name>` specifies the name of the argument that is being
-> dropped.
+> `<argument_name>` specifies the name of the argument that is being dropped.
 
 **Examples**
 
-The following call to `DROP_PROGRAM_ARGUMENT` drops the first argument
-in the `update_emp` program:
+The following call to `DROP_PROGRAM_ARGUMENT` drops the first argument in the `update_emp` program:
 
 `DBMS_SCHEDULER.DROP_PROGRAM_ARGUMENT('update_emp', 1);`
 
-The following call to `DROP_PROGRAM_ARGUMENT` drops an argument named
-`emp_name`:
+The following call to `DROP_PROGRAM_ARGUMENT` drops an argument named `emp_name`:
 
 ``` text
 DBMS_SCHEDULER.DROP_PROGRAM_ARGUMENT(update_emp', 'emp_name');

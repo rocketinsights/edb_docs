@@ -2,8 +2,7 @@
 title: CREATE_QUEUE_TABLE
 ---
 
-Use the `CREATE_QUEUE_TABLE` procedure to create a queue table. The
-signature is:
+Use the `CREATE_QUEUE_TABLE` procedure to create a queue table. The signature is:
 
 > `CREATE_QUEUE_TABLE (`
 > 
@@ -39,17 +38,11 @@ signature is:
 
 `<queue_payload_type>`
 
-> The user-defined type of the data that will be stored in the queue
-> table. Please note that to specify a `RAW` data type, you must create
-> a user-defined type that identifies a `RAW` type.
+> The user-defined type of the data that will be stored in the queue table. Please note that to specify a `RAW` data type, you must create a user-defined type that identifies a `RAW` type.
 
 `<storage_clause>`
 
-> Use the `<storage_clause>` parameter to specify attributes for the
-> queue table. Please note that only the `TABLESPACE` option is
-> enforced; all others are accepted for compatibility and ignored. Use
-> the `TABLESPACE` clause to specify the name of a tablespace in which
-> the table will be created.
+> Use the `<storage_clause>` parameter to specify attributes for the queue table. Please note that only the `TABLESPACE` option is enforced; all others are accepted for compatibility and ignored. Use the `TABLESPACE` clause to specify the name of a tablespace in which the table will be created.
 > 
 > `<storage_clause>` may be one or more of the following:
 > 
@@ -67,10 +60,7 @@ signature is:
 
 `<sort_list>`
 
-> `<sort_list>` controls the dequeueing order of the queue; specify the
-> names of the column(s) that will be used to sort the queue (in
-> ascending order). The currently accepted values are the following
-> combinations of `enq_time` and `priority`:
+> `<sort_list>` controls the dequeueing order of the queue; specify the names of the column(s) that will be used to sort the queue (in ascending order). The currently accepted values are the following combinations of `enq_time` and `priority`:
 > 
 > `enq_time, priority`
 > 
@@ -90,8 +80,7 @@ signature is:
 
 `<comment>`
 
-> Use the `<comment>` parameter to provide a comment about the queue
-> table.
+> Use the `<comment>` parameter to provide a comment about the queue table.
 
 `<auto_commit>`
 
@@ -99,8 +88,7 @@ signature is:
 
 `<primary_instance>`
 
-> `<primary_instance>` is accepted for compatibility and stored, but is
-> ignored.
+> `<primary_instance>` is accepted for compatibility and stored, but is ignored.
 
 `<secondary_instance>`
 
@@ -116,9 +104,7 @@ signature is:
 
 **Example**
 
-The following anonymous block first creates a type (`work_order`) with
-attributes that hold a name (a `VARCHAR2`), and a project description (a
-`TEXT`). The block then uses that type to create a queue table:
+The following anonymous block first creates a type (`work_order`) with attributes that hold a name (a `VARCHAR2`), and a project description (a `TEXT`). The block then uses that type to create a queue table:
 
 ``` text
 BEGIN
@@ -133,6 +119,4 @@ EXEC DBMS_AQADM.CREATE_QUEUE_TABLE
 END;
 ```
 
-The queue table is named `work_order_table`, and contains a payload of a
-type `work_order`. A comment notes that this is the `Work order message
-queue table`.
+The queue table is named `work_order_table`, and contains a payload of a type `work_order`. A comment notes that this is the `Work order message queue table`.

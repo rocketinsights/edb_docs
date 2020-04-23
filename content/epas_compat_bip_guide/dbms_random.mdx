@@ -2,9 +2,7 @@
 title: DBMS_RANDOM
 ---
 
-The `DBMS_RANDOM` package provides a number of methods to generate
-random values. The procedures and functions available in the
-`DBMS_RANDOM` package are listed in the following table.
+The `DBMS_RANDOM` package provides a number of methods to generate random values. The procedures and functions available in the `DBMS_RANDOM` package are listed in the following table.
 
 <div class="tabularcolumns">
 
@@ -27,13 +25,11 @@ Y{0.2}
 
 ## INITIALIZE
 
-The `INITIALIZE` procedure initializes the `DBMS_RANDOM` package with a
-seed value. The signature is:
+The `INITIALIZE` procedure initializes the `DBMS_RANDOM` package with a seed value. The signature is:
 
 > `INITIALIZE(<val> IN INTEGER)`
 
-This procedure should be considered deprecated; it is included for
-backward compatibility only.
+This procedure should be considered deprecated; it is included for backward compatibility only.
 
 **Parameter**
 
@@ -43,9 +39,7 @@ backward compatibility only.
 
 **Example**
 
-The following code snippet demonstrates a call to the `INITIALIZE`
-procedure that initializes the `DBMS_RANDOM` package with the seed
-value, `6475`.
+The following code snippet demonstrates a call to the `INITIALIZE` procedure that initializes the `DBMS_RANDOM` package with the seed value, `6475`.
 
 ``` text
 DBMS_RANDOM.INITIALIZE(6475);
@@ -53,8 +47,7 @@ DBMS_RANDOM.INITIALIZE(6475);
 
 ## NORMAL
 
-The `NORMAL` function returns a random number of type `NUMBER`. The
-signature is:
+The `NORMAL` function returns a random number of type `NUMBER`. The signature is:
 
 > `<result> NUMBER NORMAL()`
 
@@ -74,13 +67,11 @@ x:= DBMS_RANDOM.NORMAL();
 
 ## RANDOM
 
-The `RANDOM` function returns a random `INTEGER` value that is greater
-than or equal to -2 ^31 and less than 2 ^31. The signature is:
+The `RANDOM` function returns a random `INTEGER` value that is greater than or equal to -2 ^31 and less than 2 ^31. The signature is:
 
 > `<result> INTEGER RANDOM()`
 
-This function should be considered deprecated; it is included for
-backward compatibility only.
+This function should be considered deprecated; it is included for backward compatibility only.
 
 **Parameter**
 
@@ -90,8 +81,7 @@ backward compatibility only.
 
 **Example**
 
-The following code snippet demonstrates a call to the `RANDOM` function.
-The call returns a random number:
+The following code snippet demonstrates a call to the `RANDOM` function. The call returns a random number:
 
 ``` text
 x := DBMS_RANDOM.RANDOM();
@@ -99,9 +89,7 @@ x := DBMS_RANDOM.RANDOM();
 
 ## SEED
 
-The first form of the `SEED` procedure resets the seed value for the
-`DBMS_RANDOM` package with an `INTEGER` value. The `SEED` procedure is
-available in two forms; the signature of the first form is:
+The first form of the `SEED` procedure resets the seed value for the `DBMS_RANDOM` package with an `INTEGER` value. The `SEED` procedure is available in two forms; the signature of the first form is:
 
 > `SEED(<val> IN INTEGER)`
 
@@ -113,8 +101,7 @@ available in two forms; the signature of the first form is:
 
 **Example**
 
-The following code snippet demonstrates a call to the `SEED` procedure;
-the call sets the seed value at `8495`.
+The following code snippet demonstrates a call to the `SEED` procedure; the call sets the seed value at `8495`.
 
 ``` text
 DBMS_RANDOM.SEED(8495);
@@ -122,9 +109,7 @@ DBMS_RANDOM.SEED(8495);
 
 ## SEED
 
-The second form of the `SEED` procedure resets the seed value for the
-`DBMS_RANDOM` package with a string value. The `SEED` procedure is
-available in two forms; the signature of the second form is:
+The second form of the `SEED` procedure resets the seed value for the `DBMS_RANDOM` package with a string value. The `SEED` procedure is available in two forms; the signature of the second form is:
 
 `SEED(<val> IN VARCHAR2)`
 
@@ -136,8 +121,7 @@ available in two forms; the signature of the second form is:
 
 **Example**
 
-The following code snippet demonstrates a call to the `SEED` procedure;
-the call sets the seed value to `abc123`.
+The following code snippet demonstrates a call to the `SEED` procedure; the call sets the seed value to `abc123`.
 
 ``` text
 DBMS_RANDOM.SEED('abc123');
@@ -145,8 +129,7 @@ DBMS_RANDOM.SEED('abc123');
 
 ## STRING
 
-The `STRING` function returns a random `VARCHAR2` string in a
-user-specified format. The signature of the `STRING` function is:
+The `STRING` function returns a random `VARCHAR2` string in a user-specified format. The signature of the `STRING` function is:
 
 > `<result> VARCHAR2 STRING(<opt> IN CHAR, <len> IN NUMBER)`
 
@@ -180,9 +163,7 @@ user-specified format. The signature of the `STRING` function is:
 
 **Example**
 
-The following code snippet demonstrates a call to the `STRING` function;
-the call returns a random alpha-numeric character string that is 10
-characters long.
+The following code snippet demonstrates a call to the `STRING` function; the call returns a random alpha-numeric character string that is 10 characters long.
 
 ``` text
 x := DBMS_RANDOM.STRING('X', 10);
@@ -194,8 +175,7 @@ The `TERMINATE` procedure has no effect. The signature is:
 
 > `TERMINATE`
 
-The `TERMINATE` procedure should be considered deprecated; the procedure
-is supported for compatibility only.
+The `TERMINATE` procedure should be considered deprecated; the procedure is supported for compatibility only.
 
 <div class="index">
 
@@ -205,9 +185,7 @@ DBMS_RANDOM_VALUE_FIRST_FORM
 
 ## VALUE
 
-The `VALUE` function returns a random `NUMBER` that is greater than or
-equal to 0, and less than 1, with 38 digit precision. The `VALUE`
-function has two forms; the signature of the first form is:
+The `VALUE` function returns a random `NUMBER` that is greater than or equal to 0, and less than 1, with 38 digit precision. The `VALUE` function has two forms; the signature of the first form is:
 
 > `<result> NUMBER VALUE()`
 
@@ -219,8 +197,7 @@ function has two forms; the signature of the first form is:
 
 **Example**
 
-The following code snippet demonstrates a call to the `VALUE` function.
-The call returns a random `NUMBER`:
+The following code snippet demonstrates a call to the `VALUE` function. The call returns a random `NUMBER`:
 
 ``` text
 x := DBMS_RANDOM.VALUE();
@@ -234,9 +211,7 @@ DBMS_RANDOM_VALUE_SECOND_FORM
 
 ## VALUE
 
-The `VALUE` function returns a random `NUMBER` with a value that is
-between user-specified boundaries. The `VALUE` function has two forms;
-the signature of the second form is:
+The `VALUE` function returns a random `NUMBER` with a value that is between user-specified boundaries. The `VALUE` function has two forms; the signature of the second form is:
 
 > `<result> NUMBER VALUE(<low> IN NUMBER, <high> IN NUMBER)`
 
@@ -244,13 +219,11 @@ the signature of the second form is:
 
 `<low>`
 
-> `<low>` specifies the lower boundary for the random value. The random
-> value may be equal to `<low>`.
+> `<low>` specifies the lower boundary for the random value. The random value may be equal to `<low>`.
 
 `<high>`
 
-> `<high>` specifies the upper boundary for the random value; the random
-> value will be less than `<high>`.
+> `<high>` specifies the upper boundary for the random value; the random value will be less than `<high>`.
 
 `<result>`
 
@@ -258,9 +231,7 @@ the signature of the second form is:
 
 **Example**
 
-The following code snippet demonstrates a call to the `VALUE` function.
-The call returns a random `NUMBER` with a value that is greater than or
-equal to 1 and less than 100:
+The following code snippet demonstrates a call to the `VALUE` function. The call returns a random `NUMBER` with a value that is greater than or equal to 1 and less than 100:
 
 ``` text
 x := DBMS_RANDOM.VALUE(1, 100);

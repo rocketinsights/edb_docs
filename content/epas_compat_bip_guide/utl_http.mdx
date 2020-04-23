@@ -2,9 +2,7 @@
 title: UTL_HTTP
 ---
 
-The `UTL_HTTP` package provides a way to use the HTTP or HTTPS protocol
-to retrieve information found at an URL. Advanced Server supports the
-following functions and procedures:
+The `UTL_HTTP` package provides a way to use the HTTP or HTTPS protocol to retrieve information found at an URL. Advanced Server supports the following functions and procedures:
 
 |                                                     |                         |                                                                                                |
 | --------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------- |
@@ -37,9 +35,7 @@ following functions and procedures:
 | WRITE_RAW(r IN OUT, data)                          | n/a                     | Writes data to the HTTP request body in BINARY form.                                           |
 | WRITE_TEXT(r IN OUT, data)                         | n/a                     | Writes data to the HTTP request body in TEXT form.                                             |
 
-Advanced Server's implementation of `UTL_HTTP` is a partial
-implementation when compared to Oracle's version. Only those functions
-and procedures listed in the table above are supported.
+Advanced Server's implementation of `UTL_HTTP` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
 <div class="note">
 
@@ -49,28 +45,19 @@ Note
 
 </div>
 
-In Advanced Server, an `HTTP 4xx` or `HTTP 5xx` response produces a
-database error; in Oracle, this is configurable but `FALSE` by default.
+In Advanced Server, an `HTTP 4xx` or `HTTP 5xx` response produces a database error; in Oracle, this is configurable but `FALSE` by default.
 
 </div>
 
-In Advanced Server, the `UTL_HTTP` text interfaces expect the downloaded
-data to be in the database encoding. All currently-available interfaces
-are text interfaces. In Oracle, the encoding is detected from HTTP
-headers; in the absence of the header, the default is configurable and
-defaults to `ISO-8859-1`.
+In Advanced Server, the `UTL_HTTP` text interfaces expect the downloaded data to be in the database encoding. All currently-available interfaces are text interfaces. In Oracle, the encoding is detected from HTTP headers; in the absence of the header, the default is configurable and defaults to `ISO-8859-1`.
 
 Advanced Server ignores all cookies it receives.
 
-The `UTL_HTTP` exceptions that can be raised in Oracle are not
-recognized by Advanced Server. In addition, the error codes returned by
-Advanced Server are not the same as those returned by Oracle.
+The `UTL_HTTP` exceptions that can be raised in Oracle are not recognized by Advanced Server. In addition, the error codes returned by Advanced Server are not the same as those returned by Oracle.
 
-There are various public constants available with `UTL_HTTP`. These are
-listed in the following tables.
+There are various public constants available with `UTL_HTTP`. These are listed in the following tables.
 
-The following table contains `UTL_HTTP` public constants defining HTTP
-versions and port assignments.
+The following table contains `UTL_HTTP` public constants defining HTTP versions and port assignments.
 
 | **HTTP VERSIONS**             |                                      |
 | ----------------------------- | ------------------------------------ |
@@ -169,9 +156,7 @@ The following table contains `UTL_HTTP` public status code constants.
 
 ## HTML_PIECES
 
-The `UTL_HTTP` package declares a type named `HTML_PIECES`, which is a
-table of type `VARCHAR2 (2000)` indexed by `BINARY INTEGER`. A value of
-this type is returned by the `REQUEST_PIECES` function.
+The `UTL_HTTP` package declares a type named `HTML_PIECES`, which is a table of type `VARCHAR2 (2000)` indexed by `BINARY INTEGER`. A value of this type is returned by the `REQUEST_PIECES` function.
 
 ``` text
 TYPE html_pieces IS TABLE OF VARCHAR2(2000) INDEX BY BINARY_INTEGER;
@@ -192,8 +177,7 @@ TYPE req IS RECORD (
 
 ## RESP
 
-The `RESP` record type holds information about the response from each
-HTTP request.
+The `RESP` record type holds information about the response from each HTTP request.
 
 ``` text
 TYPE resp IS RECORD (
@@ -206,9 +190,7 @@ TYPE resp IS RECORD (
 
 ## BEGIN_REQUEST
 
-The `BEGIN_REQUEST` function initiates a new HTTP request. A network
-connection is established to the web server with the specified URL. The
-signature is:
+The `BEGIN_REQUEST` function initiates a new HTTP request. A network connection is established to the web server with the specified URL. The signature is:
 
 > `BEGIN_REQUEST(<url> IN VARCHAR2, <method> IN VARCHAR2 DEFAULT`  
 > `'GET ', <http_version> IN VARCHAR2 DEFAULT NULL) RETURN`  
@@ -220,8 +202,7 @@ The `BEGIN_REQUEST` function returns a record of type `UTL_HTTP.REQ`.
 
 `<url>`
 
-> `<url>` is the Uniform Resource Locator from which `UTL_HTTP` will
-> return content.
+> `<url>` is the Uniform Resource Locator from which `UTL_HTTP` will return content.
 
 `<method>`
 
@@ -229,17 +210,11 @@ The `BEGIN_REQUEST` function returns a record of type `UTL_HTTP.REQ`.
 
 `<http_version>`
 
-> `<http_version>` is the HTTP protocol version sending the request. The
-> specified values should be either `HTTP/1.0 or HTTP/1.1`. The default
-> is null in which case the latest HTTP protocol version supported by
-> the `UTL_HTTP` package is used which is 1.1.
+> `<http_version>` is the HTTP protocol version sending the request. The specified values should be either `HTTP/1.0 or HTTP/1.1`. The default is null in which case the latest HTTP protocol version supported by the `UTL_HTTP` package is used which is 1.1.
 
 ## END_REQUEST
 
-The `END_REQUEST` procedure terminates an HTTP request. Use the
-`END_REQUEST` procedure to terminate an HTTP request without completing
-it and waiting for the response. The normal process is to begin the
-request, get the response, then close the response. The signature is:
+The `END_REQUEST` procedure terminates an HTTP request. Use the `END_REQUEST` procedure to terminate an HTTP request without completing it and waiting for the response. The normal process is to begin the request, get the response, then close the response. The signature is:
 
 > `END_REQUEST(<r> IN OUT UTL_HTTP.REQ)`
 
@@ -251,10 +226,7 @@ request, get the response, then close the response. The signature is:
 
 ## END_RESPONSE
 
-The `END_RESPONSE` procedure terminates the HTTP response. The
-`END_RESPONSE` procedure completes the HTTP request and response. This
-is the normal method to end the request and response process. The
-signature is:
+The `END_RESPONSE` procedure terminates the HTTP response. The `END_RESPONSE` procedure completes the HTTP request and response. This is the normal method to end the request and response process. The signature is:
 
 > `END_RESPONSE(<r> IN OUT UTL_HTTP.RESP)`
 
@@ -266,9 +238,7 @@ signature is:
 
 ## GET_BODY_CHARSET
 
-The `GET_BODY_CHARSET` program is available in the form of both a
-procedure and a function. A call to `GET_BODY_CHARSET` returns the
-default character set of the body of future HTTP requests.
+The `GET_BODY_CHARSET` program is available in the form of both a procedure and a function. A call to `GET_BODY_CHARSET` returns the default character set of the body of future HTTP requests.
 
 The procedure signature is:
 
@@ -300,8 +270,7 @@ edb=# SELECT UTL_HTTP.GET_BODY_CHARSET() FROM DUAL;
 
 ## GET_FOLLOW_REDIRECT
 
-The `GET_FOLLOW_REDIRECT` procedure returns the current setting for the
-maximum number of redirections allowed. The signature is:
+The `GET_FOLLOW_REDIRECT` procedure returns the current setting for the maximum number of redirections allowed. The signature is:
 
 > `GET_FOLLOW_REDIRECT(<max_redirects> OUT INTEGER)`
 
@@ -313,8 +282,7 @@ maximum number of redirections allowed. The signature is:
 
 ## GET_HEADER
 
-The `GET_HEADER` procedure returns the `nth` header of the HTTP
-response. The signature is:
+The `GET_HEADER` procedure returns the `nth` header of the HTTP response. The signature is:
 
 > `GET_HEADER(<r> IN OUT UTL_HTTP.RESP, <n> INTEGER, <name> OUT`  
 > `VARCHAR2, <value> OUT VARCHAR2)`
@@ -399,8 +367,7 @@ Connection: keep-alive
 
 ## GET_HEADER_BY_NAME
 
-The `GET_HEADER_BY_NAME` procedure returns the header of the HTTP
-response according to the specified name. The signature is:
+The `GET_HEADER_BY_NAME` procedure returns the header of the HTTP response according to the specified name. The signature is:
 
 > `GET_HEADER_BY_NAME(<r> IN OUT UTL_HTTP.RESP, <name> VARCHAR2`,  
 > `<value> OUT VARCHAR2, <n> INTEGER DEFAULT 1)`
@@ -421,8 +388,7 @@ response according to the specified name. The signature is:
 
 `<n>`
 
-> `<n>` is the `nth` header of the HTTP response record to retrieve
-> according to the values specified by `<name>`. The default is 1.
+> `<n>` is the `nth` header of the HTTP response record to retrieve according to the values specified by `<name>`. The default is 1.
 
 **Examples**
 
@@ -447,8 +413,7 @@ Content-Type: text/html; charset=utf-8
 
 ## GET_HEADER_COUNT
 
-The `GET_HEADER_COUNT` function returns the number of HTTP response
-headers. The signature is:
+The `GET_HEADER_COUNT` function returns the number of HTTP response headers. The signature is:
 
 > `GET_HEADER_COUNT(<r> IN OUT UTL_HTTP.RESP) RETURN INTEGER`
 
@@ -462,8 +427,7 @@ This function returns an `INTEGER` value.
 
 ## GET_RESPONSE
 
-The `GET_RESPONSE` function sends the network request and returns any
-HTTP response. The signature is:
+The `GET_RESPONSE` function sends the network request and returns any HTTP response. The signature is:
 
 > `GET_RESPONSE(<r> IN OUT UTL_HTTP.REQ) RETURN UTL_HTTP.RESP`
 
@@ -477,8 +441,7 @@ This function returns a `UTL_HTTP.RESP` record.
 
 ## GET_RESPONSE_ERROR_CHECK
 
-The `GET_RESPONSE_ERROR_CHECK` procedure returns whether or not response
-error check is set. The signature is:
+The `GET_RESPONSE_ERROR_CHECK` procedure returns whether or not response error check is set. The signature is:
 
 > `GET_RESPONSE_ERROR_CHECK(<enable> OUT BOOLEAN)`
 
@@ -486,13 +449,11 @@ error check is set. The signature is:
 
 `<enable>`
 
-> `<enable>` returns `TRUE` if response error check is set, otherwise it
-> returns `FALSE`.
+> `<enable>` returns `TRUE` if response error check is set, otherwise it returns `FALSE`.
 
 ## GET_TRANSFER_TIMEOUT
 
-The `GET_TRANSFER_TIMEOUT` procedure returns the current, default
-transfer timeout setting for HTTP requests. The signature is:
+The `GET_TRANSFER_TIMEOUT` procedure returns the current, default transfer timeout setting for HTTP requests. The signature is:
 
 > `GET_TRANSFER_TIMEOUT(<timeout> OUT INTEGER)`
 
@@ -504,13 +465,9 @@ transfer timeout setting for HTTP requests. The signature is:
 
 ## READ_LINE
 
-The `READ_LINE` procedure returns the data from the HTTP response body
-in text form until the end of line is reached. A `CR` character, a `LF`
-character, a `CR LF` sequence, or the end of the response body
-constitutes the end of line. The signature is:
+The `READ_LINE` procedure returns the data from the HTTP response body in text form until the end of line is reached. A `CR` character, a `LF` character, a `CR LF` sequence, or the end of the response body constitutes the end of line. The signature is:
 
-> `READ_LINE(<r> IN OUT UTL_HTTP.RESP, <data> OUT VARCHAR2`,
-> `<remove_crlf> BOOLEAN DEFAULT FALSE)`
+> `READ_LINE(<r> IN OUT UTL_HTTP.RESP, <data> OUT VARCHAR2`, `<remove_crlf> BOOLEAN DEFAULT FALSE)`
 
 **Parameters**
 
@@ -524,13 +481,11 @@ constitutes the end of line. The signature is:
 
 `<remove_crlf>`
 
-> Set `<remove_crlf>` to `TRUE` to remove new line characters, otherwise
-> set to `FALSE`. The default is `FALSE`.
+> Set `<remove_crlf>` to `TRUE` to remove new line characters, otherwise set to `FALSE`. The default is `FALSE`.
 
 **Examples**
 
-The following example retrieves and displays the body of the specified
-website.
+The following example retrieves and displays the body of the specified website.
 
 ``` text
 DECLARE
@@ -586,9 +541,7 @@ The following is the output.
 
 ## READ_RAW
 
-The `READ_RAW` procedure returns the data from the HTTP response body in
-binary form. The number of bytes returned is specified by the `<len>`
-parameter. The signature is:
+The `READ_RAW` procedure returns the data from the HTTP response body in binary form. The number of bytes returned is specified by the `<len>` parameter. The signature is:
 
 > `READ_RAW(<r> IN OUT UTL_HTTP.RESP, <data> OUT RAW, <len>` `INTEGER)`
 
@@ -608,8 +561,7 @@ parameter. The signature is:
 
 **Examples**
 
-The following example retrieves and displays the first 150 bytes in
-binary form.
+The following example retrieves and displays the first 150 bytes in binary form.
 
 ``` text
 DECLARE
@@ -636,12 +588,9 @@ c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f
 
 ## READ_TEXT
 
-The `READ_TEXT` procedure returns the data from the HTTP response body
-in text form. The maximum number of characters returned is specified by
-the `<len>` parameter. The signature is:
+The `READ_TEXT` procedure returns the data from the HTTP response body in text form. The maximum number of characters returned is specified by the `<len>` parameter. The signature is:
 
-> `READ_TEXT(<r> IN OUT UTL_HTTP.RESP, <data> OUT VARCHAR2, <len>`
-> `INTEGER)`
+> `READ_TEXT(<r> IN OUT UTL_HTTP.RESP, <data> OUT VARCHAR2, <len>` `INTEGER)`
 
 **Parameters**
 
@@ -685,26 +634,21 @@ The following is the output.
 
 ## REQUEST
 
-The `REQUEST` function returns the first 2000 bytes retrieved from a
-user-specified URL. The signature is:
+The `REQUEST` function returns the first 2000 bytes retrieved from a user-specified URL. The signature is:
 
 > `REQUEST(<url> IN VARCHAR2) RETURN VARCHAR2`
 
-If the data found at the given URL is longer than 2000 bytes, the
-remainder will be discarded. If the data found at the given URL is
-shorter than 2000 bytes, the result will be shorter than 2000 bytes.
+If the data found at the given URL is longer than 2000 bytes, the remainder will be discarded. If the data found at the given URL is shorter than 2000 bytes, the result will be shorter than 2000 bytes.
 
 **Parameters**
 
 `<url>`
 
-> `<url>` is the Uniform Resource Locator from which UTL_HTTP will
-> return content.
+> `<url>` is the Uniform Resource Locator from which UTL_HTTP will return content.
 
 **Example**
 
-The following command returns the first 2000 bytes retrieved from the
-EnterpriseDB website:
+The following command returns the first 2000 bytes retrieved from the EnterpriseDB website:
 
 ``` text
 SELECT UTL_HTTP.REQUEST('http://www.enterprisedb.com/') FROM DUAL;
@@ -712,8 +656,7 @@ SELECT UTL_HTTP.REQUEST('http://www.enterprisedb.com/') FROM DUAL;
 
 ## REQUEST_PIECES
 
-The `REQUEST_PIECES` function returns a table of 2000-byte segments
-retrieved from an URL. The signature is:
+The `REQUEST_PIECES` function returns a table of 2000-byte segments retrieved from an URL. The signature is:
 
 > `REQUEST_PIECES(<url> IN VARCHAR2, <max_pieces> NUMBER IN`  
 > `DEFAULT 32767) RETURN UTL_HTTP.HTML_PIECES`
@@ -722,20 +665,15 @@ retrieved from an URL. The signature is:
 
 `<url>`
 
-> `<url>` is the Uniform Resource Locator from which `UTL_HTTP` will
-> return content.
+> `<url>` is the Uniform Resource Locator from which `UTL_HTTP` will return content.
 
 `<max_pieces>`
 
-> `<max_pieces>` specifies the maximum number of 2000-byte segments that
-> the `REQUEST_PIECES` function will return. If `<max_pieces>` specifies
-> more units than are available at the specified `<url>`, the final unit
-> will contain fewer bytes.
+> `<max_pieces>` specifies the maximum number of 2000-byte segments that the `REQUEST_PIECES` function will return. If `<max_pieces>` specifies more units than are available at the specified `<url>`, the final unit will contain fewer bytes.
 
 **Example**
 
-The following example returns the first four 2000 byte segments
-retrieved from the EnterpriseDB website:
+The following example returns the first four 2000 byte segments retrieved from the EnterpriseDB website:
 
 ``` text
 DECLARE
@@ -747,8 +685,7 @@ END
 
 ## SET_BODY_CHARSET
 
-The `SET_BODY_CHARSET` procedure sets the default character set of the
-body of future HTTP requests. The signature is:
+The `SET_BODY_CHARSET` procedure sets the default character set of the body of future HTTP requests. The signature is:
 
 > `SET_BODY_CHARSET(<charset> VARCHAR2 DEFAULT NULL)`
 
@@ -756,25 +693,19 @@ body of future HTTP requests. The signature is:
 
 `<charset>`
 
-> `<charset>` is the character set of the body of future requests. The
-> default is null in which case the database character set is assumed.
+> `<charset>` is the character set of the body of future requests. The default is null in which case the database character set is assumed.
 
 ## SET_FOLLOW_REDIRECT
 
-The `SET_FOLLOW_REDIRECT` procedure sets the maximum number of times the
-HTTP redirect instruction is to be followed in the response to this
-request or future requests. This procedures has two signatures:
+The `SET_FOLLOW_REDIRECT` procedure sets the maximum number of times the HTTP redirect instruction is to be followed in the response to this request or future requests. This procedures has two signatures:
 
 > `SET_FOLLOW_REDIRECT(<max_redirects> IN INTEGER DEFAULT 3)`
 
 and
 
-> `SET_FOLLOW_REDIRECT(<r> IN OUT UTL_HTTP.REQ, <max_redirects>` `IN
-> INTEGER DEFAULT 3)`
+> `SET_FOLLOW_REDIRECT(<r> IN OUT UTL_HTTP.REQ, <max_redirects>` `IN INTEGER DEFAULT 3)`
 
-Use the second form to change the maximum number of redirections for an
-individual request that a request inherits from the session default
-settings.
+Use the second form to change the maximum number of redirections for an individual request that a request inherits from the session default settings.
 
 **Parameters**
 
@@ -784,13 +715,11 @@ settings.
 
 `<max_redirects>`
 
-> `<max_redirects>` is maximum number of redirections allowed. Set to 0
-> to disable redirections. The default is 3.
+> `<max_redirects>` is maximum number of redirections allowed. Set to 0 to disable redirections. The default is 3.
 
 ## SET_HEADER
 
-The `SET_HEADER` procedure sets the HTTP request header. The signature
-is:
+The `SET_HEADER` procedure sets the HTTP request header. The signature is:
 
 > `SET_HEADER(<r> IN OUT UTL_HTTP.REQ, <name> IN VARCHAR2, <value>`  
 > `IN VARCHAR2 DEFAULT NULL)`
@@ -811,9 +740,7 @@ is:
 
 ## SET_RESPONSE_ERROR_CHECK
 
-The `SET_RESPONSE_ERROR_CHECK` procedure determines whether or not HTTP
-4xx and 5xx status codes returned by the `GET_RESPONSE` function should
-be interpreted as errors. The signature is:
+The `SET_RESPONSE_ERROR_CHECK` procedure determines whether or not HTTP 4xx and 5xx status codes returned by the `GET_RESPONSE` function should be interpreted as errors. The signature is:
 
 > `SET_RESPONSE_ERROR_CHECK(<enable> IN BOOLEAN DEFAULT FALSE)`
 
@@ -821,25 +748,19 @@ be interpreted as errors. The signature is:
 
 `<enable>`
 
-> Set `<enable>` to `TRUE` if HTTP 4xx and 5xx status codes are to be
-> treated as errors, otherwise set to `FALSE`. The default is `FALSE`.
+> Set `<enable>` to `TRUE` if HTTP 4xx and 5xx status codes are to be treated as errors, otherwise set to `FALSE`. The default is `FALSE`.
 
 ## SET_TRANSFER_TIMEOUT
 
-The `SET_TRANSFER_TIMEOUT` procedure sets the default, transfer timeout
-setting for waiting for a response from an HTTP request. This procedure
-has two signatures:
+The `SET_TRANSFER_TIMEOUT` procedure sets the default, transfer timeout setting for waiting for a response from an HTTP request. This procedure has two signatures:
 
 > `SET_TRANSFER_TIMEOUT(<timeout> IN INTEGER DEFAULT 60)`
 
 and
 
-> `SET_TRANSFER_TIMEOUT(<r> IN OUT UTL_HTTP.REQ, <timeout> IN` `INTEGER
-> DEFAULT 60)`
+> `SET_TRANSFER_TIMEOUT(<r> IN OUT UTL_HTTP.REQ, <timeout> IN` `INTEGER DEFAULT 60)`
 
-Use the second form to change the transfer timeout setting for an
-individual request that a request inherits from the session default
-settings.
+Use the second form to change the transfer timeout setting for an individual request that a request inherits from the session default settings.
 
 **Parameters**
 
@@ -849,14 +770,11 @@ settings.
 
 `<timeout>`
 
-> `<timeout>` is the transfer timeout setting in seconds for HTTP
-> requests. The default is 60 seconds.
+> `<timeout>` is the transfer timeout setting in seconds for HTTP requests. The default is 60 seconds.
 
 ## WRITE_LINE
 
-The `WRITE_LINE` procedure writes data to the HTTP request body in text
-form; the text is terminated with a CRLF character pair. The signature
-is:
+The `WRITE_LINE` procedure writes data to the HTTP request body in text form; the text is terminated with a CRLF character pair. The signature is:
 
 > `WRITE_LINE(<r> IN OUT UTL_HTTP.REQ, <data> IN VARCHAR2)`
 
@@ -872,10 +790,7 @@ is:
 
 **Example**
 
-The following example writes data (`Account balance $500.00`) in text
-form to the request body to be sent using the HTTP `POST` method. The
-data is sent to a hypothetical web application (`post.php`) that accepts
-and processes data.
+The following example writes data (`Account balance $500.00`) in text form to the request body to be sent using the HTTP `POST` method. The data is sent to a hypothetical web application (`post.php`) that accepts and processes data.
 
 ``` text
 DECLARE
@@ -893,8 +808,7 @@ BEGIN
 END;
 ```
 
-Assuming the web application successfully processed the `POST` method,
-the following output would be displayed:
+Assuming the web application successfully processed the `POST` method, the following output would be displayed:
 
 ``` text
 Status Code: 200
@@ -903,8 +817,7 @@ Reason Phrase: OK
 
 ## WRITE_RAW
 
-The `WRITE_RAW` procedure writes data to the HTTP request body in binary
-form. The signature is:
+The `WRITE_RAW` procedure writes data to the HTTP request body in binary form. The signature is:
 
 > `WRITE_RAW(<r> IN OUT UTL_HTTP.REQ, <data> IN RAW)`
 
@@ -920,9 +833,7 @@ form. The signature is:
 
 **Example**
 
-The following example writes data in binary form to the request body to
-be sent using the HTTP POST method to a hypothetical web application
-that accepts and processes such data.
+The following example writes data in binary form to the request body to be sent using the HTTP POST method to a hypothetical web application that accepts and processes such data.
 
 ``` text
 DECLARE
@@ -941,11 +852,9 @@ BEGIN
 END;
 ```
 
-The text string shown in the `HEXTORAW` function is the hexadecimal
-translation of the text `Testing POST method in HTTP request`.
+The text string shown in the `HEXTORAW` function is the hexadecimal translation of the text `Testing POST method in HTTP request`.
 
-Assuming the web application successfully processed the `POST` method,
-the following output would be displayed:
+Assuming the web application successfully processed the `POST` method, the following output would be displayed:
 
 ``` text
 Status Code: 200
@@ -954,8 +863,7 @@ Reason Phrase: OK
 
 ## WRITE_TEXT
 
-The `WRITE_TEXT` procedure writes data to the HTTP request body in text
-form. The signature is:
+The `WRITE_TEXT` procedure writes data to the HTTP request body in text form. The signature is:
 
 > `WRITE_TEXT(<r> IN OUT UTL_HTTP.REQ, <data> IN VARCHAR2)`
 
@@ -971,10 +879,7 @@ form. The signature is:
 
 **Example**
 
-The following example writes data (`Account balance $500.00`) in text
-form to the request body to be sent using the HTTP `POST` method. The
-data is sent to a hypothetical web application (`post.php`) that accepts
-and processes data.
+The following example writes data (`Account balance $500.00`) in text form to the request body to be sent using the HTTP `POST` method. The data is sent to a hypothetical web application (`post.php`) that accepts and processes data.
 
 ``` text
 DECLARE
@@ -992,8 +897,7 @@ BEGIN
 END;
 ```
 
-Assuming the web application successfully processed the `POST` method,
-the following output would be displayed:
+Assuming the web application successfully processed the `POST` method, the following output would be displayed:
 
 ``` text
 Status Code: 200

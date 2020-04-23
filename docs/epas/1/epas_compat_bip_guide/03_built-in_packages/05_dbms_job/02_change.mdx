@@ -2,9 +2,7 @@
 title: CHANGE
 ---
 
-The `CHANGE` procedure modifies certain job attributes including the
-stored procedure to be run, the next date/time the job is to be run, and
-how often it is to be run.
+The `CHANGE` procedure modifies certain job attributes including the stored procedure to be run, the next date/time the job is to be run, and how often it is to be run.
 
 `CHANGE(<job> BINARY_INTEGER <what> VARCHAR2, <next_date> DATE,`
 
@@ -18,19 +16,15 @@ how often it is to be run.
 
 `<what>`
 
-> Stored procedure name. Set this parameter to null if the existing
-> value is to remain unchanged.
+> Stored procedure name. Set this parameter to null if the existing value is to remain unchanged.
 
 `<next_date>`
 
-> Date/time when the job is to be run next. Set this parameter to null
-> if the existing value is to remain unchanged.
+> Date/time when the job is to be run next. Set this parameter to null if the existing value is to remain unchanged.
 
 `<interval>`
 
-> Date function that when evaluated, provides the next date/time the job
-> is to run. Set this parameter to null if the existing value is to
-> remain unchanged.
+> Date function that when evaluated, provides the next date/time the job is to run. Set this parameter to null if the existing value is to remain unchanged.
 
 `<instance>`
 
@@ -42,8 +36,7 @@ how often it is to be run.
 
 **Examples**
 
-Change the job to run next on December 13, 2007. Leave other parameters
-unchanged.
+Change the job to run next on December 13, 2007. Leave other parameters unchanged.
 
 ``` text
 BEGIN

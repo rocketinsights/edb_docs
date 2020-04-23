@@ -2,8 +2,7 @@
 title: UNREGISTER
 ---
 
-Use the `UNREGISTER` procedure to turn off notifications related to
-enqueueing and dequeueing. The signature is:
+Use the `UNREGISTER` procedure to turn off notifications related to enqueueing and dequeueing. The signature is:
 
 > `UNREGISTER(`
 > 
@@ -15,10 +14,7 @@ enqueueing and dequeueing. The signature is:
 
 `<reg_list>`
 
-> `<reg_list>` is a list of type `AQ$_REG_INFO_LIST`; that provides
-> information about each subscription that you would like to register.
-> Each entry within the list is of the type `AQ$_REG_INFO`, and may
-> contain:
+> `<reg_list>` is a list of type `AQ$_REG_INFO_LIST`; that provides information about each subscription that you would like to register. Each entry within the list is of the type `AQ$_REG_INFO`, and may contain:
 
 <div class="tabularcolumns">
 
@@ -75,8 +71,7 @@ Y{0.2}
 
 **Example**
 
-The following anonymous block calls `DBMS_AQ.UNREGISTER`, disabling the
-notifications specified in the example for `DBMS_AQ.REGISTER`:
+The following anonymous block calls `DBMS_AQ.UNREGISTER`, disabling the notifications specified in the example for `DBMS_AQ.REGISTER`:
 
 ``` text
 DECLARE
@@ -104,6 +99,4 @@ BEGIN
    /
 ```
 
-The `subscriptionlist` is of type `sys.aq$_reg_info_list`, and contains
-the previously described `sys.aq$_reg_info` objects. The list name and
-an object count are passed to `dbms_aq.unregister`.
+The `subscriptionlist` is of type `sys.aq$_reg_info_list`, and contains the previously described `sys.aq$_reg_info` objects. The list name and an object count are passed to `dbms_aq.unregister`.
