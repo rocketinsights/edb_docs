@@ -113,6 +113,11 @@ for path in Path('content').rglob('index.rst'):
     else:
       print ("Successfully created the directory %s " % dest_path)
 
+    path = Path(dest_path + '/index.mdx')
+    path.touch()
+
+    path.write_text('---\ntitle: new Index\n---')
+
     # copy images folder to destination folder
     shutil.copytree(root_path + "images", dest_path + "/images")
 
