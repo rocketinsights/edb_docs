@@ -67,15 +67,19 @@ def process_node(node, root_path, result_path, index):
 
 for path in Path('content').rglob('index.rst'):
     root_path = str(path.parents[0]) + '/'
-    idx = 1
     f = path.open()
+
+    # get top level of ToC
     toc = extractToc(f)
+
+    # get sub-levels of ToC
     for idx, item in enumerate(toc):
       item_path = root_path + item.filename + ".rst"
       subToc = scanNode(item_path, root_path)
       if len(subToc) > 0:
         toc[idx].items = subToc
 
+    # Check to see how many files logged in ToC
     total = len(toc)
     for node in toc:
       printItems(node, 0)
@@ -84,9 +88,12 @@ for path in Path('content').rglob('index.rst'):
 
     result_path = root_path + "result"
     dest_path = result_path + "/" + path.parts[-2]
+
     # clear out previous results, if any
     if os.path.exists(dest_path):
       shutil.rmtree(dest_path)
+
+    # create build folder, if needed
     try:
       if not os.path.exists(result_path):
         os.mkdir(result_path)
@@ -95,6 +102,7 @@ for path in Path('content').rglob('index.rst'):
     else:
       print ("Successfully created the directory %s " % result_path)
 
+    # create destination folder within build folder
     try:
       os.mkdir(dest_path)
     except OSError:
@@ -102,6 +110,10 @@ for path in Path('content').rglob('index.rst'):
     else:
       print ("Successfully created the directory %s " % dest_path)
 
+    # copy images folder to destination folder
+    shutil.copytree(root_path + "images", dest_path + "/images")
+
+    # process nodes in ToC to move mdx files to correct folder in destination folder
     idx = 1
     for node in toc:
       process_node(node, root_path, dest_path + "/", idx)
