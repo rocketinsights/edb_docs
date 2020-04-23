@@ -6,4 +6,4 @@ for line in fileinput.input(inplace=1):
     print(line_segs[0])
     print(line_segs[1].replace(">`",">`_"))
   else:
-    print(line.replace("\n", ""))
+    print(line.replace("\n", "").replace("™", "").replace("®", ""))
