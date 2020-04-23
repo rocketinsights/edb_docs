@@ -1,32 +1,12 @@
-<div id="sslutils">
-
-<div class="index">
-
-sslutils
-
-</div>
-
-</div>
-
 ---
-title: sslutils
-metaTitle: sslutils
-metaDescription: description
+title: "sslutils"
 ---
 
-`sslutils` is a Postgres extension that provides SSL certificate
-generation functions to Advanced Server for use by the EDB Postgres
-Enterprise Manager server. sslutils is installed by using the
-`edb-as<xx>-server-sslutils` RPM package where *xx* is the Advanced
-Server version number.
+`sslutils` is a Postgres extension that provides SSL certificate generation functions to Advanced Server for use by the EDB Postgres Enterprise Manager server. sslutils is installed by using the `edb-as<xx>-server-sslutils` RPM package where *xx* is the Advanced Server version number.
 
-The sslutils package provides the functions shown in the following
-sections.
+The sslutils package provides the functions shown in the following sections.
 
-In these sections, each parameter in the function’s parameter list is
-described by `parameter n` under the `Parameters` subsection where *n*
-refers to the `nth` ordinal position (for example, first, second, third,
-etc.) within the function’s parameter list.
+In these sections, each parameter in the function’s parameter list is described by `parameter n` under the `Parameters` subsection where *n* refers to the `nth` ordinal position (for example, first, second, third, etc.) within the function’s parameter list.
 
 <div class="index">
 
@@ -36,13 +16,11 @@ openssl_rsa_generate_key
 
 ## openssl_rsa_generate_key
 
-The `openssl_rsa_generate_key` function generates an RSA private key.
-The function signature is:
+The `openssl_rsa_generate_key` function generates an RSA private key. The function signature is:
 
 > `openssl_rsa_generate_key(<integer>) RETURNS <text>`
 
-When invoking the function, pass the number of bits as an integer value;
-the function returns the generated key.
+When invoking the function, pass the number of bits as an integer value; the function returns the generated key.
 
 <div class="index">
 
@@ -52,8 +30,7 @@ openssl_rsa_key_to_csr
 
 ## openssl_rsa_key_to_csr
 
-The `openssl_rsa_key_to_csr` function generates a certificate signing
-request (CSR). The signature is:
+The `openssl_rsa_key_to_csr` function generates a certificate signing request (CSR). The signature is:
 
 > `openssl_rsa_key_to_csr(<text>, <text>, <text>, <text>, <text>, <text>, <text>) RETURNS <text>`
 
@@ -122,13 +99,11 @@ openssl_csr_to_crt
 
 ## openssl_csr_to_crt
 
-The `openssl_csr_to_crt` function generates a self-signed certificate or
-a certificate authority certificate. The signature is:
+The `openssl_csr_to_crt` function generates a self-signed certificate or a certificate authority certificate. The signature is:
 
 > `openssl_csr_to_crt(<text>, <text>, <text>) RETURNS <text>`
 
-The function returns the self-signed certificate or certificate
-authority certificate.
+The function returns the self-signed certificate or certificate authority certificate.
 
 **Parameters**
 
@@ -147,8 +122,7 @@ openssl_rsa_generate_crl
 
 ## openssl_rsa_generate_crl
 
-The `openssl_rsa_generate_crl` function generates a default certificate
-revocation list. The signature is:
+The `openssl_rsa_generate_crl` function generates a default certificate revocation list. The signature is:
 
 > `openssl_rsa_generate_crl(<text>, <text>) RETURNS <text>`
 

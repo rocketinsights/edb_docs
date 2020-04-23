@@ -4,9 +4,9 @@ copying = False
 
 for line in fileinput.input(inplace=1):
   if line.startswith('# '):
-    title = line.replace("# ", "").replace("\n", "").replace("`", "")
+    title = line.replace("# ", "").replace("\n", "").replace("`", "").replace("\*", "*")
     print("---")
-    print("title:", title, sep=" ")
+    print('title: "' + title + '"')
     print('---')
     copying = True
   elif not copying:
