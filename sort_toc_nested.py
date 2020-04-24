@@ -55,7 +55,7 @@ def printItems(tree, depth):
 def process_node(node, root_path, result_path, index):
   source = root_path + node.filename + ".mdx"
   if len(node.items) == 0:
-    destination = result_path + numberprefix(index) + node.filename + ".mdx"
+    destination = result_path + numberprefix(index) + node.filename.replace("%", "") + ".mdx"
     dest = shutil.copyfile(source, destination) 
   else:
     folder_path = result_path + numberprefix(index) + node.filename
