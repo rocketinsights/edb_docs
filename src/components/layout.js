@@ -59,6 +59,11 @@ const Layout = ({ children }) => {
 
           li {
             margin-top: 0.25rem;
+            .active {
+              color: #00adf2;
+              font-weight: 700;
+              text-decoration: underline;
+            }
           }
           a {
             color: #00adf2;
