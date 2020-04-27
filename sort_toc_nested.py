@@ -113,24 +113,15 @@ for path in Path('content').rglob('index.rst'):
     else:
       print ("Successfully created the directory %s " % dest_path)
 
-    path = Path(dest_path + '/index.mdx')
-    path.touch()
-
-    path.write_text('---\ntitle: new Index\n---')
-
     # copy images folder to destination folder
     shutil.copytree(root_path + "images", dest_path + "/images")
 
+    # copy index over
+    shutil.copyfile(root_path + "index.mdx", dest_path + "/index.mdx") 
+    
     # process nodes in ToC to move mdx files to correct folder in destination folder
-    idx = 1
+        idx = 1
+
     for node in toc:
       process_node(node, root_path, dest_path + "/", idx)
       idx += 1
-
-    # for item in len(toc:
-    #   os.rename(str(path.parents[0]) + "/" + item + ".mdx", str(path.parents[0]) + "/" + numberprefix(idx) + item + ".mdx") 
-    #   idx += 1
-    # os.rename(str(path.parents[0]) + "/index.mdx", str(path.parents[1]) + "/" + path.parts[-2] + ".mdx") 
-    
-
-
