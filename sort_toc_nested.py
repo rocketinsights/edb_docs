@@ -120,7 +120,7 @@ for path in Path('content').rglob('index.rst'):
     shutil.copyfile(root_path + "index.mdx", dest_path + "/index.mdx") 
     
     # process nodes in ToC to move mdx files to correct folder in destination folder
-        idx = 1
+    idx = 1
 
     for node in toc:
       process_node(node, root_path, dest_path + "/", idx)

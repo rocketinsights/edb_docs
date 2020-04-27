@@ -85,7 +85,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         node.fields.product === doc.fields.product &&
         node.fields.version === doc.fields.version,
     );
-    console.log(doc.fields.path);
     actions.createPage({
       path: doc.fields.path,
       component: require.resolve('./src/templates/post.js'),

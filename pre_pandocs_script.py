@@ -5,5 +5,5 @@ for line in fileinput.input(inplace=1):
     line_segs = line.split(":ref:")
     print(line_segs[0])
     print(line_segs[1].replace(">`",">`_"))
-  else:
+  elif "Y{0" not in line:
     print(line.replace("\n", "").replace("™", "").replace("®", ""))
