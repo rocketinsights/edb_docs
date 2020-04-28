@@ -68,6 +68,10 @@ const Layout = ({ children }) => {
           a {
             color: #00adf2;
           }
+
+          .toctree {
+            display: none;
+          }
         `}
       />
       <Helmet>

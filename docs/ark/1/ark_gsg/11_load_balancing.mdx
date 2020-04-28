@@ -1,5 +1,5 @@
 ---
-title: Load Balancing
+title: "Load Balancing"
 ---
 
 EDB Ark uses pgPool functionality to implement automatic load balancing. Load balancing increases system performance by distributing client queries to replica nodes, while routing database modifications to the master node. Any modifications to the master node are subsequently propagated to each replica using Postgres streaming replication.

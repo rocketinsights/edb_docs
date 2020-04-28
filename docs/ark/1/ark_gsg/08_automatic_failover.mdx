@@ -1,5 +1,5 @@
 ---
-title: Automatic Failover
+title: "Automatic Failover"
 ---
 
 The EDB Ark cluster manager constantly monitors the state of each cluster. Each cluster is composed of a single master Postgres instance that operates in read-write mode (performing all writes to the database) and one or more replica Postgres instances. Replica nodes are read-only, automatically duplicating all data found on the master node, and all changes made to that data.
