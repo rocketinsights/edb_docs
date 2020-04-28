@@ -106,28 +106,6 @@ const TreeNode = ({ node, path }) => {
       )}
     </ListItem>
   );
-  // if (node.items.length === 0) {
-  //   return (
-  //     <ListItem key={node.path}>
-  //       <Link to={node.path} className={path === node.path ? 'active' : ''}>
-  //         {node.title}
-  //       </Link>
-  //     </ListItem>
-  //   );
-  // } else {
-  //   return (
-  //     <ListItem key={node.path}>
-  //       <Link to={node.path} className={path === node.path ? 'active' : ''}>
-  //         {node.title}
-  //       </Link>
-  //       <SubList collapsed={!path.includes(node.path)}>
-  //         {node.items.map(subNode => (
-  //           <TreeNode node={subNode} path={path} key={subNode.path} />
-  //         ))}
-  //       </SubList>
-  //     </ListItem>
-  //   );
-  // }
 };
 
 const LeftNav = ({ navLinks, path }) => {
