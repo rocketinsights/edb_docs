@@ -1,7 +1,7 @@
 const config = {
   gatsby: {
-    pathPrefix: '/postgres-docs-test',
-    siteUrl: 'https://github.com/rocketinsights/postgres-docs-test',
+    pathPrefix: '/edb_docs',
+    siteUrl: 'https://github.com/rocketinsights/edb_docs',
     gaTrackingId: null,
     trailingSlash: false,
   },
