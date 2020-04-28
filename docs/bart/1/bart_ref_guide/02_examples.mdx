@@ -1,37 +1,20 @@
-<div id="examples">
-
-<div class="index">
-
-Examples of BART operations
-
-</div>
-
-</div>
-
 ---
-title: Examples
-metaTitle: Examples
-metaDescription: description
+title: "Examples"
 ---
 
 This section lists examples of the following BART operations.
 
   - Restoring a database cluster with tablespaces.
-  - Evaluating, marking, and deleting backups and incremental backups
-    using redundancy and recovery window retention policy.
+  - Evaluating, marking, and deleting backups and incremental backups using redundancy and recovery window retention policy.
   - Restoring an incremental backup.
 
 ## Restoring a Database Cluster with Tablespaces
 
-The following example illustrates taking a backup and restoring a
-database cluster on a remote host containing tablespaces. For detailed
-information regarding using tablespaces, see the *EDB Postgres Backup
-and Recovery User Guide* available at:
+The following example illustrates taking a backup and restoring a database cluster on a remote host containing tablespaces. For detailed information regarding using tablespaces, see the *EDB Postgres Backup and Recovery User Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
-On an Advanced Server database running on a remote host, the following
-tablespaces are created and used by two tables:
+On an Advanced Server database running on a remote host, the following tablespaces are created and used by two tables:
 
 ``` text
 edb=# CREATE TABLESPACE tblspc_1 LOCATION '/mnt/tablespace_1';
@@ -67,8 +50,7 @@ c1     | text |
 Tablespace: "tblspc_2"
 ```
 
-The following example shows the OIDs assigned to the tablespaces and the
-symbolic links to the tablespace directories:
+The following example shows the OIDs assigned to the tablespaces and the symbolic links to the tablespace directories:
 
 ``` text
 -bash-4.1$ pwd
@@ -79,8 +61,7 @@ lrwxrwxrwx 1 enterprisedb enterprisedb 17 Nov 16 16:17 16587 ->/mnt/tablespace_1
 lrwxrwxrwx 1 enterprisedb enterprisedb 17 Nov 16 16:17 16588 ->/mnt/tablespace_2
 ```
 
-The BART configuration file contains the following settings. Note that
-the `tablespace_path` parameter does not have to be set at this point.
+The BART configuration file contains the following settings. Note that the `tablespace_path` parameter does not have to be set at this point.
 
 ``` text
 [BART]
@@ -100,8 +81,7 @@ tablespace_path =
 description = "Accounting"
 ```
 
-After the necessary configuration steps are performed to ensure BART
-manages the remote database server, a full backup is taken.
+After the necessary configuration steps are performed to ensure BART manages the remote database server, a full backup is taken.
 
 ``` text
 -bash-4.1$ bart BACKUP -s acctg
@@ -141,12 +121,9 @@ STOP TIME: 2015-11-16 16:36:52 EST
 TOTAL DURATION: 1 sec(s)
 ```
 
-Note in the output from the preceding example that checksums are
-generated for the tablespaces as well as the full backup.
+Note in the output from the preceding example that checksums are generated for the tablespaces as well as the full backup.
 
-Within the backup subdirectory `1447709811516` of the BART backup
-catalog, the tablespace data is stored with file names `16587.tar.gz`
-and `16588.tar.gz` as shown by the following example:
+Within the backup subdirectory `1447709811516` of the BART backup catalog, the tablespace data is stored with file names `16587.tar.gz` and `16588.tar.gz` as shown by the following example:
 
 ``` text
 -bash-4.1$ pwd
@@ -163,14 +140,9 @@ total 54536
 -rw-rw-r-- 1 enterprisedb enterprisedb 55792640 Nov 16 16:36 base.tar
 ```
 
-When you are ready to restore the backup, in addition to creating the
-directory to which the main database cluster is to be restored, prepare
-the directories to which the tablespaces are to be restored.
+When you are ready to restore the backup, in addition to creating the directory to which the main database cluster is to be restored, prepare the directories to which the tablespaces are to be restored.
 
-On the remote host, directories `/opt/restore_tblspc_1` and
-`/opt/restore_tblspc_2` are created and assigned the proper ownership
-and permissions as shown by the following example. The main database
-cluster is to be restored to `/opt/restore`.
+On the remote host, directories `/opt/restore_tblspc_1` and `/opt/restore_tblspc_2` are created and assigned the proper ownership and permissions as shown by the following example. The main database cluster is to be restored to `/opt/restore`.
 
 ``` text
 [root@localhost opt]# mkdir restore_tblspc_1
@@ -192,11 +164,9 @@ restore_tblspc_2
 drwxr-xr-x. 2 root root 4096 Nov 22 2013 rh
 ```
 
-Set the `tablespace_path` parameter in the BART configuration file to
-specify the tablespace directories.
+Set the `tablespace_path` parameter in the BART configuration file to specify the tablespace directories.
 
-Also note that the remote host user and IP address are specified by the
-`remote_host` configuration parameter.
+Also note that the remote host user and IP address are specified by the `remote_host` configuration parameter.
 
 ``` text
 [ACCTG]
@@ -223,8 +193,7 @@ INFO: archiving is disabled
 INFO: tablespace(s) restored
 ```
 
-The following example shows the restored full backup including the
-restored tablespaces:
+The following example shows the restored full backup including the restored tablespaces:
 
 ``` text
 bash-4.1$ pwd
@@ -262,8 +231,7 @@ drwx------ 3 enterprisedb enterprisedb 4096 Nov 16 16:18
 PG_9.5_201306121
 ```
 
-The symbolic links in the `pg_tblspc` subdirectory point to the restored
-directory location:
+The symbolic links in the `pg_tblspc` subdirectory point to the restored directory location:
 
 ``` text
 bash-4.1$ pwd
@@ -292,18 +260,13 @@ tblspc_2    | enterprisedb | /opt/restore_tblspc_2
 
 ## Managing Backups
 
-This section illustrates evaluating, marking, and deleting backups using
-the `MANAGE` subcommand with two examples – the first for a redundancy
-retention policy and the second for a recovery window retention policy.
-For detailed information about the `MANAGE` subcommand, see the *EDB
-Postgres Backup and Recovery User Guide* available at:
+This section illustrates evaluating, marking, and deleting backups using the `MANAGE` subcommand with two examples – the first for a redundancy retention policy and the second for a recovery window retention policy. For detailed information about the `MANAGE` subcommand, see the *EDB Postgres Backup and Recovery User Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
 ### Using a Redundancy Retention Policy
 
-The following example uses a redundancy retention policy to evaluate,
-mark, and delete backups as shown by the following server configuration:
+The following example uses a redundancy retention policy to evaluate, mark, and delete backups as shown by the following server configuration:
 
 ``` text
 [ACCTG]
@@ -315,8 +278,7 @@ retention_policy = 3 BACKUPS
 description = "Accounting"
 ```
 
-The following list is the set of backups. Note that the last backup in
-the list has been marked as `keep`.
+The following list is the set of backups. Note that the last backup in the list has been marked as `keep`.
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s acctg
@@ -336,9 +298,7 @@ acctg        1428355371389   2015-04-06 17:22:53 EDT   5.71 MB       16.00 MB
 1            keep
 ```
 
-Invoke the `MANAGE` subcommand with the `-n` option to perform a dry run
-to observe which active backups would be changed to obsolete according
-to the retention policy:
+Invoke the `MANAGE` subcommand with the `-n` option to perform a dry run to observe which active backups would be changed to obsolete according to the retention policy:
 
 ``` text
 -bash-4.1$ bart MANAGE -s acctg -n
@@ -354,8 +314,7 @@ INFO: 2 WAL file(s) marked obsolete
 INFO: processing server 'acctg', backup '1428355371389'
 ```
 
-The dry run shows that backups `1428502049836` and `1428422324880` would
-be marked as `obsolete`.
+The dry run shows that backups `1428502049836` and `1428422324880` would be marked as `obsolete`.
 
 <div class="note">
 
@@ -365,8 +324,7 @@ Note
 
 </div>
 
-A dry run does not change the backup status. The two backups that would
-be considered obsolete are still marked as `active`:
+A dry run does not change the backup status. The two backups that would be considered obsolete are still marked as `active`:
 
 </div>
 
@@ -388,8 +346,7 @@ acctg        1428355371389   2015-04-06 17:22:53 EDT   5.71 MB       16.00 MB
 1            keep
 ```
 
-Invoke the `MANAGE` subcommand omitting the `-n` option to change and
-mark the status of the backups as `obsolete`:
+Invoke the `MANAGE` subcommand omitting the `-n` option to change and mark the status of the backups as `obsolete`:
 
 ``` text
 -bash-4.1$ bart MANAGE -s acctg
@@ -405,8 +362,7 @@ INFO: 2 WAL file(s) marked obsolete
 INFO: processing server 'acctg', backup '1428355371389'
 ```
 
-The obsolete backups can be observed in a number of ways. Use the
-`MANAGE` subcommand with the `-l` option to list the `obsolete` backups:
+The obsolete backups can be observed in a number of ways. Use the `MANAGE` subcommand with the `-l` option to list the `obsolete` backups:
 
 ``` text
 -bash-4.1$ bart MANAGE -s acctg -l
@@ -434,8 +390,7 @@ WAL FILE: 0000000100000000000000E1
 WAL FILE: 0000000100000000000000E0
 ```
 
-The `STATUS` field of the `SHOW-BACKUPS` subcommand displays the current
-status:
+The `STATUS` field of the `SHOW-BACKUPS` subcommand displays the current status:
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s acctg
@@ -455,9 +410,7 @@ acctg        1428355371389  2015-04-06 17:22:53 EDT  5.71 MB       16.00 MB
 1            keep
 ```
 
-The details of an individual backup can be displayed using the
-`SHOW-BACKUPS` subcommand with the `-t` option. Note the status in the
-`BACKUP STATUS` field.
+The details of an individual backup can be displayed using the `SHOW-BACKUPS` subcommand with the `-t` option. Note the status in the `BACKUP STATUS` field.
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s acctg -i 1428502049836 -t
@@ -475,8 +428,7 @@ LAST WAL FILE : 000000010000000100000003
 CREATION TIME : 2015-04-09 10:25:46 EDT
 ```
 
-Use the `MANAGE` subcommand with the `-d` option to physically delete
-the `obsolete` backups including the unneeded WAL files.
+Use the `MANAGE` subcommand with the `-d` option to physically delete the `obsolete` backups including the unneeded WAL files.
 
 ``` text
 -bash-4.1$ bart MANAGE -s acctg -d
@@ -495,8 +447,7 @@ INFO: removing WAL file '0000000100000000000000E1'
 INFO: removing WAL file '0000000100000000000000E0'
 ```
 
-The `SHOW-BACKUPS` subcommand now displays the remaining backups marked
-as `active` or `keep`:
+The `SHOW-BACKUPS` subcommand now displays the remaining backups marked as `active` or `keep`:
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s acctg
@@ -518,30 +469,23 @@ acctg          1428355371389     2015-04-06 17:22:53 EDT   5.71 MB       16.00 M
 
 ### Using a Recovery Window Retention Policy
 
-This section illustrates the evaluation, marking, and deletion of backup
-using a recovery window retention policy. To use the recovery window
-retention policy, set the `retention_policy` parameter to the desired
-length of time for the recovery window.
+This section illustrates the evaluation, marking, and deletion of backup using a recovery window retention policy. To use the recovery window retention policy, set the `retention_policy` parameter to the desired length of time for the recovery window.
 
 This section provides examples of the following:
 
   - How to view the calculated recovery window.
-  - How to evaluate, mark, and delete backup using a recovery window
-    retention policy.
+  - How to evaluate, mark, and delete backup using a recovery window retention policy.
 
 #### Viewing the Recovery Window
 
-You can view the actual, calculated recovery window by invoking any of
-the following subcommands:
+You can view the actual, calculated recovery window by invoking any of the following subcommands:
 
   - `MANAGE` subcommand in debug mode (along with the `-n` option).
   - `SHOW-SERVERS` subcommand.
 
 ##### Viewing the Recovery Window Using the Manage Subcommand
 
-By invoking BART in debug mode and the `MANAGE` subcommand with the `-n`
-option, time length of the recovery window is calculated based on the
-`retention_policy` setting and the current date/time.
+By invoking BART in debug mode and the `MANAGE` subcommand with the `-n` option, time length of the recovery window is calculated based on the `retention_policy` setting and the current date/time.
 
 For example, using the following `retention_policy` settings:
 
@@ -574,8 +518,7 @@ retention_policy = 3 MONTHS
 description = "Human Resources"
 ```
 
-If the `MANAGE` subcommand is invoked in debug mode along with the `-n`
-option on 2015-04-17, the following results are displayed:
+If the `MANAGE` subcommand is invoked in debug mode along with the `-n` option on 2015-04-17, the following results are displayed:
 
 ``` text
 -bash-4.1$ bart -d MANAGE -n
@@ -589,33 +532,17 @@ DEBUG: Server: hr, Now: 2015-04-17 16:34:03 EDT, RetentionWindow:
 
 For server `acctg`, 72 hours translates to a recovery window of 3 days.
 
-For server `dev`, 504 hours translates to a recovery window of 21 days
-(3 weeks).
+For server `dev`, 504 hours translates to a recovery window of 21 days (3 weeks).
 
-For server `hr`, 2160 hours translates to a recovery window of 90 days
-(3 months).
+For server `hr`, 2160 hours translates to a recovery window of 90 days (3 months).
 
-For a setting of `<max_number> MONTHS`, the calculated total number of
-days for the recovery window is dependent upon the actual number of days
-in the preceding months from the current date/time. Thus, `<max_number>
-MONTHS` is not always exactly equivalent to `<max_number> x 30 DAYS`.
-(For example, if the current date/time is in the month of March, a
-1-month recovery window would be equivalent to only 28 days because the
-preceding month is February. Thus, for a current date of March 31, a
-1-month recovery window would start on March 3.) However, the typical
-result is that the day of the month of the starting recovery window
-boundary will be the same day of the month of when the `MANAGE`
-subcommand is invoked.
+For a setting of `<max_number> MONTHS`, the calculated total number of days for the recovery window is dependent upon the actual number of days in the preceding months from the current date/time. Thus, `<max_number> MONTHS` is not always exactly equivalent to `<max_number> x 30 DAYS`. (For example, if the current date/time is in the month of March, a 1-month recovery window would be equivalent to only 28 days because the preceding month is February. Thus, for a current date of March 31, a 1-month recovery window would start on March 3.) However, the typical result is that the day of the month of the starting recovery window boundary will be the same day of the month of when the `MANAGE` subcommand is invoked.
 
 ##### Viewing the Recovery Window Using the Show-Servers Subcommand
 
-This section provides example of viewing the recovery window using the
-`SHOW-SERVERS` subcommand, the `RETENTION POLICY` field displays the
-start of the recovery window.
+This section provides example of viewing the recovery window using the `SHOW-SERVERS` subcommand, the `RETENTION POLICY` field displays the start of the recovery window.
 
-In the following example, the recovery window retention policy setting
-considers the backups taken within a 3-day recovery window as the active
-backups.
+In the following example, the recovery window retention policy setting considers the backups taken within a 3-day recovery window as the active backups.
 
 ``` text
 [ACCTG]
@@ -627,14 +554,9 @@ retention_policy = 3 DAYS
 description = "Accounting"
 ```
 
-The start of the 3-day recovery window displayed in the `RETENTION
-POLICY` field is `2015-04-07 14:57:36 EDT` when the `SHOW-SERVERS`
-subcommand is invoked on `2015-04-10`.
+The start of the 3-day recovery window displayed in the `RETENTION POLICY` field is `2015-04-07 14:57:36 EDT` when the `SHOW-SERVERS` subcommand is invoked on `2015-04-10`.
 
-At this current point in time, backups taken on or after
-`2015-04-07 14:57:36 EDT` would be considered active. Backups taken
-prior to `2015-04-07 14:57:36 EDT` would be considered obsolete except
-for backups marked as `keep`.
+At this current point in time, backups taken on or after `2015-04-07 14:57:36 EDT` would be considered active. Backups taken prior to `2015-04-07 14:57:36 EDT` would be considered obsolete except for backups marked as `keep`.
 
 ``` text
 -bash-4.1$ date
@@ -657,9 +579,7 @@ TABLESPACE PATH(s) :
 DESCRIPTION : "Accounting"
 ```
 
-In the following example, the recovery window retention policy setting
-considers the backups taken within a 3-week recovery window as the
-`active` backups.
+In the following example, the recovery window retention policy setting considers the backups taken within a 3-week recovery window as the `active` backups.
 
 ``` text
 [DEV]
@@ -671,14 +591,9 @@ retention_policy = 3 WEEKS
 description = "Development"
 ```
 
-The start of the 3-week recovery window displayed in the `RETENTION
-POLICY` field is `2015-03-20 14:59:42 EDT` when the `SHOW-SERVERS`
-subcommand is invoked on `2015-04-10`.
+The start of the 3-week recovery window displayed in the `RETENTION POLICY` field is `2015-03-20 14:59:42 EDT` when the `SHOW-SERVERS` subcommand is invoked on `2015-04-10`.
 
-At this current point in time, backups taken on or after
-`2015-03-20 14:59:42 EDT` would be considered `active`. Backups taken
-prior to `2015-03-20 14:59:42 EDT` would be considered `obsolete` except
-for backups marked as `keep`.
+At this current point in time, backups taken on or after `2015-03-20 14:59:42 EDT` would be considered `active`. Backups taken prior to `2015-03-20 14:59:42 EDT` would be considered `obsolete` except for backups marked as `keep`.
 
 ``` text
 -bash-4.1$ date
@@ -701,9 +616,7 @@ TABLESPACE PATH(s) :
 DESCRIPTION : "Development"
 ```
 
-In the following example, the recovery window retention policy setting
-considers the backups taken within a 3-month recovery window as the
-`active` backups.
+In the following example, the recovery window retention policy setting considers the backups taken within a 3-month recovery window as the `active` backups.
 
 ``` text
 [HR]
@@ -714,14 +627,9 @@ retention_policy = 3 MONTHS
 description = "Human Resources"
 ```
 
-The start of the 3-month recovery window displayed in the `RETENTION
-POLICY` field is `2015-01-10 14:04:23 EST` when the `SHOW-SERVERS`
-subcommand is invoked on `2015-04-10`.
+The start of the 3-month recovery window displayed in the `RETENTION POLICY` field is `2015-01-10 14:04:23 EST` when the `SHOW-SERVERS` subcommand is invoked on `2015-04-10`.
 
-At this current point in time, backups taken on or after
-`2015-01-10 14:04:23 EST` would be considered `active`. Backups taken
-prior to `2015-01-10 14:04:23 EST` would be considered `obsolete`,
-except for backups marked as `keep`.
+At this current point in time, backups taken on or after `2015-01-10 14:04:23 EST` would be considered `active`. Backups taken prior to `2015-01-10 14:04:23 EST` would be considered `obsolete`, except for backups marked as `keep`.
 
 ``` text
 -bash-4.1$ date
@@ -747,9 +655,7 @@ DESCRIPTION : "Human Resources"
 
 #### Evaluating, Marking, and Deleting Backup Using a Recovery Window Retention Policy
 
-The following example uses a recovery window retention policy to
-evaluate, mark, and delete backups as shown by the following server
-configuration:
+The following example uses a recovery window retention policy to evaluate, mark, and delete backups as shown by the following server configuration:
 
 ``` text
 [DEV]
@@ -761,8 +667,7 @@ retention_policy = 3 DAYS
 description = "Development"
 ```
 
-The following is the current set of backups. Note that the last backup
-in the list has been marked as `keep`.
+The following is the current set of backups. Note that the last backup in the list has been marked as `keep`.
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s dev
@@ -782,21 +687,16 @@ dev            1428502171990   2015-04-08 10:09:34 EDT   5.65 MB       80.00 MB
 5              keep
 ```
 
-The current date and time is `2015-04-13 16:46:35 EDT` as shown by the
-following:
+The current date and time is `2015-04-13 16:46:35 EDT` as shown by the following:
 
 ``` text
 -bash-4.1$ date
 Mon Apr 13 16:46:35 EDT 2015
 ```
 
-Thus, a 3-day recovery window would evaluate backups prior to
-`2015-04-10 16:46:35 EDT` as `obsolete` except for those marked as
-`keep`.
+Thus, a 3-day recovery window would evaluate backups prior to `2015-04-10 16:46:35 EDT` as `obsolete` except for those marked as `keep`.
 
-Invoke the `MANAGE` subcommand with the `-n` option to perform a dry run
-to observe which active backups would be changed to `obsolete` according
-to the retention policy.
+Invoke the `MANAGE` subcommand with the `-n` option to perform a dry run to observe which active backups would be changed to `obsolete` according to the retention policy.
 
 ``` text
 -bash-4.1$ bart MANAGE -s dev -n
@@ -814,11 +714,9 @@ INFO: 1 Unused WAL file(s) present
 INFO: processing server 'dev', backup '1428502171990'
 ```
 
-The dry run shows that backups `1428684544008` and `1428590536488` would
-be marked as `obsolete`.
+The dry run shows that backups `1428684544008` and `1428590536488` would be marked as `obsolete`.
 
-Also note that a dry run does not change the backup status. The two
-backups that would be considered obsolete are still marked as `active`:
+Also note that a dry run does not change the backup status. The two backups that would be considered obsolete are still marked as `active`:
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s dev\
@@ -838,8 +736,7 @@ backups that would be considered obsolete are still marked as `active`:
   5            keep
 ```
 
-Invoke the `MANAGE` subcommand omitting the `-n` option to change and
-mark the status of the backups as `obsolete`:
+Invoke the `MANAGE` subcommand omitting the `-n` option to change and mark the status of the backups as `obsolete`:
 
 ``` text
 -bash-4.1$ bart MANAGE -s dev
@@ -857,8 +754,7 @@ INFO: 1 Unused WAL file(s) present
 INFO: processing server 'dev', backup '1428502171990'
 ```
 
-The obsolete backups can be observed in a number of ways. Use the
-`MANAGE` subcommand with the `-l` option to list the `obsolete` backups:
+The obsolete backups can be observed in a number of ways. Use the `MANAGE` subcommand with the `-l` option to list the `obsolete` backups:
 
 ``` text
 -bash-4.1$ bart MANAGE -s dev -l
@@ -901,8 +797,7 @@ WAL FILE: 00000001000000000000001E
 UNUSED WAL FILE: 00000001000000000000000F.00000028
 ```
 
-The `STATUS` field of the `SHOW-BACKUPS` subcommand displays the current
-status:
+The `STATUS` field of the `SHOW-BACKUPS` subcommand displays the current status:
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s dev
@@ -922,9 +817,7 @@ dev          1428502171990   2015-04-08 10:09:34 EDT   5.65 MB     80.00 MB
 5            keep
 ```
 
-The details of an individual backup can be displayed using the
-`SHOW-BACKUPS` subcommand with the `-t` option. Note the status in the
-`BACKUP STATUS` field.
+The details of an individual backup can be displayed using the `SHOW-BACKUPS` subcommand with the `-t` option. Note the status in the `BACKUP STATUS` field.
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s dev -i 1428684544008 -t
@@ -942,8 +835,7 @@ LAST WAL FILE  : 00000001000000000000002E
 CREATION TIME  : 2015-04-11 12:02:15 EDT
 ```
 
-Use the `MANAGE` subcommand with the `-d` option to physically delete
-the obsolete backups including the unneeded WAL files.
+Use the `MANAGE` subcommand with the `-d` option to physically delete the obsolete backups including the unneeded WAL files.
 
 ``` text
 -bash-4.1$ bart MANAGE -s dev -d
@@ -973,8 +865,7 @@ INFO: removing WAL file '00000001000000000000001F'
 INFO: removing WAL file '00000001000000000000001E'
 ```
 
-The `SHOW-BACKUPS` subcommand now displays the remaining backups marked
-as `active` or `keep`:
+The `SHOW-BACKUPS` subcommand now displays the remaining backups marked as `active` or `keep`:
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s dev
@@ -992,32 +883,19 @@ dev          1428502171990   2015-04-08 10:09:34 EDT   5.65 MB         80.00 MB
 
 ## Managing Incremental Backups
 
-> This section illustrates evaluating, marking, and deleting incremental
-> backups using the `MANAGE` and `DELETE` subcommands with two examples
-> – the first for a redundancy retention policy and the second for a
-> recovery window retention policy. For detailed information about the
-> `MANAGE` and `DELETE` subcommands, as well as the redundancy retention
-> and recovery window retention policy, see the *EDB Postgres Backup and
-> Recovery User Guide* available at:
+> This section illustrates evaluating, marking, and deleting incremental backups using the `MANAGE` and `DELETE` subcommands with two examples – the first for a redundancy retention policy and the second for a recovery window retention policy. For detailed information about the `MANAGE` and `DELETE` subcommands, as well as the redundancy retention and recovery window retention policy, see the *EDB Postgres Backup and Recovery User Guide* available at:
 > 
 > > <https://www.enterprisedb.com/edb-docs/>
 
-\- [Using a Redundancy Retention Policy](redundancy_retention_policy)
-provides an example of using the `MANAGE` and `DELETE` subcommands when
-a 3 backup redundancy retention policy is in effect.
+\- [Using a Redundancy Retention Policy](redundancy_retention_policy) provides an example of using the `MANAGE` and `DELETE` subcommands when a 3 backup redundancy retention policy is in effect.
 
-\- [Using a Recovery Window Retention
-Policy](recovery_window_retention_policy) provides
+\- [Using a Recovery Window Retention Policy](recovery_window_retention_policy) provides
 
-> an example of using the `MANAGE` and `DELETE` subcommands when a 1-day
-> recovery window retention policy is in effect.
+> an example of using the `MANAGE` and `DELETE` subcommands when a 1-day recovery window retention policy is in effect.
 
 ### Using a Redundancy Retention Policy
 
-The following examples show using the `MANAGE` and `DELETE` subcommands
-to evaluate, mark, and delete incremental backups when a 3 backup
-redundancy retention policy is in effect. This is shown by the following
-server configuration:
+The following examples show using the `MANAGE` and `DELETE` subcommands to evaluate, mark, and delete incremental backups when a 3 backup redundancy retention policy is in effect. This is shown by the following server configuration:
 
 ``` text
 [ACCTG]
@@ -1032,9 +910,7 @@ retention_policy = 3 BACKUPS
 description = "Accounting"
 ```
 
-The following is the current set of backups. (In these examples, some
-columns have been omitted from the `SHOW-BACKUPS` output in order to
-display the relevant information in a more observable manner).
+The following is the current set of backups. (In these examples, some columns have been omitted from the `SHOW-BACKUPS` output in order to display the relevant information in a more observable manner).
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1047,8 +923,7 @@ acctg        1481749619582   ... none            2016-12-14 16:07:00 EST ... act
 
 There is one backup chain. The first backup is the initial full backup.
 
-Backup chain: `1481749619582 => 1481749651927 => 1481749673603
-=> 1481749696905`
+Backup chain: `1481749619582 => 1481749651927 => 1481749673603 => 1481749696905`
 
 The `MANAGE` subcommand is invoked as shown by the following:
 
@@ -1071,13 +946,9 @@ acctg          1481749651927 ... 1481749619582   2016-12-14 16:07:32 EST ... act
 acctg          1481749619582 ... none            2016-12-14 16:07:00 EST ... active
 ```
 
-The status remains active for all backups. Even though the total number
-of backups exceeds the 3 backup redundancy retention policy, it is only
-the total number of full backups that is used to determine if the
-redundancy retention policy has been exceeded.
+The status remains active for all backups. Even though the total number of backups exceeds the 3 backup redundancy retention policy, it is only the total number of full backups that is used to determine if the redundancy retention policy has been exceeded.
 
-Additional full backups are added including a second backup chain. The
-following example shows the resulting list of backups:
+Additional full backups are added including a second backup chain. The following example shows the resulting list of backups:
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1094,8 +965,7 @@ acctg        1481749619582 ... none              2016-12-14 16:07:00 EST ... act
 
 Second backup chain: `1481749997807 => 1481750098924`
 
-The `MANAGE` subcommand is invoked, but now with a total of four active
-full backups.
+The `MANAGE` subcommand is invoked, but now with a total of four active full backups.
 
 ``` text
 -bash-4.2$ bart MANAGE -s acctg
@@ -1114,8 +984,7 @@ INFO: 4 Unused file(s) (WALs included) present, use 'MANAGE -l' for the
 list
 ```
 
-The oldest full backup and its chain of incremental backups are now
-marked as obsolete.
+The oldest full backup and its chain of incremental backups are now marked as obsolete.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1130,8 +999,7 @@ acctg        1481749651927    ... 1481749619582   2016-12-14 16:07:32 EST ... ob
 acctg        1481749619582    ... none            2016-12-14 16:07:00 EST ... obsolete
 ```
 
-Invoking the `MANAGE` subcommand with the `-d` option deletes the entire
-obsolete backup chain.
+Invoking the `MANAGE` subcommand with the `-d` option deletes the entire obsolete backup chain.
 
 ``` text
 -bash-4.2$ bart MANAGE -s acctg -d
@@ -1155,8 +1023,7 @@ INFO: removing (unused) file
 '0000000100000000FB00002800000000FC000000.mbm'
 ```
 
-The following example shows the remaining full backups and the second
-backup chain.
+The following example shows the remaining full backups and the second backup chain.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1169,10 +1036,7 @@ acctg        1481749992003   ... none            2016-12-14 16:13:12 EST ... act
 
 ### Using a Recovery Window Retention Policy
 
-The following examples show using the `MANAGE` and `DELETE` subcommands
-to evaluate, mark, and delete incremental backups when a 1-day recovery
-window retention policy is in effect. This is shown by the following
-server configuration:
+The following examples show using the `MANAGE` and `DELETE` subcommands to evaluate, mark, and delete incremental backups when a 1-day recovery window retention policy is in effect. This is shown by the following server configuration:
 
 ``` text
 [ACCTG]
@@ -1187,9 +1051,7 @@ retention_policy = 1 DAYS
 description = "Accounting"
 ```
 
-The following is the current set of backups. In these examples, some
-columns have been omitted from the `SHOW-BACKUPS` output in order to
-display the relevant information in a more observable manner.
+The following is the current set of backups. In these examples, some columns have been omitted from the `SHOW-BACKUPS` output in order to display the relevant information in a more observable manner.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1204,21 +1066,13 @@ acctg 1481553088053 ... 1481552078404 2016-12-12 09:31:28 EST ... active
 acctg 1481552078404 ... none 2016-12-12 09:14:39 EST ... active
 ```
 
-There are two backup chains. In each of the following chains, the first
-backup is the initial full backup.
+There are two backup chains. In each of the following chains, the first backup is the initial full backup.
 
-First backup chain: `1481552078404 => 1481553088053 => 1481553914533
-=> 1481554802918 => 1481559014359`
+First backup chain: `1481552078404 => 1481553088053 => 1481553914533 => 1481554802918 => 1481559014359`
 
 Second backup chain: `1481553651165 => 1481554203288 => 1481559303348`
 
-The `MANAGE` subcommand is invoked when the first full backup
-`1481552078404` falls out of the recovery window. When the `MANAGE`
-subcommand is invoked, it is `2016-12-13 09:20:03 EST`, thus making the
-start of the 1-day recovery window at `2016-12-12 09:20:03 EST` exactly
-one day earlier. This backup was taken at `2016-12-12 09:14:39 EST`,
-which is about 5 ½ minutes before the start of the recovery window, thus
-making the backup obsolete.
+The `MANAGE` subcommand is invoked when the first full backup `1481552078404` falls out of the recovery window. When the `MANAGE` subcommand is invoked, it is `2016-12-13 09:20:03 EST`, thus making the start of the 1-day recovery window at `2016-12-12 09:20:03 EST` exactly one day earlier. This backup was taken at `2016-12-12 09:14:39 EST`, which is about 5 ½ minutes before the start of the recovery window, thus making the backup obsolete.
 
 ``` text
 -bash-4.2$ date
@@ -1239,10 +1093,7 @@ INFO: 2 Unused file(s) (WALs included) present, use 'MANAGE -l' for the list
 
 The entire first backup chain is now marked `obsolete`.
 
-The incremental backup date and time are within the recovery window
-since they were taken after the start of the recovery window of
-`2016-12-12 09:20:03 EST`, but all backups in the chain are marked as
-`obsolete`.
+The incremental backup date and time are within the recovery window since they were taken after the start of the recovery window of `2016-12-12 09:20:03 EST`, but all backups in the chain are marked as `obsolete`.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg\
@@ -1266,9 +1117,7 @@ acctg            1481552078404 ... none                2016-12-12 09:14:39 EST
 ... obsolete
 ```
 
-The following example shows how the entire backup chain is changed back
-to active status by invoking the `MANAGE` subcommand with the `-c
-nokeep` option on the full backup of the chain.
+The following example shows how the entire backup chain is changed back to active status by invoking the `MANAGE` subcommand with the `-c nokeep` option on the full backup of the chain.
 
 ``` text
 -bash-4.2$ bart MANAGE -s acctg -c nokeep -i 1481552078404
@@ -1302,10 +1151,7 @@ acctg          1481553088053    ... 1481552078404   2016-12-12 09:31:28 EST ... 
 acctg          1481552078404    ... none            2016-12-12 09:14:39 EST ... active
 ```
 
-The following example shows usage of the `DELETE` subcommand on an
-incremental backup. The specified incremental backup `1481554802918` in
-the first backup chain as well as its successive incremental backup
-`1481559014359` are deleted.
+The following example shows usage of the `DELETE` subcommand on an incremental backup. The specified incremental backup `1481554802918` in the first backup chain as well as its successive incremental backup `1481559014359` are deleted.
 
 ``` text
 -bash-4.2$ bart DELETE -s acctg -i 1481554802918
@@ -1322,9 +1168,7 @@ INFO: removing (unused) file
 INFO: backup(s) deleted
 ```
 
-The results show that incremental backup `1481554802918` as well as its
-successive backup `1481559014359` are no longer listed by the
-`SHOW-BACKUPS` subcommand.
+The results show that incremental backup `1481554802918` as well as its successive backup `1481559014359` are no longer listed by the `SHOW-BACKUPS` subcommand.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1337,10 +1181,7 @@ acctg        1481553088053   ... 1481552078404   2016-12-12 09:31:28 EST   ... a
 acctg        1481552078404   ... none            2016-12-12 09:14:39 EST   ... active
 ```
 
-The `MANAGE` subcommand is invoked again. This time both backup chains
-are marked `obsolete` since the full backups of both chains fall out of
-the start of the recovery window, which is now `2016-12-12 09:55:03
-EST`.
+The `MANAGE` subcommand is invoked again. This time both backup chains are marked `obsolete` since the full backups of both chains fall out of the start of the recovery window, which is now `2016-12-12 09:55:03 EST`.
 
 ``` text
 -bash-4.2$ date
@@ -1380,11 +1221,7 @@ acctg          1481552078404   ... none            2016-12-12 09:14:39 EST
 ... obsolete
 ```
 
-The following example shows usage of the `MANAGE` subcommand with the
-`-c keep` option to keep a backup chain indefinitely. The `MANAGE`
-subcommand with the `-c keep` option must specify the backup identifier
-or backup name of the full backup of the chain, and not any incremental
-backup.
+The following example shows usage of the `MANAGE` subcommand with the `-c keep` option to keep a backup chain indefinitely. The `MANAGE` subcommand with the `-c keep` option must specify the backup identifier or backup name of the full backup of the chain, and not any incremental backup.
 
 ``` text
 -bash-4.2$ bart MANAGE -s acctg -c keep -i 1481553651165
@@ -1399,9 +1236,7 @@ INFO: changing status of incremental backup '1481554203288' of server
 INFO: 38 WAL file(s) changed
 ```
 
-The following now displays the full backup `1481553651165` of the backup
-chain and its successive incremental backups `1481554203288` and
-`1481559303348`, changed to `keep` status.
+The following now displays the full backup `1481553651165` of the backup chain and its successive incremental backups `1481554203288` and `1481559303348`, changed to `keep` status.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -1421,8 +1256,7 @@ acctg        1481552078404   ... none            2016-12-12 09:14:39 EST
 ... obsolete
 ```
 
-Finally, the `MANAGE` subcommand with the `-d` option is used to delete
-the `obsolete` backup chain.
+Finally, the `MANAGE` subcommand with the `-d` option is used to delete the `obsolete` backup chain.
 
 ``` text
 -bash-4.2$ bart MANAGE -s acctg -d
@@ -1447,8 +1281,7 @@ INFO: removing (unused) file '0000000100000000000000FA'
 INFO: removing (unused) file '0000000100000000000000BB.00000028.backup'
 ```
 
-Only the backup chain with the `keep` status remains as shown by the
-following.
+Only the backup chain with the `keep` status remains as shown by the following.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg

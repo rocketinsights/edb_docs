@@ -1,36 +1,18 @@
-<div class="index">
-
-Restoring an Incremental Backup
-
-</div>
-
 ---
-title: Restoring an Incremental Backup
-metaTitle: Restoring an Incremental Backup
-metaDescription: description
+title: "Restoring an Incremental Backup"
 ---
 
-Restoring an incremental backup may require additional setup steps
-depending upon the host on which the incremental backup is to be
-restored. For more information, see the *Restoring an Incremental
-Backup* section of the *EDB Postgres Backup and Recovery User Guide*
-available at:
+Restoring an incremental backup may require additional setup steps depending upon the host on which the incremental backup is to be restored. For more information, see the *Restoring an Incremental Backup* section of the *EDB Postgres Backup and Recovery User Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
-This section provides an example of creating backup chains and then
-restoring an incremental backup.
+This section provides an example of creating backup chains and then restoring an incremental backup.
 
 **Creating a Backup Chain**
 
-A *backup chain* is the set of backups consisting of a full backup and
-all of its successive incremental backups. Tracing back on the parent
-backups of all incremental backups in the chain eventually leads back to
-that single, full backup.
+A *backup chain* is the set of backups consisting of a full backup and all of its successive incremental backups. Tracing back on the parent backups of all incremental backups in the chain eventually leads back to that single, full backup.
 
-In the following example, the `allow_incremental_backups` parameter is
-set to `enabled` in the BART configuration file to permit incremental
-backups on the listed database server:
+In the following example, the `allow_incremental_backups` parameter is set to `enabled` in the BART configuration file to permit incremental backups on the listed database server:
 
 ``` text
 [BART]
@@ -51,8 +33,7 @@ allow_incremental_backups = enabled
 description = "Accounting"
 ```
 
-After the database server has been started with WAL archiving enabled to
-the BART backup catalog, the WAL scanner is started:
+After the database server has been started with WAL archiving enabled to the BART backup catalog, the WAL scanner is started:
 
 ``` text
 -bash-4.2$ bart-scanner --daemon
@@ -90,9 +71,7 @@ STOP TIME: 2017-03-27 17:13:25 EDT
 TOTAL DURATION: 1 sec(s)
 ```
 
-A series of incremental backups are taken. The first incremental backup
-specifies the full backup as the parent. Each successive incremental
-backup then uses the preceding incremental backup as its parent.
+A series of incremental backups are taken. The first incremental backup specifies the full backup as the parent. Each successive incremental backup then uses the preceding incremental backup as its parent.
 
 ``` text
 -bash-4.2$ bart BACKUP -s acctg -F p --parent full_1 --backup-name
@@ -153,8 +132,7 @@ INFO: incremental backup completed successfully
 .
 ```
 
-The following output of the `SHOW-BACKUPS` subcommand lists the backup
-chain, which are backups `full_1, incr_1-a, incr_1-b, and incr_1-c`.
+The following output of the `SHOW-BACKUPS` subcommand lists the backup chain, which are backups `full_1, incr_1-a, incr_1-b, and incr_1-c`.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -173,16 +151,11 @@ Note
 
 </div>
 
-For the `full backup full_1`, the `BACKUP PARENT` field contains `none`.
-For each incremental backup, the `BACKUP PARENT` field contains the
-backup identifier or name of its parent backup.
+For the `full backup full_1`, the `BACKUP PARENT` field contains `none`. For each incremental backup, the `BACKUP PARENT` field contains the backup identifier or name of its parent backup.
 
 </div>
 
-A second backup chain is created in the same manner with the `BACKUP`
-subcommand. The following example shows the addition of the resulting,
-second backup chain consisting of full backup `full_2` and incremental
-backups `incr_2-a` and `incr_2-b`.
+A second backup chain is created in the same manner with the `BACKUP` subcommand. The following example shows the addition of the resulting, second backup chain consisting of full backup `full_2` and incremental backups `incr_2-a` and `incr_2-b`.
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -196,11 +169,7 @@ acctg       1490649255649 incr_1-a     full_1         2017-03-27 17:14:16 ...
 acctg       1490649204327 full_1       none           2017-03-27 17:13:25 ...
 ```
 
-The following additional incremental backups starting with `incr_1-b-1`,
-which designates `incr_1-b` as the parent, results in the forking from
-that backup into a second line of backups in the chain consisting of
-`full_1, incr_1-a, incr_1-b, incr_1-b-1, incr_1-b-2`, and `incr_1-b-3`
-as shown in the following list:
+The following additional incremental backups starting with `incr_1-b-1`, which designates `incr_1-b` as the parent, results in the forking from that backup into a second line of backups in the chain consisting of `full_1, incr_1-a, incr_1-b, incr_1-b-1, incr_1-b-2`, and `incr_1-b-3` as shown in the following list:
 
 ``` text
 -bash-4.2$ bart SHOW-BACKUPS -s acctg
@@ -219,10 +188,7 @@ acctg        1490649204327 full_1        none            2017-03-27 17:13:25 ...
 
 **Restoring an Incremental Backup**
 
-Restoring an incremental backup is done with the `RESTORE` subcommand in
-the same manner as for restoring a full backup. Specify the backup
-identifier or backup name of the incremental backup to be restored as
-shown in the following example.
+Restoring an incremental backup is done with the `RESTORE` subcommand in the same manner as for restoring a full backup. Specify the backup identifier or backup name of the incremental backup to be restored as shown in the following example.
 
 ``` text
 -bash-4.2$ bart RESTORE -s acctg -p /opt/restore -i incr_1-b
@@ -233,6 +199,4 @@ INFO: permissions set on $PGDATA
 INFO: incremental restore completed successfully
 ```
 
-Restoring incremental backup `incr_1-b` as shown by the preceding
-example results in the restoration of full backup `full_1`, then
-incremental backups `incr_1-a` and finally, `incr_1-b`.
+Restoring incremental backup `incr_1-b` as shown by the preceding example results in the restoration of full backup `full_1`, then incremental backups `incr_1-a` and finally, `incr_1-b`.

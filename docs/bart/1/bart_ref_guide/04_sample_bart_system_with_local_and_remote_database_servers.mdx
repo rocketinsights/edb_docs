@@ -1,89 +1,47 @@
-<div id="a_sample_bart_system_with_local_and_remote_database_servers">
-
-<div class="index">
-
-A Sample BART System
-
-</div>
-
-</div>
-
 ---
-title: A Sample BART System with Local and Remote Database Servers
-metaTitle: A Sample BART System with Local and Remote Database Servers
-metaDescription: description
+title: "A Sample BART System with Local and Remote Database Servers"
 ---
 
-This section describes a sample BART managed backup and recovery system
-consisting of both local and remote database servers. The complete steps
-to configure and operate the system are provided.
+This section describes a sample BART managed backup and recovery system consisting of both local and remote database servers. The complete steps to configure and operate the system are provided.
 
-For detailed information about configuring a BART system, see the *EDB
-Postgres Backup and Recovery Installation and Upgrade Guide* and for
-information about the operational procedures and BART subcommands, see
-the *EDB Postgres Backup and Recovery User Guide* available at:
+For detailed information about configuring a BART system, see the *EDB Postgres Backup and Recovery Installation and Upgrade Guide* and for information about the operational procedures and BART subcommands, see the *EDB Postgres Backup and Recovery User Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
 The environment for this sample system is as follows:
 
-  - BART on host `192.168.2.22` running with BART user account
-    `enterprisedb`
-  - Local Advanced Server on host `192.168.2.22` running with user
-    account `enterprisedb`
-  - Remote Advanced Server on host `192.168.2.24` running with user
-    account `enterprisedb`
-  - Remote PostgreSQL server on host `192.168.2.24` running with user
-    account `postgres`
+  - BART on host `192.168.2.22` running with BART user account `enterprisedb`
+  - Local Advanced Server on host `192.168.2.22` running with user account `enterprisedb`
+  - Remote Advanced Server on host `192.168.2.24` running with user account `enterprisedb`
+  - Remote PostgreSQL server on host `192.168.2.24` running with user account `postgres`
 
 passwordless SSH/SCP connections are required between the following:
 
-  - BART on host `192.168.2.22` and the local Advanced Server on the
-    same host `192.168.2.22`
-  - BART on host `192.168.2.22` and the remote Advanced Server on host
-    `192.168.2.24`
-  - BART on host `192.168.2.22` and the remote PostgreSQL server on host
-    `192.168.2.24`
+  - BART on host `192.168.2.22` and the local Advanced Server on the same host `192.168.2.22`
+  - BART on host `192.168.2.22` and the remote Advanced Server on host `192.168.2.24`
+  - BART on host `192.168.2.22` and the remote PostgreSQL server on host `192.168.2.24`
 
-The following sections demonstrate configuring and taking full backups
-only. To support incremental backups as well, enable the
-`allow_incremental_backups` parameter for the desired database servers
-and use the `WAL scanner` program.
+The following sections demonstrate configuring and taking full backups only. To support incremental backups as well, enable the `allow_incremental_backups` parameter for the desired database servers and use the `WAL scanner` program.
 
-\- [The BART Configuration File](bart_configuration_file) shows the
-settings used in the BART configuration file.
+\- [The BART Configuration File](bart_configuration_file) shows the settings used in the BART configuration file.
 
-\- [Establishing SSH/SCP Passwordless
-Connections](establishing_ssh/scp_passwordless_connections) provides an
-example of how to establish an SSH/SCP passwordless connection.
+\- [Establishing SSH/SCP Passwordless Connections](establishing_ssh/scp_passwordless_connections) provides an example of how to establish an SSH/SCP passwordless connection.
 
-\- [Configuring a Replication Database
-User](configuring_a_replication_database_user) provides an example of
-how to configure the replication database user.
+\- [Configuring a Replication Database User](configuring_a_replication_database_user) provides an example of how to configure the replication database user.
 
-\- [WAL Archiving Configuration
-Parameters](wal_archiving_configuration_parameters) provides an example
-of how to configure WAL archiving.
+\- [WAL Archiving Configuration Parameters](wal_archiving_configuration_parameters) provides an example of how to configure WAL archiving.
 
-\- [Creating the BART Backup
-Catalog](creating_the_bart_backup_catalog_\(backup_path\)) provides
-information about creating a BART Backup Catalog.
+\- [Creating the BART Backup Catalog](creating_the_bart_backup_catalog_\(backup_path\)) provides information about creating a BART Backup Catalog.
 
-\- [Starting the Database Servers with WAL
-Archiving](starting_the_database_servers_with_wal_archiving) provides
-example of starting the database servers with WAL archiving.
+\- [Starting the Database Servers with WAL Archiving](starting_the_database_servers_with_wal_archiving) provides example of starting the database servers with WAL archiving.
 
-\- [Taking a Full Backup](taking_a_full_backup) illustrates taking the
-first full backup of the database servers.
+\- [Taking a Full Backup](taking_a_full_backup) illustrates taking the first full backup of the database servers.
 
-\- [Using Point-In-Time Recovery](using_point-in-time_recovery)
-demonstrates the point-in-time recovery operation on the remote
-PostgreSQL database server.
+\- [Using Point-In-Time Recovery](using_point-in-time_recovery) demonstrates the point-in-time recovery operation on the remote PostgreSQL database server.
 
 ## The BART Configuration File
 
-The following code snippet shows the settings used in the BART
-configuration file for the examples that follow:
+The following code snippet shows the settings used in the BART configuration file for the examples that follow:
 
 ``` text
 [BART]
@@ -127,16 +85,13 @@ description = "Human Resources"
 
 ## Establishing SSH/SCP Passwordless Connections
 
-This section shows how the passwordless SSH/SCP connections are
-established with the authorized public keys files.
+This section shows how the passwordless SSH/SCP connections are established with the authorized public keys files.
 
 ### Generating a Public Key File for the BART User Account
 
-The BART user account is `enterprisedb` with the home directory of
-`/opt/PostgresPlus/9.5AS`.
+The BART user account is `enterprisedb` with the home directory of `/opt/PostgresPlus/9.5AS`.
 
-To generate the public key file, first create the `.ssh` subdirectory in
-the BART user’s home directory:
+To generate the public key file, first create the `.ssh` subdirectory in the BART user’s home directory:
 
 ``` text
 [root@localhost 9.5AS]# pwd
@@ -149,8 +104,7 @@ the BART user’s home directory:
 drwx------ 2 enterprisedb enterprisedb 4096 Apr 23 13:02 .ssh
 ```
 
-Make sure there are no groups or other users that can access the `.ssh`
-directory.
+Make sure there are no groups or other users that can access the `.ssh` directory.
 
 Now, generate the public key file:
 
@@ -187,8 +141,7 @@ The key's randomart image is:
 +-------------------+
 ```
 
-The following are the resulting files. `id_rsa.pub` is the public key
-file of BART user account `enterprisedb`.
+The following are the resulting files. `id_rsa.pub` is the public key file of BART user account `enterprisedb`.
 
 ``` text
 -bash-4.1$ ls -l .ssh
@@ -205,20 +158,11 @@ Configuring local host access
 
 ### Configuring Access between Local Advanced Server and the BART Host
 
-Even when the Advanced Server database is on the same host as the BART
-user account, and the Advanced Server database cluster owner is also the
-BART user account (`enterprisedb` is this case), a passwordless SSH/SCP
-connection must be established from the same user account to itself.
+Even when the Advanced Server database is on the same host as the BART user account, and the Advanced Server database cluster owner is also the BART user account (`enterprisedb` is this case), a passwordless SSH/SCP connection must be established from the same user account to itself.
 
-On the BART host where the public key file was just generated as shown
-in [Generating a Public Key File for the BART User
-Account](generating_a_public_key_file_for_the_bart_user_account), create
-the authorized keys file by appending the public key file to any
-existing authorized keys file.
+On the BART host where the public key file was just generated as shown in [Generating a Public Key File for the BART User Account](generating_a_public_key_file_for_the_bart_user_account), create the authorized keys file by appending the public key file to any existing authorized keys file.
 
-Log into the BART host as the BART user account and append the public
-key file, `id_rsa.pub` onto the `authorized_keys` file in the same
-`.ssh` directory.
+Log into the BART host as the BART user account and append the public key file, `id_rsa.pub` onto the `authorized_keys` file in the same `.ssh` directory.
 
 ``` text
 [user@localhost ~]$ su - enterprisedb
@@ -240,9 +184,7 @@ total 16
 -rw-r--r-- 1 enterprisedb enterprisedb 345 Mar 23 10:05 known_hosts
 ```
 
-The `authorized_keys` file must have file permission `600` as set by the
-following `chmod 600` command, otherwise the passwordless connection
-fails:
+The `authorized_keys` file must have file permission `600` as set by the following `chmod 600` command, otherwise the passwordless connection fails:
 
 ``` text
 -bash-4.2$ chmod 600 ~/.ssh/authorized_keys
@@ -254,9 +196,7 @@ total 16
 -rw-r--r-- 1 enterprisedb enterprisedb 345 Mar 23 10:05 known_hosts
 ```
 
-Test the passwordless connection. Use the `ssh` command to verify that
-you can access the same user account as you are currently logged in as
-(`enterprisedb`) without being prompted for a password:
+Test the passwordless connection. Use the `ssh` command to verify that you can access the same user account as you are currently logged in as (`enterprisedb`) without being prompted for a password:
 
 ``` text
 -bash-4.2$ ssh enterprisedb@127.0.0.1
@@ -274,12 +214,9 @@ Configuring remote host
 
 ### Configuring Access from Remote Advanced Server to BART Host
 
-On the remote host `192.168.2.24`, create the public key file for the
-remote database server user account, `enterprisedb`, for access to the
-BART user account, `enterprisedb`, on the BART host 192.168.2.22.
+On the remote host `192.168.2.24`, create the public key file for the remote database server user account, `enterprisedb`, for access to the BART user account, `enterprisedb`, on the BART host 192.168.2.22.
 
-Create the `.ssh` directory for user account `enterprisedb` on the
-remote host:
+Create the `.ssh` directory for user account `enterprisedb` on the remote host:
 
 ``` text
 [root@localhost 9.5AS]# pwd
@@ -292,8 +229,7 @@ remote host:
 drwx------ 2 enterprisedb enterprisedb 4096 Apr 23 13:08 .ssh
 ```
 
-Generate the public key file on the remote host for user account
-`enterprisedb`:
+Generate the public key file on the remote host for user account `enterprisedb`:
 
 ``` text
 [user@localhost ~]$ su - enterprisedb
@@ -325,8 +261,7 @@ The key's randomart image is:
 +----------------+
 ```
 
-Copy the generated public key file, `id_rsa.pub`, to the BART user
-account, `enterprisedb`, on the BART host, `192.168.2.22`:
+Copy the generated public key file, `id_rsa.pub`, to the BART user account, `enterprisedb`, on the BART host, `192.168.2.22`:
 
 ``` text
 -bash-4.1$ scp ~/.ssh/id_rsa.pub enterprisedb@192.168.2.22:/tmp/tmp.pub
@@ -339,9 +274,7 @@ enterprisedb@192.168.2.22's password:
 id_rsa.pub
 ```
 
-Log into the BART host as the BART user account and append the temporary
-public key file, `/tmp/tmp.pub` onto the `authorized_keys` file owned by
-the BART user account.
+Log into the BART host as the BART user account and append the temporary public key file, `/tmp/tmp.pub` onto the `authorized_keys` file owned by the BART user account.
 
 ``` text
 -bash-4.1$ ssh enterprisedb@192.168.2.22
@@ -357,9 +290,7 @@ total 12
 -rw-r--r-- 1 enterprisedb enterprisedb 416 Apr 23 13:04 id_rsa.pub
 ```
 
-The `authorized_keys` file must have file permission `600` as set by the
-following `chmod 600` command, otherwise the passwordless connection
-fails:
+The `authorized_keys` file must have file permission `600` as set by the following `chmod 600` command, otherwise the passwordless connection fails:
 
 ``` text
 -bash-4.1$ chmod 600 ~/.ssh/authorized_keys
@@ -374,9 +305,7 @@ logout
 Connection to 192.168.2.22 closed.
 ```
 
-Test the passwordless connection. From the remote host, verify that you
-can log into the BART host with the BART user account without being
-prompted for a password:
+Test the passwordless connection. From the remote host, verify that you can log into the BART host with the BART user account without being prompted for a password:
 
 ``` text
 -bash-4.1$ ssh enterprisedb@192.168.2.22
@@ -394,12 +323,9 @@ Configuring BART host access to Advanced Server
 
 ### Configuring Access from BART Host to Remote Advanced Server
 
-On the BART host `192.168.2.22`, copy the public key file for the BART
-user account, `enterprisedb`, for access to the remote database server
-user account, `enterprisedb`, on the remote host `192.168.2.24`.
+On the BART host `192.168.2.22`, copy the public key file for the BART user account, `enterprisedb`, for access to the remote database server user account, `enterprisedb`, on the remote host `192.168.2.24`.
 
-The following lists the current SSH keys files in the BART user’s `.ssh`
-directory on the BART host:
+The following lists the current SSH keys files in the BART user’s `.ssh` directory on the BART host:
 
 ``` text
 [user@localhost ~]$ su - enterprisedb
@@ -413,11 +339,7 @@ total 12
 -rw-r--r-- 1 enterprisedb enterprisedb 416 Apr 23 13:04 id_rsa.pub
 ```
 
-The public key file, `id_rsa.pub`, for BART user account `enterprisedb`
-on the BART host was generated in [Generating a Public Key File for the
-BART User
-Account](generating_a_public_key_file_for_the_bart_user_account)
-Section, and is now copied to the
+The public key file, `id_rsa.pub`, for BART user account `enterprisedb` on the BART host was generated in [Generating a Public Key File for the BART User Account](generating_a_public_key_file_for_the_bart_user_account) Section, and is now copied to the
 
 remote Advanced Server host on `192.168.2.24`:
 
@@ -433,9 +355,7 @@ enterprisedb@192.168.2.24's password:
 id_rsa.pub
 ```
 
-Log into the `enterprisedb` user account on the remote host and copy the
-public key file onto the `authorized_keys` file of the remote
-`enterprisedb` user account under its `.ssh` directory:
+Log into the `enterprisedb` user account on the remote host and copy the public key file onto the `authorized_keys` file of the remote `enterprisedb` user account under its `.ssh` directory:
 
 ``` text
 -bash-4.1$ ssh enterprisedb@192.168.2.24
@@ -467,8 +387,7 @@ logout
 Connection to 192.168.2.24 closed.
 ```
 
-While logged into the BART host, test the passwordless connection from
-the BART host to the remote Advanced Server host.
+While logged into the BART host, test the passwordless connection from the BART host to the remote Advanced Server host.
 
 ``` text
 -bash-4.1$ ssh enterprisedb@192.168.2.24
@@ -486,12 +405,9 @@ Configuring remote PostgreSQL access
 
 ### Configuring Access from Remote PostgreSQL to BART Host
 
-On the remote host 192.168.2.24, create the public key file for the
-remote database server user account, `postgres`, for access to the BART
-user account, `enterprisedb`, on the BART host 192.168.2.22.
+On the remote host 192.168.2.24, create the public key file for the remote database server user account, `postgres`, for access to the BART user account, `enterprisedb`, on the BART host 192.168.2.22.
 
-Create the `.ssh` directory for user account `postgres` on the remote
-host:
+Create the `.ssh` directory for user account `postgres` on the remote host:
 
 ``` text
 [root@localhost 9.5]# cd /opt/PostgreSQL/9.5
@@ -503,8 +419,7 @@ host:
 drwx------ 2 postgres postgres 4096 Apr 23 13:32 .ssh
 ```
 
-Create and copy the generated public key file, `id_rsa.pub`, to the BART
-user account, `enterprisedb`, on the BART host, `192.168.2.22`:
+Create and copy the generated public key file, `id_rsa.pub`, to the BART user account, `enterprisedb`, on the BART host, `192.168.2.22`:
 
 ``` text
 [user@localhost ~]$ su - postgres
@@ -548,9 +463,7 @@ enterprisedb@192.168.2.22's password:
 id_rsa.pub
 ```
 
-Log into the BART host as the BART user account and append the temporary
-public key file, `/tmp/tmp.pub`, onto the `authorized_keys` file owned
-by the BART user account.
+Log into the BART host as the BART user account and append the temporary public key file, `/tmp/tmp.pub`, onto the `authorized_keys` file owned by the BART user account.
 
 ``` text
 -bash-4.1$ ssh enterprisedb@192.168.2.22
@@ -571,11 +484,7 @@ logout
 Connection to 192.168.2.22 closed.
 ```
 
-Make sure the `authorized_keys` file has file permission 600 as shown,
-otherwise the passwordless connection fails. Test the passwordless
-connection. From the remote host, while logged in as user account
-`postgres`, verify that you can log into the BART host with the BART
-user account without being prompted for a password:
+Make sure the `authorized_keys` file has file permission 600 as shown, otherwise the passwordless connection fails. Test the passwordless connection. From the remote host, while logged in as user account `postgres`, verify that you can log into the BART host with the BART user account without being prompted for a password:
 
 ``` text
 -bash-4.1$ pwd
@@ -595,12 +504,9 @@ Configuring access to a PostgreSQL host
 
 ### Configuring Access from the BART Host to Remote PostgreSQL
 
-On the BART host 192.168.2.22, copy the public key file for the BART
-user account, `enterprisedb`, for access to the remote database server
-user account, `postgres`, on the remote host 192.168.2.24.
+On the BART host 192.168.2.22, copy the public key file for the BART user account, `enterprisedb`, for access to the remote database server user account, `postgres`, on the remote host 192.168.2.24.
 
-The following lists the current SSH keys files in the BART user’s `.ssh`
-directory on the BART host:
+The following lists the current SSH keys files in the BART user’s `.ssh` directory on the BART host:
 
 ``` text
 [user@localhost ~]$ su - enterprisedb
@@ -613,12 +519,7 @@ total 16
 -rw-r--r-- 1 enterprisedb enterprisedb 394 Apr 23 13:24 known_hosts
 ```
 
-The public key file, `id_rsa.pub`, for BART user account `enterprisedb`
-on the BART host was generated in [Generating a Public Key File for the
-BART User
-Account](generating_a_public_key_file_for_the_bart_user_account)
-Section, and is now copied to the remote PostgreSQL host on
-192.168.2.24:
+The public key file, `id_rsa.pub`, for BART user account `enterprisedb` on the BART host was generated in [Generating a Public Key File for the BART User Account](generating_a_public_key_file_for_the_bart_user_account) Section, and is now copied to the remote PostgreSQL host on 192.168.2.24:
 
 ``` text
 -bash-4.1$ scp ~/.ssh/id_rsa.pub postgres@192.168.2.24:/tmp/tmp.pub
@@ -626,9 +527,7 @@ postgres@192.168.2.24's password:
 id_rsa.pub
 ```
 
-Log into the `postgres` user account on the remote host and copy the
-public key file onto the `authorized_keys` file of `postgres` under its
-`.ssh` directory:
+Log into the `postgres` user account on the remote host and copy the public key file onto the `authorized_keys` file of `postgres` under its `.ssh` directory:
 
 ``` text
 -bash-4.1$ ssh postgres@192.168.2.24
@@ -661,8 +560,7 @@ logout
 Connection to 192.168.2.24 closed.
 ```
 
-Test the passwordless connection from the BART host to the remote
-PostgreSQL host.
+Test the passwordless connection from the BART host to the remote PostgreSQL host.
 
 ``` text
 [user@localhost ~]$ su - enterprisedb
@@ -684,12 +582,9 @@ Replication database user
 
 This section shows how the replication database user is established.
 
-**All database servers must use a superuser as the replication database
-user.**
+**All database servers must use a superuser as the replication database user.**
 
-The replication database user for each database server is specified by
-the `user` parameter in the BART configuration file as shown by the
-following:
+The replication database user for each database server is specified by the `user` parameter in the BART configuration file as shown by the following:
 
 ``` text
 [ACCTG]
@@ -723,9 +618,7 @@ copy_wals_during_restore = enabled
 description = "Human Resources"
 ```
 
-Add entries to the `.pgpass` file on each server to allow the BART user
-account to initiate a backup without being prompted for credentials. The
-`.pgpass` file is located in `/opt/PostgresPlus/9.5AS/.pgpass`.
+Add entries to the `.pgpass` file on each server to allow the BART user account to initiate a backup without being prompted for credentials. The `.pgpass` file is located in `/opt/PostgresPlus/9.5AS/.pgpass`.
 
 ``` text
 127.0.0.1:5444:*:enterprisedb:password
@@ -733,136 +626,97 @@ account to initiate a backup without being prompted for credentials. The
 192.168.2.24:5432:*:postgres:password
 ```
 
-For more information about using a `.pgpass` file, please see the
-PostgreSQL documentation available at:
+For more information about using a `.pgpass` file, please see the PostgreSQL documentation available at:
 
 > <https://www.postgresql.org/docs/current/libpq-pgpass.html>
 
-While connected to `MKTG` on 192.168.2.24, the following `CREATE ROLE`
-command is given to create the replication database superuser:
+While connected to `MKTG` on 192.168.2.24, the following `CREATE ROLE` command is given to create the replication database superuser:
 
 ``` text
 CREATE ROLE repuser WITH LOGIN SUPERUSER PASSWORD 'password';
 ```
 
-The `pg_hba.conf` file for the local Advanced Server, `ACCTG` is set as
-follows:
+The `pg_hba.conf` file for the local Advanced Server, `ACCTG` is set as follows:
 
 ``` text
 ---
-title: TYPE     DATABASE            USER        ADDRESS         METHOD
-metaTitle: TYPE     DATABASE            USER        ADDRESS         METHOD
-metaDescription: description
+title: "TYPE     DATABASE            USER        ADDRESS         METHOD"
 ---
 ---
-title: "local" is for Unix domain socket connections only
-metaTitle: "local" is for Unix domain socket connections only
-metaDescription: description
+title: ""local" is for Unix domain socket connections only"
 ---
 local        all                all                          md5
 ---
-title: IPv4     local connections:
-metaTitle: IPv4     local connections:
-metaDescription: description
+title: "IPv4     local connections:"
 ---
 host       template1         enterprisedb  127.0.0.1/32      md5
 host       edb               enterprisedb  127.0.0.1/32      md5
 #host      all               all           127.0.0.1/32      md5
 ---
-title: IPv6 local connections:
-metaTitle: IPv6 local connections:
-metaDescription: description
+title: "IPv6 local connections:"
 ---
 host       all               all           ::1/128           md5
 ---
-title: Allow replication connections from localhost, by a user with the
-metaTitle: Allow replication connections from localhost, by a user with the
-metaDescription: description
+title: "Allow replication connections from localhost, by a user with the"
 ---
 ---
-title: replication privilege.
-metaTitle: replication privilege.
-metaDescription: description
+title: "replication privilege."
 ---
 #local     replication       enterprisedb                    md5
 host       replication       enterprisedb  127.0.0.1/32      md5
 ```
 
-The `pg_hba.conf` file for the remote Advanced Server, `MKTG` is set as
-follows:
+The `pg_hba.conf` file for the remote Advanced Server, `MKTG` is set as follows:
 
 ``` text
 ---
-title: TYPE    DATABASE           USER        ADDRESS             METHOD
-metaTitle: TYPE    DATABASE           USER        ADDRESS             METHOD
-metaDescription: description
+title: "TYPE    DATABASE           USER        ADDRESS             METHOD"
 ---
 ---
-title: "local" is for Unix domain socket connections only
-metaTitle: "local" is for Unix domain socket connections only
-metaDescription: description
+title: ""local" is for Unix domain socket connections only"
 ---
 local      all               all                               md5
 ---
-title: IPv4 local connections:
-metaTitle: IPv4 local connections:
-metaDescription: description
+title: "IPv4 local connections:"
 ---
 host       template1         repuser      192.168.2.22/32      md5
 host       all               enterprisedb 127.0.0.1/32         md5
 #host      all               all          127.0.0.1/32         md5
 ---
-title: IPv6 local connections:
-metaTitle: IPv6 local connections:
-metaDescription: description
+title: "IPv6 local connections:"
 ---
 host       all               all           ::1/128             md5
 ---
-title: Allow replication connections from localhost, by a user with the
-metaTitle: Allow replication connections from localhost, by a user with the
-metaDescription: description
+title: "Allow replication connections from localhost, by a user with the"
 ---
 ---
-title: replication privilege.
-metaTitle: replication privilege.
-metaDescription: description
+title: "replication privilege."
 ---
 #local   replication         enterprisedb                      md5
 host     replication         repuser       192.168.2.22/32     md5
 ```
 
-The `pg_hba.conf` file for the remote PostgreSQL server, `HR` is set as
-follows:
+The `pg_hba.conf` file for the remote PostgreSQL server, `HR` is set as follows:
 
 ``` text
 ---
-title: TYPE    DATABASE           USER        ADDRESS               METHOD
-metaTitle: TYPE    DATABASE           USER        ADDRESS               METHOD
-metaDescription: description
+title: "TYPE    DATABASE           USER        ADDRESS               METHOD"
 ---
 ---
-title: "local" is for Unix domain socket connections only
-metaTitle: "local" is for Unix domain socket connections only
-metaDescription: description
+title: ""local" is for Unix domain socket connections only"
 ---
 local      all               all                                 md5
 ---
-title: IPv4 local connections:
-metaTitle: IPv4 local connections:
-metaDescription: description
+title: "IPv4 local connections:"
 ---
 host       template1         postgres    192.168.2.22/32         md5
 host       all               all         127.0.0.1/32            md5
 ---
-title: IPv6 local connections:
-metaTitle: IPv6 local connections:
-metaDescription: description
+title: "IPv6 local connections:"
 ---
 host       all               all         ::1/128                 md5
 ---
-title: Allow replication connections from localhost, by a user with the
-metaTitle: Allow replication connections from localhost, by a user with the
-metaDescription: description
+title: "Allow replication connections from localhost, by a user with the"
 ---
 q# replication privilege.
 #local     replication       postgres                            md5
@@ -881,9 +735,7 @@ WAL archiving parameters
 
 ## WAL Archiving Configuration Parameters
 
-Use the following parameters in the `postgresql.conf` file to enable WAL
-archiving. The `postgresql.conf` file for the local Advanced Server,
-`ACCTG` is set as follows:
+Use the following parameters in the `postgresql.conf` file to enable WAL archiving. The `postgresql.conf` file for the local Advanced Server, `ACCTG` is set as follows:
 
 ``` text
 wal_level = archive
@@ -897,10 +749,7 @@ archive_mode = on                              # allows archiving to be done
 max_wal_senders = 3
 ```
 
-When the `INIT` subcommand is invoked, the Postgres `archive_command`
-configuration parameter in the `postgresql.auto.conf` file will be set
-based on the BART `archive_command` parameter located in the BART
-configuration file.
+When the `INIT` subcommand is invoked, the Postgres `archive_command` configuration parameter in the `postgresql.auto.conf` file will be set based on the BART `archive_command` parameter located in the BART configuration file.
 
 <div class="note">
 
@@ -910,9 +759,7 @@ Note
 
 </div>
 
-If the Postgres `archive_command` is already set, to prevent the
-`archive_command` from re-setting invoke the `INIT` subcommand with the
-`-- no-configure` option. For details, see
+If the Postgres `archive_command` is already set, to prevent the `archive_command` from re-setting invoke the `INIT` subcommand with the `-- no-configure` option. For details, see
 
 </div>
 
@@ -937,31 +784,21 @@ archive_command = 'cp %p %a/%f'
 description = "Accounting"
 ```
 
-When the `INIT` subcommand is invoked, the `postgresql.auto.conf` file
-contains the following:
+When the `INIT` subcommand is invoked, the `postgresql.auto.conf` file contains the following:
 
 ``` text
 ---
-title: Do not edit this file manually!
-metaTitle: Do not edit this file manually!
-metaDescription: description
+title: "Do not edit this file manually!"
 ---
 ---
-title: It will be overwritten by ALTER SYSTEM command.
-metaTitle: It will be overwritten by ALTER SYSTEM command.
-metaDescription: description
+title: "It will be overwritten by ALTER SYSTEM command."
 ---
 archive_command = 'cp %p /opt/backup/acctg/archived_wals/%f'
 ```
 
-The `archive_command` uses the `cp` command instead of `scp` since the
-BART backup catalog is local to this database cluster and the BART user
-account (owning the backup catalog, `enterprisedb`), is the same user
-account running Advanced Server. The result is that there is no
-directory permission conflict during the archive operation.
+The `archive_command` uses the `cp` command instead of `scp` since the BART backup catalog is local to this database cluster and the BART user account (owning the backup catalog, `enterprisedb`), is the same user account running Advanced Server. The result is that there is no directory permission conflict during the archive operation.
 
-The `postgresql.conf` file for the remote Advanced Server, `MKTG` is set
-as follows:
+The `postgresql.conf` file for the remote Advanced Server, `MKTG` is set as follows:
 
 ``` text
 wal_level = archive
@@ -975,11 +812,7 @@ archive_command = ''                           # command to use to archive a
 max_wal_senders = 3
 ```
 
-When the `INIT` subcommand is invoked, the Postgres `archive_command`
-configuration parameter in the `postgresql.auto.conf` file will be set
-by the default BART format of the BART `archive_command` parameter
-(since it is not explicitly set for this database server in the BART
-configuration file).
+When the `INIT` subcommand is invoked, the Postgres `archive_command` configuration parameter in the `postgresql.auto.conf` file will be set by the default BART format of the BART `archive_command` parameter (since it is not explicitly set for this database server in the BART configuration file).
 
 ``` text
 [BART]
@@ -1009,33 +842,22 @@ The default, BART `archive_command` format is the following:
 archive_command = 'scp %p %h:%a/%f'
 ```
 
-The `postgresql.auto.conf` file contains the following after the `INIT`
-subcommand is invoked:
+The `postgresql.auto.conf` file contains the following after the `INIT` subcommand is invoked:
 
 ``` text
 ---
-title: Do not edit this file manually!
-metaTitle: Do not edit this file manually!
-metaDescription: description
+title: "Do not edit this file manually!"
 ---
 ---
-title: It will be overwritten by ALTER SYSTEM command.
-metaTitle: It will be overwritten by ALTER SYSTEM command.
-metaDescription: description
+title: "It will be overwritten by ALTER SYSTEM command."
 ---
 archive_command = 'scp %p
 enterprisedb@192.168.2.22:/opt/backup/hr/archived_wals/%f'
 ```
 
-The `archive_command` uses the `scp` command since the BART backup
-catalog is remote relative to this database cluster. The BART user
-account, `enterprisedb`, is specified on the `scp` command since this is
-the user account owning the BART backup catalog where the archived WAL
-files are to be copied. The result is that there is no directory
-permission conflict during the archive operation.
+The `archive_command` uses the `scp` command since the BART backup catalog is remote relative to this database cluster. The BART user account, `enterprisedb`, is specified on the `scp` command since this is the user account owning the BART backup catalog where the archived WAL files are to be copied. The result is that there is no directory permission conflict during the archive operation.
 
-The `postgresql.conf` file for the remote PostgreSQL server, `HR` is set
-as follows:
+The `postgresql.conf` file for the remote PostgreSQL server, `HR` is set as follows:
 
 ``` text
 wal_level = archive
@@ -1049,11 +871,7 @@ archive_mode = on                              # allows archiving to be done
 max_wal_senders = 3
 ```
 
-When the `INIT` subcommand is invoked, the Postgres `archive_command`
-configuration parameter in the `postgresql.auto.conf` file will be set
-by the default BART format of the BART `archive_command` parameter
-(since it is not explicitly set for this database server in the BART
-configuration file).
+When the `INIT` subcommand is invoked, the Postgres `archive_command` configuration parameter in the `postgresql.auto.conf` file will be set by the default BART format of the BART `archive_command` parameter (since it is not explicitly set for this database server in the BART configuration file).
 
 ``` text
 [BART]
@@ -1085,30 +903,20 @@ The default, BART `archive_command` format is the following:
 archive_command = 'scp %p %h:%a/%f'
 ```
 
-The `postgresql.auto.conf` file contains the following after the `INIT`
-subcommand is invoked:
+The `postgresql.auto.conf` file contains the following after the `INIT` subcommand is invoked:
 
 ``` text
 ---
-title: Do not edit this file manually!
-metaTitle: Do not edit this file manually!
-metaDescription: description
+title: "Do not edit this file manually!"
 ---
 ---
-title: It will be overwritten by ALTER SYSTEM command.
-metaTitle: It will be overwritten by ALTER SYSTEM command.
-metaDescription: description
+title: "It will be overwritten by ALTER SYSTEM command."
 ---
 archive_command = 'scp %p
 enterprisedb@192.168.2.22:/opt/backup/hr/archived_wals/%f'
 ```
 
-The `archive_command` uses the `scp` command since the BART backup
-catalog is remote relative to this database cluster. The BART user
-account, `enterprisedb`, is specified on the `scp` command since this is
-the user account owning the BART backup catalog where the archived WAL
-files are to be copied. The result is that there is no directory
-permission conflict during the archive operation.
+The `archive_command` uses the `scp` command since the BART backup catalog is remote relative to this database cluster. The BART user account, `enterprisedb`, is specified on the `scp` command since this is the user account owning the BART backup catalog where the archived WAL files are to be copied. The result is that there is no directory permission conflict during the archive operation.
 
 <div id="creating_the_bart_backup_catalog_(backup_path)">
 
@@ -1122,8 +930,7 @@ BART backup catalog backup_path
 
 ## Creating the BART Backup Catalog (backup_path)
 
-Create the directory specified by the `backup_path` configuration
-parameter.
+Create the directory specified by the `backup_path` configuration parameter.
 
 ``` text
 [BART]
@@ -1149,8 +956,7 @@ Make sure it is owned by the BART user account:
 drwx------ 2 enterprisedb enterprisedb 4096 Apr 23 15:36 backup
 ```
 
-Use the BART `INIT` subcommand to complete the directory structure and
-set the Postgres `archive_command` configuration parameter.
+Use the BART `INIT` subcommand to complete the directory structure and set the Postgres `archive_command` configuration parameter.
 
 <div class="note">
 
@@ -1160,22 +966,15 @@ Note
 
 </div>
 
-Before invoking any BART subcommands, set up a profile under the BART
-user account’s home directory to set the `LD_LIBRARY_PATH` and `PATH`
-environment variables.
+Before invoking any BART subcommands, set up a profile under the BART user account’s home directory to set the `LD_LIBRARY_PATH` and `PATH` environment variables.
 
 </div>
 
-For more information regarding setting this variable, see the
-Configuring the BART host section of *EDB Postgres Backup and Recovery
-Installation and Upgrade Guide* available at:
+For more information regarding setting this variable, see the Configuring the BART host section of *EDB Postgres Backup and Recovery Installation and Upgrade Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
-The `-o` option is specified with the `INIT` subcommand to force the
-setting of the Postgres `archive_command` configuration parameter when
-`archive_mode` is `off` or if the Postgres `archive_command` parameter
-is already set and needs to be overridden.
+The `-o` option is specified with the `INIT` subcommand to force the setting of the Postgres `archive_command` configuration parameter when `archive_mode` is `off` or if the Postgres `archive_command` parameter is already set and needs to be overridden.
 
 ``` text
 [user@localhost ~]$ su - enterprisedb
@@ -1260,11 +1059,7 @@ total 4
 drwxrwxr-x 2 enterprisedb enterprisedb 4096 Mar 29 13:16 archived_wals
 ```
 
-The `ARCHIVE PATH` field displays the full directory path to where the
-WAL files are copied. This directory path must match the directory path
-specified in the Postgres `archive_command` parameter of the
-`postgresql.conf` file or the `postgresql.auto.conf` file of each
-database server.
+The `ARCHIVE PATH` field displays the full directory path to where the WAL files are copied. This directory path must match the directory path specified in the Postgres `archive_command` parameter of the `postgresql.conf` file or the `postgresql.auto.conf` file of each database server.
 
 <div id="starting_the_database_servers_with_wal_archiving">
 
@@ -1278,9 +1073,7 @@ Starting WAL archiving
 
 ### Starting the Database Servers with WAL Archiving
 
-After the BART backup catalog directory structure has been completed,
-begin the archiving of WAL files from the database servers by restarting
-each database server. On BART host 192.168.2.22:
+After the BART backup catalog directory structure has been completed, begin the archiving of WAL files from the database servers by restarting each database server. On BART host 192.168.2.22:
 
 ``` text
 [root@localhost data]# service ppas-9.5 restart
@@ -1296,18 +1089,13 @@ On remote host 192.168.2.24:
 
 In the BART backup catalog, verify that the WAL files are archiving.
 
-Archived WAL files may not appear very frequently depending upon how
-often WAL archiving is set to switch to a new segment file with the
-`archive_timeout` parameter in your database server configuration
-settings.
+Archived WAL files may not appear very frequently depending upon how often WAL archiving is set to switch to a new segment file with the `archive_timeout` parameter in your database server configuration settings.
 
-Verify that there are no archiving-related errors in the database server
-log files.
+Verify that there are no archiving-related errors in the database server log files.
 
 ## Taking a Full Backup
 
-The following code snippet shows the first full backup of the database
-servers.
+The following code snippet shows the first full backup of the database servers.
 
 ``` text
 -bash-4.1$ bart BACKUP -s acctg -z
@@ -1401,9 +1189,7 @@ STOP TIME: 2017-03-29 13:50:26 EDT
 TOTAL DURATION: 1 sec(s)
 ```
 
-The following code snippet shows the backup directories created for each
-backup of each database server. The backup ID is used as the backup
-directory name.
+The following code snippet shows the backup directories created for each backup of each database server. The backup ID is used as the backup directory name.
 
 ``` text
 -bash-4.1$ cd /opt/backup
@@ -1428,11 +1214,9 @@ drwxrwxr-x 2 enterprisedb enterprisedb 4096 Mar 29 13:49 archived_wals
 
 ## Using Point-In-Time Recovery
 
-The following section demonstrates the point-in-time recovery operation
-on the remote PostgreSQL database server.
+The following section demonstrates the point-in-time recovery operation on the remote PostgreSQL database server.
 
-The following tables were created about two minutes apart while WAL
-archiving is enabled:
+The following tables were created about two minutes apart while WAL archiving is enabled:
 
 ``` text
 postgres=# \dt
@@ -1450,15 +1234,11 @@ public  | hr_rmt_t1_1406 | table   | postgres
 (6 rows)
 ```
 
-In the table name `hr_rmt_t<n>_<hhmi>, n` represents the active
-timeline. `<hhmi>` is the approximate time the table was created. For
-example, `hr_rmt_t1_1356` was created at approximately 1:56 PM while
-timeline \#1 is active.
+In the table name `hr_rmt_t<n>_<hhmi>, n` represents the active timeline. `<hhmi>` is the approximate time the table was created. For example, `hr_rmt_t1_1356` was created at approximately 1:56 PM while timeline \#1 is active.
 
 The PostgreSQL database server was then stopped.
 
-WAL files that have been created, but not yet archived must be
-identified, and then saved.
+WAL files that have been created, but not yet archived must be identified, and then saved.
 
 The following are the archived WAL files in the BART backup catalog:
 
@@ -1475,8 +1255,7 @@ total 49156
 000000010000000000000003
 ```
 
-The following lists the current PostgreSQL server WAL files. The
-unarchived WAL files are marked with two stars (**).
+The following lists the current PostgreSQL server WAL files. The unarchived WAL files are marked with two stars (**).
 
 ``` text
 -bash-4.1$ cd /opt/PostgreSQL/9.5/data/pg_xlog
@@ -1509,9 +1288,7 @@ total 32768
 -rw------- 1 postgres postgres 16777216 Mar 29 13:50 000000010000000000000005
 ```
 
-On the remote host, the directory is created to which the PostgreSQL
-database cluster is to be restored. This restore path is
-`/opt/restore_pg95` owned by user account `postgres`.
+On the remote host, the directory is created to which the PostgreSQL database cluster is to be restored. This restore path is `/opt/restore_pg95` owned by user account `postgres`.
 
 ``` text
 [user@localhost ~]$ su root
@@ -1537,12 +1314,7 @@ Note
 
 </div>
 
-In the BART configuration file, the remote user and remote host IP
-address, `postgres@192.168.2.24`, have been set with the `remote_host`
-parameter. If not given in the BART configuration file, this information
-must then be specified by the `--remote-host` option when giving the
-`RESTORE` subcommand (for example, `bart RESTORE --remote-host
-postgres@192.168.2.24 …`).
+In the BART configuration file, the remote user and remote host IP address, `postgres@192.168.2.24`, have been set with the `remote_host` parameter. If not given in the BART configuration file, this information must then be specified by the `--remote-host` option when giving the `RESTORE` subcommand (for example, `bart RESTORE --remote-host postgres@192.168.2.24 …`).
 
 </div>
 
@@ -1559,8 +1331,7 @@ copy_wals_during_restore = enabled
 description = "Human Resources"
 ```
 
-Use the `SHOW-BACKUPS` subcommand to identify the backup to use with the
-`RESTORE` subcommand.
+Use the `SHOW-BACKUPS` subcommand to identify the backup to use with the `RESTORE` subcommand.
 
 ``` text
 SERVER NAME          BACKUP ID         BACKUP NAME             BACKUP PARENT
@@ -1577,8 +1348,7 @@ mktg                 1490809751193     mktg_2017-03-29T13:49   none
 6.13 MB              64.00 MB          4                       active
 ```
 
-The `-t` option with the `SHOW-BACKUPS` subcommand displays additional
-backup information:
+The `-t` option with the `SHOW-BACKUPS` subcommand displays additional backup information:
 
 ``` text
 -bash-4.1$ bart SHOW-BACKUPS -s hr -i 1490809824946 -t
@@ -1612,8 +1382,7 @@ INFO: permissions set on $PGDATA
 INFO: restore completed successfully
 ```
 
-The following example shows the restored backup files in the restore
-path directory, `/opt/restore_pg95`:
+The following example shows the restored backup files in the restore path directory, `/opt/restore_pg95`:
 
 ``` text
 -bash-4.1$ pwd
@@ -1648,8 +1417,7 @@ drwx------ 3 postgres postgres 4096 Mar 29 14:27 pg_xlog
 -rw-r--r-- 1 postgres postgres 118 Mar 29 14:27 postgresql.auto.conf
 ```
 
-Copy the saved, unarchived WAL files to the restore path `pg_xlog`
-subdirectory (`/opt/restore_pg95/pg_xlog`):
+Copy the saved, unarchived WAL files to the restore path `pg_xlog` subdirectory (`/opt/restore_pg95/pg_xlog`):
 
 ``` text
 -bash-4.1$ pwd
@@ -1677,8 +1445,7 @@ total 49156
 drwx------ 2 postgres postgres 4096 Mar 29 14:27 archive_status
 ```
 
-Inspect the `/opt/restore_pg95/postgresql.auto.conf` file to verify that
-it contains the correct recovery settings:
+Inspect the `/opt/restore_pg95/postgresql.auto.conf` file to verify that it contains the correct recovery settings:
 
 ``` text
 restore_command = 'cp archived_wals/%f %p'
@@ -1686,13 +1453,9 @@ recovery_target_time = '2017-03-29 14:01:00'
 recovery_target_timeline = 1
 ```
 
-Note that it restores from the `archived_wals` subdirectory of
-`/opt/restore_pg95` since the `copy_wals_during_restore` parameter in
-the BART configuration file is set to `enabled` for database server
-`hr`.
+Note that it restores from the `archived_wals` subdirectory of `/opt/restore_pg95` since the `copy_wals_during_restore` parameter in the BART configuration file is set to `enabled` for database server `hr`.
 
-Start the database server to initiate the point-in-time recovery
-operation.
+Start the database server to initiate the point-in-time recovery operation.
 
 ``` text
 [user@localhost ~]$ su postgres
@@ -1703,8 +1466,7 @@ bash-4.1$ /opt/PostgreSQL/9.5/bin/pg_ctl start -D /opt/restore_pg95 -l
 server starting
 ```
 
-Inspect the database server log file to ensure the operation did not
-result in any errors.
+Inspect the database server log file to ensure the operation did not result in any errors.
 
 ``` text
 2017-03-29 14:33:23 EDT LOG: database system was interrupted; last known
@@ -1736,8 +1498,7 @@ connections
 2017-03-29 14:33:23 EDT LOG: autovacuum launcher started
 ```
 
-The tables that exist in the recovered database cluster are the
-following:
+The tables that exist in the recovered database cluster are the following:
 
 ``` text
 postgres=# \dt
@@ -1750,8 +1511,7 @@ public  | hr_rmt_t1_1400 | table | postgres
 (3 rows)
 ```
 
-Since recovery was up to and including 2017-03-29 14:01:00, the
-following tables created after 14:01 are not present:
+Since recovery was up to and including 2017-03-29 14:01:00, the following tables created after 14:01 are not present:
 
 ``` text
 public  | hr_rmt_t1_1402  | table  | postgres
@@ -1767,19 +1527,13 @@ Note
 
 </div>
 
-The BART `RESTORE` operation stops WAL archiving by adding an
-`archive_mode = off` parameter at the very end of the `postgresql.conf`
-file. This last parameter in the file overrides any other previous
-setting of the same parameter in the file. Delete the last setting and
-restart the database server to start WAL archiving.
+The BART `RESTORE` operation stops WAL archiving by adding an `archive_mode = off` parameter at the very end of the `postgresql.conf` file. This last parameter in the file overrides any other previous setting of the same parameter in the file. Delete the last setting and restart the database server to start WAL archiving.
 
 </div>
 
 ``` text
 ---
-title: Add settings for extensions here
-metaTitle: Add settings for extensions here
-metaDescription: description
+title: "Add settings for extensions here"
 ---
 archive_mode = off
 4.
