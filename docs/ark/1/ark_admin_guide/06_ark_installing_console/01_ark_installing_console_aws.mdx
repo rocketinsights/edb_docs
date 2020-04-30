@@ -4,13 +4,18 @@ title: "Installing the Ark Console on AWS"
 
 The EDB Ark console is distributed through the Amazon AWS Marketplace in an Amazon machine instance. To install the Ark console on your Amazon instance, you will need to:
 
-* Launch an [Ark instance](launch_ark_aws) with an Amazon AWS Marketplace AMI.
+  - Launch an `Ark instance <launch_ark_aws>`_ with an Amazon AWS Marketplace AMI.
+  - Create an `Amazon role <creating_aws_service_user>`_ and `register an administrative user <creating_aws_service_role>`_ .
+  - Configure the `Ark console <config_ark_console>`_ .
+  - Create an Amazon role and `register an Ark console user <create_aws_role_register_ark_user>`_ .
 
-* Create an [Amazon role](creating_aws_service_user) and
+<div id="launch_ark_aws" class="registered_link"></div>
 
-* Configure the [Ark console](config_ark_console) .
+<div class="index">
 
-* Create an Amazon role and [register an Ark console user](create_aws_role_register_ark_user) .
+Launching the Ark Console on AWS
+
+</div>
 
 ## Launching the Ark Console Instance on AWS
 
@@ -61,6 +66,14 @@ Continue through the launch wizard; please note that when configuring your secur
   - The CIDR addresses specified for port 6666 and ports 7800 through 7999 must specify a value of `0.0.0.0/0`.
   - The Custom TCP rule that opens ports 7800 through 7999 provides enough ports for 200 cluster connections; the upper limit of the port range can be extended if more than 200 clusters are required.
 
+<div id="create_aws_service_user_and_role" class="registered_link"></div>
+
+<div class="index">
+
+Creating the AWS Service User and Role
+
+</div>
+
 ## Creating the Amazon AWS Service User and Service Role
 
 Before configuring the Ark console on an Amazon host and creating users, you must create an Amazon service user and service role. Ark uses the service role when performing Ark management functions (such as console backups). The Ark console uses the service role credentials (the cross account keys) to assume the IAM roles assigned to Ark users. This enables Ark to securely manage AWS resources. When configuring the Ark console, you are required to provide the setup dialog with details about the AWS service user and the service role. Specify:
@@ -69,6 +82,14 @@ Before configuring the Ark console on an Amazon host and creating users, you mus
   - the Amazon external ID that will be used by the Ark service user in the `Service Account External ID` field.
   - the AWS_ACCESS_KEY_ID associated with the AWS role used for account administration in `AWS Access Key` field.
   - the AWS_SECRET_ACCESS_KEY associated with the AWS role used for account administration in `AWS Secret Key` field.
+
+<div id="creating_aws_service_user" class="registered_link"></div>
+
+<div class="index">
+
+Creating the AWS Service User
+
+</div>
 
 ### Creating the AWS Service User
 
@@ -110,6 +131,14 @@ Keep a copy of the access key values displayed on the console; you must provide 
   - Provide the Access key id in the `AWS Access Key` field on the Ark console setup dialog.
   - Use the `Show` button to display the Secret access key. You must provide the Secret access key in the AWS `Secret Key` field on the Ark console setup dialog.
 
+<div id="creating_aws_service_role" class="registered_link"></div>
+
+<div class="index">
+
+Creating the AWS Service Role
+
+</div>
+
 ### Creating the AWS Service Role
 
 After creating the service user, you must create a service role. Connect to the Amazon management console, and navigate through the Identity and Access Management dashboard to the Roles dashboard. Then, click the `Create role` button to open the `Create role` dialog.
@@ -132,11 +161,11 @@ The `Summary` dialog will display a Role ARN, but the ARN will not be enabled un
 
 ![*Provide the policy name and contents*](../images/ark_installing_console_aws_role_provide_policy.png)
 
-Copy the [provided security policy](ark_aws_service_user_security_policy) into the `JSON` tab on the `Create policy` dialog. After providing security policy information, click `Review Policy` to provide a name for the policy, and return to the role information page.
+Copy the `provided security policy <ark_aws_service_user_security_policy>`_ into the `JSON` tab on the `Create policy` dialog. After providing security policy information, click `Review Policy` to provide a name for the policy, and return to the role information page.
 
 ![*The policy document*](../images/ark_installing_console_aws_role_edit_trust.png)
 
-Navigate to the `Trust relationships` tab, and select the `Edit Trust Relationship` button to display the `Policy Document`. Replace the displayed content of the policy document with the provided [Amazon IAM Role Trust Relationship](ark_aws_iam_role_trust_relationship).
+Navigate to the `Trust relationships` tab, and select the `Edit Trust Relationship` button to display the `Policy Document`. Replace the displayed content of the policy document with the provided `Amazon IAM Role Trust Relationship <ark_aws_iam_role_trust_relationship>`_.
 
 Click the `Update Trust Policy` button to finish.
 
@@ -146,6 +175,14 @@ The role detail `Summary` will display values that you must provide when configu
 
   - The `Role ARN` associated with the service role must be provided in the `Service Account Role ARN` field.
   - The external ID associated with the service role must be provided in the `Service Account External ID` field. You can find this value under the `Conditions` section of the `Trust Relationships` tab.
+
+<div id="config_ark_console" class="registered_link"></div>
+
+<div class="index">
+
+Configuring the Ark Console
+
+</div>
 
 ## Configuring the Ark Console
 
@@ -186,9 +223,7 @@ For more information, please visit: <http://docs.aws.amazon.com/AmazonS3/latest/
 
   - Use the `Dashboard Docs URL` field to specify the location of the content that will be displayed on the Dashboard tab of the Ark console. If your cluster resides on a network with Internet access, set the parameter to `DEFAULT` to display content (documentation) from EnterpriseDB; to display alternate content, provide the URL of the content. To display no content in the lower half of the `Dashboard` tab, leave the field blank.
   - Use the `Dashboard Hot Topics URL` field to specify the location of the content that will be displayed on the Dashboard tab of the Ark console. If your cluster resides on a network with Internet access, set the parameter to `DEFAULT` to display content (alerts) from EnterpriseDB; to display alternate content, provide the URL of the content. Leave the field blank to omit content.
-
-* Use the `Enable Console Switcher` field to indicate if the console should display [console switcher](ark_using_admin_tab) functionality.
-
+  - Use the `Enable Console Switcher` field to indicate if the console should display `console switcher <ark_using_admin_tab>`_ functionality.
   - Set `Enable Postgres Authentication` to `true` to instruct Ark to enforce the authentication method configured on the backing Postgres server. Supported authentication methods include password, LDAP, RADIUS, PAM, and BSD. If <span class="title-ref">false</span>, Ark will use the default authentication method (password).
   - Use the `Template Restrict New Users` field to configure the Ark console to make any new user a <span class="title-ref">Template Only</span> user by default. You can later modify the user definition in the `User Administration` table to specify that a user is not a template only user.
   - Use the `Cluster Event Retention Limit` field to specify how long the console will keep events for deleted clusters. The default value is 14 days.
@@ -218,13 +253,11 @@ Select `REMOTE` to indicate that you would like to use a PEM server that resides
   - Use the `PEM Sync Mode` drop-down listbox to `ENABLE` or `DISABLE` synchronization between the Ark server and the PEM server.
   - Use the `PEM Synchronization Interval` field to specify the number of minutes between attempts to synchronize the Ark console with the PEM server.
 
-<div id="saml">
+<div id="saml" class="registered_link"></div>
 
 <div class="index">
 
 saml Configuring Ark for SAML
-
-</div>
 
 </div>
 
@@ -311,6 +344,14 @@ Use the last field to specify a timezone for the server:
 
 When you've completed the setup dialog, click the `Save` button to validate your changes. The Ark console will prompt you to confirm that you wish to restart the server; when prompted, click the `Restart` button to restart the server and start the Ark console.
 
+<div id="create_aws_role_register_ark_user" class="registered_link"></div>
+
+<div class="index">
+
+Creating an AWS Role and Registering an Ark User
+
+</div>
+
 ## Creating an Amazon Role and Registering an Ark Console User
 
 After deploying the console, you must create an Amazon role with an associated security policy that will be applied to the Ark console user. You can use the same security policy for multiple users, or create additional Amazon roles with custom security policies for additional users. Each time you register a user, you will be prompted for a Role ARN. The Role ARN determines which security policy will be applied to that user.
@@ -333,7 +374,7 @@ Use the `Review` dialog to provide a name and a description; then, click `Create
 
 The *Summary* dialog will display a Role ARN, but the ARN will not be enabled until the security policy and trust policy are updated.
 
-After completing the `Create Role` wizard, you must modify the inline policy and trust relationship (defined by the security policy) to allow Ark to use the role. Click the `Add inline policy` link to add a security policy. Then, copy the [permission policy text](ark_aws_iam_role_permission_policy) into the `JSON` tab.
+After completing the `Create Role` wizard, you must modify the inline policy and trust relationship (defined by the security policy) to allow Ark to use the role. Click the `Add inline policy` link to add a security policy. Then, copy the `permission policy text <ark_aws_iam_role_permission_policy>`_ into the `JSON` tab.
 
 ![*Adding a security policy*](../images/ark_installing_console_aws_iam_role_sec_policy.png)
 
@@ -343,7 +384,7 @@ Select the `Trust relationships` tab, and click the `Edit trust relationship` bu
 
 ![*Editing the trust relationship*](../images/ark_installing_console_aws_iam_role_edit_trust_rel.png)
 
-Replace the displayed content with the [provided policy document](ark_aws_iam_role_trust_relationship).
+Replace the displayed content with the `provided policy document <ark_aws_iam_role_trust_relationship>`_.
 
 <div class="note">
 
@@ -393,6 +434,5 @@ Provide the email address in the `Email` field, and the associated password in t
 
 In preparation for non-administrative user to connect, an Administrator should:
 
-1\. Use the Ark console to define a server image for each server that will host a database cluster. For detailed information about using the Ark console to create server ../images, see [Creating a Server Image](ark_using_admin_tab).
-
-2\. Use the Ark console to create database engine definitions. For detailed information about defining a database engine, see [Creating a Database Engine](ark_using_admin_tab)
+1.  Use the Ark console to define a server image for each server that will host a database cluster. For detailed information about using the Ark console to create server ../images, see `Creating a Server Image <ark_using_admin_tab>`_.
+2.  Use the Ark console to create database engine definitions. For detailed information about defining a database engine, see `Creating a Database Engine <ark_using_admin_tab>`_

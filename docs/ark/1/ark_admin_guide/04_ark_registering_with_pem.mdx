@@ -58,6 +58,14 @@ The sync service will also ensure that the corresponding pem-team role is delete
 
 Ark will sync with PEM on the schedule specified by the `PEM Synchronization Interval` field. The field accepts interval values in minutes; by default, Ark will attempt to syncronize every 10 minutes.
 
+<div id="monitoring_cluster" class="registered_link"></div>
+
+<div class="index">
+
+Monitoring an Ark Cluster
+
+</div>
+
 ## Monitoring an Ark Cluster
 
 After deployment, you can access the PEM web interface in your choice of browser:
@@ -77,7 +85,7 @@ If you have deployed the PEM server locally (on the Ark host), the password asso
 > 
 > password: `0f42d1934a1a19f3d25d6288f2a3272c6143fc5d`
 
-You should [change the password](ark_console_management) after deployment to a unique password (known only to trusted users).
+You should `change the password <ark_console_management>`_ after deployment to a unique password (known only to trusted users).
 
 After authenticating with the server, the PEM web interface allows you to manage your monitored nodes.
 
@@ -98,6 +106,14 @@ PEM documentation is available via the PEM web interface Help menu, or at [the E
 If your Ark clusters are provisioned with private IP addresses, they may not be reachable from the PEM server. If this is the case, you will not be able to use PEM to remotely browse the database server. PEM agents running on the Ark cluster nodes will be able to report status to the PEM Server.
 
 Please note that the user identifier associated with an Ark cluster (the cluster owner) must be unique across all Ark consoles supported by a given PEM server.
+
+<div id="pem_agent" class="registered_link"></div>
+
+<div class="index">
+
+Registering a PEM Agent
+
+</div>
 
 ## Registering a PEM Agent
 

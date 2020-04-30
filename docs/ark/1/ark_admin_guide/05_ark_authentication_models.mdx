@@ -44,6 +44,14 @@ For detailed information about using the [psql client](https://www.enterprisedb.
 
 After the administrative user adds the end-user, the end-user will complete the registration process by navigating to the URL of the console, and logging in.
 
+<div id="provider_on_AWS" class="registered_link"></div>
+
+<div class="index">
+
+Provider Authentication on AWS
+
+</div>
+
 ## Using Provider Authentication on AWS
 
 If you use authentication provided by Amazon, an Ark Administrative user can use the Ark Administrator's console to add, modify, or delete user accounts.
@@ -51,6 +59,14 @@ If you use authentication provided by Amazon, an Ark Administrative user can use
 ![*Using Provider Authentication on AWS*](images/ark_authentication_models_aws_provider_auth.png)
 
 When the user provides credentials to the Ark console, the credentials are passed to Amazon for verification. If the credentials are successfully verified, the role is evaluated to determine if the user should have access to the Administrator console or the end-user console.
+
+<div id="pg_on_AWS" class="registered_link"></div>
+
+<div class="index">
+
+PostgreSQL Authentication on AWS
+
+</div>
 
 ## Using PostgreSQL Authentication on AWS
 
@@ -60,6 +76,14 @@ When Postgres authentication is enabled, the first user to log in becomes the se
 
 An Ark Administrative user must use a client application (such as psql or PEM) to add each user to the Ark backing database, and then use the User Administration table to register Ark users. The user name and associated password specified in the Ark backing database must match the credentials specified when registering the user in the Ark console. If Ark successfully verifies the credentials, the credentials are passed to Amazon for evaluation to determine console access.
 
+<div id="provider_on_Azure" class="registered_link"></div>
+
+<div class="index">
+
+Provider Authentication on Azure
+
+</div>
+
 ## Using Provider Authentication on Azure
 
 If you use native password authentication provided by Azure you must use the Azure Active Directory console to create and manage user accounts.
@@ -67,6 +91,14 @@ If you use native password authentication provided by Azure you must use the Azu
 ![*Using Provider Authentication on Azure*](images/ark_authentication_models_azure_provider_auth.png)
 
 When the user provides credentials to the Ark console, the credentials are passed to the provider for verification. If the credentials are successfully verified, the role is evaluated to determine if the user should have access to the Administrator console or the end-user console.
+
+<div id="pg_on_Azure" class="registered_link"></div>
+
+<div class="index">
+
+PostgreSQL Authentication on Azure
+
+</div>
 
 ## Using PostgreSQL Authentication on Azure
 

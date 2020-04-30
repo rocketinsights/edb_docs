@@ -105,7 +105,7 @@ Console Manager
 
 Use fields in the `Console Manager` panel to manage the names and links displayed by the `Consoles` drop-down listbox on the Ark console. You can also use the Console Manager to manage federated consoles and provide access to cross-region resources. The console manager provides access to optional functionality; if you are not federating consoles or do not wish to use the `Consoles` drop-down, you are not required to complete the fields in the panel.
 
-For more information about creating and using federated consoles, see [Using the Console Manager to Create a Federated Console](register_federated_console).
+For more information about creating and using federated consoles, see `Using the Console Manager to Create a Federated Console <register_federated_console>`_.
 
 ![*The Consoles drop-down.*](images/ark_admin_tab_console_switcher.png)
 
@@ -136,6 +136,14 @@ To remove a URL, highlight the name of the URL in the `NAME` column and click th
 ![*Deleting a console.*](images/ark_admin_tab_console_switcher_delete_url.png)
 
 Click the `Delete` button to confirm that you want to remove the entry from the `Consoles` drop-down and delete the entry from the `Console Manager` table, or click `Cancel` to exit the dialog without deleting the entry.
+
+<div id="register_federated_console" class="registered_link"></div>
+
+<div class="index">
+
+Federated console Cross-region resources
+
+</div>
 
 ### Using the Console Manager to Create a Federated Console
 
@@ -209,6 +217,14 @@ After creating a federation, you can:
   - Scale a federated cluster in multiple regions.
   - Perform machine scaling on a cluster that resides on a federated console.
 
+<div id="manage_server_images" class="registered_link"></div>
+
+<div class="index">
+
+Managing Server Images
+
+</div>
+
 ## Managing Server Images
 
 A server definition describes the virtual machine that will host an instance of Advanced Server or PostgreSQL. Use the `Server Type Administration` panel to manage server images.
@@ -254,7 +270,7 @@ If you are using an Amazon AWS Marketplace image, the default user name is assoc
   - Use the `System Type` field drop-down listbox to select the operating system type of the server; select CentOS or RHEL.
   - Check the box next to `Statically Provisioned` to indicate that the server is statically provisioned. A statically provisioned server is a pre-installed image that contains the software required to create a database cluster.
 
-For detailed information about creating a statically provisioned image, please see [Creating a Statically Provisioned Image](ark_statically_provisioned).
+For detailed information about creating a statically provisioned image, please see `Creating a Statically Provisioned Image <ark_statically_provisioned>`_.
 
 When you have completed the dialog, click `Save` to create the server image, or `Cancel` to exit without saving.
 
@@ -277,6 +293,14 @@ Select the `Delete` key to remove the server, or `Cancel` to exit without removi
 ![*You cannot remove a server with dependencies*](images/ark_admin_tab_delete_server_error.png)
 
 Please note: If the server is currently used by an engine, the Ark console will advise you that the server cannot be removed; before removing the server, you must delete any dependent engines.
+
+<div id="manage_db_engines" class="registered_link"></div>
+
+<div class="index">
+
+Managing Database Engines
+
+</div>
 
 ## Managing Database Engines
 
@@ -391,6 +415,14 @@ https://USERNAME:PASSWORD@yum.enterprisedb.com/edb-repo-rpms/edb-repo-latest.noa
 
 Required Packages: edb-as12-server edb-pgpool40 edb-as12-pgpool40-extensions edb-pem-agent
 ```
+
+<div id="manage_engine_definition" class="registered_link"></div>
+
+<div class="index">
+
+Managing Engine Definitions
+
+</div>
 
 ## Adding, Modifying, or Deleting Engine Definitions
 
@@ -574,6 +606,14 @@ Click the `Delete` button to remove the engine definition, or select `Cancel` to
 
 Please note that you cannot remove an engine that is referenced by one or more clusters and/or backups; if you attempt to remove an engine that is in use, EDB Ark will display a warning message.
 
+<div id="add_supporting_component_db_engine" class="registered_link"></div>
+
+<div class="index">
+
+Adding Components to a DB Engine
+
+</div>
+
 ## Adding Supporting Components to a Database Engine Definition
 
 When you create a cluster, you specify the engine that EDB Ark will use when provisioning that cluster. If you modify the engine description, adding the list of RPM packages that will be installed when that engine is provisioned, each node of any cluster provisioned with that engine will include the functionality of the supporting component.
@@ -662,6 +702,14 @@ The client will confirm that the extensions have been created successfully. The 
 
 Visit the PostGIS project site for detailed information about using [PostGIS](http://postgis.net/documentation/).
 
+<div id="template_administration" class="registered_link"></div>
+
+<div class="index">
+
+Template Administration
+
+</div>
+
 ## Template Administration
 
 A template contains a predefined set of server options that determine the configuration of a database cluster. A template can simplify creation of clusters that use a common configuration, or limit user access to costly resources such as large server classes. Use functionality offered in the `Template Administration` panel to create and manage templates.
@@ -712,6 +760,14 @@ When you've completed the `Add Template` dialog, click `Save` to create the defi
 If you select `Launch From Template` on the `Create a New Server Cluster` dialog, you will be prompted to select the template you wish to use from the `Template Name` drop-down listbox. After selecting a template, you can use the `Full Template Details` link to open a popup that displays detailed information about the configuration of clusters deployed with the template.
 
 ![*The template details popup*](images/ark_admin_tab_template_details.png)
+
+<div id="rhel_subscription" class="registered_link"></div>
+
+<div class="index">
+
+Red Hat Subscription Management
+
+</div>
 
 ## Red Hat Subscription Management
 
@@ -775,6 +831,14 @@ Then, to delete a Red Hat Subscription Manager service from the list in the Ark 
 
 Click the `Delete` button to confirm that you wish to delete the subscription definition, or `Cancel` to exit without deleting the definition.
 
+<div id="manage_aws_roles" class="registered_link"></div>
+
+<div class="index">
+
+Managing Amazon Roles
+
+</div>
+
 ## Managing Amazon Roles
 
 Amazon Role ARNs that are listed in the `IAM Roles Administration` table will be available on the `Role` drop-down listbox of the `Add User` dialog. Please note that before adding a Role ARN to the table you must define the role in the AWS management console, and the trust policy of the role must include the External Id of the Ark console.
@@ -795,6 +859,14 @@ Use fields on the dialog to provide details from the Amazon management console:
   - Provide the `Value` from the `Trust relationships` tab in the `External Id` field.
 
 Click the `Apply` button to verify the information, and add the entry to the table.
+
+<div id="user_administration" class="registered_link"></div>
+
+<div class="index">
+
+User Administration
+
+</div>
 
 ## User Administration
 
@@ -845,6 +917,14 @@ If enabled, you can use buttons below the `User Administration` table to manage 
 
 After deleting the objects owned by a user, you can use the `Delete User` button to remove the user account. To delete a user, highlight the name of a user in the user table, and click the `Delete User` button. The Ark console will ask you to confirm that you wish to delete the selected user before removing the account. Click `Delete` to remove the user account, or `Cancel` to exit the popup without deleting the account.
 
+<div id="user_admin_aws_host" class="registered_link"></div>
+
+<div class="index">
+
+User Administration on an AWS Host
+
+</div>
+
 ## User Administration on an Amazon Host
 
 You can use the `User Administration` table to register new users for the Ark console, edit user properties, or delete a user account. Please note that you must use a client application to connect to the Ark console and add the user to the postgres database before the user is allowed to connect.
@@ -886,6 +966,14 @@ After the administrative user adds the end-user, the end-user will complete the 
 
 Use the buttons below the AWS user table to manage user accounts for the AWS console and user-owned objects.
 
+<div id="user_admin_azure" class="registered_link"></div>
+
+<div class="index">
+
+User Administration on an Azure Host
+
+</div>
+
 ## User Administration on an Azure Host
 
 You can use the `User Administration` table to register new users for the Ark console, edit user properties, or delete a user account. Please note that you must use a client application to connect to the Ark console and add the user to the postgres database before the user is added to the table or allowed to connect.
@@ -899,6 +987,14 @@ Use the check boxes to modify user access privileges:
   - Check the box in the `TEMPLATES ONLY` column to indicate that the user must use templates when deploying clusters.
 
 Use the `Refresh` button to update the table.
+
+<div id="display_connected_users" class="registered_link"></div>
+
+<div class="index">
+
+Display Connected Users
+
+</div>
 
 ## Displaying Connected Users
 
@@ -914,6 +1010,14 @@ The dialog displays:
 
 When you’re finished reviewing the list, use the `X` in the upper-right corner of the popup to close the dialog.
 
+<div id="manage_wall_message" class="registered_link"></div>
+
+<div class="index">
+
+Wall Message
+
+</div>
+
 ## Managing the Wall Message
 
 Provide a message in the `Message` field and click the `Display Message` button to add an announcement to the top of the user console. A message may include HTML tags to control the displayed format, and will wrap if the message exceeds the width of the screen.
@@ -925,6 +1029,14 @@ The console may take a few seconds to refresh. Once processed by the server, the
 ![*Displaying a wall message*](images/ark_admin_tab_wall_message.png)
 
 Use the `Remove Message` button to remove the wall banner.
+
+<div id="access_console_logs" class="registered_link"></div>
+
+<div class="index">
+
+Console Logs
+
+</div>
 
 ## Accessing the Console Logs
 
@@ -944,6 +1056,14 @@ You can include the `-F` option to instruct the `tail` utility to display only t
 
 > `tail -F file_name`
 
+<div id="core_usage_logs" class="registered_link"></div>
+
+<div class="index">
+
+Core Usage Logs
+
+</div>
+
 ## Accessing the Core Usage Logs
 
 Use the `Download Core Usage Logs` panel to download a zip file that contains the core usage by managed clusters on an hourly basis.
@@ -957,6 +1077,14 @@ The zip file contains a report with four columns; the columns contain:
 >   - The database version.
 >   - The total number of cores running in that region.
 
+<div id="manual_console_backup" class="registered_link"></div>
+
+<div class="index">
+
+Manual Backup of the Console
+
+</div>
+
 ## Taking a Manual Backup of the Console
 
 Use the `Backup Ark Console` panel to request a manual backup of the Ark console begin.
@@ -964,6 +1092,14 @@ Use the `Backup Ark Console` panel to request a manual backup of the Ark console
 ![*The Backup Ark Console section of the Admin tab*](images/ark_admin_tab_take_manual_backup.png)
 
 Click the `Backup Now` button to start a console backup; the backup will be uploaded to the currently configured object storage service.
+
+<div id="edit_installation_props" class="registered_link"></div>
+
+<div class="index">
+
+Editing Installation Properties
+
+</div>
 
 ## Editing Installation Properties
 
@@ -975,6 +1111,5 @@ Click the `Edit installation properties` button to open the `Edit Installation P
 
 For detailed descriptions of each field:
 
-\- For an Amazon-hosted console, review the AWS [deployment instructions](ark_installing_console_aws).
-
-\- For an Azure-hosted console, review the Azure console [deployment instructions](ark_installing_console_azure).
+  - For an Amazon-hosted console, review the AWS `deployment instructions <ark_installing_console_aws>`_.
+  - For an Azure-hosted console, review the Azure console `deployment instructions <ark_installing_console_azure>`_.

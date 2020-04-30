@@ -12,9 +12,11 @@ for line in fileinput.input(inplace=1):
   elif not copying:
     continue
   elif line.startswith('##'):
-    print(line.replace("\n", "").replace("`", "").replace("\*", "*").replace("\_", "_"))
+    print(line.replace("`", "").replace("\*", "*").replace("\_", "_"), end="")
+  elif line.startswith('\<'):
+    print(line.replace("\\",""), end="")
   else:
-    print(line.replace("\n", "").replace("\_", "_").replace("\*", "*"))
+    print(line.replace("\_", "_").replace("\*", "*"), end="")
   
 
 
