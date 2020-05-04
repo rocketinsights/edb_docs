@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductGroup from './productGroup';
+import ProductGroup from './ProductGroup';
 import styled from '@emotion/styled';
 
 const FlexGroups = styled('div')`
