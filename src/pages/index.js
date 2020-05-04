@@ -1,12 +1,12 @@
 import React from 'react';
 import Layout from '../components/layout';
-import ContentCol from '../components/contentCol';
-import IndexLinks from '../components/indexLinks';
-import ProductGroups from '../components/productGroups';
-import ArticleStubs from '../components/articleStubs';
-import EdbLogo from '../components/edbLogo';
+import ContentCol from '../components/ContentCol';
+import IndexLinks from '../components/IndexLinks';
+import ProductGroups from '../components/ProductGroups';
+import ArticleStubs from '../components/ArticleStubs';
+import EdbLogo from '../components/EdbLogo';
 import { Container, Row, Col } from 'react-bootstrap';
-import { indexLinkList, linkGroups, articles } from '../indexLinkList';
+import { indexLinkList, linkGroups, articles } from '../../constants/indexLinkList';
 import styled from '@emotion/styled';
 
 const FlexColumn = styled('div')`
@@ -44,7 +44,7 @@ export default () => {
               <IndexLinks indexLinkList={indexLinkList} />
             </PaddedCol>
             <ContentCol md={9}>
-              <h1>welcome to docs</h1>
+              <h1>Welcome To EDB Docs</h1>
               <ProductGroups linkGroups={linkGroups} />
               <HeadlineWithStrap
                 headline=" Learn EDB Postgres"
