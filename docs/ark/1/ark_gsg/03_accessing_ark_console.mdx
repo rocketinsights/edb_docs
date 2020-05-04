@@ -2,6 +2,9 @@
 title: "Accessing the Ark Console"
 ---
 
+<div id="accessing_ark_console" class="registered_link"></div>
+
+
 If your Ark console resides on an Amazon host, the console configuration will determine the user registration process. An administrative user can enable or disable self-registration. If you are an administrative user and need information about enabling or disabling self-registration, please refer to the EDB Ark Administrative User's Guide. If you are a non-administrative user connecting to the Ark console on an Amazon host with self-registration enabled, see Using Self-Registration on an Amazon Hosted Console.
 
 When you navigate to the URL of an installed Ark console, the console will display a login dialog.
@@ -11,6 +14,14 @@ When you navigate to the URL of an installed Ark console, the console will displ
 Enter your user name in the `Email` field, and the associated password in the `Password` field, and click `Log In` to connect to the Ark console.
 
 ![*The Ark console.*](images/accessing_ark_console_dashboard.png)
+
+<div id="self_registration" class="registered_link"></div>
+
+<div class="index">
+
+Self-Registration on AWS
+
+</div>
 
 ## Using Self-Registration on an Amazon Hosted Console
 
@@ -66,7 +77,7 @@ After providing security policy information, click `Apply Policy` to return to t
 
 ![*The Policy Document.*](images/self_reg_edit_trust_rel.png)
 
-Replace the displayed content of the policy document with the content of the file available in `AWS Resources <aws_policies>` .
+Replace the displayed content of the policy document with the content of the file available in [AWS Resources ](15_aws_policies#aws_policies) .
 
 `EDB-PPCD-CONSOLE` is a placeholder within the trust policy. You must replace the placeholder with the `External ID` provided on the `Step 2` tab of the Ark console `New User Registration` dialog.
 

@@ -2,6 +2,9 @@
 title: "Creating a Server Cluster"
 ---
 
+<div id="creating_a_cluster" class="registered_link"></div>
+
+
 To create a server cluster, you can:
 
   - Use the `Launch DB Cluster` button (located on the `Dashboard` tab) to open the `Create a new Server Cluster` dialog and define a new cluster.
@@ -11,19 +14,22 @@ If you are not a *Template Only* user (a user required to use a template when de
 
 ![*Specify your server launch preferences.*](images/create_cluster_launch_option.png)
 
-If you are a Template Only user or select the `Launch From Template` option on the deployment method selection dialog, a dialog opens that allows you to use a pre-defined template for the cluster configuration; for detailed information about using a template to create a cluster, see
+If you are a Template Only user or select the `Launch From Template` option on the deployment method selection dialog, a dialog opens that allows you to use a pre-defined template for the cluster configuration; for detailed information about using a template to create a cluster, see [Using a Template to Create a Cluster ](05_creating_a_cluster#template_create_cluster) .
 
-[Using a Template to Create a Cluster](template_create_cluster) .
-
-If you select `Manually Define A Cluster`, a dialog opens that allows you to specify detailed information about the cluster configuration. For information about manually defining a cluster, see
-
-[Manually Creating a Cluster](manually_create_cluster) .
+If you select `Manually Define A Cluster`, a dialog opens that allows you to specify detailed information about the cluster configuration. For information about manually defining a cluster, see [Manually Creating a Cluster ](05_creating_a_cluster#manually_create_cluster) .
 
 You can also use an existing cluster or a backup as a starting point for a new cluster:
 
-* For information about cloning a new server cluster from an existing cluster, see [Cloning a Server Cluster](clone_server_cluster) .
+  - For information about cloning a new server cluster from an existing cluster, see [Cloning a Server Cluster ](05_creating_a_cluster#clone_server_cluster) .
+  - For information about restoring a backup to create a new cluster, see [Restoring a Cluster from Backup ](07_manage_backup_recovery#restore_create_cluster) .
 
-* For information about restoring a backup to create a new cluster, see [Restoring a Cluster from Backup](restore_create_cluster) .
+<div id="manually_create_cluster" class="registered_link"></div>
+
+<div class="index">
+
+Manually Creating a Cluster
+
+</div>
 
 ## Manually Creating a Cluster
 
@@ -146,6 +152,14 @@ A popup dialog confirms that EDB Ark is creating a new cluster; click the `X` in
 
 Navigate to the `Clusters` tab of the Ark console to monitor the creation of the cluster.
 
+<div id="template_create_cluster" class="registered_link"></div>
+
+<div class="index">
+
+Using a Template to Create a Cluster Create Cluster, Template Only User
+
+</div>
+
 ### Using a Template to Create a Cluster
 
 If you select the `Launch From Template` option when deploying a cluster or are a *Template only* user, a dialog that offers limited options will open when you deploy a cluster.
@@ -180,6 +194,14 @@ After selecting the template that you wish to use, use the fields on the dialog 
 
 After completing the `Launch From Template` dialog, click the `Launch` button to provision a cluster that conforms to the cluster configuration.
 
+<div id="clone_server_cluster" class="registered_link"></div>
+
+<div class="index">
+
+Cloning a Server Cluster
+
+</div>
+
 ## Cloning a Server Cluster
 
 With a few simple steps, you can create a developer sandbox that contains a duplicate of the original master node. To clone a cluster,
@@ -188,9 +210,7 @@ navigate to the `Clusters` tab and highlight the name of the cluster you wish to
 
 ![*Selecting a Cloning option.*](images/create_cluster_clone.png)
 
-If you are a Template Only user or select the `Clone From Template` option on the deployment method selection dialog, a dialog opens that allows you to use a pre-defined template for the cluster configuration; for detailed information about using a template to clone a cluster, see
-
-[Using a Template to Create a Cluster](template_create_cluster) .
+If you are a Template Only user or select the `Clone From Template` option on the deployment method selection dialog, a dialog opens that allows you to use a pre-defined template for the cluster configuration; for detailed information about using a template to clone a cluster, see [Using a Template to Create a Cluster ](05_creating_a_cluster#template_create_cluster) .
 
 If you select `Manually Clone A Backup`, the dialog shown below opens.
 
@@ -218,7 +238,15 @@ When the `Create clone...` dialog opens, provide values in the requested fields:
 
 When you've completed the dialog, click the `Clone` button to create the sandbox.
 
-When you clone a database, only the master node is recreated in the new cluster; for information about manually adding replica servers to the new cluster, see `Manual Scaling <manual_scaling>`.
+When you clone a database, only the master node is recreated in the new cluster; for information about manually adding replica servers to the new cluster, see [Manual Scaling ](09_manual_scaling#manual_scaling).
+
+<div id="template_clone_cluster" class="registered_link"></div>
+
+<div class="index">
+
+Clone cluster with template Using a Template to Clone a Cluster
+
+</div>
 
 ### Using a Template to Clone a Cluster
 
@@ -256,6 +284,14 @@ On the `Add Rule` dialog:
 When you're finished, click `Apply` to create the security rule.
 
 After providing the details for the cluster, click the `Clone` button to create the clone of the cluster; select `Cancel` to exit the dialog without creating a cluster.
+
+<div id="modify_admin_settings" class="registered_link"></div>
+
+<div class="index">
+
+Modifying a Cluster's Administrative Settings Administrative Settings
+
+</div>
 
 ## Modifying a Cluster’s Administrative Settings
 

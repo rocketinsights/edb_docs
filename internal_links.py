@@ -23,6 +23,10 @@ for path in Path('content_build').rglob('*.mdx'):
     root_path = str(path.parents[0]) + '/'
     content_path = str(path.parents[2]) + '/'
     depth = len(str(path.parent).split('/')) - 2
+    if path.name == 'index.mdx':
+      depth -= 1
+    if depth < 0:
+      depth = 0
     depth_prefix = "../" * depth
     print(str(path.parent) + "/" + str(path.stem))
     print(depth)

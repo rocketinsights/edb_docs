@@ -2,6 +2,9 @@
 title: "Connecting to an EDB Ark Cluster"
 ---
 
+<div id="connecting_to_cluster" class="registered_link"></div>
+
+
 To connect to an Ark cluster, provide the IP address and port of the server, and the credentials associated with the role defined when the server cluster was created.
 
 ![*The Details panel on the Clusters tab.*](images/clusters_tab_details_panel.png)
@@ -19,6 +22,14 @@ If you have defined a cluster with two or more servers, client applications shou
 Use the authentication information (`Master User` and `Master Password`) provided on the `Create a New Server Cluster` dialog to establish the initial connection to the cluster as the database superuser. Please note that connecting with this identity grants you superuser privileges on the server; you should not share this connection information with un-trusted users.
 
 After connecting as the database superuser, you should create lesser-privileged user roles with which non-administrative users will connect.
+
+<div id="page_id" class="registered_link"></div>
+
+<div class="index">
+
+keyword one
+
+</div>
 
 ## Using ssh to Access a Server
 
@@ -50,6 +61,14 @@ After connecting via ssh, you can:
 Please note: Postgres Server applications must be invoked by the Postgres cluster owner (identified when creating an EDB Ark cluster as the Master User). If you are using a PostgreSQL server, the default user name is `postgres`; if you are using Advanced Server, the default user name is `enterprisedb`. To change your identity after connecting via ssh, use the `su` command:
 
 > `# sudo su <database_user_name>`
+
+<div id="connecting_psql" class="registered_link"></div>
+
+<div class="index">
+
+Connecting with psql psql
+
+</div>
 
 ## Connecting to EDB Ark with the psql Client
 
@@ -125,6 +144,14 @@ To exit the psql client, enter `\q`.
 For information about using psql and the psql meta-commands, please see the Postgres documentation at:
 
 <http://www.enterprisedb.com/docs/en/11/pg/app-psql.html>
+
+<div id="iptables_rules" class="registered_link"></div>
+
+<div class="index">
+
+iptables rules Using iptables Rules
+
+</div>
 
 ## Using iptables Rules
 

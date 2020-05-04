@@ -2,6 +2,9 @@
 title: "Managing Backups and Recovery"
 ---
 
+<div id="manage_backup_recovery" class="registered_link"></div>
+
+
 When you use the Ark console to take a backup, EDB Ark makes a copy of the contents of the PostgreSQL `PGDATA` directory. The `PGDATA` directory contains the data and the meta-data required to construct an exact copy of the Postgres data cluster (the data and the database objects that reside within that Postgres instance).
 
 To capture a backup of a cluster, navigate to the `Clusters` tab, highlight a name in the cluster list, and click the `Backup` icon. The `Backup Data?` dialog opens as shown below:
@@ -12,6 +15,14 @@ You can include a reference note about the backup that can be viewed on the Back
 
 When you click the `Backup` button, EDB Ark will perform the backup. While EDB Ark performs the backup, the `PENDING` column of the selected cluster on the `Clusters` tab will display the message: `Backup in progress`.
 
+<div id="backup_for_pitr" class="registered_link"></div>
+
+<div class="index">
+
+Performing a Base Backup for PITR PITR Base Backup
+
+</div>
+
 ## Performing a Base Backup for Point-In-Time Recovery
 
 When point-in-time recovery is enabled, a base backup is automatically performed that can to be used to restore to a specific point in time. All subsequent automatic scheduled backups will also support point-in-time recovery. Note that if you deselect this option, the cluster (and subsequent automatic backups) will be re-configured to not include support for point-in-time recovery.
@@ -20,15 +31,19 @@ When point-in-time recovery is enabled, the value specified in the `Backup Reten
 
 Please note that you cannot perform a base backup on a cluster while the database is in recovery and not accepting connections. If you attempt to perform a base backup during recovery, the backup will fail (the failure will be noted on the `Events` panel of the `Clusters` tab). You should instead wait until the database recovery is complete to enable point-in-time recovery for the cluster.
 
-Point-in-time recovery is enabled on the [Details panel](details_panel) of
+Point-in-time recovery is enabled on the [Details panel ](04_using_ark_console/02_ark_clusters_tab#details_panel) of the [Clusters tab ](04_using_ark_console/02_ark_clusters_tab#ark_clusters_tab) . If a base backup fails, you can trigger EDB Ark to perform a base backup by disabling point-in-time recovery, and then (after waiting a few minutes) re-enable point-in-time recovery.
 
-the [Clusters tab](ark_clusters_tab) . If a base backup fails, you can trigger EDB Ark
+<div id="reviewing_stored_backups" class="registered_link"></div>
 
-to perform a base backup by disabling point-in-time recovery, and then (after waiting a few minutes) re-enable point-in-time recovery.
+<div class="index">
+
+keyword one
+
+</div>
 
 ## Reviewing Stored Backups
 
-Navigate to the `Backups tab <ark_backups_tab>` to review a list of stored cluster backups.
+Navigate to the [Backups tab ](04_using_ark_console/03_ark_backups_tab#ark_backups_tab) to review a list of stored cluster backups.
 
 ![*The Backups tab of the Ark console.*](images/backups_list.png)
 
@@ -51,17 +66,23 @@ Status indicators provide quick visual feedback about each feature:
 | ![icon1](images/recover_backup_icon.png) | Highlight a backup in the list, and click the Recover Backup icon to open a dialog that allows you to restore a cluster from the selected backup.                                                                                |
 | ![icon2](images/delete_backup_icon.png)  | Highlight one or more backups in the list and click the Delete Backup icon to delete the selected backups. A popup will ask you to confirm that you wish to delete the selected backups before the backups are actually deleted. |
 
+<div id="restore_create_cluster" class="registered_link"></div>
+
+<div class="index">
+
+Restoring a Cluster from Backup
+
+</div>
+
 ## Restoring a Cluster from Backup
 
-You can use a template or manually provide cluster properties when restoring a cluster from a backup. To restore a backup into a new cluster, navigate to the `Backups tab <ark_backups_tab>` and highlight the name of a backup. Then, click the `Recover Backup` icon (located in the left margin).
+You can use a template or manually provide cluster properties when restoring a cluster from a backup. To restore a backup into a new cluster, navigate to the [Backups tab ](04_using_ark_console/03_ark_backups_tab#ark_backups_tab) and highlight the name of a backup. Then, click the `Recover Backup` icon (located in the left margin).
 
 If you are not a Template Only user, a dialog will open that allows you to select the method by which you will specify cluster preferences.
 
 ![*Selecting a Restore option.*](images/select_restore_backup.png)
 
-If you are a Template Only user or select the `Restore From Template` option on the recovery method dialog, a dialog opens that allows you to use a pre-defined template for the cluster configuration; for detailed information about using a template to clone a cluster, see
-
-[Using a Template to Restore from Backup](template_restore) .
+If you are a Template Only user or select the `Restore From Template` option on the recovery method dialog, a dialog opens that allows you to use a pre-defined template for the cluster configuration; for detailed information about using a template to clone a cluster, see [Using a Template to Restore from Backup ](07_manage_backup_recovery#template_restore) .
 
 If you select `Manually Restore A Backup`, the following dialog opens:
 
@@ -118,6 +139,14 @@ Click the `Recover` button to continue, or the `Cancel` button to exit without s
 Please note: when you restore a backup, the server configuration will match the original configuration, but the server addresses will change.
 
 Please note: when restoring a cluster from backup, you may need to modify parameters in the postgresql.conf file on the restored cluster to reflect the available memory of the new instance if the server class has changed from the original setting (the default value in the `Server Class` field). After modifying the server configuration, restart the server for the changes to take effect.
+
+<div id="template_restore" class="registered_link"></div>
+
+<div class="index">
+
+Using a Template to Restore from Backup Template Restore from Backup
+
+</div>
 
 ### Using a Template to Restore from Backup
 
