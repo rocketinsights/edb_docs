@@ -6,7 +6,7 @@ import ProductGroups from '../components/productGroups';
 import ArticleStubs from '../components/articleStubs';
 import EdbLogo from '../components/edbLogo';
 import { Container, Row, Col } from 'react-bootstrap';
-import { indexLinkList, linkGroups, articles } from '../indexLinkList';
+import { indexLinkList, linkGroups, articles } from '../components/indexLinkList';
 import styled from '@emotion/styled';
 
 const FlexColumn = styled('div')`
@@ -44,7 +44,7 @@ export default () => {
               <IndexLinks indexLinkList={indexLinkList} />
             </PaddedCol>
             <ContentCol md={9}>
-              <h1>welcome to docs</h1>
+              <h1>Welcome To EDB Docs</h1>
               <ProductGroups linkGroups={linkGroups} />
               <HeadlineWithStrap
                 headline=" Learn EDB Postgres"
