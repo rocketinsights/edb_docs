@@ -2,6 +2,9 @@
 title: "Uninstalling Advanced Server"
 ---
 
+<div id="uninstalling_advanced_server" class="registered_link"></div>
+
+
 Note that after uninstalling Advanced Server, the cluster data files remain intact and the service user persists. You may manually remove the cluster `data` and service user from the system.
 
 ## Uninstalling an RPM Package
@@ -16,7 +19,7 @@ Where `package_name` is the name of the package that you would like to remove.
 
 You can use the `yum remove` command to remove a package installed by yum. To remove a package, open a terminal window, assume superuser privileges, and enter the command:
 
-> `yum remove <package_name>`
+> [yum remove ](#package_name)
 
 Where `package_name` is the name of the package that you would like to remove.
 
@@ -34,7 +37,7 @@ yum and RPM will not remove a package that is required by another package. If yo
 
 To uninstall Advanced Server and its dependent packages; use the following command:
 
-> `yum remove <edb-as12-server*>`
+> [yum remove ](#edb-as12-server*)
 
 ## Uninstalling Advanced Server Components on a Debian or Ubuntu Host
 

@@ -28,7 +28,7 @@ for path in Path('content').rglob('*.mdx'):
       print(line.replace("`", "").replace("\*", "*").replace("\_", "_"), end="")
     elif "registered\_link" in line:
       print(line.replace("\\",""), end="")
-    elif line.startswith("<table>"):
+    elif line.startswith("<table"):
       print('<div class="table-with-scroll">\n<table>')
     elif line.startswith("</table>"):
       print('</table>\n</div>')
