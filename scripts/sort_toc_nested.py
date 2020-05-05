@@ -56,12 +56,12 @@ def process_node(node, root_path, result_path, index):
   source = root_path + node.filename + ".mdx"
   if len(node.items) == 0:
     destination = result_path + numberprefix(index) + node.filename.replace("%", "") + ".mdx"
-    dest = shutil.copyfile(source, destination) 
+    dest = shutil.move(source, destination) 
   else:
     folder_path = result_path + numberprefix(index) + node.filename
     os.mkdir(folder_path)
     destination = folder_path + "/index.mdx"
-    dest = shutil.copyfile(source, destination)
+    dest = shutil.move(source, destination)
     idx = 1
     for sub_node in node.items:
       process_node(sub_node, root_path, folder_path + "/", idx)
@@ -117,7 +117,7 @@ for path in Path('content').rglob('index.rst'):
     shutil.copytree(root_path + "images", dest_path + "/images")
 
     # copy index over
-    shutil.copyfile(root_path + "index.mdx", dest_path + "/index.mdx") 
+    shutil.move(root_path + "index.mdx", dest_path + "/index.mdx") 
     
     # process nodes in ToC to move mdx files to correct folder in destination folder
     idx = 1
