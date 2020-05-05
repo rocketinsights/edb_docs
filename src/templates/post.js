@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/leftNav';
-import ContentCol from '../components/contentCol';
+import ContentCol from '../components/ContentCol';
 import PageTableOfContents from '../components/PageTableOfContents';
 import { Container, Row, Col } from 'react-bootstrap';
 import VersionDropdown from '../components/versionDropdown';
