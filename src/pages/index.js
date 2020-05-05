@@ -6,7 +6,7 @@ import ProductGroups from '../components/ProductGroups';
 import ArticleStubs from '../components/ArticleStubs';
 import EdbLogo from '../components/EdbLogo';
 import { Container, Row, Col } from 'react-bootstrap';
-import { indexLinkList, linkGroups, articles } from '../../constants/indexLinkList';
+import { indexLinkList, linkGroups, articles } from '../constants/indexLinkList';
 import styled from '@emotion/styled';
 
 const FlexColumn = styled('div')`
