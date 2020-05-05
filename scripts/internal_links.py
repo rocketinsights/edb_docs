@@ -38,11 +38,11 @@ for path in Path('content_build').rglob('*.mdx'):
       new_line = line
 
       # convert all internal links in each line to MDX format
-      internal_links = re.findall('(\`[a-zA-Z\s]*?) (\<.*?\>\`)', line)
+      internal_links = re.findall('(\`[.0-9a-zA-Z\s]*?) (\<.*?\>\`)', line)
       if len(internal_links) > 0:
         for link in internal_links:
           new_text = "[" + link[0][1:]
-          new_url = "](#" + link[1][1:-2] + ")"
+          new_url = "](#" + link[1][1:-2].replace("(","").replace(")","") + ")"
           new_line = new_line.replace(link[0], new_text).replace(link[1], new_url)
 
       # convert registered links to paths

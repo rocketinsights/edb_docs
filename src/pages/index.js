@@ -1,12 +1,16 @@
 import React from 'react';
 import Layout from '../components/layout';
-import ContentCol from '../components/ContentCol';
+import ContentCol from '../components/contentCol';
 import IndexLinks from '../components/IndexLinks';
 import ProductGroups from '../components/ProductGroups';
 import ArticleStubs from '../components/ArticleStubs';
-import EdbLogo from '../components/EdbLogo';
+import EdbLogo from '../components/edbLogo';
 import { Container, Row, Col } from 'react-bootstrap';
-import { indexLinkList, linkGroups, articles } from '../../constants/indexLinkList';
+import {
+  indexLinkList,
+  linkGroups,
+  articles,
+} from '../../constants/indexLinkList';
 import styled from '@emotion/styled';
 
 const FlexColumn = styled('div')`
