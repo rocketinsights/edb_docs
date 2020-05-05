@@ -2,6 +2,9 @@
 title: "Hierarchical Queries"
 ---
 
+<div id="hierarchical_queries" class="registered_link"></div>
+
+
 A *hierarchical query* is a type of query that returns the rows of the result set in a hierarchical order based upon data forming a parent-child relationship. A hierarchy is typically represented by an inverted tree structure. The tree is comprised of interconnected *nodes*. Each node may be connected to none, one, or multiple *child* nodes. Each node is connected to one *parent* node except for the top node which has no parent. This node is the *root* node. Each tree has exactly one root node. Nodes that don’t have any children are called *leaf* nodes. A tree always has at least one leaf node - e.g., the trivial case where the tree is comprised of a single node. In this case it is both the root and the leaf.
 
 In a hierarchical query the rows of the result set represent the nodes of one or more trees.

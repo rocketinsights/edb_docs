@@ -2,6 +2,9 @@
 title: "Registering an Agent"
 ---
 
+<div id="registering_agent" class="registered_link"></div>
+
+
 Each PEM agent must be *registered* with the PEM server. The registration process provides the PEM server with the information it needs to communicate with the agent. The PEM agent graphical installer for Windows supports self-registration for the agent. You must use the `pemworker` utility to register the agent if the agent is on a Linux host.
 
 The RPM installer places the PEM agent in the `/usr/edb/pem/agent/bin` directory. To register an agent, include the `--register-agent` keywords along with registration details when invoking the pemworker utility:

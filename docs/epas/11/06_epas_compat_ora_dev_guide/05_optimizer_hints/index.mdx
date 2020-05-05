@@ -2,6 +2,9 @@
 title: "Optimizer Hints"
 ---
 
+<div id="optimizer_hints" class="registered_link"></div>
+
+
 When you invoke a `DELETE, INSERT, SELECT` or `UPDATE` command, the server generates a set of execution plans; after analyzing those execution plans, the server selects a plan that will (generally) return the result set in the least amount of time. The server's choice of plan is dependent upon several factors:
 
   - The estimated execution cost of data handling operations.

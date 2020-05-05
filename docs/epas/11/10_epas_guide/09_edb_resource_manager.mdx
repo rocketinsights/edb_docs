@@ -2,6 +2,9 @@
 title: "EDB Resource Manager"
 ---
 
+<div id="edb_resource_manager" class="registered_link"></div>
+
+
 <div class="index">
 
 EDB Resource Manager
@@ -96,7 +99,7 @@ The first form with the `RENAME TO` clause assigns a new name to an existing res
 
 The second form with the `SET <resource_type> TO` clause either assigns the specified literal value to a resource type, or resets the resource type when `DEFAULT` is specified. Resetting or setting a resource type to `DEFAULT` means that the resource group has no defined limit on that resource type.
 
-The third form with the `RESET <resource_type>` clause resets the resource type for the group as described previously.
+The third form with the [RESET ](#resource_type) clause resets the resource type for the group as described previously.
 
 To use the `ALTER RESOURCE GROUP` command, you must have superuser privileges.
 
@@ -208,6 +211,9 @@ The entire database server instance can be assigned a default resource group by 
 ---
 title: "- EDB Resource Manager -"
 ---
+
+<div id="edb_resource_manager" class="registered_link"></div>
+
 #edb_max_resource_groups = 16 # 0-65536 (change requires restart)
 edb_resource_group = 'resgrp_b'
 ```
@@ -683,6 +689,8 @@ The `pg_stat_statements_reset()` function is used to clear out the `pg_stat_stat
 
 The resource groups with the dirty rate limit settings shown in the previous query are used in these examples.
 
+<div id="example-single-process-in-a-single-group-1" class="registered_link"></div>
+
 ### Example – Single Process in a Single Group
 
 The following sequence of commands shows the creation of table t1. The current process is set to use resource group `resgrp_b`. The `pg_stat_statements` view is cleared out by running the `pg_stat_statements_reset()` function.
@@ -771,6 +779,8 @@ The actual dirty rate without the use of a resource group is calculated as follo
   - Multiply the result by 8.192 to give the number of kilobytes dirtied per second (1 block = 8.192 kilobytes), which yields approximately *33692 kilobytes per second*.
 
 Note that the actual dirty rate of 33692 kilobytes per second is significantly higher than when the resource group with a dirty rate limit of 6144 kilobytes per second was used.
+
+<div id="example-multiple-processes-in-a-single-group-1" class="registered_link"></div>
 
 ### Example – Multiple Processes in a Single Group
 
@@ -867,6 +877,8 @@ The actual dirty rate for session 2 is calculated as follows.
   - Multiply the result by 8.192 to give the number of kilobytes dirtied per second (1 block = 8.192 kilobytes), which yields approximately *2679 kilobytes per second*.
 
 The combined dirty rate from session 1 (2467 kilobytes per second) and from session 2 (2679 kilobytes per second) yields 5146 kilobytes per second, which is below the set dirty rate limit of the resource group (6144 kilobytes per seconds).
+
+<div id="example-multiple-processes-in-multiple-groups-1" class="registered_link"></div>
 
 ### Example – Multiple Processes in Multiple Groups
 
@@ -981,9 +993,7 @@ The combined dirty rate from session 3 (1554 kilobytes per second) and from sess
 
 Thus, this demonstrates how EDB Resource Manager keeps the aggregate dirty rate of the active processes in its groups close to the dirty rate limit set for each group.
 
-<div id="system-catalogs-1">
-
-</div>
+<div id="system-catalogs-1" class="registered_link"></div>
 
 ## System Catalogs
 
@@ -1001,6 +1011,8 @@ The following table lists the information available in the `edb_all_resource_gro
 | per_process_cpu_rate_limit   | float8  | Maximum CPU rate limit per currently active process in the resource group.   |
 | dirty_rate_limit               | float8  | Maximum dirty rate limit for a resource group. 0 means no limit.             |
 | per_process_dirty_rate_limit | float8  | Maximum dirty rate limit per currently active process in the resource group. |
+
+<div id="edb_resource_group-1" class="registered_link"></div>
 
 ### edb_resource_group
 

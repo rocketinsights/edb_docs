@@ -45,7 +45,7 @@ The popup displays the tenant name, the cluster name, the name that you should u
 
 Before using the private key, you must modify the permissions on the keyfile. Use the following command to restrict file permissions:
 
-> `chmod 0600 <ssh_key_file.pem>`
+> [chmod 0600 ](#ssh_key_file.pem)
 
 Where `ssh_key_file.pem` specifies the complete path and name of the EDB Ark ssh private key file.
 
@@ -117,7 +117,7 @@ After connecting, the prompt will display the name of the database to which you 
 
 To use a copy of the psql client that resides on the EDB Ark host, first connect to the cluster using ssh:
 
-> `ssh -i path <ssh_key> <root@host_name>`
+> [ssh -i path ](#ssh_key> <root@host_name)
 
 After connecting to the host, assume the identity of the database superuser (or a user with sufficient privileges to invoke the client). On an Advanced Server host, use the command:
 

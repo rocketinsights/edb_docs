@@ -2,6 +2,9 @@
 title: "Prerequisites"
 ---
 
+<div id="prerequisites" class="registered_link"></div>
+
+
 Before configuring a Failover Manager cluster, you must satisfy the prerequisites described below.
 
 **Install Java 1.8 (or later)**
@@ -23,7 +26,7 @@ If an event occurs, Failover Manager invokes the script (if provided), and sends
 
 Failover Manager requires that PostgreSQL streaming replication be configured between the Master node and the Standby node or nodes. Failover Manager does not support other types of replication.
 
-On database versions 11 (or prior), unless specified with the `-sourcenode` option, a `recovery.conf` file is copied from a random standby node to the stopped master during switchover. You should ensure that the paths within the `recovery.conf` file on your standby nodes are consistent before performing a switchover. For more information about the `-sourcenode` option, please see [Promoting a Failover Manager Node](promote_node).
+On database versions 11 (or prior), unless specified with the `-sourcenode` option, a `recovery.conf` file is copied from a random standby node to the stopped master during switchover. You should ensure that the paths within the `recovery.conf` file on your standby nodes are consistent before performing a switchover. For more information about the `-sourcenode` option, please see [Promoting a Failover Manager Node ](../05_using_efm#promote_node).
 
 On database version 12, the `primary_conninfo`, `restore_command`, and `promote_trigger_file` properties are copied to the stopped master during switchover (unless otherwise specified with the `-sourcenode` option.
 
@@ -37,14 +40,23 @@ You must modify the `pg_hba.conf` file on the Master and Standby nodes, adding e
 ---
 title: "access for itself"
 ---
+
+<div id="prerequisites" class="registered_link"></div>
+
 host fmdb efm 127.0.0.1/32 md5
 ---
 title: "access for standby"
 ---
+
+<div id="prerequisites" class="registered_link"></div>
+
 host fmdb efm 192.168.27.1/32 md5
 ---
 title: "access for witness"
 ---
+
+<div id="prerequisites" class="registered_link"></div>
+
 host fmdb efm 192.168.27.34/32 md5
 ```
 
@@ -74,6 +86,9 @@ If a Linux firewall (i.e. iptables) is enabled on the host of a Failover Manager
 ---
 title: "iptables -I INPUT -p tcp --dport 7800:7810 -j ACCEPT"
 ---
+
+<div id="prerequisites" class="registered_link"></div>
+
 /sbin/service iptables save
 ```
 

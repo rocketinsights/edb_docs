@@ -2,6 +2,9 @@
 title: "Optional Components"
 ---
 
+<div id="optional_components" class="registered_link"></div>
+
+
 ## Virtual IP Addresses
 
 Both Pgpool-II and Failover Manager provide functionality to employ a virtual IP for seamless failover. While both provide this capability, it must be noted that Failover Manager associates a virtual IP to the master database node while Pgpool associates a virtual IP to the currently-active Pgpool host (in a multi-Pgpool watchdog setup).
@@ -30,11 +33,17 @@ wd_life_point = 3
 ---
 title: "virtual IP control"
 ---
+
+<div id="optional_components" class="registered_link"></div>
+
 if_cmdconfig_path = '/sbin' # ifconfig command path
 if_up_cmd = 'ifconfig eth0:0 inet $_IP_$ netmask 255.255.255.0'
 ---
 title: "startup delegate IP command"
 ---
+
+<div id="optional_components" class="registered_link"></div>
+
 if_down_cmd = 'ifconfig eth0:0 down' #shutdown DIP
 arping_path = '/usr/sbin' # arping command path
 arping_cmd = 'arping -U $_IP_$ -w 1' # arping command

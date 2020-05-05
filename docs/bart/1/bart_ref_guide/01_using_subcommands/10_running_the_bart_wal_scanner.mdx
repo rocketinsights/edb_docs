@@ -2,6 +2,8 @@
 title: "Running the BART WAL Scanner"
 ---
 
+
+
 The BART WAL scanner is used to process each WAL file to find and record modified blocks in a corresponding MBM file. As a BART account user, use the BART WAL scanner to invoke the `bart-scanner` program located in the `<BART_HOME>/bin` directory.
 
 For detailed information about WAL scanner and its usage, see the *Running the BART WAL Scanner* section of *EDB Postgres Backup and Recovery User Guide* available at:
@@ -46,7 +48,7 @@ The WAL scanner processes can run in either the foreground or background dependi
 
 > Displays debugging output while executing the WAL scanner with any of its options.
 
-  - `-c <config_file_path>` or `--config-path <config_file_path>`
+  - [-c ](#config_file_path) or [--config-path ](#config_file_path)
 
 > Specifies `<config_file_path>` as the full directory path to a BART configuration file. Use this option if you do not want to use the default BART configuration file `<BART_HOME>/etc/bart.cfg`
 
@@ -54,7 +56,7 @@ The WAL scanner processes can run in either the foreground or background dependi
 
 > Runs the WAL scanner as a background process.
 
-  - `-p <mbm_file>` or `--print <mbm_file>`
+  - [-p ](#mbm_file) or [--print ](#mbm_file)
 
 > Specifies the full directory path to an MBM file whose content is to be printed. The `archived_wals` directory as specified in the the `archive_path` parameter in the `bart.cfg` file contains the MBM files.
 

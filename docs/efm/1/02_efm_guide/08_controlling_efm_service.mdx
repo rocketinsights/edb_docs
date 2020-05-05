@@ -2,6 +2,9 @@
 title: "Controlling the Failover Manager Service"
 ---
 
+<div id="controlling_efm_service" class="registered_link"></div>
+
+
 Each node in a Failover Manager cluster hosts a Failover Manager agent that is controlled by a service script. By default, the service script expects to find:
 
   - A configuration file named `efm.properties` that contains the properties used by the Failover Manager service. Each node of a replication scenario must contain a properties file that provides information about the node.
@@ -10,6 +13,14 @@ Each node in a Failover Manager cluster hosts a Failover Manager agent that is c
 Note that if you are running multiple clusters on a single node you will need to manually create configuration files with cluster-specific names and modify the service script for the corresponding clusters.
 
 The commands that control the Failover Manager service are platform-specific.
+
+<div id="service_utility" class="registered_link"></div>
+
+<div class="index">
+
+Using the service utility
+
+</div>
 
 ## Using the service Utility on RHEL 6.x and CentOS 6.x
 
@@ -39,6 +50,14 @@ Use the following service commands to control a Failover Manager agent that resi
 `service edb-efm-3.9 help`
 
 > Display online help for the Failover Manager service script.
+
+<div id="systemctl" class="registered_link"></div>
+
+<div class="index">
+
+Using the systemctl utility
+
+</div>
 
 ## Using the systemctl Utility on RHEL 7.x and CentOS 7.x
 

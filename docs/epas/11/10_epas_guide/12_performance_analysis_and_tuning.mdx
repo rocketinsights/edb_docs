@@ -2,6 +2,9 @@
 title: "Performance Analysis and Tuning"
 ---
 
+<div id="performance_analysis_and_tuning" class="registered_link"></div>
+
+
 <div class="index">
 
 Performance Analysis and Tuning
@@ -16,6 +19,8 @@ Advanced Server supports dynamic tuning of the database server to make the optim
 
   - `edb_dynatune`
   - `edb_dynatune_profile`
+
+<div id="edb_dynatune-1" class="registered_link"></div>
 
 ### edb_dynatune
 
@@ -34,6 +39,8 @@ A value in the range of 34 - 66 dedicates a moderate amount of resources to the 
 The highest values (e.g., 67 - 100) dedicate most of the server's resources to the database server. This setting would be used for a host machine that is totally dedicated to running Advanced Server.
 
 Once a value of `edb_dynatune` is selected, database server performance can be further fine-tuned by adjusting the other configuration parameters in the `postgresql.conf` file. Any adjusted setting overrides the corresponding value chosen by `edb_dynatune`. You can change the value of a parameter by un-commenting the configuration parameter, specifying the desired value, and restarting the database server.
+
+<div id="edb_dynatune_profile-1" class="registered_link"></div>
 
 ### edb_dynatune_profile
 

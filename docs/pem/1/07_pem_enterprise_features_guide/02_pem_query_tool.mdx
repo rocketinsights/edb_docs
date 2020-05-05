@@ -2,6 +2,8 @@
 title: "The PEM Query Tool"
 ---
 
+
+
 <div class="index">
 
 PEM Query Tool
@@ -14,10 +16,7 @@ You can access the Query Tool via the *Query Tool* menu option on the *Tools* me
 
   - Issue ad-hoc SQL queries.
   - Execute arbitrary SQL commands.
-  - Edit the result set of a SELECT query if it is
-
-[updatable](updatable-result-set).
-
+  - Edit the result set of a SELECT query if it is [updatable ](02_pem_query_tool#updatable-result-set).
   - Displays current connection and transaction status as configured by the user.
   - Save the data displayed in the output panel to a CSV file.
   - Review the execution plan of a SQL statement in either a text, a graphical format or a table format (similar to <https://explain.depesz.com>).
@@ -40,7 +39,8 @@ The *Query Tool* toolbar uses context-sensitive icons that provide shortcuts to 
 
 Hover over an icon to display a tool-tip that describes the icon's functionality:
 
-<table style="width:9%;">
+<div class="table-with-scroll">
+<table>
 <colgroup>
 <col style="width: 1%" />
 <col style="width: 5%" />
@@ -210,6 +210,7 @@ Hover over an icon to display a tool-tip that describes the icon's functionality
 </tr>
 </tbody>
 </table>
+</div>
 
 ## The SQL Editor Panel
 
@@ -252,11 +253,9 @@ The *Data Output* tab displays the result set of the query in a table format. Yo
   - Use the *Download as CSV* icon to download the content of the *Data Output* tab as a comma-delimited file.
   - Edit the data in the result set of a SELECT query if it is updatable.
 
-<div id="updatable-result-set">
+<div id="updatable-result-set" class="registered_link"></div>
 
 A result set is updatable if:
-
-</div>
 
   - All columns are either selected directly from a single table, or they are not actually a table column (e.g. concatenation of 2 columns). Only columns that are selected directly from the table are editable, other columns are read-only.
   - All the primary key columns or OIDs of the table are selected in the result set.

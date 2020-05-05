@@ -2,6 +2,9 @@
 title: "System Catalog Tables"
 ---
 
+<div id="system_catalog_tables" class="registered_link"></div>
+
+
 <div class="index">
 
 System Catalog Tables
@@ -21,6 +24,8 @@ You can use a directory to fence a user into a specific directory tree within th
 | dirname                 | "name"               | not null  | The name of the alias.                                                                                                                                            |
 | dirowner dirpath diracl | oid text aclitem\[\] | not null  | The OID of the user that owns the alias. The directory name to which access is granted. The access control list that determines which users may access the alias. |
 
+<div id="edb_all_resource_groups-1" class="registered_link"></div>
+
 ## edb_all_resource_groups
 
 The `edb_all_resource_groups` table contains one row for each resource group created with the `CREATE RESOURCE GROUP` command and displays the number of active processes in each resource group.
@@ -33,6 +38,7 @@ The `edb_all_resource_groups` table contains one row for each resource group cre
 
 The `edb_policy` table contains one row for each policy.
 
+<div class="table-with-scroll">
 <table>
 <thead>
 <tr class="header">
@@ -145,6 +151,7 @@ The `edb_policy` table contains one row for each policy.
 </tr>
 </tbody>
 </table>
+</div>
 
 ## edb_profile
 
@@ -155,6 +162,8 @@ The `edb_profile` table stores information about the available profiles. `edb_pr
 | oid prfname prffailedloginattempts prfpasswordlocktime prfpasswordlifetime prfpasswordgracetime prfpasswordreusetime prfpasswordreusemax | oid name integer integer integer integer integer integer |                  | Row identifier (hidden attribute, must be explicitly selected). The name of the profile. The number of failed login attempts allowed by the profile. -1 indicates that the value from the default profile should be used. -2 indicates no limit on failed login attempts. The password lock time associated with the profile (in seconds). -1 indicates that the value from the default profile should be used. -2 indicates that the account should be locked permanently. The password life time associated with the profile (in seconds). -1 indicates that the value from the default profile should be used. -2 indicates that the password never expires. The password grace time associated with the profile (in seconds). -1 indicates that the value from the default profile should be used. -2 indicates that the password never expires. The number of seconds that a user must wait before reusing a password. -1 indicates that the value from the default profile should be used. -2 indicates that the old passwords can never be reused. The number of password changes that have to occur before a password can be reused. -1 indicates that the value from the default profile should be used. -2 indicates that the old passwords can never be reused. |
 | prfpasswordverifyfuncdb                                                                                                                  | oid                                                      | pg_database.oid | The OID of the database in which the password verify function exists.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | prfpasswordverifyfunc                                                                                                                    | oid                                                      | pg_proc.oid     | The OID of the password verify function associated with the profile.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+
+<div id="edb_redaction_column-1" class="registered_link"></div>
 
 ## edb_redaction_column
 
@@ -169,6 +178,8 @@ The catalog `edb_redaction_column` stores information of data redaction policy a
 
 **Note:** The described column will be redacted if the redaction policy `edb_redaction_column.rdpolicyid` on the table is enabled and the redaction policy expression `edb_redaction_policy.rdexpr` evaluates to true.
 
+<div id="edb_redaction_policy-1" class="registered_link"></div>
+
 ## edb_redaction_policy
 
 The catalog `edb_redaction_policy` stores information of the redaction policies for tables.
@@ -179,6 +190,8 @@ The catalog `edb_redaction_policy` stores information of the redaction policies 
 | rdrelid rdenable rdexpr | oid boolean pg_node_tree | pg_class.oid | The table to which the data redaction policy applies Is the data redaction policy enabled? The data redaction policy expression |
 
 **Note:** The data redaction policy applies for the table if it is enabled and the expression ever evaluated true.
+
+<div id="edb_resource_group-2" class="registered_link"></div>
 
 ## edb_resource_group
 
@@ -194,6 +207,7 @@ The `edb_resource_group` table contains one row for each resource group created 
 
 The `edb_variable` table contains one row for each package level variable (each variable declared within a package).
 
+<div class="table-with-scroll">
 <table>
 <thead>
 <tr class="header">
@@ -242,6 +256,7 @@ The `edb_variable` table contains one row for each package level variable (each 
 </tr>
 </tbody>
 </table>
+</div>
 
 ## pg_synonym
 

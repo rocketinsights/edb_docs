@@ -2,6 +2,9 @@
 title: "edb_redwood_strings"
 ---
 
+<div id="edb_redwood_strings" class="registered_link"></div>
+
+
 In Oracle, when a string is concatenated with a null variable or null column, the result is the original string; however, in PostgreSQL concatenation of a string with a null variable or null column gives a null result. If the `edb_redwood_strings` parameter is set to `TRUE`, the aforementioned concatenation operation results in the original string as done by Oracle. If `edb_redwood_strings` is set to `FALSE`, the native PostgreSQL behavior is maintained.
 
 The following example illustrates the difference.

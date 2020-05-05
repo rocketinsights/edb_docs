@@ -63,7 +63,7 @@ If prompted, enter the password associated with the database superuser.
 
 Use the scp command to copy the archive to the master server in the EDB Ark cluster; include the `-i` option to specify the location of your ssh key:
 
-> `scp -i <ssh_key_file> <file_name> <user_name@host_name:target>`
+> [scp -i ](#ssh_key_file> <file_name> <user_name@host_name:target)
 
 Where:
 
@@ -105,7 +105,7 @@ On a PostgreSQL host:
 
 Before invoking the `pg_restore` utility, you must create the target database in the master server; you can use the createdb client utility at the command line to create the target:
 
-> `createdb -U <db_superuser> <database_name>`
+> [createdb -U ](#db_superuser> <database_name)
 
 Where:
 
@@ -139,7 +139,7 @@ Include:
 
 After performing the restore, you can use the psql client to connect to the EDB Ark and confirm that the database has been transferred:
 
-> `psql -U <database_superuser> -d <target_db_name>`
+> [psql -U ](#database_superuser> -d <target_db_name)
 
 Where:
 

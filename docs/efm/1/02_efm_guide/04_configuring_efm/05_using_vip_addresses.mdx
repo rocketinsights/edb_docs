@@ -2,6 +2,9 @@
 title: "Using Failover Manager with Virtual IP Addresses"
 ---
 
+<div id="using_vip_addresses" class="registered_link"></div>
+
+
 Failover Manager uses the `efm_address` script to assign or release a virtual IP address.
 
 Please note that virtual IP addresses are not supported by many cloud providers. In those environments, another mechanism should be used (such as an Elastic IP Address on AWS), which can be changed when needed by a fencing or post-promotion script.
@@ -34,9 +37,9 @@ Where:
 > 
 > `prefix` matches the value specified in the `virtual.ip.prefix` property in the cluster properties file.
 
-For more information about properties that describe a virtual IP address, see [The Cluster Properties File](virtual.iP).
+For more information about properties that describe a virtual IP address, see [The Cluster Properties File ](#virtual.iP).
 
-You must invoke the `efm_address` script as the root user. The `efm` user is created during the installation, and is granted privileges in the sudoers file to run the `efm_address` script. For more information about the sudoers file, see `Extending Failover Manager Permissions <extending_efm_permissions>`.
+You must invoke the `efm_address` script as the root user. The `efm` user is created during the installation, and is granted privileges in the sudoers file to run the `efm_address` script. For more information about the sudoers file, see [Extending Failover Manager Permissions ](../04_configuring_efm/04_extending_efm_permissions#extending_efm_permissions).
 
 Please note: If a VIP address (or any address other than the `bind.address`) is assigned to a node, the operating system can choose the source address used when contacting the database. Be sure that you modify the `pg_hba.conf` file on all monitored databases to allow contact from all addresses within your replication scenario.
 
@@ -61,6 +64,9 @@ When instructed to ping the VIP from a node, use the command defined by the `pin
 ---
 title: "/bin/ping -q -c3 -w5 172.24.38.239"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 PING 172.24.38.239 (172.24.38.239) 56(84) bytes of data.
 --- 172.24.38.239 ping statistics ---
 4 packets transmitted, 0 received, +3 errors, 100% packet loss,
@@ -75,9 +81,15 @@ You should see 100% packet loss.
 ---
 title: "efm_address add4 eth0 172.24.38.239/24"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 ---
 title: "ip address"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 <output truncated>
 eth0 Link encap:Ethernet HWaddr 36:AA:A4:F4:1C:40
 inet addr:172.24.38.239 Bcast:172.24.38.255
@@ -90,6 +102,9 @@ inet addr:172.24.38.239 Bcast:172.24.38.255
 ---
 title: "/bin/ping -q -c3 -w5 172.24.38.239"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 PING 172.24.38.239 (172.24.38.239) 56(84) bytes of data.
 --- 172.24.38.239 ping statistics ---
 3 packets transmitted, 3 received, 0% packet loss, time 1999ms
@@ -104,9 +119,15 @@ You should see no packet loss.
 ---
 title: "efm_address del eth0 172.24.38.239/24"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 ---
 title: "ip address"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 eth0 Link encap:Ethernet HWaddr 22:00:0A:89:02:8E
 inet addr:10.137.2.142 Bcast:10.137.2.191
 ...
@@ -120,6 +141,9 @@ The output from this step should not show an eth0 interface
 ---
 title: "/bin/ping -q -c3 -w5 172.24.38.239"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 PING 172.24.38.239 (172.24.38.239) 56(84) bytes of data.
 --- 172.24.38.239 ping statistics ---
 4 packets transmitted, 0 received, +3 errors, 100% packet loss,
@@ -134,9 +158,15 @@ You should see 100% packet loss. Repeat this step on all nodes.
 ---
 title: "efm_address add4 eth0 172.24.38.239/24"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 ---
 title: "ip address"
 ---
+
+<div id="using_vip_addresses" class="registered_link"></div>
+
 <output truncated>
 eth0 Link encap:Ethernet HWaddr 36:AA:A4:F4:1C:40
 inet addr:172.24.38.239 Bcast:172.24.38.255

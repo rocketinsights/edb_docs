@@ -2,6 +2,8 @@
 title: "BACKUP"
 ---
 
+
+
 Use the `BACKUP` subcommand to create a full or incremental backup.
 
 **Syntax for a Full Backup:**
@@ -77,7 +79,7 @@ An incremental backup can only be taken in plain text format (`p`).
 
 > Use this option to enable gzip compression of tar files using the default compression level (typically 6).
 
-  - `-c <compression_level>` or `--compress-level <compression_level>` (applicable only for full backup and `tar` format)
+  - [-c ](#compression_level) or [--compress-level ](#compression_level) (applicable only for full backup and `tar` format)
 
 > Use this option to specify the gzip compression level on the tar file output. `<compression_level>` is a digit from 1 through 9, with 9 being the best compression.
 
@@ -87,7 +89,7 @@ An incremental backup can only be taken in plain text format (`p`).
     
     \-`<backup_id>` is the backup identifier of a parent backup and `<backup_name>` is the user-defined alphanumeric name of a parent backup.
 
-  - `--backup-name <backup_name>`
+  - [--backup-name ](#backup_name)
     
       - `<backup_name>` is a user-defined, alphanumeric friendly name to be assigned to the backup. The maximum permitted length of backup name is 49 characters.
     
@@ -131,7 +133,7 @@ An incremental backup can only be taken in plain text format (`p`).
     
       - If the option `--backup-name` is not specified and the `backup_name` parameter is not set for this database server in the BART configuration file, then the backup can only be referenced in other BART subcommands by the BART assigned backup identifier.
 
-  - `--thread-count <number_of_threads>`
+  - [--thread-count ](#number_of_threads)
     
       - `<number_of_threads>` is the number of worker threads to run in parallel to copy blocks for a backup.
       - For detailed information about the `--thread-count` parameter, see the configuration section of the *EDB Postgres Backup and Recovery Installation and Upgrade Guide* available at:
@@ -306,6 +308,7 @@ TOTAL DURATION: 1 sec(s)
 
 The following table lists the error messages that may be encountered when using BART with the `BACKUP` subcommand.
 
+<div class="table-with-scroll">
 <table>
 <colgroup>
 <col style="width: 43%" />
@@ -347,3 +350,4 @@ The following table lists the error messages that may be encountered when using 
 </tr>
 </tbody>
 </table>
+</div>

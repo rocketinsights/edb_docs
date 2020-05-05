@@ -2,6 +2,8 @@
 title: "DBMS_REDACT"
 ---
 
+
+
 The `DBMS_REDACT` package enables the redacting or masking of data returned by a query. The `DBMS_REDACT` package provides a procedure to create policies, alter policies, enable policies, disable policies, and drop policies. The procedures available in the `DBMS_REDACT` package are listed in the following table.
 
 |                                                                                                                                                                                                                                                                                                                                    |                       |             |                                                                       |
@@ -74,7 +76,8 @@ The following table highlights the format descriptor for partial redaction with 
 
 The following table represents `function_parameters` values that can be used in partial redaction.
 
-<table style="width:50%;">
+<div class="table-with-scroll">
+<table>
 <colgroup>
 <col style="width: 17%" />
 <col style="width: 5%" />
@@ -249,6 +252,7 @@ The following table represents `function_parameters` values that can be used in 
 </tr>
 </tbody>
 </table>
+</div>
 
 A regular expression-based redaction searches for patterns of data to redact. The `regexp_pattern` search the values in order for the `regexp_replace_string` to change the value. The following table illustrates the `regexp_pattern` values that you can use during `REGEXP` based redaction.
 
@@ -267,7 +271,8 @@ A regular expression-based redaction searches for patterns of data to redact. Th
 
 The below table illustrates the `regexp_replace_string` values that you can use during `REGEXP` based redaction.
 
-<table style="width:35%;">
+<div class="table-with-scroll">
+<table>
 <colgroup>
 <col style="width: 13%" />
 <col style="width: 4%" />
@@ -352,6 +357,7 @@ The below table illustrates the `regexp_replace_string` values that you can use 
 </tr>
 </tbody>
 </table>
+</div>
 
 The following tables show the `regexp_position` value and `regexp_occurence` values that you can use during `REGEXP` based redaction.
 

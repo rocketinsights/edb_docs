@@ -2,6 +2,8 @@
 title: "DELETE"
 ---
 
+
+
 The `DELETE` subcommand removes the subdirectory and data files from the BART backup catalog for the specified backups along with archived WAL files.
 
 **Syntax:**
@@ -34,15 +36,10 @@ For database servers under a retention policy, there are conditions where certai
 
 > `<server_name>` is the name of the database server whose backups are to be deleted.
 
-\- `-i` (or ``--backupid) { all | [']{ <backup_id> | <backup_name> }',...    }[`] }``
-
->   - `<backup_id>` is the backup identifier of the backup to be deleted. `<backup_name>` is the user-defined alphanumeric name for the backup.
->   - Multiple backup identifiers and backup names may be specified in a comma-separated list. The list must be enclosed within single quotes if there is any white space appearing before or after each comma (see
-
-[Example](deleting_multiple_backups_with_space_characters) section).
-
->   - If `all` is specified, all backups and their archived WAL files for the specified database server are deleted.
-
+  - `-i` (or ``--backupid) { all | [']{ <backup_id> | <backup_name> }',... }[`] }``
+      - `<backup_id>` is the backup identifier of the backup to be deleted. `<backup_name>` is the user-defined alphanumeric name for the backup.
+      - Multiple backup identifiers and backup names may be specified in a comma-separated list. The list must be enclosed within single quotes if there is any white space appearing before or after each comma (see [Example ](#deleting_multiple_backups_with_space_characters) section).
+      - If `all` is specified, all backups and their archived WAL files for the specified database server are deleted.
   - `-n` or `--dry-run`
 
 > Performs the test run and displays the results prior to physically removing files, however, no files are actually deleted.
@@ -117,11 +114,9 @@ drwxrwxr-x. 2 edb edb 6 Aug 28 06:09 archived_wals
 [edb@localhost acctg]$
 ```
 
-<div id="deleting_multiple_backups_with_space_characters">
+<div id="deleting_multiple_backups_with_space_characters" class="registered_link"></div>
 
 **Deleting Multiple Backups with Space Characters**
-
-</div>
 
 The following example also deletes multiple backups, but since there are space characters in the comma-separated list, the entire list must be enclosed within single quotes.
 

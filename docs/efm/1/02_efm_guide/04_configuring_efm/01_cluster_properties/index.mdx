@@ -2,6 +2,9 @@
 title: "The Cluster Properties File"
 ---
 
+<div id="cluster_properties" class="registered_link"></div>
+
+
 Each node in a Failover Manager cluster has a properties file (by default, named `efm.properties`) that contains the properties of the individual node on which it resides. The Failover Manager installer creates a file template for the properties file named `efm.properties.in` in the `/etc/edb/efm-3.9` directory.
 
 After completing the Failover Manager installation, you must make a working copy of the template before modifying the file contents:
@@ -14,11 +17,13 @@ After copying the template file, change the owner of the file to `efm`:
 
 Please note: By default, Failover Manager expects the cluster properties file to be named `efm.properties`. If you name the properties file something other than `efm.properties`, you must modify the service script or unit file to instruct Failover Manager to use a different name.
 
-After creating the cluster properties file, add (or modify) configuration parameter values as required. For detailed information about each property, see [Specifying Cluster Properties](specifying_cluster_properties).
+After creating the cluster properties file, add (or modify) configuration parameter values as required. For detailed information about each property, see [Specifying Cluster Properties ](../04_configuring_efm/01_cluster_properties/index#specifying_cluster_properties).
 
 The property files are owned by `root`. The Failover Manager service script expects to find the files in the `/etc/edb/efm-3.9 directory`. If you move the property file to another location, you must create a symbolic link that specifies the new location.
 
 Please note that all user scripts referenced in the properties file will be invoked as the Failover Manager user.
+
+<div id="specifying_cluster_properties" class="registered_link"></div>
 
 ## Specifying Cluster Properties
 
@@ -46,33 +51,54 @@ Use the following properties to specify connection details for the Failover Mana
 ---
 title: "The value for the password property should be the output from"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "'efm encrypt' -- do not include a cleartext password here. To"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "prevent accidental sharing of passwords among clusters, the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "cluster name is incorporated into the encrypted password. If"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "you change the cluster name (the name of this file), you must"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "encrypt the password again with the new name."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "The db.port property must be the same for all nodes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.user=
 db.password.encrypted=
 db.port=
 db.database=
 ```
 
-The `db.user` specified must have sufficient privileges to invoke selected PostgreSQL commands on behalf of Failover Manager. For more information, please see `Prerequisites <prerequisites>`.
+The `db.user` specified must have sufficient privileges to invoke selected PostgreSQL commands on behalf of Failover Manager. For more information, please see [Prerequisites ](../02_failover_manager_overview/01_prerequisites#prerequisites).
 
-For information about encrypting the password for the database user, see `Encrypting Your Database Password <encrypting_database_password>`.
+For information about encrypting the password for the database user, see [Encrypting Your Database Password ](../04_configuring_efm/01_cluster_properties/01_encrypting_database_password#encrypting_database_password).
 
 <div class="index">
 
@@ -86,28 +112,52 @@ Use the `db.service.owner` property to specify the name of the operating system 
 ---
 title: "This property tells EFM which OS user owns the $PGDATA dir for"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the 'db.database'. By default, the owner is either 'postgres'"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "for PostgreSQL or 'enterprisedb' for EDB Postgres Advanced"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Server. However, if you have configured your db to run as a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "different user, you will need to copy the /etc/sudoers.d/efm-XX"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "conf file to grant the necessary permissions to your db owner."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This username must have write permission to the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "'db.data.dir' specified below."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.service.owner=
 ```
 
@@ -123,20 +173,43 @@ Specify the name of the database service in the `db.service.name` property if yo
 ---
 title: "Specify the proper service name in order to use service commands rather"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "than pg_ctl to start/stop/restart a database. For example, if this property"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "is set, then 'service <name> restart' or 'systemctl restart <name>'"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "(depending on OS version) will be used to restart the database rather than pg_ctl."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "This property is required if running the database as a service."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.service.name=
 ```
+
+<div id="db.bin" class="registered_link"></div>
+
+<div class="index">
+
+db.bin
+
+</div>
 
 You should use the same service control mechanism (pg_ctl, service, or systemctl) each time you start or stop the database service. If you use the `pg_ctl` program to control the service, specify the location of the `pg_ctl` program in the `db.bin` property.
 
@@ -144,15 +217,27 @@ You should use the same service control mechanism (pg_ctl, service, or systemctl
 ---
 title: "Specify the directory containing the pg_controldata/pg_ctl commands, for example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "/usr/edb/as11/bin. Unless the db.service.name property is used, the pg_ctl"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "command is used to start/stop/restart databases as needed after a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "failover or switchover. This property is required."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.bin=
 ```
 
@@ -168,33 +253,63 @@ Use the `db.data.dir` property to specify the location to which a recovery file 
 ---
 title: "For database version 12 and up, this is the directory where a standby.signal"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "file will exist for a standby node. For previous versions, this is the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "location of the db recovery.conf file on the node. "
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "After a failover, the recovery.conf files on remaining standbys are changed"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "to point to the new master db (a copy of the original is made first). On a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "master node, a recovery.conf file will be written during failover and"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "promotion to ensure that the master node can not be restarted as the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "master database."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "This corresponds to database environment variable PGDATA and should be same"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "as the output of query 'show data_directory;' on respective database."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.data.dir=
 ```
 
@@ -210,28 +325,57 @@ Use the `db.config.dir` property to specify the location of database configurati
 ---
 title: "Specify the location of database configuration files if they are not contained"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "in the same location as the recovery.conf or standby.signal file. This is most"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "likely the case for Debian installations. The location specified will be used as"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the -D value (the location of the data directory for the cluster)"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "when calling pg_ctl to start or stop the database. If this property is blank,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the db.data.dir location specified by the db.data.dir property will be used."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "This corresponds to the output of query 'show config_file;' on respective database."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.config.dir=
 ```
 
 For more information about database configuration files, visit the [PostgreSQL website](https://www.postgresql.org/docs/12/runtime-config-file-locations.html)
+
+<div id="jdbc.sslmode" class="registered_link"></div>
+
+<div class="index">
+
+jdbc.sslmode
+
+</div>
 
 Use the `jdbc.sslmode` property to instruct Failover Manager to use SSL connections; by default, SSL is disabled.
 
@@ -239,34 +383,64 @@ Use the `jdbc.sslmode` property to instruct Failover Manager to use SSL connecti
 ---
 title: "Use the jdbc.sslmode property to enable ssl for EFM"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "connections. Setting this property to anything but 'disable'"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "will force the agents to use 'ssl=true' for all JDBC database"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "connections (to both local and remote databases)."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Valid values are:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "disable - Do not use ssl for connections."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "verify-ca - EFM will perform CA verification before allowing"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the certificate."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "require - Verification will not be performed on the server"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "certificate."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 jdbc.sslmode=disable
 ```
 
@@ -290,17 +464,37 @@ Use the `user.email` property to specify an email address (or multiple email add
 ---
 title: "Email address(es) for notifications. The value of this"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "property must be the same across all agents. Multiple email"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "addresses must be separated by space. If using a notification"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script instead, this property can be left blank."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 user.email=
 ```
+
+<div id="from.email" class="registered_link"></div>
+
+<div class="index">
+
+from.email
+
+</div>
 
 The `from.email` property specifies the value that will be used as the sender's address on any email notifications from Failover Manager. You can:
 
@@ -308,48 +502,89 @@ The `from.email` property specifies the value that will be used as the sender's 
   - specify a custom value for the email address.
   - specify a custom email address, using the `%h` placeholder to represent the name of the node host (e.g., <example@%h>). The placeholder will be replaced with the name of the host as returned by the Linux hostname utility.
 
-For more information about notifications, see `Notifications <notifications>` .
+For more information about notifications, see [Notifications ](../10_notifications#notifications) .
 
 ``` text
 ---
 title: "Use the from.email property to specify the from email address that"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "will be used for email notifications. Use the %h placeholder to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "represent the name of the node host (e.g. example@%h). The"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "placeholder will be replaced with the name of the host as returned"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "by the hostname command."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Leave blank to use the default, efm@localhost."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 from.email=
 ```
 
-Use the `notification.level` property to specify the minimum severity level at which Failover Manager will send user notifications or when a notification script is called. For a complete list of notifications, please see `Notifications <notifications>`.
+<div id="notification.level" class="registered_link"></div>
+
+<div class="index">
+
+notification.level
+
+</div>
+
+Use the `notification.level` property to specify the minimum severity level at which Failover Manager will send user notifications or when a notification script is called. For a complete list of notifications, please see [Notifications ](../10_notifications#notifications).
 
 ``` text
 ---
 title: "Minimum severity level of notifications that will be sent by"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the agent. The minimum level also applies to the notification"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script (below). Valid values are INFO, WARNING, and SEVERE."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "A list of notifications is grouped by severity in the user's"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "guide."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 notification.level=INFO
 ```
 
@@ -365,22 +600,40 @@ Use the `script.notification` property to specify the path to a user-supplied sc
 ---
 title: "Absolute path to script run for user notifications."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This is an optional user-supplied script that can be used for"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "notifications instead of email. This is required if not using"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "email notifications. Either/both can be used. The script will"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "be passed two parameters: the message subject and the message"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "body."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.notification=
 ```
 
@@ -396,27 +649,51 @@ The `bind.address` property specifies the IP address and port number of the agen
 ---
 title: "This property specifies the ip address and port that jgroups"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "will bind to on this node. The value is of the form"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "<ip>:<port>."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Note that the port specified here is used for communicating"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "with other nodes, and is not the same as the admin.port below,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "used only to communicate with the local agent to send control"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "signals."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "For example, <provide_your_ip_address_here>:7800"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 bind.address=
 ```
 
@@ -432,15 +709,27 @@ Use the `admin.port` property to specify a port on which Failover Manager listen
 ---
 title: "This property controls the port binding of the administration"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "server which is used for some commands (ie cluster-status). The"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "default is 7809; you can modify this value if the port is"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "already in use."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 admin.port=7809
 ```
 
@@ -456,9 +745,15 @@ Set the `is.witness` property to true to indicate that the current node is a wit
 ---
 title: "Specifies whether or not this is a witness node. Witness nodes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "do not have local databases running."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 is.witness=
 ```
 
@@ -494,33 +789,63 @@ For example, given the default values of these properties, a check of the local 
 ---
 title: "These properties apply to the connection(s) EFM uses to monitor"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the local database. Every 'local.period' seconds, a database"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "check is made in a background thread. If the main monitoring"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "thread does not see that any checks were successful in"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "'local.timeout' seconds, then the main thread makes a final"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "check with a timeout value specified by the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "'local.timeout.final' value. All values are in seconds."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Whether EFM uses single or multiple connections for database"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "checks is controlled by the 'db.reuse.connection.count'"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "property."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 local.period=10
 local.timeout=60
 local.timeout.final=10
@@ -540,15 +865,27 @@ Use the `remote.timeout` property to specify how many seconds an agent waits for
 ---
 title: "Timeout for a call to check if a remote database is responsive."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "For example, this is how long a standby would wait for a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "DB ping request from itself and the witness to the master DB"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "before performing failover."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 remote.timeout=10
 ```
 
@@ -564,13 +901,22 @@ Use the `node.timeout` property to specify the number of seconds that an agent w
 ---
 title: "The total amount of time in seconds to wait before determining"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "that a node has failed or been disconnected from this node."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "The value of this property must be the same across all agents."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 node.timeout=50
 ```
 
@@ -586,15 +932,27 @@ Use the `stop.isolated.master` property to instruct Failover Manager to shut dow
 ---
 title: "Shut down the database after a master agent detects that it has"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "been isolated from the majority of the efm cluster. If set to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "true, efm will stop the database before running the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "'script.master.isolated' script, if a script is specified."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 stop.isolated.master=true
 ```
 
@@ -610,20 +968,43 @@ Use the `stop.failed.master` property to instruct Failover Manager to attempt to
 ---
 title: "Attempt to shut down a failed master database after EFM can no"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "longer connect to it. This can be used for added safety in the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "case a failover is caused by a failure of the network on the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "master node."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "If specified, a 'script.db.failure' script is run after this attempt."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 stop.failed.master=true
 ```
+
+<div id="master_shutdown_as_failure" class="registered_link"></div>
+
+<div class="index">
+
+master.shutdown.as.failure
+
+</div>
 
 Use the `master.shutdown.as.failure` parameter to indicate that any shutdown of the Failover Manager agent on the master node should be treated as a failure. If this parameter is set to `true` and the master agent stops (for any reason), the cluster will attempt to confirm if the database on the master node is running:
 
@@ -636,24 +1017,45 @@ Use the `master.shutdown.as.failure` parameter to indicate that any shutdown of 
 ---
 title: "Treat a master agent shutdown as a failure. This can be set to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "true to treat a master agent shutdown as a failure situation,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "e.g. during the shutdown of a node, accidental or otherwise."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Caution should be used when using this feature, as it could"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "cause an unwanted promotion in the case of performing master"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "database maintenance."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Please see the user's guide for more information."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 master.shutdown.as.failure=false
 ```
 
@@ -673,45 +1075,84 @@ Use the `ping.server.ip` property to specify the IP address of a server that Fai
 ---
 title: "This is the address of a well-known server that EFM can ping"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "in an effort to determine network reachability issues. It"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "might be the IP address of a nameserver within your corporate"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "firewall or another server that *should* always be reachable"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "via a 'ping' command from each of the EFM nodes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "There are many reasons why this node might not be considered"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "reachable: firewalls might be blocking the request, ICMP might"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "be filtered out, etc."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Do not use the IP address of any node in the EFM cluster"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "(master, standby, or witness) because this ping server is meant"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "to provide an additional layer of information should the EFM"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "nodes lose sight of each other."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "The installation default is Google's DNS server."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ping.server.ip=8.8.8.8
 ```
 
@@ -727,28 +1168,57 @@ Use the `ping.server.command` property to specify the command used to test netwo
 ---
 title: "This command will be used to test the reachability of certain"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "nodes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Do not include an IP address or hostname on the end of"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "this command - it will be added dynamically at runtime with the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "values contained in 'virtual.ip' and 'ping.server.ip'."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Make sure this command returns reasonably quickly - test it"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "from a shell command line first to make sure it works properly."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ping.server.command=/bin/ping -q -c3 -w5
 ```
+
+<div id="auto.allow.hosts" class="registered_link"></div>
+
+<div class="index">
+
+auto.allow.hosts
+
+</div>
 
 Use the `auto.allow.hosts` property to instruct the server to use the addresses specified in the .nodes file of the first node started to update the allowed host list. Enabling this property (setting auto.allow.hosts to true) can simplify cluster start-up.
 
@@ -756,17 +1226,37 @@ Use the `auto.allow.hosts` property to instruct the server to use the addresses 
 ---
 title: "Have the first node started automatically add the addresses"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "from its .nodes file to the allowed host list. This will make"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "it faster to start the cluster when the initial set of hosts"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "is already known."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 auto.allow.hosts=false
 ```
+
+<div id="stable.nodes.file" class="registered_link"></div>
+
+<div class="index">
+
+stable.nodes.file
+
+</div>
 
 Use the `stable.nodes.file` property to instruct the server to not rewrite the nodes file when a node joins or leaves the cluster. This property is most useful in clusters with unchanging IP addresses.
 
@@ -774,18 +1264,33 @@ Use the `stable.nodes.file` property to instruct the server to not rewrite the n
 ---
 title: "When set to true, EFM will not rewrite the .nodes file whenever"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "new nodes join or leave the cluster. This can help starting a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "cluster in the cases where it is expected for member addresses"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "to be mostly static, and combined with 'auto.allow.hosts' makes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "startup easier when learning failover manager."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 stable.nodes.file=false
 ```
 
@@ -801,17 +1306,37 @@ The `db.reuse.connection.count` property allows the administrator to specify the
 ---
 title: "This property controls how many times a database connection is"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "reused before creating a new one. If set to zero, a new"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "connection will be created every time an agent pings its local"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "database."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 db.reuse.connection.count=0
 ```
+
+<div id="auto.failover" class="registered_link"></div>
+
+<div class="index">
+
+auto.failover
+
+</div>
 
 The `auto.failover` property enables automatic failover. By default, auto.failover is set to true.
 
@@ -819,15 +1344,27 @@ The `auto.failover` property enables automatic failover. By default, auto.failov
 ---
 title: "Whether or not failover will happen automatically when the master"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "fails. Set to false if you want to receive the failover notifications"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "but not have EFM actually perform the failover steps."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "The value of this property must be the same across all agents."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 auto.failover=true
 ```
 
@@ -843,36 +1380,69 @@ Use the `auto.reconfigure` property to instruct Failover Manager to enable or di
 ---
 title: "After a standby is promoted, Failover Manager will attempt to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "update the remaining standbys to use the new master. For database"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "versions before 12, Failover Manager will back up recovery.conf."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Then it will change the host parameter of the primary_conninfo entry"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "in recovery.conf or postgresql.auto.conf, and restart the database. The"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "restart command is contained in either the efm_db_functions or"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "efm_root_functions file; default when not running db as an os"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "service is: "pg_ctl restart -m fast -w -t <timeout> -D <directory>""
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "where the timeout is the local.timeout property value and the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "directory is specified by db.data.dir. To turn off"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "automatic reconfiguration, set this property to false."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 auto.reconfigure=true
 ```
 
@@ -886,36 +1456,73 @@ promotable
 
 </div>
 
-Use the `promotable` property to indicate that a node should not be promoted. To override the setting, use the efm set-priority command at runtime; for more information about the efm set-priority command, see `Using the efm Utility <using_efm_utility>`.
+Use the `promotable` property to indicate that a node should not be promoted. To override the setting, use the efm set-priority command at runtime; for more information about the efm set-priority command, see [Using the efm Utility ](../07_using_efm_utility#using_efm_utility).
 
 ``` text
 ---
 title: "A standby with this set to false will not be added to the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "failover priority list, and so will not be available for"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "promotion. The property will be used whenever an agent starts"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "as a standby or resumes as a standby after being idle. After"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "startup/resume, the node can still be added or removed from the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "priority list with the 'efm set-priority' command. This"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "property is required for all non-witness nodes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 promotable=true
 ```
+
+<div id="use.replay.tiebreaker" class="registered_link"></div>
+
+<div class="index">
+
+use.replay.tiebreaker
+
+</div>
 
 If the same amount of data has been written to more than one standby node, and a failover occurs, the use.replay.tiebreaker value will determine how Failover Manager selects a replacement master. Set the `use.replay.tiebreaker` property to `true` to instruct Failover Manager to failover to the node that will come out of recovery faster, as determined by the log sequence number. To ignore the log sequence number and promote a node based on user preference, set `use.replay.tiebreaker` to `false`.
 
 > \# Use replay LSN value for tiebreaker when choosing a standby to promote \# before using failover priority. Set this property to true to consider \# replay location as more important than failover priority (as seen in \# cluster-status command) when choosing the "most ahead" standby to promote. use.replay.tiebreaker=true
+
+<div id="application.name" class="registered_link"></div>
+
+<div class="index">
+
+application.name
+
+</div>
 
 You can use the `application.name` property to provide the name of an application that will be copied to the `primary_conninfo` parameter before restarting an old master node as a standby.
 
@@ -923,28 +1530,57 @@ You can use the `application.name` property to provide the name of an applicatio
 ---
 title: "During a switchover, recovery settings are copied from a standby"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "to the original master. If the application.name property is set,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Failover Manager will replace the application_name portion of the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "primary_conninfo entry with this property value before starting"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the original master database as a standby. If this property is"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "not set, Failover Manager will remove the parameter value"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "from primary_conninfo."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 application.name=
 ```
 
 **Please note:** You should set the `application.name` property on the master and any promotable standby; in the event of a failover/switchover, the master node could potentially become a standby node again.
+
+<div id="restore.command" class="registered_link"></div>
+
+<div class="index">
+
+restore.command
+
+</div>
 
 Use the `restore.command` property to instruct Failover Manager to update the `restore_command` when a new master is promoted. `%h` represents the address of the new master; Failover Manager will replace `%h` with the address of the new master. `%f` and `%p` are placeholders used by the server. If the property is left blank, Failover Manager will not update the `restore_command` values on the standbys after a promotion.
 
@@ -954,36 +1590,76 @@ See the PostgreSQL documentation for more information about using a [restore_com
 ---
 title: "If the restore_command on a standby restores directly from the master node, use this property"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "to have Failover Manager change the command when a new master is promoted."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Use the %h placeholder to represent the address of the new master. During promotion"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "it will be replaced with the address of the new master."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "If not specified, failover manager will not change the restore_command value, if any,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "on standby nodes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "restore.command=scp <db service owner>@%h:/var/lib/edb/as12/data/archive/%f %p"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 restore.command=
 ```
+
+<div id="reconfigure.num.sync" class="registered_link"></div>
+
+<div class="index">
+
+reconfigure.num.sync
+
+</div>
 
 The synchronous_standby_names parameter on the master node specifies the names and count of the synchronous standby servers that will confirm receipt of data, to ensure that the master nodes can accept write transactions. When set to true, Failover Manager will reduce the number of synchronous standby servers and reload the configuration of the master node to reflect the current value.
 
 > \# Reduce num_sync when the number of synchronous standbys drops below the \# value required by the master database. If set to true, Failover Manager will \# reduce the number of standbys needed in the master's \# synchronous_standby_names property and reload the master configuration. \# Failover Manager will not reduce the number below 1, taking the master \# out of synchronous replication, unless the reconfigure.sync.master \# property is also set to true. reconfigure.num.sync=false
+
+<div id="reconfigure.sync.master" class="registered_link"></div>
+
+<div class="index">
+
+reconfigure.sync.master
+
+</div>
 
 Set the `reconfigure.sync.master` property to `true` to take the master database out of synchronous replication mode if the number of standby nodes drops below the level required. Set `reconfigure.sync.master` to `false` to send a notification if the standby count drops, but not interrupt synchronous replication.
 
@@ -991,31 +1667,58 @@ Set the `reconfigure.sync.master` property to `true` to take the master database
 ---
 title: "Take the master database out of synchronous replication mode when needed."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "If set to true, Failover Manager will clear the synchronous_standby_names"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "configuration parameter on the master if the number of synchronous"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "standbys drops below the required level for the master to accept writes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "If set to false, Failover Manager will detect the situation but will only"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "send a notification if the standby count drops below the required level."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "CAUTION: TAKING THE MASTER DATABASE OUT OF SYNCHRONOUS MODE MEANS THERE"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "MAY ONLY BE ONE COPY OF DATA. DO NOT MAKE THIS CHANGE UNLESS YOU ARE SURE"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "THIS IS OK."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 reconfigure.sync.master=false
 ```
 
@@ -1031,21 +1734,39 @@ Use the `minimum.standbys` property to specify the minimum number of standby nod
 ---
 title: "Instead of setting specific standbys as being unavailable for"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "promotion, this property can be used to set a minimum number"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "of standbys that will not be promoted. Set to one, for"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "example, promotion will not happen if it will drop the number"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "of standbys below this value. This property must be the same on"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "each node."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 minimum.standbys=0
 ```
 
@@ -1061,11 +1782,25 @@ Use the `recovery.check.period` property to specify the number of seconds that F
 ---
 title: "Time in seconds between checks to see if a promoting database"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "is out of recovery."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 recovery.check.period=2
 ```
+
+<div id="restart.connection.timeout" class="registered_link"></div>
+
+<div class="index">
+
+restart.connection.timeout
+
+</div>
 
 Use the `restart.connection.timeout` property to specify the number of seconds that Failover Manager will attempt to connect to a newly reconfigured master or standby node while the database on that node prepares to accept connections.
 
@@ -1073,24 +1808,45 @@ Use the `restart.connection.timeout` property to specify the number of seconds t
 ---
 title: "Time in seconds to keep trying to connect to a database after a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "start or restart command returns successfully but the database"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "is not ready to accept connections yet (a rare occurance). This"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "applies to standby databases that are restarted when being"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "reconfigured for a new master, and to master databases that"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "are stopped and started as standbys during a switchover."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "This retry mechanism is unrelated to the auto.resume.period parameter."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 restart.connection.timeout=60
 ```
 
@@ -1106,20 +1862,43 @@ Use the `auto.resume.period` property to specify the number of seconds (after a 
 ---
 title: "Period in seconds for IDLE agents to try to resume monitoring"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "after a database failure or when starting in IDLE mode. Set to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "0 for agents to not try to resume (in which case the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "'efm resume <cluster>' command is used after bringing a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "database back up)."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 auto.resume.period=0
 ```
+
+<div id="virtual.ip" class="registered_link"></div>
+
+<div class="index">
+
+virtual.ip virtual.ip.interface virtual.ip.prefix virtual.ip.single
+
+</div>
 
 Failover Manager provides support for clusters that use a virtual IP. If your cluster uses a virtual IP, provide the host name or IP address in the `virtual.ip` property; specify the corresponding prefix in the `virtual.ip.prefix` property. If `virtual.ip` is left blank, virtual IP support is disabled.
 
@@ -1127,64 +1906,115 @@ Use the `virtual.ip.interface` property to provide the network interface used by
 
 The specified virtual IP address is assigned only to the master node of the cluster. If you specify `virtual.ip.single=true`, the same VIP address will be used on the new master in the event of a failover. Specify a value of false to provide a unique IP address for each node of the cluster.
 
-For information about using a virtual IP address, see `Using Failover Manager with Virtual IP Addresses <using_vip_addresses>`.
+For information about using a virtual IP address, see [Using Failover Manager with Virtual IP Addresses ](../04_configuring_efm/05_using_vip_addresses#using_vip_addresses).
 
 ``` text
 ---
 title: "These properties specify the IP and prefix length that will be"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "remapped during failover. If you do not use a VIP as part of"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "your failover solution, leave the virtual.ip property blank to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "disable Failover Manager support for VIP processing (assigning,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "releasing, testing reachability, etc)."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "If you specify a VIP, the interface and prefix are required."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "If you specify a host name, it will be resolved to an IP address"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "when acquiring or releasing the VIP. If the host name resolves"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "to more than one IP address, there is no way to predict which"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "address Failover Manager will use."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "By default, the virtual.ip and virtual.ip.prefix values must be"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the same across all agents. If you set virtual.ip.single to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "false, you can specify unique values for virtual.ip and"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "virtual.ip.prefix on each node."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "If you are using an IPv4 address, the virtual.ip.interface value"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "should not contain a secondary virtual ip id (do not include"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "":1", etc)."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 virtual.ip=
 virtual.ip.interface=
 virtual.ip.prefix=
@@ -1193,29 +2023,63 @@ virtual.ip.single=true
 
 Please Note: If a master agent is started and the node does not currently have the VIP, the EFM agent will acquire it. Stopping a master agent does not drop the VIP from the node.
 
+<div id="check.vip.before.promotion" class="registered_link"></div>
+
+<div class="index">
+
+check.vip.before.promotion
+
+</div>
+
 Set the `check.vip.before.promotion` property to false to indicate that Failover Manager will not check to see if a VIP is in use before assigning it to a a new master in the event of a failure. Please note that this could result in multiple nodes broadcasting on the same VIP address; unless the master node is isolated or can be shut down via another process, you should set this property to true.
 
 ``` text
 ---
 title: "Whether to check if the VIP (when used) is still in use before"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "promoting after a master failure. Turning this off may allow"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the new master to have the VIP even though another node is also"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "broadcasting it. This should only be used in environments where"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "it is known that the failed master node will be isolated or"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "shut down through other means."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 check.vip.before.promotion=true
 ```
+
+<div id="script.load.balancer" class="registered_link"></div>
+
+<div class="index">
+
+script.load.balancer.attach script.load.balancer.detach
+
+</div>
 
 Use the following properties to provide paths to scripts that reconfigure your load balancer in the event of a switchover or master failure scenario. The scripts will also be invoked in the event of a standby failure. If you are using these properties, they should be provided on every node of the cluster (master, standby, and witness) to ensure that if a database node fails, another node will call the detach script with the failed node's address.
 
@@ -1225,38 +2089,76 @@ Provide a script name after the `script.load.balancer.attach` property to identi
 ---
 title: "Absolute path to load balancer scripts"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "The attach script is called when a node should be attached to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the load balancer, for example after a promotion. The detach"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script is called when a node should be removed, for example"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "when a database has failed or is about to be stopped. Use %h to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "represent the IP/hostname of the node that is being"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "attached/detached. Use %t to represent the type of node being"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "attached or detached: the letter m will be passed in for master nodes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #and the letter s for standby nodes.
 #
 ---
 title: "Example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script.load.balancer.attach=/somepath/attachscript %h %t"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.load.balancer.attach=
 script.load.balancer.detach=
 ```
+
+<div id="script.fence" class="registered_link"></div>
+
+<div class="index">
+
+script.fence
+
+</div>
 
 `script.fence` specifies the path to an optional user-supplied script that will be invoked during the promotion of a standby node to master node.
 
@@ -1264,43 +2166,79 @@ script.load.balancer.detach=
 ---
 title: "absolute path to fencing script run during promotion"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This is an optional user-supplied script that will be run"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "during failover on the standby database node. If left blank,"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "no action will be taken. If specified, EFM will execute this"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script before promoting the standby."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Parameters can be passed into this script for the failed master"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "and new primary node addresses. Use %p for new primary and %f"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "for failed master. On a node that has just been promoted, %p"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "should be the same as the node's efm binding address."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script.fence=/somepath/myscript %p %f"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "NOTE: FAILOVER WILL NOT OCCUR IF THIS SCRIPT RETURNS A NON-ZERO EXIT CODE."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.fence=
 ```
 
@@ -1316,42 +2254,78 @@ Use the `script.post.promotion` property to specify the path to an optional user
 ---
 title: "Absolute path to fencing script run after promotion"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This is an optional user-supplied script that will be run after"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "failover on the standby node after it has been promoted and"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "is no longer in recovery. The exit code from this script has"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "no effect on failover manager, but will be included in a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "notification sent after the script executes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Parameters can be passed into this script for the failed master"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "and new primary node addresses. Use %p for new primary and %f"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "for failed master. On a node that has just been promoted, %p"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "should be the same as the node's efm binding address."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script.post.promotion=/somepath/myscript %f %p"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.post.promotion=
 ```
 
@@ -1367,13 +2341,22 @@ Use the `script.resumed property` to specify an optional path to a user-supplied
 ---
 title: "Absolute path to resume script"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This script is run before an IDLE agent resumes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "monitoring its local database."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.resumed=
 ```
 
@@ -1389,12 +2372,21 @@ Use the `script.db.failure` property to specify the complete path to an optional
 ---
 title: "Absolute path to script run after database failure"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "This is an optional user-supplied script that will be run after"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "an agent detects that its local database has failed."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.db.failure=
 ```
 
@@ -1410,15 +2402,27 @@ Use the `script.master.isolated` property to specify the complete path to an opt
 ---
 title: "Absolute path to script run on isolated master"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "This is an optional user-supplied script that will be run after"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "a master agent detects that it has been isolated from the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "majority of the efm cluster."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.master.isolated=
 ```
 
@@ -1436,39 +2440,72 @@ Include the %p placeholder to identify the address of the new primary node.
 ---
 title: "Absolute path to script invoked on non-promoting agent nodes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "before a promotion."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This optional user-supplied script will be invoked on other"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "agents when a node is about to promote its database. The exit"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "code from this script has no effect on Failover Manager, but"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "will be included in a notification sent after the script"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "executes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Pass a parameter (%p) with the script to identify the new"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "primary node address."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script.remote.pre.promotion=/path_name/script_name %p"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.remote.pre.promotion=
 ```
 
@@ -1486,36 +2523,66 @@ Include the %p placeholder to identify the address of the new primary node.
 ---
 title: "Absolute path to script invoked on non-master agent nodes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "after a promotion."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "This optional user-supplied script will be invoked on nodes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "(except the new master) after a promotion occurs. The exit code"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "from this script has no effect on Failover Manager, but will be"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "included in a notification sent after the script executes."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Pass a parameter (%p) with the script to identify the new"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "primary node address."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Example:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script.remote.post.promotion=/path_name/script_name %p"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 script.remote.post.promotion=
 ```
 
@@ -1535,65 +2602,122 @@ Set `custom.monitor.safe.mode` to true to instruct Failover Manager to report no
 ---
 title: "Absolute path to a custom monitoring script."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "Use script.custom.monitor to specify the location and name of"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "an optional user-supplied script that will be invoked"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "periodically to perform custom monitoring tasks. A non-zero"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "exit value means that a check has failed; this will be treated"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "as a database failure. On a master node, script failure will"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "cause a promotion. On a standby node script failure will"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "generate a notification and the agent will become IDLE."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "The custom.monitor.* properties are required if a custom"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "monitoring script is specified:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "custom.monitor.interval is the time in seconds between executions of the script."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "custom.monitor.timeout is a timeout value in seconds for how"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "long the script will be allowed to run. If script execution"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "exceeds the specified time, the task will be stopped and a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "notification sent. Subsequent runs will continue."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "If custom.monitor.safe.mode is set to true, non-zero exit codes"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "from the script will be reported but will not cause a promotion"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "or be treated as a database failure. This allows testing of the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "script without affecting EFM."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 script.custom.monitor=
 custom.monitor.interval=
@@ -1615,38 +2739,71 @@ Use the `sudo.user.command` property to specify a command that will be invoked b
 ---
 title: "Command to use in place of 'sudo' if desired when efm runs"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the efm_db_functions or efm_root_functions, or efm_address"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "scripts."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Sudo is used in the following ways by efm:"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "sudo /usr/edb/efm-<version>/bin/efm_address <arguments>"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "sudo /usr/edb/efm-<version>/bin/efm_root_functions <arguments>"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "sudo -u <db service owner> /usr/edb/efm-<version>/bin/efm_db_functions <arguments>"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 #
 ---
 title: "'sudo' in the first two examples will be replaced by the value"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "of the sudo.command property. 'sudo -u <db service owner>' will"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "be replaced by the value of the sudo.user.command property."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "The '%u' field will be replaced with the db owner."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 sudo.command=sudo
 sudo.user.command=sudo -u %u
 ```
@@ -1663,20 +2820,43 @@ Use the `lock.dir` property to specify an alternate location for the Failover Ma
 ---
 title: "Specify the directory of lock file on the node. Failover"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Manager creates a file named <cluster>.lock at this location to"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "avoid starting multiple agents for same cluster. If the path"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "does not exist, Failover Manager will attempt to create it. If"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "not specified defaults to '/var/lock/efm-<version>'"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 lock.dir=
 ```
+
+<div id="log.dir" class="registered_link"></div>
+
+<div class="index">
+
+log.dir
+
+</div>
 
 Use the `log.dir` property to specify the location to which agent log files will be written; Failover Manager will attempt to create the directory if the directory does not exist.
 
@@ -1684,29 +2864,61 @@ Use the `log.dir` property to specify the location to which agent log files will
 ---
 title: "Specify the directory of agent logs on the node. If the path"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "does not exist, Failover Manager will attempt to create it. If"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "not specified defaults to '/var/log/efm-<version>'. (To store"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Failover Manager startup logs in a custom location, modify the"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "path in the service script to point to an existing, writable"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "directory.)"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "If using a custom log directory, you must configure"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "logrotate separately. Use 'man logrotate' for more information."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 log.dir=
 ```
+
+<div id="syslog.logging" class="registered_link"></div>
+
+<div class="index">
+
+syslog.host syslog.port syslog.protocol syslog.facility
+
+</div>
 
 After enabling the UDP or TCP protocol on a Failover Manager host, you can enable logging to syslog. Use the `syslog.protocol` parameter to specify the protocol type (UDP or TCP) and the `syslog.port` parameter to specify the listener port of the syslog host. The `syslog.facility` value may be used as an identifier for the process that created the entry; the value must be between LOCAL0 and LOCAL7.
 
@@ -1714,17 +2926,34 @@ After enabling the UDP or TCP protocol on a Failover Manager host, you can enabl
 ---
 title: "Syslog information. The syslog service must be listening on"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the port for the given protocol, which can be UDP or TCP."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "The facilities supported are LOCAL0 through LOCAL7."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 syslog.host=localhost
 syslog.port=514
 syslog.protocol=UDP
 syslog.facility=LOCAL1
 ```
+
+<div id="logtype.enabled" class="registered_link"></div>
+
+<div class="index">
+
+file.log.enabled syslog.enabled
+
+</div>
 
 Use the `file.log.enabled` and `syslog.enabled` properties to specify the type of logging that you wish to implement. Set file.log.enabled to true to enable logging to a file; enable the UDP protocol or TCP protocol and set syslog.enabled to true to enable logging to syslog. You can enable logging to both a file and syslog.
 
@@ -1732,41 +2961,74 @@ Use the `file.log.enabled` and `syslog.enabled` properties to specify the type o
 ---
 title: "Which logging is enabled."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 file.log.enabled=true
 syslog.enabled=false
 ```
 
-For more information about configuring syslog logging, see
+For more information about configuring syslog logging, see [Enabling syslog Log File Entries ](../09_controlling_logging#enabling_syslog) .
 
-[Enabling syslog Log File Entries](enabling_syslog) .
+<div id="loglevel" class="registered_link"></div>
 
-Use the `jgroups.loglevel` and `efm.loglevel` parameters to specify the level of detail logged by Failover Manager. The default value is INFO. For more information about logging, see `Controlling Logging <controlling_logging>` .
+<div class="index">
+
+jgroups.loglevel efm.loglevel
+
+</div>
+
+Use the `jgroups.loglevel` and `efm.loglevel` parameters to specify the level of detail logged by Failover Manager. The default value is INFO. For more information about logging, see [Controlling Logging ](../09_controlling_logging#controlling_logging) .
 
 ``` text
 ---
 title: "Logging levels for JGroups and EFM."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Valid values are: TRACE, DEBUG, INFO, WARN, ERROR"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "Default value: INFO"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "It is not necessary to increase these values unless debugging a"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "specific issue. If nodes are not discovering each other at"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "startup, increasing the jgroups level to DEBUG will show"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "information about the TCP connection attempts that may help"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "diagnose the connection failures."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 jgroups.loglevel=INFO
 efm.loglevel=INFO
 ```
@@ -1783,9 +3045,15 @@ Use the `jvm.options` property to pass JVM-related configuration information. Th
 ---
 title: "Extra information that will be passed to the JVM when starting"
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 ---
 title: "the agent."
 ---
+
+<div id="cluster_properties" class="registered_link"></div>
+
 jvm.options=-Xmx128m
 ```
 

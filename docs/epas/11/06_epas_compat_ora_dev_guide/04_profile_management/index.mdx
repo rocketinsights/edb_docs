@@ -2,6 +2,9 @@
 title: "Profile Management"
 ---
 
+<div id="profile_management" class="registered_link"></div>
+
+
 Advanced Server allows a database superuser to create named *profiles*. Each profile defines rules for password management that augment `password` and `md5` authentication. The rules in a profile can:
 
   - count failed login attempts
@@ -30,7 +33,7 @@ The `default` profile specifies the following attributes:
 | `PASSWORD_VERIFY_FUNCTION` | `NULL`      |
 | `PASSWORD_ALLOW_HASHED`    | `TRUE`      |
 
-A database superuser can use the `ALTER PROFILE` command to modify the values specified by the `default` profile. For more information about modifying a profile, see [Altering a Profile](altering_a_profile).
+A database superuser can use the `ALTER PROFILE` command to modify the values specified by the `default` profile. For more information about modifying a profile, see `Altering a Profile<altering_a_profile>`.
 
 <div class="toctree" data-maxdepth="3">
 

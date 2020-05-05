@@ -2,10 +2,14 @@
 title: "Default Optimization Modes"
 ---
 
+<div id="default_optimization_modes" class="registered_link"></div>
+
+
 There are a number of optimization modes that can be chosen as the default setting for an Advanced Server database cluster. This setting can also be changed on a per session basis by using the `ALTER SESSION` command as well as in individual `DELETE, SELECT`, and `UPDATE` commands within an optimizer hint. The configuration parameter that controls these default modes is named `OPTIMIZER_MODE`.
 
 The following table shows the possible values.
 
+<div class="table-with-scroll">
 <table>
 <tbody>
 <tr class="odd">
@@ -58,6 +62,7 @@ The following table shows the possible values.
 </tr>
 </tbody>
 </table>
+</div>
 
 These optimization modes are based upon the assumption that the client submitting the SQL command is interested in viewing only the first “n” rows of the result set and will then abandon the remainder of the result set. Resources allocated to the query are adjusted as such.
 
