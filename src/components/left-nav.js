@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
-import EdbLogo from './EdbLogo';
+import EdbLogo from './edb-logo';
 
 const FixedCol = styled('div')`
   position: -webkit-sticky;
