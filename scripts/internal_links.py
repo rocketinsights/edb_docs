@@ -28,9 +28,13 @@ for path in Path('content_build').rglob('*.mdx'):
 # Now that all of the links in the object, scan all of the files again to replace the
 # references with links
 
+total = 0
+
 for path in Path('content_build').rglob('*.mdx'):
 
     # finding depth of link to know how far to back out to root
+
+    path_total = 0
 
     depth = len(str(path.parent).split('/')) - 2
     if path.name == 'index.mdx':
@@ -43,22 +47,19 @@ for path in Path('content_build').rglob('*.mdx'):
     for line in fileinput.input(files=[str(path)], inplace=1):
       new_line = line
 
-      # convert all internal links in each line to MDX format
-      internal_links = re.findall('(\`[.0-9a-zA-Z\s\-]*?) (\<.*?\>\`)', line)
-      if len(internal_links) > 0:
-        for link in internal_links:
-          new_text = "[" + link[0][1:]
-          new_url = "](#" + clean_up_key(link[1][1:-2]) + ")"
-          new_line = new_line.replace(link[0], new_text).replace(link[1], new_url)
-
       # convert registered links to paths
       if "](#" in new_line:
-        tags = re.findall('(?<=\()(.*?)(?=\))', new_line)
+        tags = re.findall('\[[.0-9a-zA-Z\s\-]*\]\((#.*?)\)', new_line)
         for tag in tags:
           if tag in links:
             new_line = new_line.replace(tag, depth_prefix + links[tag])
+            path_total += 1
       print(new_line, end="")
-      
+    if path_total > 0:
+      print(str(path_total) + " internal links converted in:\n" + str(path.parent) + "/" + str(path.stem))
+      total += path_total
+
+print(str(total) + " total internal links converted")
 
 
 
