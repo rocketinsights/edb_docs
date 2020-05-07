@@ -30,20 +30,10 @@ delegate_IP = ‘Virtual IP address’
 wd_lifecheck_method = 'heartbeat'
 wd_interval = 10 # we can lower this value for quick detection
 wd_life_point = 3
----
-title: "virtual IP control"
----
-
-<div id="optional_components" class="registered_link"></div>
-
+# virtual IP control
 if_cmdconfig_path = '/sbin' # ifconfig command path
 if_up_cmd = 'ifconfig eth0:0 inet $_IP_$ netmask 255.255.255.0'
----
-title: "startup delegate IP command"
----
-
-<div id="optional_components" class="registered_link"></div>
-
+# startup delegate IP command
 if_down_cmd = 'ifconfig eth0:0 down' #shutdown DIP
 arping_path = '/usr/sbin' # arping command path
 arping_cmd = 'arping -U $_IP_$ -w 1' # arping command

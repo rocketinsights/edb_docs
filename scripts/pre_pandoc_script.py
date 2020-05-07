@@ -6,7 +6,7 @@ def clean_up_ref(ref):
   return new_ref
 
 def extract_target(line):
-  target = line.replace(".. _", "").replace(":\n", "").replace("(", "").replace(")", "").replace("/","_")
+  target = line.replace(".. _", "").replace(":\n", "").replace("(", "").replace(")", "").replace("/","_").replace(".","_")
   if target[-1] == "_":
     target = target[0:-1]
   return target

@@ -33,7 +33,7 @@ integration scripts
 
 ### load_balancer_detach.sh
 
-<div id="load_balancer_detach.sh" class="registered_link"></div>
+<div id="load_balancer_detach_sh" class="registered_link"></div>
 
 <div class="index">
 
@@ -57,7 +57,7 @@ exit 0
 
 ### load_balancer_attach.sh
 
-<div id="load_balancer_attach.sh" class="registered_link"></div>
+<div id="load_balancer_attach_sh" class="registered_link"></div>
 
 <div class="index">
 
@@ -94,78 +94,18 @@ PCP_PORT= # PCP port number as in pgpool.conf
 PCP_HOST= # hostname of Pgpool-II
 PGPOOL_PATH= # Pgpool-II installed path
 export PCPPASSFILE= # Path to PCPPASS file
----
-title: "Execute command by failover."
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "special values: %d = node id"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%h = host name"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%p = port number"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%D = database cluster path"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%m = new master node id"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%M = old master node id"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%H = new master node host name"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%P = old primary node id"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%R = new master database cluster path"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%r = new master port number"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "%% = '%' character"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# Execute command by failover.
+# special values: %d = node id
+# %h = host name
+# %p = port number
+# %D = database cluster path
+# %m = new master node id
+# %M = old master node id
+# %H = new master node host name
+# %P = old primary node id
+# %R = new master database cluster path
+# %r = new master port number
+# %% = '%' character
 detached_node_id=$1
 old_master_id=$2
 echo detached_node_id $1
@@ -191,68 +131,23 @@ pgpool_backend.sh
 ``` text
 #!/bin/bash
 #
----
-title: "pgpool-II backend node configuration driver."
----
-
-<div id="appendix" class="registered_link"></div>
-
+# pgpool-II backend node configuration driver.
 #
----
-title: "usage: promote_standby.sh hostname [port]"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# usage: promote_standby.sh hostname [port]
 #
----
-title: "set the following variables according to your setup"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# set the following variables according to your setup
 PCP_USER= # PCP user name
 PCP_PORT= # PCP port number as in pgpool.conf
 PCP_HOST= # hostname of Pgpool-II
 PGPOOL_PATH= # Pgpool-II installed path
 export PCPPASSFILE= # Path to PCPPASS file
----
-title: "function returns the Pgpool-II backend node-id for the given"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# function returns the Pgpool-II backend node-id for the given
 hostname
----
-title: "and port number, And if the node-id is not found 255 is returned"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments:"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- Hostname"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "2- Port (optional) if not provided, node-id of first matching"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "hostname will be returned"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# and port number, And if the node-id is not found 255 is returned
+# Arguments:
+# 1- Hostname
+# 2- Port (optional) if not provided, node-id of first matching
+# hostname will be returned
 #
 function get_pgpool_nodeid_from_host {
 if [ -z "$1" ]; then
@@ -280,49 +175,14 @@ let i=i+1
 done
 return 255
 }
----
-title: "function returns 1 if Pgpool-II backend node for the given hostname"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "and port number is the primary node in Pgpool-II"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "returns 0 for the standby node and 255 if no node exist for the"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# function returns 1 if Pgpool-II backend node for the given hostname
+# and port number is the primary node in Pgpool-II
+# returns 0 for the standby node and 255 if no node exist for the
 hostname
----
-title: "Arguments:"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- Hostname"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "2- Port (optional) if not provided, node-id of first matching"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "hostname will be returned"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# Arguments:
+# 1- Hostname
+# 2- Port (optional) if not provided, node-id of first matching
+# hostname will be returned
 #
 function is_host_is_primary_pgpool_node {
 if [ -z "$1" ]; then
@@ -345,12 +205,7 @@ role=`echo $nodeinfo \| awk -v N=6 '{print $N}'\`
 if [ "$hostname" == $1 ] && ( [ -z "$2" ] \|\| [ $port -eq $2 ] );
 then
 echo "$1:$2 has backend node-id = $i in Pgpool-II"
----
-title: "check if the node role is primary"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# check if the node role is primary
 if [ "$role" == "primary" ]; then
 return 1
 else
@@ -361,24 +216,9 @@ let i=i+1
 done
 return 255
 }
----
-title: "Function promotes the node-id to the new master node"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments:"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- node-id: Pgpool-II backend node-id of node to be promoted to"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# Function promotes the node-id to the new master node
+# Arguments:
+# 1- node-id: Pgpool-II backend node-id of node to be promoted to
 master
 function promote_node_id_to_master {
 if [ -z "$1" ]; then
@@ -389,24 +229,9 @@ $PGPOOL_PATH/pcp_promote_node -w -U $PCP_USER -h $PCP_HOST -p
 $PCP_PORT $1
 return $?
 }
----
-title: "Function attach the node-id to the Pgpool-II"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- node-id: Pgpool-II backend node-id to be attached"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# Function attach the node-id to the Pgpool-II
+# Arguments
+# 1- node-id: Pgpool-II backend node-id to be attached
 function attach_node_id {
 if [ -z "$1" ]; then
 echo "node-id not provided"
@@ -416,24 +241,9 @@ $PGPOOL_PATH/pcp_attach_node -w -U $PCP_USER -h $PCP_HOST -p
 $PCP_PORT $1
 return $?
 }
----
-title: "Function detach the node-id from the Pgpool-II"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- node-id: Pgpool-II backend node-id to be detached"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# Function detach the node-id from the Pgpool-II
+# Arguments
+# 1- node-id: Pgpool-II backend node-id to be detached
 function detach_node_id {
 if [ -z "$1" ]; then
 echo "node-id not provided"
@@ -443,42 +253,12 @@ $PGPOOL_PATH/pcp_detach_node -w -U $PCP_USER -h $PCP_HOST -p
 $PCP_PORT $1
 return $?
 }
----
-title: "function promotes the standby node identified by hostname:port"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "to the master node in Pgpool-II"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments:"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- Hostname"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "2- Port (optional) if not provided, node-id of first matching"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "hostname will be promoted"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# function promotes the standby node identified by hostname:port
+# to the master node in Pgpool-II
+# Arguments:
+# 1- Hostname
+# 2- Port (optional) if not provided, node-id of first matching
+# hostname will be promoted
 #
 function promote_standby_to_master {
 get_pgpool_nodeid_from_host $1 $2
@@ -492,42 +272,12 @@ promote_node_id_to_master $node_id
 return $?
 fi
 }
----
-title: "function attaches the backend node identified by hostname:port"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "to Pgpool-II"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments:"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- Hostname"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "2- Port (optional) if not provided, node-id of first matching"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "hostname will be promoted"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# function attaches the backend node identified by hostname:port
+# to Pgpool-II
+# Arguments:
+# 1- Hostname
+# 2- Port (optional) if not provided, node-id of first matching
+# hostname will be promoted
 #
 function attach_node {
 get_pgpool_nodeid_from_host $1 $2
@@ -541,42 +291,12 @@ attach_node_id $node_id
 return $?
 fi
 }
----
-title: "function detaches the backend node identified by hostname:port"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "from Pgpool-II"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "Arguments:"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "1- Hostname"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "2- Port (optional) if not provided, node-id of first matching"
----
-
-<div id="appendix" class="registered_link"></div>
-
----
-title: "hostname will be promoted"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# function detaches the backend node identified by hostname:port
+# from Pgpool-II
+# Arguments:
+# 1- Hostname
+# 2- Port (optional) if not provided, node-id of first matching
+# hostname will be promoted
 #
 function detach_node {
 get_pgpool_nodeid_from_host $1 $2
@@ -599,12 +319,7 @@ echo " promote: promote node".
 echo " attach: attach node".
 echo " detach: detach node".
 }
----
-title: "script entry point"
----
-
-<div id="appendix" class="registered_link"></div>
-
+# script entry point
 if [ -z "$1" ] \|\| [ -z "$2" ]; then
 echo "ERROR: operation not provided"
 print_usage

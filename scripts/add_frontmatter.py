@@ -11,7 +11,7 @@ for path in Path('content').rglob('*.mdx'):
   copying = False
   top_url_line = ""
   for line in fileinput.input(files=[str(path)], inplace=1):
-    if line.startswith('# '):
+    if line.startswith('# ') and not copying:
       title = line.replace("# ", "").replace("\n", "").replace("`", "").replace("\*", "*")
       print("---")
       print('title: "' + title + '"')

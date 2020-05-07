@@ -5,7 +5,7 @@ import fileinput
 links = {}
 
 def clean_up_key(key):
-  new_key = key.replace("(", "").replace(")", "")
+  new_key = key.replace("(", "").replace(")", "").replace(".", "_")
   if key[-1] == "_":
     new_key = new_key[0:-1]
   return new_key
@@ -23,7 +23,12 @@ for path in Path('content_build').rglob('*.mdx'):
     for line in f.readlines():
       if "registered_link" in line:
         id = "#" + line.split('"')[1]
-        links[id] = root_path + str(path.stem) + id
+        if str(path.stem.startswith("index")):
+          links[id] = root_path + id
+        else:
+          links[id] = root_path + str(path.stem) + id
+
+
 
 # Now that all of the links in the object, scan all of the files again to replace the
 # references with links
@@ -51,8 +56,9 @@ for path in Path('content_build').rglob('*.mdx'):
       if "](#" in new_line:
         tags = re.findall('\[[.0-9a-zA-Z\s\-]*\]\((#.*?)\)', new_line)
         for tag in tags:
-          if tag in links:
-            new_line = new_line.replace(tag, depth_prefix + links[tag])
+          clean_tag = clean_up_key(tag)
+          if clean_tag in links:
+            new_line = new_line.replace(tag, depth_prefix + links[clean_tag])
             path_total += 1
       print(new_line, end="")
     if path_total > 0:
