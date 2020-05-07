@@ -1,12 +1,12 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
-import LeftNav from '../components/leftNav';
-import ContentCol from '../components/contentCol';
-import PageTableOfContents from '../components/PageTableOfContents';
-import { Container, Row, Col } from 'react-bootstrap';
-import VersionDropdown from '../components/versionDropdown';
+import LeftNav from '../components/left-nav';
+import ContentCol from '../components/content-col';
+import PageTableOfContents from '../components/table-of-contents';
+import VersionDropdown from '../components/version-dropdown';
 
 export const query = graphql`
   query($path: String!) {

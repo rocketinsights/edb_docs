@@ -1,6 +1,6 @@
 import React from 'react';
-import { Global, css } from '@emotion/core';
 import Helmet from 'react-helmet';
+import { Global, css } from '@emotion/core';
 import useSiteMetadata from '../hooks/use-sitemetadata';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
