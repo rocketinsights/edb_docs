@@ -13,15 +13,15 @@ If a Master node reboots, Failover Manager may detect the database is down on th
 
 Once configured, a Failover Manager cluster requires no regular maintenance. The following sections provide information about performing the management tasks that may occasionally be required by a Failover Manager Cluster.
 
-By default, [some of the efm commands ](07_using_efm_utility#using_efm_utility) must be invoked by `efm` or an OS superuser; an administrator can selectively permit users to invoke these commands by adding the user to the `efm` group. The commands are:
+By default, `some of the efm commands <using_efm_utility>` must be invoked by `efm` or an OS superuser; an administrator can selectively permit users to invoke these commands by adding the user to the `efm` group. The commands are:
 
-  - [efm allow-node ](07_using_efm_utility#efm_allow_node)
-  - [efm disallow-node ](07_using_efm_utility#efm_disallow_node)
-  - [efm promote ](07_using_efm_utility#efm_promote)
-  - [efm resume ](07_using_efm_utility#efm_resume)
-  - [efm set-priority ](07_using_efm_utility#efm_set_priority)
-  - [efm stop-cluster ](07_using_efm_utility#efm_stop_cluster)
-  - [efm upgrade-conf ](07_using_efm_utility#efm_upgrade_conf)
+  - [efm allow-node](07_using_efm_utility#efm_allow_node)
+  - [efm disallow-node](07_using_efm_utility#efm_disallow_node)
+  - [efm promote](07_using_efm_utility#efm_promote)
+  - [efm resume](07_using_efm_utility#efm_resume)
+  - [efm set-priority](07_using_efm_utility#efm_set_priority)
+  - [efm stop-cluster](07_using_efm_utility#efm_stop_cluster)
+  - [efm upgrade-conf](07_using_efm_utility#efm_upgrade_conf)
 
 <div id="starting_efm_cluster" class="registered_link"></div>
 
@@ -65,13 +65,13 @@ You can add a node to a Failover Manager cluster at any time. When you add a nod
 
 1.  Unless `auto.allow.hosts` is set to `true`, use the `efm allow-node` command, to add the IP address of the new node to the Failover Manager allowed node host list. When invoking the command, specify the cluster name and the IP address of the new node:
     
-    [efm allow-node ](#cluster_name ip_address)
+    `efm allow-node <cluster_name ip_address>`
     
-    For more information about using the `efm allow-node` command or controlling a Failover Manager service, see [Using the EFM Utility ](07_using_efm_utility#efm_allow_node).
+    For more information about using the `efm allow-node` command or controlling a Failover Manager service, see [Using the EFM Utility](07_using_efm_utility#efm_allow_node).
     
-    Install a Failover Manager agent and configure the cluster properties file on the new node. For more information about modifying the properties file, see [The Cluster Properties File ](04_configuring_efm/01_cluster_properties/index#cluster_properties).
+    Install a Failover Manager agent and configure the cluster properties file on the new node. For more information about modifying the properties file, see `The Cluster Properties File <cluster_properties>`.
 
-2.  Configure the cluster members file on the new node, adding an entry for the Membership Coordinator. For more information about modifying the cluster members file, see [The Cluster Members File ](04_configuring_efm/03_cluster_members#cluster_members).
+2.  Configure the cluster members file on the new node, adding an entry for the Membership Coordinator. For more information about modifying the cluster members file, see `The Cluster Members File <cluster_members>`.
 
 3.  Assume superuser privileges on the new node, and start the Failover Manager agent. To start the Failover Manager cluster on RHEL 6.x or CentOS 6.x, assume superuser privileges, and invoke the command:
     
@@ -107,9 +107,9 @@ For example, if the properties file on node `10.0.1.10` includes a setting of `p
 
 > `efm set-priority acctg 10.0.1.10 1`
 
-In the event of a failover, Failover Manager will first retrieve information from Postgres streaming replication to confirm which Standby node has the most recent data, and promote the node with the least chance of data loss. If two Standby nodes contain equally up-to-date data, the node with a higher user-specified priority value will be promoted to Master unless [use.replay.tiebreaker ](04_configuring_efm/01_cluster_properties/index#use.replay.tiebreaker) is set to `false` . To check the priority value of your Standby nodes, use the command:
+In the event of a failover, Failover Manager will first retrieve information from Postgres streaming replication to confirm which Standby node has the most recent data, and promote the node with the least chance of data loss. If two Standby nodes contain equally up-to-date data, the node with a higher user-specified priority value will be promoted to Master unless [use.replay.tiebreaker](04_configuring_efm/01_cluster_properties/index#use.replay.tiebreaker) is set to `false` . To check the priority value of your Standby nodes, use the command:
 
-> [efm cluster-status ](#cluster_name)
+> `efm cluster-status <cluster_name>`
 
 Please note: The promotion priority may change if a node becomes isolated from the cluster, and later re-joins the cluster.
 
@@ -162,13 +162,13 @@ Please note that this command instructs the service to ignore the value specifie
 
 To return a node to the role of master, place the node first in the promotion list:
 
-> [efm set-priority ](#cluster_name> <ip_address> <priority)
+> `efm set-priority <cluster_name> <ip_address> <priority>`
 
 Then, perform a manual promotion:
 
 > `efm promote <cluster_name> ‑switchover`
 
-For more information about the efm utility, see [Using the EFM Utility ](07_using_efm_utility#using_efm_utility).
+For more information about the efm utility, see `Using the EFM Utility <using_efm_utility>`.
 
 <div id="stop_efm_agent" class="registered_link"></div>
 
@@ -192,7 +192,7 @@ To stop the Failover Manager agent on RHEL 7.x or CentOS 7.x, assume superuser p
 
 Until you invoke the efm disallow-node command (removing the node's address of the node from the Allowed node host list), you can use the `service edb-efm-3.9 start` command to restart the node at a later date without first running the `efm allow-node` command again.
 
-Please note that stopping an agent does not signal the cluster that the agent has failed unless the [master.shutdown.as.failure ](04_configuring_efm/01_cluster_properties/index#master_shutdown_as_failure) property is set to `true`.
+Please note that stopping an agent does not signal the cluster that the agent has failed unless the [master.shutdown.as.failure](04_configuring_efm/01_cluster_properties/index#master_shutdown_as_failure) property is set to `true`.
 
 <div id="stopping_efm_cluster" class="registered_link"></div>
 
@@ -206,7 +206,7 @@ Stopping a Cluster
 
 To stop a Failover Manager cluster, connect to any node of a Failover Manager cluster, assume the identity of `efm` or the OS superuser, and invoke the command:
 
-> [efm stop-cluster ](#cluster_name)
+> `efm stop-cluster <cluster_name>`
 
 The command will cause *all* Failover Manager agents to exit. Terminating the Failover Manager agents completely disables all failover functionality.
 
@@ -218,12 +218,11 @@ Please Note: when you invoke the `efm stop-cluster` command, all authorized node
 
 The `efm disallow-node` command removes the IP address of a node from the Failover Manager Allowed Node host list. Assume the identity of `efm` or the OS superuser on any existing node (that is currently part of the running cluster), and invoke the `efm disallow-node` command, specifying the cluster name and the IP address of the node:
 
-> [efm disallow-node ](#cluster_name> <ip_address)
+> `efm disallow-node <cluster_name> <ip_address>`
 
-The `efm disallow-node` command will not stop a running agent; the service will continue to run on the node until you [stop the agent ](05_using_efm#stop_efm_agent). If the agent or cluster is subsequently stopped, the node will not be allowed to rejoin the cluster, and will be removed from the failover priority list (and will be ineligible for promotion).
+The `efm disallow-node` command will not stop a running agent; the service will continue to run on the node until you [stop the agent](05_using_efm#stop_efm_agent). If the agent or cluster is subsequently stopped, the node will not be allowed to rejoin the cluster, and will be removed from the failover priority list (and will be ineligible for promotion).
 
-After invoking the `efm disallow-node` command, you must use the `efm
-allow-node command <efm_allow_node>` to add the node to the cluster again .
+After invoking the `efm disallow-node` command, you must use the <span class="title-ref">efm allow-node command \<efm_allow_node\></span> to add the node to the cluster again .
 
 <div id="multiple_agents_single_node" class="registered_link"></div>
 
@@ -297,7 +296,7 @@ The following parameters are used when assigning the virtual IP address to a nod
 
 This parameter value is determined by the virtual IP addresses being used and may or may not be the same for both acctg.properties and sales.properties.
 
-After creating the `acctg.properties` and `sales.properties` files, create a service script or unit file for each cluster that points to the respective property files; this step is platform specific. If you are using RHEL 6.x or CentOS 6.x, see [RHEL 6.x or CentOS 6.x ](05_using_efm#rhel_or_centos_6); if you are using RHEL 7.x or CentOS 7.x, see [RHEL 7.x or CentOS 7.x ](05_using_efm#rhel_or_centos_7).
+After creating the `acctg.properties` and `sales.properties` files, create a service script or unit file for each cluster that points to the respective property files; this step is platform specific. If you are using RHEL 6.x or CentOS 6.x, see [RHEL 6.x or CentOS 6.x](05_using_efm#rhel_or_centos_6); if you are using RHEL 7.x or CentOS 7.x, see [RHEL 7.x or CentOS 7.x](05_using_efm#rhel_or_centos_7).
 
 Please note: If you are using a custom service script or unit file, you must manually update the file to reflect the new service name when you upgrade Failover Manager.
 

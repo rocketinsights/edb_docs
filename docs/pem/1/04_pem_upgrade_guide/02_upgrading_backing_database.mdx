@@ -5,11 +5,11 @@ title: "Upgrading the Backing Postgres Database"
 <div id="upgrading_backing_database" class="registered_link"></div>
 
 
-If you are updating both PEM components and the PEM backing database,you should perform PEM component updates (the server, agents and client) before updating the backing database. For more information about updating PEM component software, see [Upgrading a PEM Installation ](01_upgrading_pem_installation#upgrading_pem_installation).
+If you are updating both PEM components and the PEM backing database,you should perform PEM component updates (the server, agents and client) before updating the backing database. For more information about updating PEM component software, see [Upgrading a PEM Installation](01_upgrading_pem_installation#upgrading_pem_installation).
 
 The update process described in this section uses the `pg_upgrade` utility to migrate from one version of the backing server to a more recent version. `pg_upgrade` facilitates migration between any version of Postgres (version 9.3 or later), and any subsequent release of Postgres that is supported on the same platform.
 
-`pg_upgrade` supports a transfer of data between servers of the same type. For example, you can use `pg_upgrade` to move data from a PostgreSQL 9.6 backing database to a PostgreSQL 10 backing database, but not to an Advanced Server 10 backing database. If you wish to migrate to a different type of backing database (i.e from a PostgreSQL server to Advanced Server), see [Moving the Postgres Enterprise Manager Server ](03_moving_pem_server#moving_pem_server).
+`pg_upgrade` supports a transfer of data between servers of the same type. For example, you can use `pg_upgrade` to move data from a PostgreSQL 9.6 backing database to a PostgreSQL 10 backing database, but not to an Advanced Server 10 backing database. If you wish to migrate to a different type of backing database (i.e from a PostgreSQL server to Advanced Server), see <span class="title-ref">Moving the Postgres Enterprise Manager Server \<moving_pem_server\></span>.
 
 You can find more information about using pg_upgrade at:
 
@@ -162,15 +162,15 @@ To invoke `pg_upgrade`, assume the identity of the cluster owner, navigate into 
 
 > `<path_to_pg_upgrade> pg_upgrade`
 > 
-> [-d ](#old_data_dir_path)
+> `-d <old_data_dir_path>`
 > 
-> [-D ](#new_data_dir_path)
+> `-D <new_data_dir_path>`
 > 
-> [-b ](#old_bin_dir_path> -B <new_bin_dir_path)
+> `-b <old_bin_dir_path> -B <new_bin_dir_path>`
 > 
-> [-p ](#old_port> -P <new_port)
+> `-p <old_port> -P <new_port>`
 > 
-> [-u ](#user_name)
+> `-u <user_name>`
 
 Where:
 
@@ -241,7 +241,7 @@ Once in place on the target server, the files should have the (platform-specific
 
 On Linux, the certificate files must be owned by `postgres`. You can use the following command at the command line to modify the ownership of the files:
 
-> [chown postgres ](#file_name)
+> `chown postgres <file_name>`
 
 Where `file_name` specifies the name of the certificate file.
 
@@ -251,7 +251,7 @@ The `server.crt` file may only be modified by the owner of the file, but may be 
 
 The other certificate files may only be modified or read by the owner of the file. You can use the following command to set the file permissions:
 
-> [chmod 600 ](#file_name)
+> `chmod 600 <file_name>`
 
 Where `file_name` specifies the name of the file.
 
@@ -334,7 +334,7 @@ Start the service of the new backing database.
 
 \-On RHEL or CentOS 7.x, open a command line and assume the identity of a superuser. Enter the command:
 
-> [systemctl stop ](#service_name)
+> `systemctl stop <service_name>`
 
 Where `service_name` is the name of the backing database server.
 

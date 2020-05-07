@@ -42,7 +42,7 @@ Where `<function_declaration>` :=
 
 > `FUNCTION <func_name> [ <argument_list> ]`
 > 
-> [RETURN ](#rettype> [ DETERMINISTIC ]`; \[ `<restriction_pragma); \]
+> `RETURN <rettype> [ DETERMINISTIC ]`; \[ `<restriction_pragma>`; \]
 
 Where `<argument_list>` :=
 
@@ -106,7 +106,7 @@ The data type(s) of an argument. An argument type may be a base data type, a cop
 
 The type of a column is referenced by writing `<tablename.columnname>` `%TYPE`; using this can sometimes help make a procedure independent from changes to the definition of a table.
 
-[DEFAULT ](#value)
+`DEFAULT <value>`
 
 The `DEFAULT` clause supplies a default value for an input argument if one is not supplied in the invocation. `DEFAULT` may not be specified for arguments with modes `IN OUT` or `OUT`.
 
@@ -234,9 +234,9 @@ Where `<option>` :=
 > 
 > `PARALLEL { UNSAFE | RESTRICTED | SAFE }`
 > 
-> [COST ](#execution_cost)
+> `COST <execution_cost>`
 > 
-> [ROWS ](#result_rows)
+> `ROWS <result_rows>`
 > 
 > `SET <config_param> { TO <value> | = <value> | FROM CURRENT` }
 
@@ -344,7 +344,7 @@ Where `<package_initializer>` :=
 > 
 > The type of a column is referenced by writing ``<tablename>. <columnname>`%TYPE``; using this can sometimes help make a procedure independent from changes to the definition of a table.
 
-[DEFAULT ](#value)
+`DEFAULT <value>`
 
 > The `DEFAULT` clause supplies a default value for an input argument if one is not supplied in the procedure call. `DEFAULT` may not be specified for arguments with modes `IN OUT` or `OUT`.
 > 

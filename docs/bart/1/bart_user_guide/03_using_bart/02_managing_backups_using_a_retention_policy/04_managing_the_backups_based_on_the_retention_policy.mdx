@@ -9,9 +9,9 @@ The `MANAGE` subcommand is used to evaluate and categorize backups according to 
 
 This section covers following aspects of backup management:
 
-  - The rules for [deleting backups ](../../03_using_bart/02_managing_backups_using_a_retention_policy/04_managing_the_backups_based_on_the_retention_policy#deletions_permitted_under_retention_policy) depending upon the backup status and the subcommand used.
-  - The process to retain a backup indefinitely by [marking it as keep ](../../03_using_bart/02_managing_backups_using_a_retention_policy/04_managing_the_backups_based_on_the_retention_policy#marking_backups_for_indefinite_keep_status). This section also provides information about resetting backups status (that are marked as `obsolete` and `keep`) back to active status.
-  - The general process for `evaluating, marking, and then deleting obsolete backups <evaluating_marking_and_deleting_obsolete_backups>`.
+  - The rules for [deleting backups](../../03_using_bart/02_managing_backups_using_a_retention_policy/04_managing_the_backups_based_on_the_retention_policy#deletions_permitted_under_retention_policy) depending upon the backup status and the subcommand used.
+  - The process to retain a backup indefinitely by [marking it as keep](../../03_using_bart/02_managing_backups_using_a_retention_policy/04_managing_the_backups_based_on_the_retention_policy#marking_backups_for_indefinite_keep_status). This section also provides information about resetting backups status (that are marked as `obsolete` and `keep`) back to active status.
+  - The general process for <span class="title-ref">evaluating, marking, and then deleting obsolete backups \<evaluating_marking_and_deleting_obsolete_backups\></span>.
 
 <div id="deletions_permitted_under_retention_policy" class="registered_link"></div>
 
@@ -90,19 +90,25 @@ Table 3‑1 Allowable Backup Deletion by Status
 <tr class="even">
 <td>DELETE –i <em>backup</em></td>
 <td><p>Yes</p>
-<p>(see <code class="interpreted-text" role="ref">Note1 &lt;note1&gt;</code>)</p></td>
+<p>(see <a href="###note1">Note1</a>_)</p></td>
+<td><blockquote>
+<p>Yes</p>
+</blockquote>
+<div class="line-block">(see <a href="###note1">Note1</a>_)</div></td>
 <td><p>Yes</p>
-<p>(see <code class="interpreted-text" role="ref">Note1 &lt;note1&gt;</code>)</p></td>
+<div class="line-block"> (see <a href="###note1">Note1</a>_)</div></td>
 <td><p>Yes</p>
 <blockquote>
-<p>(see <code class="interpreted-text" role="ref">Note1 &lt;note1&gt;</code>)</p>
+<div class="line-block">(see <a href="###note2">Note2</a></div>
 </blockquote></td>
+<td><blockquote>
+<p>Yes</p>
+</blockquote>
+_) | (see <a href="###note2">Note2</a>_)</td>
 <td><p>Yes</p>
-<p>(see <code class="interpreted-text" role="ref">Note2 &lt;note2&gt;</code>)</p></td>
-<td><p>Yes</p>
-<p>(see <code class="interpreted-text" role="ref">Note2 &lt;note2&gt;</code>)</p></td>
-<td><p>Yes</p>
-<p>(see <code class="interpreted-text" role="ref">Note2 &lt;note2&gt;</code>)</p></td>
+<blockquote>
+<div class="line-block">(see <a href="###note2">Note2</a>_)</div>
+</blockquote></td>
 </tr>
 <tr class="odd">
 <td>DELETE –i all</td>
@@ -193,7 +199,7 @@ Note
 
 </div>
 
-The status of backups currently marked as `obsolete` or `keep` is not changed. To re-evaluate such backups and then classify them, their status must first be reset to `active` with the `MANAGE -c nokeep` option. See [Marking the Backup Status ](../../03_using_bart/02_managing_backups_using_a_retention_policy/02_marking_the_backup_status#marking_the_backup_status) for more information.
+The status of backups currently marked as `obsolete` or `keep` is not changed. To re-evaluate such backups and then classify them, their status must first be reset to `active` with the `MANAGE -c nokeep` option. See [Marking the Backup Status](../../03_using_bart/02_managing_backups_using_a_retention_policy/02_marking_the_backup_status#marking_the_backup_status) for more information.
 
 </div>
 

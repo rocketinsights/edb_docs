@@ -13,7 +13,7 @@ script.notification
 from.email
 ```
 
-For more information about editing the configuration properties, see [Specifying Cluster Properties ](04_configuring_efm/01_cluster_properties/index#cluster_properties) .
+For more information about editing the configuration properties, see `Specifying Cluster Properties <cluster_properties>` .
 
 The body of the notification contains details about the event that triggered the notification, and about the current state of the cluster. For example:
 
@@ -37,7 +37,7 @@ Failover Manager assigns a severity level to each notification. The following le
 
 The severity level designates the urgency of the notification. A notification with a severity level of `SEVERE` requires user attention immediately, while a notification with a severity level of `INFO` will call your attention to operational information about your cluster that does not require user action. Notification severity levels are not related to logging levels; all notifications are sent regardless of the log level detail specified in the configuration file.
 
-You can use the [notification.level ](04_configuring_efm/01_cluster_properties/index#notification.level) property to specify the minimum severity level that will trigger a notification.
+You can use the [notification.level](04_configuring_efm/01_cluster_properties/index#notification.level) property to specify the minimum severity level that will trigger a notification.
 
 Please note: In addition to sending notices to the administrative email address, all notifications are recorded in the cluster log file (`/var/log/efm-3.9/cluster_name.log`).
 

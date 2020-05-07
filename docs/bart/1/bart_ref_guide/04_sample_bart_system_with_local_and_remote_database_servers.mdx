@@ -26,14 +26,14 @@ passwordless SSH/SCP connections are required between the following:
 
 The following sections demonstrate configuring and taking full backups only. To support incremental backups as well, enable the `allow_incremental_backups` parameter for the desired database servers and use the `WAL scanner` program.
 
-  - [The BART Configuration File ](04_sample_bart_system_with_local_and_remote_database_servers#bart_configuration_file) shows the settings used in the BART configuration file.
-  - `Establishing SSH/SCP Passwordless Connections <establishing_ssh/scp_passwordless_connections>` provides an example of how to establish an SSH/SCP passwordless connection.
-  - [Configuring a Replication Database User ](04_sample_bart_system_with_local_and_remote_database_servers#configuring_a_replication_database_user) provides an example of how to configure the replication database user.
-  - [WAL Archiving Configuration Parameters ](04_sample_bart_system_with_local_and_remote_database_servers#wal_archiving_configuration_parameters) provides an example of how to configure WAL archiving.
-  - [Creating the BART Backup Catalog ](04_sample_bart_system_with_local_and_remote_database_servers#creating_the_bart_backup_catalog_backup_path) provides information about creating a BART Backup Catalog.
-  - [Starting the Database Servers with WAL Archiving ](04_sample_bart_system_with_local_and_remote_database_servers#starting_the_database_servers_with_wal_archiving) provides example of starting the database servers with WAL archiving.
-  - [Taking a Full Backup ](#taking_a_full_backup) illustrates taking the first full backup of the database servers.
-  - [Using Point-In-Time Recovery ](04_sample_bart_system_with_local_and_remote_database_servers#using_point-in-time_recovery) demonstrates the point-in-time recovery operation on the remote PostgreSQL database server.
+  - [The BART Configuration File](04_sample_bart_system_with_local_and_remote_database_servers#bart_configuration_file) shows the settings used in the BART configuration file.
+  - [Establishing SSH/SCP Passwordless Connections](establishing_ssh_scp_passwordless_connections) provides an example of how to establish an SSH/SCP passwordless connection.
+  - [Configuring a Replication Database User](04_sample_bart_system_with_local_and_remote_database_servers#configuring_a_replication_database_user) provides an example of how to configure the replication database user.
+  - [WAL Archiving Configuration Parameters](04_sample_bart_system_with_local_and_remote_database_servers#wal_archiving_configuration_parameters) provides an example of how to configure WAL archiving.
+  - [Creating the BART Backup Catalog](04_sample_bart_system_with_local_and_remote_database_servers#creating_the_bart_backup_catalog_backup_path) provides information about creating a BART Backup Catalog.
+  - [Starting the Database Servers with WAL Archiving](04_sample_bart_system_with_local_and_remote_database_servers#starting_the_database_servers_with_wal_archiving) provides example of starting the database servers with WAL archiving.
+  - [Taking a Full Backup](#taking_a_full_backup) illustrates taking the first full backup of the database servers.
+  - [Using Point-In-Time Recovery](04_sample_bart_system_with_local_and_remote_database_servers#using_point-in-time_recovery) demonstrates the point-in-time recovery operation on the remote PostgreSQL database server.
 
 <div id="bart_configuration_file" class="registered_link"></div>
 
@@ -81,7 +81,7 @@ copy_wals_during_restore = enabled
 description = "Human Resources"
 ```
 
-<div id="establishing_ssh/scp_passwordless_connections" class="registered_link"></div>
+<div id="establishing_ssh_scp_passwordless_connections" class="registered_link"></div>
 
 <div class="index">
 
@@ -174,7 +174,7 @@ Configuring local host access
 
 Even when the Advanced Server database is on the same host as the BART user account, and the Advanced Server database cluster owner is also the BART user account (`enterprisedb` is this case), a passwordless SSH/SCP connection must be established from the same user account to itself.
 
-On the BART host where the public key file was just generated as shown in [Generating a Public Key File for the BART User Account ](04_sample_bart_system_with_local_and_remote_database_servers#generating_a_public_key_file_for_the_bart_user_account), create the authorized keys file by appending the public key file to any existing authorized keys file.
+On the BART host where the public key file was just generated as shown in [Generating a Public Key File for the BART User Account](04_sample_bart_system_with_local_and_remote_database_servers#generating_a_public_key_file_for_the_bart_user_account), create the authorized keys file by appending the public key file to any existing authorized keys file.
 
 Log into the BART host as the BART user account and append the public key file, `id_rsa.pub` onto the `authorized_keys` file in the same `.ssh` directory.
 
@@ -353,7 +353,7 @@ total 12
 -rw-r--r-- 1 enterprisedb enterprisedb 416 Apr 23 13:04 id_rsa.pub
 ```
 
-The public key file, `id_rsa.pub`, for BART user account `enterprisedb` on the BART host was generated in [Generating a Public Key File for the BART User Account ](04_sample_bart_system_with_local_and_remote_database_servers#generating_a_public_key_file_for_the_bart_user_account) Section, and is now copied to the remote Advanced Server host on `192.168.2.24`:
+The public key file, `id_rsa.pub`, for BART user account `enterprisedb` on the BART host was generated in [Generating a Public Key File for the BART User Account](04_sample_bart_system_with_local_and_remote_database_servers#generating_a_public_key_file_for_the_bart_user_account) Section, and is now copied to the remote Advanced Server host on `192.168.2.24`:
 
 ``` text
 -bash-4.1$ scp ~/.ssh/id_rsa.pub enterprisedb@192.168.2.24:/tmp/tmp.pub
@@ -531,7 +531,7 @@ total 16
 -rw-r--r-- 1 enterprisedb enterprisedb 394 Apr 23 13:24 known_hosts
 ```
 
-The public key file, `id_rsa.pub`, for BART user account `enterprisedb` on the BART host was generated in [Generating a Public Key File for the BART User Account ](04_sample_bart_system_with_local_and_remote_database_servers#generating_a_public_key_file_for_the_bart_user_account) Section, and is now copied to the remote PostgreSQL host on 192.168.2.24:
+The public key file, `id_rsa.pub`, for BART user account `enterprisedb` on the BART host was generated in [Generating a Public Key File for the BART User Account](04_sample_bart_system_with_local_and_remote_database_servers#generating_a_public_key_file_for_the_bart_user_account) Section, and is now copied to the remote PostgreSQL host on 192.168.2.24:
 
 ``` text
 -bash-4.1$ scp ~/.ssh/id_rsa.pub postgres@192.168.2.24:/tmp/tmp.pub
@@ -822,7 +822,7 @@ Note
 
 </div>
 
-If the Postgres `archive_command` is already set, to prevent the `archive_command` from re-setting invoke the [INIT` subcommand with the `-- no-configure` option. For details, see [INIT ](01_using_subcommands/04_init#init) section.
+If the Postgres `archive_command` is already set, to prevent the `archive_command` from re-setting invoke the `INIT` subcommand with the `-- no-configure` option. For details, see [INIT](01_using_subcommands/04_init#init) section.
 
 </div>
 
