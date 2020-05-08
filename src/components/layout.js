@@ -14,6 +14,7 @@ const Layout = ({ children }) => {
           * {
             box-sizing: border-box;
             margin: 0;
+            padding: 0;
           }
 
           /* More info: https://bit.ly/2PsCnzk */
@@ -78,12 +79,11 @@ const Layout = ({ children }) => {
         <html lang="en" />
         <title>{title}</title>
         <meta name="description" content={description} />
+        <script src="https://kit.fontawesome.com/8b48506750.js" crossorigin="anonymous"></script>
       </Helmet>
-      {/* <Header /> */}
       <main
         css={css`
           margin: 0 auto;
-          max-width: 1200px;
           width: 100%;
         `}
       >
