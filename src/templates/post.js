@@ -1,12 +1,13 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { graphql } from 'gatsby';
+import { Container, Row, Col, Navbar } from 'react-bootstrap';import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/left-nav';
-import ContentCol from '../components/content-col';
 import PageTableOfContents from '../components/table-of-contents';
 import VersionDropdown from '../components/version-dropdown';
+import styled from '@emotion/styled';
+import SearchBar from '../components/search-bar';
+
 
 export const query = graphql`
   query($path: String!) {
@@ -22,6 +23,14 @@ export const query = graphql`
     }
   }
 `;
+
+const PaddedCol = styled(Col)`
+  padding-top: 1.5rem;
+`;
+
+const navStyles = {
+  height: '65px'
+}
 
 const getProductUrlBase = path => {
   return path
@@ -43,12 +52,15 @@ const DocTemplate = ({ data, pageContext }) => {
   const versionArray = makeVersionArray(versions, mdx.fields.path);
   return (
     <Layout>
-      <Container fluid>
-        <Row>
-          <Col md={3}>
-            <LeftNav navLinks={navLinks} path={mdx.fields.path} />
-          </Col>
-          <ContentCol md={7}>
+      <Row>
+        <PaddedCol style={{height: "100vh" }} md={2} className="border-right">
+          <LeftNav navLinks={navLinks} path={mdx.fields.path} />
+        </PaddedCol>
+        <Col className="m-0 p-0">
+          <Navbar className="border-bottom fluid" style={navStyles}>
+            <SearchBar />
+          </Navbar>
+          <Container>
             <h1>{mdx.frontmatter.title}</h1>
             {versionArray.length > 1 && (
               <VersionDropdown
@@ -57,14 +69,14 @@ const DocTemplate = ({ data, pageContext }) => {
               />
             )}
             <MDXRenderer>{mdx.body}</MDXRenderer>
-          </ContentCol>
+          </Container>
           <Col md={2}>
             {mdx.tableOfContents.items && (
               <PageTableOfContents toc={mdx.tableOfContents.items} />
             )}
           </Col>
-        </Row>
-      </Container>
+        </Col>
+      </Row>
     </Layout>
   );
 };
