@@ -2,6 +2,9 @@
 title: "Managing Incremental Backups"
 ---
 
+<div id="managing_incremental_backups" class="registered_link"></div>
+
+
 The following section summarizes how retention policy management affects incremental backups.
 
   - The retention policy rules are applied to full backups.
@@ -30,9 +33,7 @@ Redundancy retention with incremental backups
 
 </div>
 
-When a [redundancy retention policy](redundancy_retention_policy) is used and the `MANAGE` subcommand
-
-is invoked, the status of the oldest `active` full backup is changed to `obsolete` if the number of full backups exceeds the maximum number specified by the `retention_policy` parameter in the BART configuration file.
+When a [redundancy retention policy](../../02_examples#redundancy_retention_policy) is used and the `MANAGE` subcommand is invoked, the status of the oldest `active` full backup is changed to `obsolete` if the number of full backups exceeds the maximum number specified by the `retention_policy` parameter in the BART configuration file.
 
 <div class="note">
 
@@ -58,7 +59,7 @@ Recovery window retention with incremental backups
 
 </div>
 
-If the `MANAGE` command is invoked when BART is configured to use a [recovery window retention policy](recovery_window_retention_policy), the status of `active` full backups are changed to `obsolete` if the date/time of the full backup is outside of the recovery window.
+If the `MANAGE` command is invoked when BART is configured to use a [recovery window retention policy](../../02_examples#recovery_window_retention_policy), the status of `active` full backups are changed to `obsolete` if the date/time of the full backup is outside of the recovery window.
 
 <div class="note">
 

@@ -2,6 +2,9 @@
 title: "EDB Clone Schema"
 ---
 
+<div id="edb_clone_schema" class="registered_link"></div>
+
+
 <div class="index">
 
 EDB Clone Schema
@@ -14,34 +17,12 @@ The source and target databases can be the same physical database, or different 
 
 Use the following functions with EDB Clone Schema:
 
-  - \- **localcopyschema.** This function makes a copy of a schema and its  
-    database objects from a source database back into the same database (the target), but with a different schema name than the original. Use this function when the original source schema and the resulting copy are to reside within the same database. See
-
-[localcopyschema](localcopyschema) for information on the `localcopyschema` function.
-
-  - \- **localcopyschema_nb.** This function performs the same purpose as  
-    localcopyschema, but as a background job, thus freeing up the terminal from which the function was initiated. This is referred to as a *non-blocking* function. See
-
-[localcopyschema_nb](localcopyschema_nb) for information on the `localcopyschema_nb` function.
-
-  - \- **remotecopyschema.** This function makes a copy of a schema and its  
-    database objects from a source database to a different target database. Use this function when the original source schema and the resulting copy are to reside in two, separate databases. The separate databases can reside in the same, or in different Advanced Server database clusters. See
-
-[remotecopyschema](remotecopyschema) for information on the `remotecopyschema` function.
-
-  - \- **remotecopyschema_nb.** This function performs the same purpose as  
-    remotecopyschema, but as a background job, thus freeing up the terminal from which the function was initiated. This is referred to as a *non-blocking* function. See
-
-[remotecopyschema_nb](remotecopyschema_nb) for information on the `remotecopyschema_nb` function.
-
-  - \- **process_status_from_log.** This function displays the status of the  
-    cloning functions. The information is obtained from a log file that must be specified when a cloning function is invoked. See
-
-[process_status_from_log](process_status_from_log) for information on the `process_status_from_log` function.
-
-  - **remove_log_file_and_job.** This function deletes the log file created by a cloning function. This function can also be used to delete a job created by the non-blocking form of the function. See
-
-[remove_log_file_and_job](remove_log_file_and_job) for information on the `remove_log_file_and_job` function.
+  - **localcopyschema.** This function makes a copy of a schema and its database objects from a source database back into the same database (the target), but with a different schema name than the original. Use this function when the original source schema and the resulting copy are to reside within the same database. See [localcopyschema](13_edb_clone_schema#localcopyschema) for information on the `localcopyschema` function.
+  - **localcopyschema_nb.** This function performs the same purpose as localcopyschema, but as a background job, thus freeing up the terminal from which the function was initiated. This is referred to as a *non-blocking* function. See <span class="title-ref">localcopyschema_nb \<localcopyschema_nb\></span> for information on the `localcopyschema_nb` function.
+  - **remotecopyschema.** This function makes a copy of a schema and its database objects from a source database to a different target database. Use this function when the original source schema and the resulting copy are to reside in two, separate databases. The separate databases can reside in the same, or in different Advanced Server database clusters. See [remotecopyschema](13_edb_clone_schema#remotecopyschema) for information on the `remotecopyschema` function.
+  - **remotecopyschema_nb.** This function performs the same purpose as remotecopyschema, but as a background job, thus freeing up the terminal from which the function was initiated. This is referred to as a *non-blocking* function. See <span class="title-ref">remotecopyschema_nb \<remotecopyschema_nb\></span> for information on the `remotecopyschema_nb` function.
+  - **process_status_from_log.** This function displays the status of the cloning functions. The information is obtained from a log file that must be specified when a cloning function is invoked. See <span class="title-ref">process_status_from_log \<process_status_from_log\></span> for information on the `process_status_from_log` function.
+  - **remove_log_file_and_job.** This function deletes the log file created by a cloning function. This function can also be used to delete a job created by the non-blocking form of the function. See <span class="title-ref">remove_log_file_and_job \<remove_log_file_and_job\></span> for information on the `remove_log_file_and_job` function.
 
 The database objects that can be cloned from one schema to another are the following:
 
@@ -142,6 +123,8 @@ shared_preload_libraries =
 For more information about using the CREATE LANGUAGE command, see the PostgreSQL core documentation at:
 
 > <https://www.postgresql.org/docs/current/static/sql-createlanguage.html>
+
+<div id="setting-configuration-parameters-1" class="registered_link"></div>
 
 ### Setting Configuration Parameters
 
@@ -390,13 +373,22 @@ In addition, database user `srcuser` with password `srcpassword` connects to `sr
 ---
 title: "TYPE      DATABASE      USER      ADDRESS          METHOD"
 ---
+
+<div id="edb_clone_schema" class="registered_link"></div>
+
 ---
 title: ""local" is for Unix domain socket connections only"
 ---
+
+<div id="edb_clone_schema" class="registered_link"></div>
+
 local       all           all                         md5
 ---
 title: "IPv4 local connections:"
 ---
+
+<div id="edb_clone_schema" class="registered_link"></div>
+
 host        srcdb         srcuser   192.168.2.27/32   md5
 ```
 
@@ -421,11 +413,9 @@ Note that pgAgent is provided as a component with Advanced Server.
 
 ### localcopyschema
 
-<div id="localcopyschema">
+<div id="localcopyschema" class="registered_link"></div>
 
 The `localcopyschema` function copies a schema and its database objects within a local database specified within the *source_fdw* foreign server from the source schema to the specified target schema within the same database.
-
-</div>
 
 ``` text
 localcopyschema(
@@ -593,11 +583,9 @@ EDBCOPY      | USER_AUDIT_TRIG                | TRIGGER
 
 ### localcopyschema_nb
 
-<div id="localcopyschema_nb">
+<div id="localcopyschema_nb" class="registered_link"></div>
 
 The `localcopyschema_nb` function copies a schema and its database objects within a local database specified within the *source_fdw* foreign server from the source schema to the specified target schema within the same database, but in a non-blocking manner as a job submitted to pgAgent.
-
-</div>
 
 ``` text
 localcopyschema_nb(
@@ -708,11 +696,9 @@ t
 
 ### remotecopyschema
 
-<div id="remotecopyschema">
+<div id="remotecopyschema" class="registered_link"></div>
 
 The `remotecopyschema` function copies a schema and its database objects from a source schema in the remote source database specified within the *source_fdw* foreign server to a target schema in the local target database specified within the *target_fdw* foreign server.
-
-</div>
 
 ``` text
 remotecopyschema(
@@ -901,11 +887,9 @@ In case two clone schema jobs are running in parallel, the first log file will h
 
 ### remotecopyschema_nb
 
-<div id="remotecopyschema_nb">
+<div id="remotecopyschema_nb" class="registered_link"></div>
 
 The `remotecopyschema_nb` function copies a schema and its database objects from a source schema in the remote source database specified within the *source_fdw* foreign server to a target schema in the local target database specified within the *target_fdw* foreign server, but in a non-blocking manner as a job submitted to pgAgent.
-
-</div>
 
 ``` text
 remotecopyschema_nb(
@@ -1014,11 +998,9 @@ t
 
 ### process_status_from_log
 
-<div id="process_status_from_log">
+<div id="process_status_from_log" class="registered_link"></div>
 
 The `process_status_from_log` function provides the status of a cloning function from its log file.
-
-</div>
 
 ``` text
 process_status_from_log (
@@ -1061,11 +1043,9 @@ FINAL","successfully cloned schema")
 
 ### remove_log_file_and_job
 
-<div id="remove_log_file_and_job">
+<div id="remove_log_file_and_job" class="registered_link"></div>
 
 The `remove_log_file_and_job` function performs cleanup tasks by removing the log files created by the schema cloning functions and the jobs created by the non-blocking functions.
-
-</div>
 
 ``` text
 remove_log_file_and_job (

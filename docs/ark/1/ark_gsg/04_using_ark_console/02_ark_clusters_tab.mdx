@@ -2,6 +2,9 @@
 title: "The Clusters Tab"
 ---
 
+<div id="ark_clusters_tab" class="registered_link"></div>
+
+
 Use the `Clusters` tab to create, monitor and manage active clusters that reside in the cluster.
 
 ![*The Clusters tab.*](../images/ark_clusters_tab.png)
@@ -27,8 +30,7 @@ Management options are on the node's context menu; right-click the node name to 
 
   - `Download DB Logs` to download database server logs.
   - `Download pgPool Logs` to download pgPool (load balancing) logs.
-
-\- `Promote` to [promote](manual_promotion) the selected standby node to master.
+  - `Promote` to [promote](../08_automatic_failover#manual_promotion) the selected standby node to master.
 
 ![](../images/ark_cluster_download_logs.png)
 
@@ -62,17 +64,17 @@ Status indicators provide quick visual feedback about each feature:
 | ![icon15](../images/admin_settings_icon.png)   | Use the `Cluster Administrative Settings` icon to access a popup dialog that allows you to view or modify the ownership and notification email address of a cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ![icon16](../images/delete_icon.png)           | Use the `Delete Cluster` icon to delete the currently selected cluster. A popup dialog will ask you to confirm you wish to terminate the cluster; once terminated, a cluster may only be restored from a backup. By default, the box next to `Release elastic IP address` is checked. Deselect this option if you wish to retain the IP address for re-use with other clusters. If you release the IP address, it will be made available for use by other clusters. When you terminate an active cluster, backups are not deleted. Backups (including user data) are retained until they are selected and deleted from the Backups tab. |
 
-\- Select the [Details bar](details_panel) to view information
+  - Select the [Details bar](../04_using_ark_console/02_ark_clusters_tab#details_panel) to view information about the state of the selected cluster.
+  - Select the [Monitoring bar](../04_using_ark_console/02_ark_clusters_tab#monitoring_panel) to view usage statistics for the selected cluster.
+  - Select the [Events bar](../04_using_ark_console/02_ark_clusters_tab#events_panel) to review event logs describing activities on the selected cluster.
 
-> about the state of the selected cluster.
+<div id="details_panel" class="registered_link"></div>
 
-\- Select the [Monitoring bar](monitoring_panel) to view usage
+<div class="index">
 
-> statistics for the selected cluster.
+Details Panel
 
-\- Select the [Events bar](events_panel) to review event logs
-
-> describing activities on the selected cluster.
+</div>
 
 ## The Details Panel
 
@@ -191,6 +193,14 @@ Use the drop-down tab in the upper-right corner of the `DNSNAME` pane to select 
     
     If alerted to an out-of-date package, you can use the `Upgrade` icon to invoke a yum update to update the package on all of the nodes on your cluster.
 
+<div id="monitoring_panel" class="registered_link"></div>
+
+<div class="index">
+
+Monitoring Panel
+
+</div>
+
 ### The Monitoring Panel
 
 The `Monitoring` panel displays graphs that allow you to review statistical usage information about the amount of storage and the CPU load for the selected cluster.
@@ -205,6 +215,14 @@ The graphs on the `Monitoring` panel display resource usage information:
   - The `Connections` chart displays a graph of the number of connections to the cluster during the selected time range. The red line denotes the threshold specified by the Connections slider on the Details panel.
   - The `Load` chart displays the processing load placed on the CPU by connecting clients. The value displayed is the actual load average as read from the program, `/proc/loadavg`. The chart shows the number of jobs in the run queue or waiting for disk I/O, averaged over 15 minute periods.
   - The `Replication Lag` chart displays the replication lag (in seconds) for the cluster. Each replica node is displayed as a separate colored line on the chart; the key at the bottom of the chart identifies the IP address of the node.
+
+<div id="events_panel" class="registered_link"></div>
+
+<div class="index">
+
+Events Panel
+
+</div>
 
 ## The Events Panel
 

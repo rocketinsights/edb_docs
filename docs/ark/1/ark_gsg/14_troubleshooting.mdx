@@ -2,6 +2,9 @@
 title: "Troubleshooting"
 ---
 
+<div id="troubleshooting" class="registered_link"></div>
+
+
 This section provides helpful troubleshooting information; if you still have unanswered questions after reviewing this section, you can also find solutions through EnterpriseDB:
 
 If you have purchased support, you can log a support ticket:
@@ -48,7 +51,7 @@ pgpool attempts to connect to each node to perform replication lag checking. Thi
 
 **Question: How do I stop the Postgres server on a cluster node without triggering a failover process?**
 
-To safely stop a Postgres server without triggering failover, you can use either the `service` command or the pg_ctl utility. For more information, see [Controlling the Database Server](controlling_server) .
+To safely stop a Postgres server without triggering failover, you can use either the `service` command or the pg_ctl utility. For more information, see [Controlling the Database Server](13_database_management#controlling_server) .
 
 **Problem: I am attempting to connect to my Advanced Server database with the psql client, and am getting an error**
 
@@ -75,6 +78,14 @@ Instead of reloading, simply waiting for 20 seconds between the CREATE USER stat
 **Question: Why are scheduled backups not working?**
 
 If you invoke the `pg_start_backup()` function before performing a manual backup your database, you must remember to invoke the `pg_stop_backup()` function when the backup has completed, or EDB Ark scheduled backups will fail.
+
+<div id="email_notification" class="registered_link"></div>
+
+<div class="index">
+
+Email Notification System
+
+</div>
 
 ## The EDB Ark Email Notification System
 

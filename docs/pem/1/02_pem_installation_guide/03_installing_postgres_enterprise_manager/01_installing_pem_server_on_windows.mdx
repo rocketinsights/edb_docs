@@ -2,6 +2,9 @@
 title: "Installing the PEM Server on Windows"
 ---
 
+<div id="installing_pem_server_on_windows" class="registered_link"></div>
+
+
 <div class="index">
 
 installing PEM server on Windows
@@ -18,12 +21,9 @@ At the heart of each PEM installation is the server. In a production environment
 
 The PEM server backend database may be an EnterpriseDB distribution of the PostgreSQL or Advanced Server database server, or an existing Postgres server installed from another source. The Postgres backing database server must be version 9.4 or later, and will contain a database named pem, which is used by the PEM server as a repository.
 
-  - \- If you would like to use an existing Postgres server to host the PEM  
-    server, the PEM server installer can create the `pem` database on the Postgres host. You must manually satisfy the software pre-requisites if you choose to use an existing server.
+  - If you would like to use an existing Postgres server to host the PEM server, the PEM server installer can create the `pem` database on the Postgres host. You must manually satisfy the software pre-requisites if you choose to use an existing server.
     
-    For more information about using an existing Postgres server to host the PEM server backend database, see
-
-[Installing the PEM Server on an Existing Postgres Server](installing_the_pem_server_on_an_existing_postgres_server) section.
+    For more information about using an existing Postgres server to host the PEM server backend database, see [Installing the PEM Server on an Existing Postgres Server](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#installing_the_pem_server_on_an_existing_postgres_server) section.
 
   - If you do not wish to use an existing installation of Postgres as the PEM server host, the PEM server installer can install PostgreSQL, satisfy the server host's software pre-requisites, and create an instance (a PostgreSQL database cluster) that contains the `pem` database.
     
@@ -31,7 +31,7 @@ The PEM server backend database may be an EnterpriseDB distribution of the Postg
 
 PEM-HTTPD is made available for Postgres installations through the PEM server installer or the StackBuilder utility. If PEM-HTTPD is already installed on the host, the PEM server installer will review and update the existing installation if required. If the PEM server host does not contain an existing PEM-HTTPD installation, the PEM server installer will add it.
 
-Before installing the PEM server, you must decide if you wish to run PostgreSQL and PEM-HTTPD on the same host or on separate hosts. If you intend to run the PostgreSQL database server and PEM-HTTPD on different hosts, then you must run the PEM server installer twice – once on each host, as detailed in [Installing the PEM Server and PEM-HTTPD on Separate Hosts](installing_the_pem_server_and_pem-httpd_on_separate_hosts) section.
+Before installing the PEM server, you must decide if you wish to run PostgreSQL and PEM-HTTPD on the same host or on separate hosts. If you intend to run the PostgreSQL database server and PEM-HTTPD on different hosts, then you must run the PEM server installer twice – once on each host, as detailed in [Installing the PEM Server and PEM-HTTPD on Separate Hosts](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#installing_the_pem_server_and_pem-httpd_on_separate_hosts) section.
 
 The PEM server installer will also install the software required to access the server via the PEM web interface. You can access the web interface with a supported version of your browser of choice.
 
@@ -129,6 +129,8 @@ Click `OK` to acknowledge that the webservice has been configured, and that the 
 
 ![*The PEM server installation is complete*](../images/setup_pem_server_on_same_host_installation_complete_wizard.png)
 
+<div id="installing_the_pem_server_and_pem-httpd_on_separate_hosts" class="registered_link"></div>
+
 ## Installing the PEM Server and PEM-HTTPD on Separate Hosts
 
 <div class="index">
@@ -181,14 +183,13 @@ You must complete the PEM server installation process on the host of the PEM ser
 
 </div>
 
-This option invokes the installation steps documented in [Installing Web Services](installing_web_services) section.
+This option invokes the installation steps documented in [Installing Web Services](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#installing_web_services) section.
 
-  - \- Select `Database` to use an existing Postgres server (version 9.4 or  
-    greater), or to install only the database server that is distributed with the PEM server installer. This option invokes the installation steps documented in
-
-[Specifying a Database Host](specifying_a_database_host).
+  - Select `Database` to use an existing Postgres server (version 9.4 or greater), or to install only the database server that is distributed with the PEM server installer. This option invokes the installation steps documented in [Specifying a Database Host](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#specifying_a_database_host).
 
 After selecting an installation option, click `Next` to continue.
+
+<div id="specifying_a_database_host" class="registered_link"></div>
 
 ### Specifying a Database Host
 
@@ -217,13 +218,7 @@ You may be required to add the `sslutils` package to your installation.
 </div>
 
   - Select the `PostgreSQL x` option to install the Postgres server that is distributed with the PEM server installer where `x` is the PostgreSQL database server version. If you decide to use the version of PostgreSQL that is bundled with the PEM server installer, the EnterpriseDB one-click PostgreSQL installer will open and walk you through the installation.
-
-<!-- end list -->
-
-  - \- Select `Other Database Server` to specify connection information for a  
-    Postgres server that was not installed using a one-click graphical installer from EnterpriseDB. For information about the software pre-requisites for the PEM server database host, please see
-
-[Preparing the Postgres Server](preparing_the_postgres_server) section.
+  - Select `Other Database Server` to specify connection information for a Postgres server that was not installed using a one-click graphical installer from EnterpriseDB. For information about the software pre-requisites for the PEM server database host, please see [Preparing the Postgres Server](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#preparing_the_postgres_server) section.
 
 Click `Next` to continue.
 
@@ -280,6 +275,8 @@ Click `OK` to acknowledge that the `pem` database has been created, and continue
 
 When the database portion of the PEM server installation is complete, you can invoke the PEM server on another host to install (or upgrade) PEM-HTTPD.
 
+<div id="installing_web_services" class="registered_link"></div>
+
 ### Installing Web Services
 
 Selecting the `Web Services` radio button on the `Advanced options` dialog instructs the PEM server installer to either install PEM-HTTPD on the current host or update an existing PEM-HTTPD installation.
@@ -330,6 +327,8 @@ Use the fields on the `Database Server Installation Details` dialog to provide c
 
 Click `Next` to continue. Before completing the PEM server installation, the installer will contact the database host. The `pg_hba.conf` file on the PEM database host must be configured to accept connections from the host of the httpd server and the firewall must allow a connection for the installation to continue. The PEM server installer will complete the PEM server installation, adding only those items that must reside on the host of the PEM-HTTPD server.
 
+<div id="installing_the_pem_server_on_an_existing_postgres_server" class="registered_link"></div>
+
 ## Installing the PEM Server on an Existing Postgres Server
 
 <div class="index">
@@ -359,21 +358,18 @@ The following versions of Postgres are pre-configured to contain the `sslutils` 
   - PostgreSQL 9.4 or later (as bundled with the PEM Server installer)
   - Advanced Server 9.4 or later
 
+<div id="preparing_the_postgres_server" class="registered_link"></div>
+
 ### Preparing the Postgres Server
 
 Before installing the PEM server on an existing Postgres server, you must:
 
-  - \- Ensure that the Postgres server contains an installation of the  
-    `sslutils` extension. For more information, see
-
-[Installing the sslutils Extension](installing_the_sslutils_extension) section.
-
-  - \- Create a service script (on Linux) or register the server with the  
-    Windows service manager. For more information, see
-
-[Creating a Service Script or Registering the Service](creating_a_service_script_or_registering_the_service) section.
+  - Ensure that the Postgres server contains an installation of the `sslutils` extension. For more information, see [Installing the sslutils Extension](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#installing_the_sslutils_extension) section.
+  - Create a service script (on Linux) or register the server with the Windows service manager. For more information, see [Creating a Service Script or Registering the Service](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#creating_a_service_script_or_registering_the_service) section.
 
 After preparing the server, you can use the PEM server installer to install PEM on the existing Postgres server.
+
+<div id="installing_the_sslutils_extension" class="registered_link"></div>
 
 #### Installing the sslutils Extension
 
@@ -479,6 +475,8 @@ While specific details of the installation process will vary by platform and com
     > 
     > `COPY sslutils.dll "%PGPATH%\lib\"`
 
+<div id="creating_a_service_script_or_registering_the_service" class="registered_link"></div>
+
 #### Creating a Service Script or Registering the Service
 
 <div class="index">
@@ -501,9 +499,7 @@ Writing a Linux Service Script
 
 </div>
 
-On Linux, the service script must reside in the `/etc/init.d` directory. The service script must be able to start, stop and restart the database server. Service scripts are platform-specific; you can find a sample service script for Linux in [Linux Service Script (Sample)](reference_linux_service_script) section.
-
-For information about customizing a Postgres service, visit:
+On Linux, the service script must reside in the `/etc/init.d` directory. The service script must be able to start, stop and restart the database server. Service scripts are platform-specific; you can find a sample service script for Linux in <span class="title-ref">Linux Service Script (Sample) \<reference_linux_service_script\></span> section. For information about customizing a Postgres service, visit:
 
 > <https://www.postgresql.org/docs/current/static/server-start.html>
 
@@ -574,14 +570,7 @@ Use the radio buttons on the `Advanced options` dialog to specify an installatio
     
     If you select `Web Services and Database`, the PEM server installer will check the current host for a PEM-HTTPD installation, and upgrade or install PEM-HTTPD if necessary.
 
-<!-- end list -->
-
-  - \- `Web Services` if only the PEM-HTTPD server will reside on the current  
-    host. See
-
-[Installing Web Services](installing_web_services) section for more
-
-> information about invoking this option.
+  - `Web Services` if only the PEM-HTTPD server will reside on the current host. See [Installing Web Services](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#installing_web_services) section for more information about invoking this option.
 
   - `Database` if you are installing only the PEM server (and creating the `pem` backend database) on the current host. This option is valid if you are using an existing Postgres server to host the PEM server, or using the PEM server installer to install the PostgreSQL server on which PEM will reside.
 
@@ -607,7 +596,7 @@ The selected database server must include an installation of the `sslutils` cont
 
 </div>
 
-For information about Preparing the Postgres Server, please see [this section](preparing_the_postgres_server).
+For information about Preparing the Postgres Server, please see [this section](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#preparing_the_postgres_server).
 
 If you selected `Web Services and Database` on the `Advanced options` dialog, the installation wizard will check the current host for an existing PEM-HTTPD installation, and upgrade or install the service as needed.
 
@@ -630,11 +619,9 @@ Note
 
 </div>
 
-For information about preparing a service script, please see
+For information about preparing a service script, please see [this section](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#creating_a_service_script_or_registering_the_service)
 
 </div>
-
-[this section](creating_a_service_script_or_registering_the_service)
 
 Click `Next` to continue.
 
@@ -669,15 +656,7 @@ During the installation process, the installer will copy files to the system, an
 If you are using a PEM-HTTPD service that resides on a separate host, you must:
 
   - Modify the `pg_hba.conf` file on the Postgres server host to allow connections between the hosts.
-
-<!-- end list -->
-
-  - \- Invoke the PEM server installer on the host of the PEM-HTTPD server.  
-    See
-
-[Installing Web Services](installing_web_services) section for more
-
-> information about installing PEM-HTTPD.
+  - Invoke the PEM server installer on the host of the PEM-HTTPD server. See [Installing Web Services](../03_installing_postgres_enterprise_manager/01_installing_pem_server_on_windows#installing_web_services) section for more information about installing PEM-HTTPD.
 
 ## Invoking the Server Installer from Command Line
 

@@ -2,6 +2,9 @@
 title: "Examples"
 ---
 
+<div id="examples" class="registered_link"></div>
+
+
 This section lists examples of the following BART operations.
 
   - Restoring a database cluster with tablespaces.
@@ -264,6 +267,8 @@ This section illustrates evaluating, marking, and deleting backups using the `MA
 
 > <https://www.enterprisedb.com/edb-docs/>
 
+<div id="using_redundancy_retention_policy" class="registered_link"></div>
+
 ### Using a Redundancy Retention Policy
 
 The following example uses a redundancy retention policy to evaluate, mark, and delete backups as shown by the following server configuration:
@@ -463,9 +468,7 @@ acctg          1428355371389     2015-04-06 17:22:53 EDT   5.71 MB       16.00 M
 1              keep
 ```
 
-<div id="using_recovery_window_retention_policy">
-
-</div>
+<div id="using_recovery_window_retention_policy" class="registered_link"></div>
 
 ### Using a Recovery Window Retention Policy
 
@@ -887,11 +890,10 @@ dev          1428502171990   2015-04-08 10:09:34 EDT   5.65 MB         80.00 MB
 > 
 > > <https://www.enterprisedb.com/edb-docs/>
 
-\- [Using a Redundancy Retention Policy](redundancy_retention_policy) provides an example of using the `MANAGE` and `DELETE` subcommands when a 3 backup redundancy retention policy is in effect.
+  - [Using a Redundancy Retention Policy](02_examples#redundancy_retention_policy) provides an example of using the `MANAGE` and `DELETE` subcommands when a 3 backup redundancy retention policy is in effect.
+  - [Using a Recovery Window Retention Policy](02_examples#recovery_window_retention_policy) provides an example of using the `MANAGE` and `DELETE` subcommands when a 1-day recovery window retention policy is in effect.
 
-\- [Using a Recovery Window Retention Policy](recovery_window_retention_policy) provides
-
-> an example of using the `MANAGE` and `DELETE` subcommands when a 1-day recovery window retention policy is in effect.
+<div id="redundancy_retention_policy" class="registered_link"></div>
 
 ### Using a Redundancy Retention Policy
 
@@ -1033,6 +1035,8 @@ acctg        1481750098924   ... 1481749997807   2016-12-14 16:14:59 EST ... act
 acctg        1481749997807   ... none            2016-12-14 16:13:18 EST ... active
 acctg        1481749992003   ... none            2016-12-14 16:13:12 EST ... active
 ```
+
+<div id="recovery_window_retention_policy" class="registered_link"></div>
 
 ### Using a Recovery Window Retention Policy
 

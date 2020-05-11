@@ -2,11 +2,22 @@
 title: "Database Management"
 ---
 
+<div id="database_management" class="registered_link"></div>
+
+
 This section details some of the tasks that are performed outside of the Ark console's graphical interface:
 
   - Moving an existing database into an EDB Ark cluster
   - Manually modifying configuration parameters on a cluster
   - Stopping and starting the server
+
+<div id="move_existing_database" class="registered_link"></div>
+
+<div class="index">
+
+Moving an Existing Database into a New Cluster
+
+</div>
 
 ## Moving an Existing Database into a New Cluster
 
@@ -144,6 +155,14 @@ For more information about using the psql client, please see the [PostgreSQL cor
 
 For more information about using PostgreSQL utilities to move an existing database into EDB Ark, please see the [PostgreSQL core documentation](https://www.postgresql.org/docs/11/static/backup-dump.html) .
 
+<div id="modify_configuration" class="registered_link"></div>
+
+<div class="index">
+
+Modifying Configuration Files
+
+</div>
+
 ## Manually Modifying Configuration Files
 
 Many of the features of a Postgres server may be influenced by settings specified in configuration files:
@@ -163,6 +182,14 @@ When you add or remove nodes from a cluster, EDB Ark takes a backup of your `pg_
 
 When modifying a configuration file, you should make changes only to those files that *are not* appended with a timestamp and identifier.
 
+<div id="bp_modify_configuration" class="registered_link"></div>
+
+<div class="index">
+
+Modifying Configuration Files
+
+</div>
+
 ### Best Practices for Modifying Configuration Files
 
 Please note that changing parameter settings can have unintended consequences, ranging from degraded performance to system crashes. Consequently, we recommend that only an advanced user who accepts these risks, and has experience with both Postgres and cloud environments modify parameter settings.
@@ -177,6 +204,14 @@ There are several ways that you can minimize the risks involved when making para
 When adjusting parameters, be mindful of that fact that the master node in the cluster processes both read and write requests, while the replica nodes in the cluster accept only read requests. You can tune the master node and the replica nodes independently to quickly have an impact (either positive or negative) on your write or read performance.
 
 For more information about modifying Postgres server parameters, please see the [PostgreSQL core documentation](https://www.postgresql.org/docs/11/static/runtime-config.html) .
+
+<div id="controlling_server" class="registered_link"></div>
+
+<div class="index">
+
+Controlling the Database Server Restart Server Reload Configuration
+
+</div>
 
 ## Controlling the Database Server
 
@@ -211,6 +246,14 @@ Where `action` specifies the action taken by the service command. Specify:
   - `condrestart` to restart the service without displaying a notice if the server is already stopped.
   - `try-restart` to restart the service without displaying a notice if the server is already stopped.
 
+<div id="update_server_version" class="registered_link"></div>
+
+<div class="index">
+
+Updating the Server Version UP column
+
+</div>
+
 ## Updating the Server Version on the EDB Ark Cluster
 
 When an update becomes available for a package installed on your cluster, the Ark console will display an alert symbol in the `UP` column of the `Details` panel for the cluster, and in the `UP` column of the DNSNAME table adjacent to the node that requires an update:
@@ -235,6 +278,14 @@ Select the radio button next to an option to:
 
 After making a selection, click `Upgrade` to continue.
 
+<div id="minor_version_upgrade" class="registered_link"></div>
+
+<div class="index">
+
+Performing a Minor Version Upgrade
+
+</div>
+
 ### Performing a Minor Version Upgrade
 
 If you select the radio button next to `OS and DB Minor Version Upgrade` and click the `Upgrade` button, the Ark console will invoke the yum update command on each node of the cluster. The `yum update` command will update all installed packages to the most recent version available of the same release (i.e., if you are running a 9.6 database server, yum will update your database server to the most recent version of 9.6).
@@ -248,6 +299,14 @@ After performing a yum update, the node will be rebooted, initiating any kernel 
 If one or more nodes in your cluster are currently displaying an unknown status, EDB Ark will display an error message. You must correct the problem that is causing the unknown status before EDB Ark can perform an update.
 
 Please note that if the yum update command fails during the upgrade process, EDB Ark will terminate the process and yum update will not be run on any remaining nodes, leaving the cluster partially upgraded.
+
+<div id="major_version_upgrade" class="registered_link"></div>
+
+<div class="index">
+
+Performing a Major Version Upgrade
+
+</div>
 
 ### Performing a Major Version Upgrade
 

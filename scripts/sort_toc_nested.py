@@ -2,19 +2,19 @@ from pathlib import Path
 import os
 import shutil
 
-def numberprefix(int):
-  result = str(int) + "_"
-  if int < 10:
-    result = "0" + result
-  return result
-
 class Node:
     def __init__(self, filename):
         self.filename = filename
         self.items = []
 
+def number_prefix(int):
+  result = str(int) + "_"
+  if int < 10:
+    result = "0" + result
+  return result
+
 # return an array of Nodes that are included in page's ToC section
-def extractToc(readfile):
+def extract_table_of_contents(readfile):
   appending = False
   toc = []
   tocItems = {}
@@ -29,36 +29,36 @@ def extractToc(readfile):
   return toc
 
 # recursive function for building ToC tree
-def scanNode(path, root):
+def scan_node_for_toc(path, root):
   g = open(path, "r")
-  toc = extractToc(g)
+  toc = extract_table_of_contents(g)
   if len(toc) > 0:
     for idx, item in enumerate(toc):
       item_path = root + item.filename + ".rst"
-      subToc = scanNode(item_path, root)
+      subToc = scan_node_for_toc(item_path, root)
       if len(subToc) > 0:
         toc[idx].items = subToc
   return toc
 
-def countItems(tree):
+def count_tree_items(tree):
   total = len(tree.items)
   for leaf in tree.items:
-    total += countItems(leaf)
+    total += count_tree_items(leaf)
   return total
 
-def printItems(tree, depth):
+def print_tree_items(tree, depth):
   print(">" * depth + " " + tree.filename)
   for leaf in tree.items:
-    printItems(leaf, depth + 1)
+    print_tree_items(leaf, depth + 1)
 
 # use ToC to move files to correct folder, building a new one if necessary
 def process_node(node, root_path, result_path, index):
   source = root_path + node.filename + ".mdx"
   if len(node.items) == 0:
-    destination = result_path + numberprefix(index) + node.filename.replace("%", "") + ".mdx"
+    destination = result_path + number_prefix(index) + node.filename.replace("%", "") + ".mdx"
     dest = shutil.copyfile(source, destination) 
   else:
-    folder_path = result_path + numberprefix(index) + node.filename
+    folder_path = result_path + number_prefix(index) + node.filename
     os.mkdir(folder_path)
     destination = folder_path + "/index.mdx"
     dest = shutil.copyfile(source, destination)
@@ -73,20 +73,20 @@ for path in Path('content').rglob('index.rst'):
     f = path.open()
 
     # get top level of ToC
-    toc = extractToc(f)
+    toc = extract_table_of_contents(f)
 
     # get sub-levels of ToC
     for idx, item in enumerate(toc):
       item_path = root_path + item.filename + ".rst"
-      subToc = scanNode(item_path, root_path)
+      subToc = scan_node_for_toc(item_path, root_path)
       if len(subToc) > 0:
         toc[idx].items = subToc
 
     # Print ToC structure and check to see how many files logged in ToC
     total = len(toc)
     for node in toc:
-      printItems(node, 0)
-      total += countItems(node)
+      print_tree_items(node, 0)
+      total += count_tree_items(node)
     print(str(total) + " files logged in ToC")
 
     result_path = content_path + "content_build"
@@ -97,13 +97,13 @@ for path in Path('content').rglob('index.rst'):
       shutil.rmtree(dest_path)
 
     # create build folder, if needed
-    try:
-      if not os.path.exists(result_path):
+    if not os.path.exists(result_path):
+      try:
         os.mkdir(result_path)
-    except OSError:
-      print ("Creation of the directory %s failed" % result_path)
-    else:
-      print ("Successfully created the directory %s " % result_path)
+      except OSError:
+        print ("Creation of the directory %s failed" % result_path)
+      else:
+        print ("Successfully created the directory %s " % result_path)
 
     # create destination folder within build folder
     try:

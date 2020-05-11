@@ -2,6 +2,9 @@
 title: "Performing an Incremental Backup"
 ---
 
+<div id="performing_an_incremental_backup" class="registered_link"></div>
+
+
 The WAL files produced at the time of the parent backup up to the start of the incremental backup contain information about which blocks were modified during that time interval. That information is consolidated into an MBM file for each WAL file by the WAL scanner.
 
 The MBM files for the relevant WAL files are read, and the information is used to copy the modified blocks from the database cluster to the `archived_wals` directory as specified in the `archive_path` parameter in the `bart.cfg` file. When compared to a full backup, the number and sizes of relation files can be significantly less for an incremental backup.
@@ -81,6 +84,4 @@ You must specify the following before taking an incremental backup:
   - `-F p` option for plain text format as incremental backup can only be taken in the plain text format.
   - `--check` option to verify if the required MBM files are present in the `archived_wals` directory. The `--parent` option must be specified when the `--check` option is used.
 
-See the [BACKUP](backup) section for more information about using the `BACKUP`
-
-subcommand.
+See the [BACKUP](../../03_using_bart/03_basic_bart_subcommand_usage/03_backup#backup) section for more information about using the `BACKUP` subcommand.

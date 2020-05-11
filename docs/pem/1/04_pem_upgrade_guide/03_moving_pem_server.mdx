@@ -2,6 +2,9 @@
 title: "Moving the Postgres Enterprise ManagerServer"
 ---
 
+<div id="moving_pem_server" class="registered_link"></div>
+
+
 The steps in this section describe how to move a PEM server from one host machine to a new host machine. The PEM server on the new host (the target) must be installed with the same version of the PEM server installer as the original host (the source). Please note that if you do not use the same installer version, you may encounter a schema-mismatch error.
 
 The backing database of the target server (either PostgreSQL or Advanced Server) may be of the same type and version, or a different type and version than the backing database of the source PEM server. A PEM server that resides on a PostgreSQL host can be migrated to an Advanced Server host, or vice versa.

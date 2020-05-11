@@ -2,10 +2,14 @@ import React from 'react';
 import IndexLinks from '../components/index-links';
 import ProductGroups from '../components/product-groups';
 import ArticleStubs from '../components/article-stubs';
-import SearchBar from '../components/search-bar'
+import SearchBar from '../components/search-bar';
 import EdbLogo from '../components/edb-logo';
 import { Container, Row, Col, Navbar } from 'react-bootstrap';
-import { indexLinkList, linkGroups, articles } from '../constants/index-link-list';
+import {
+  indexLinkList,
+  linkGroups,
+  articles,
+} from '../constants/index-link-list';
 import styled from '@emotion/styled';
 import Layout from '../components/layout';
 
@@ -34,14 +38,14 @@ const HeadlineWithStrap = ({ headline, strap }) => {
 };
 
 const navStyles = {
-  height: '65px'
-}
+  height: '65px',
+};
 
 export default () => {
   return (
     <Layout>
       <Row>
-        <PaddedCol style={{height: "100vh" }} md={2} className="border-right">
+        <PaddedCol style={{ height: '100vh' }} md={2} className="border-right">
           <EdbLogo />
           <IndexLinks indexLinkList={indexLinkList} />
         </PaddedCol>
