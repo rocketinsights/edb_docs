@@ -2,6 +2,9 @@
 title: "Updating the Server Version"
 ---
 
+<div id="cds_updating_server_version" class="registered_link"></div>
+
+
 When an update becomes available for a package installed on your cluster, the console will display an alert symbol in the `UP` column of the `Details` panel for the cluster, and in the `UP` column of the `Address` table adjacent to the node that requires an update.
 
 ![*The Address table.*](images/cds_up1.png)
@@ -49,6 +52,14 @@ After performing a yum update, the node will be rebooted, initiating any kernel 
 If one or more nodes in your cluster are currently displaying an unknown status, CDS will display an error message; you must correct the problem that is causing the unknown status before CDS can perform an update.
 
 Please note that if the yum update command fails during the upgrade process, CDS will terminate the process and yum update will not be run on any remaining nodes, leaving the cluster partially upgraded.
+
+<div id="major_version" class="registered_link"></div>
+
+<div class="index">
+
+Major Version Upgrade
+
+</div>
 
 ## Performing a Major Version Upgrade
 

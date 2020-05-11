@@ -2,11 +2,14 @@
 title: "Using a Package Manager to Install Advanced Server"
 ---
 
+<div id="using_a_package_manager_to_install_advanced_server" class="registered_link"></div>
+
+
 You can use the yum package manager to install Advanced Server or Advanced Server supporting components. yum will attempt to satisfy package dependencies as it installs a package, but requires access to the Advanced Server repositories. If your system does not have access to a repository via the Internet, you can use RPM to install an individual package or create a local repository, but you may be required to manually satisfy package dependencies.
 
 Installing the server package creates a database superuser named `enterprisedb`. The user is assigned a user ID (UID) and a group ID (GID) of `26`. The user has no default password; use the `passwd` command to assign a password for the user. The default shell for the user is `bash`, and the user's home directory is `/var/lib/edb/as12`.
 
-By default, Advanced Server logging is configured to write files to the `log` subdirectory of the `data` directory, rotating the files each day and retaining one week of log entries. You can customize the logging behavior of the server by [modifying the postgresql.conf File](modifying_the_postgresqlconf_file).
+By default, Advanced Server logging is configured to write files to the `log` subdirectory of the `data` directory, rotating the files each day and retaining one week of log entries. You can customize the logging behavior of the server by [modifying the postgresql.conf File](04_managing_an_advanced_server_installation#modifying_the_postgresqlconf_file).
 
 The RPM installers place Advanced Server components in the directories listed in the table below:
 
@@ -30,6 +33,8 @@ The RPM installers place Advanced Server components in the directories listed in
 | Shared data                       | `/usr/edb/as12/share`                      |
 | Regression tests                  | `/usr/edb/as12/lib/pgxs/src/test/regress`  |
 | SGML Documentation                | `/usr/edb/as12/share/doc`                  |
+
+<div id="installing_advanced_server_on_a_linux_host" class="registered_link"></div>
 
 ## Installing Advanced Server on a Linux Host
 
@@ -101,7 +106,7 @@ Then, you can use `yum install` command to install Advanced Server. For example,
 
 When you install an RPM package that is signed by a source that is not recognized by your system,`yum` may ask for your permission to import the key to your local server. If prompted, and you are satisfied that the packages come from a trustworthy source, enter a `y`, and press `Return` to continue.
 
-After installing Advanced Server, you must configure the installation. For more information, see [Configuring a Package Installation](configuring_a_package_installation).
+After installing Advanced Server, you must configure the installation. For more information, see [Configuring a Package Installation](02_using_a_package_manager_to_install_advanced_server#configuring_a_package_installation).
 
 During the installation, yum may encounter a dependency that it cannot resolve. If it does, it will provide a list of the required dependencies that you must manually resolve.
 
@@ -115,16 +120,165 @@ Where `package` is the search term that specifies the name (or partial name) of 
 
 Please note: The available package list is subject to change.
 
-[Installing Advanced Server on a Linux Host](installing_advanced_server_on_a_linux_host).
-
-> edb-as12-edbplus The `edb-edbplus` package contains the files required to install the EDB*Plus command line client. EDB*Plus commands are compatible with Oracle's SQL*Plus. edb-as12-pgsnmpd SNMP (Simple Network Management Protocol) is a protocol that allows you to supervise an apparatus connected to the network. edb-as12-pljava Installs PL/Java, providing access to Java stored procedures, triggers and functions via the JDBC interface. edb-as12-pgpool40-extensions This package creates pgPool extensions required by the server for use with pgpool. edb-as12-postgis-2.5 Installs POSTGIS meta RPMs. edb-as12-postgis-core This package provides support for geographic objects to the PostgreSQL object-relational database. In effect, PostGIS "spatially enables" the PostgreSQL server, allowing it to be used as a backend spatial database for geographic information systems (GIS), much like ESRI's SDE or Oracle's Spatial extension. edb-as12-postgis-docs This package installs pdf documentation of PostGIS. edb-as12-postgis-jdbc This package installs the essential jdbc driver for PostGIS. edb-as12-postgis-utils This package installs the utilities for PostGIS. edb-as12-slony-replication Installs the meta RPM for Slony-I. edb-as12-slony-replication-core Slony-I builds a master-slave system that includes all features and capabilities needed to replicate large databases to a reasonably limited number of slave systems. edb-as12-slony-replication-docs This package contains the Slony project documentation (in pdf form). edb-as12-slony-replication-tools This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see
-
-[Installing Advanced Server on a Linux Host](installing_advanced_server_on_a_linux_host).
-
-> edb-as12-libicu These packages contain supporting library files. ================================================== ===================================================================================================================================================================================================================================================================================================================
+<div class="table-with-scroll">
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Package Name</th>
+<th>Package Installs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>edb-as12-server</td>
+<td>This package installs core components of the Advanced Server database server.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-client</td>
+<td>Client programs and utilities that you can use to access and manage Advanced Server.</td>
+</tr>
+<tr class="odd">
+<td><p>edb-as12-server-contrib</p></td>
+<td><p>Installs contributed tools and utilities that are distributed with Advanced Server. Files for these modules are installed in:</p>
+<p>Documentation: <code>/usr/edb/as12/share/doc</code></p>
+<p>Loadable modules: <code>/usr/edb/as12/lib</code></p>
+<p>Binaries: <code>/usr/edb/as12/bin</code></p></td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-core</td>
+<td>Includes the programs needed to create the core functionality behind the Advanced Server database.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-devel</td>
+<td>Installs the header files and libraries needed to compile C or C++ applications that directly interact with an Advanced Server server and the ecpg or ecpgPlus C preprocessor.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-docs</td>
+<td>Installs the readme file.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-edb-modules</td>
+<td>Installs supporting modules for Advanced Server</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-indexadvisor</td>
+<td>Installs Advanced Server's Index Advisor feature. The Index Advisor utility helps determine which columns you should index to improve performance in a given workload.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-libs</td>
+<td>Provides the essential shared libraries for any Advanced Server client program or interface.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-llvmjit</td>
+<td>This package contains support for Just in Time (JIT) compiling parts of EDBAS queries.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-pldebugger</td>
+<td>This package implements an API for debugging PL/pgSQL functions on Advanced Server.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-plperl</td>
+<td>Installs the PL/Perl procedural language for Advanced Server. Please note that the <code>edb-as12-server-plperl</code> package is dependent on the platform-supplied version of Perl.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-plpython edb-as12-server-plpython3</td>
+<td>Installs the PL/Python procedural language for Advanced Server. Please note that the <code>edb-as12-server-plpython</code> package is dependent on the platform-supplied version of Python. By default, the <code>edb-as12-server-plpython3</code> package is not installed; you need to explicitly install the package using yum.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-pltcl</td>
+<td>Installs the PL/Tcl procedural language for Advanced Server. Please note that the <code>edb-as12-pltcl</code> package is dependent on the platform-supplied version of TCL.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-sqlprofiler</td>
+<td>This package installs Advanced Server's SQL Profiler feature. SQL Profiler helps identify and optimize SQL code.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-sqlprotect</td>
+<td>This package installs Advanced Server's SQL Protect feature. SQL Protect provides protection against SQL injection attacks.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-sslutils</td>
+<td>This package installs functionality that provides SSL support.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-server-cloneschema</td>
+<td>This package installs the EDB Clone Schema extension. For more information about EDB Clone Schema, see the EDB Postgres Advanced Server Guide.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-server-parallel-clone</td>
+<td>This package installs functionality that supports the EDB Clone Schema extension.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-pgagent</td>
+<td>Installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see <a href="#installing_advanced_server_on_a_linux_host">Installing Advanced Server on a Linux Host</a>.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-edbplus</td>
+<td>The <code>edb-edbplus</code> package contains the files required to install the EDB*Plus command line client. EDB*Plus commands are compatible with Oracle's SQL*Plus.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-pgsnmpd</td>
+<td>SNMP (Simple Network Management Protocol) is a protocol that allows you to supervise an apparatus connected to the network.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-pljava</td>
+<td>Installs PL/Java, providing access to Java stored procedures, triggers and functions via the JDBC interface.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-pgpool40-extensions</td>
+<td>This package creates pgPool extensions required by the server for use with pgpool.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-postgis-2.5</td>
+<td>Installs POSTGIS meta RPMs.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-postgis-core</td>
+<td>This package provides support for geographic objects to the PostgreSQL object-relational database. In effect, PostGIS "spatially enables" the PostgreSQL server, allowing it to be used as a backend spatial database for geographic information systems (GIS), much like ESRI's SDE or Oracle's Spatial extension.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-postgis-docs</td>
+<td>This package installs pdf documentation of PostGIS.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-postgis-jdbc</td>
+<td>This package installs the essential jdbc driver for PostGIS.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-postgis-utils</td>
+<td>This package installs the utilities for PostGIS.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-slony-replication</td>
+<td>Installs the meta RPM for Slony-I.</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-slony-replication-core</td>
+<td>Slony-I builds a master-slave system that includes all features and capabilities needed to replicate large databases to a reasonably limited number of slave systems.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-slony-replication-docs</td>
+<td>This package contains the Slony project documentation (in pdf form).</td>
+</tr>
+<tr class="odd">
+<td>edb-as12-slony-replication-tools</td>
+<td>This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see <a href="#installing_advanced_server_on_a_linux_host">Installing Advanced Server on a Linux Host</a>.</td>
+</tr>
+<tr class="even">
+<td>edb-as12-libicu</td>
+<td>These packages contain supporting library files.</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 The following table lists the packages for Advanced Server 12 supporting components.
 
+<div class="table-with-scroll">
 <table>
 <thead>
 <tr class="header">
@@ -274,6 +428,7 @@ The following table lists the packages for Advanced Server 12 supporting compone
 </tr>
 </tbody>
 </table>
+</div>
 
 ### Updating an RPM Installation
 
@@ -339,6 +494,7 @@ If you are installing an Advanced Server supporting component that requires Java
 
 The Debian package manager places Advanced Server and supporting components in the directories listed in the following table:
 
+<div class="table-with-scroll">
 <table>
 <thead>
 <tr class="header">
@@ -423,6 +579,7 @@ The Debian package manager places Advanced Server and supporting components in t
 </tr>
 </tbody>
 </table>
+</div>
 
 ### Advanced Server Debian Packages
 
@@ -432,6 +589,7 @@ The table that follows lists some of the Debian packages that are available from
 
 Please note: The available package list is subject to change.
 
+<div class="table-with-scroll">
 <table>
 <thead>
 <tr class="header">
@@ -555,31 +713,23 @@ Please note: The available package list is subject to change.
 </tr>
 <tr class="odd">
 <td>edb-as12-pgagent</td>
-<td>This package installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see</td>
+<td>This package installs pgAgent; pgAgent is a job scheduler for Advanced Server. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see <a href="#installing_advanced_server_on_a_linux_host">Installing Advanced Server on a Linux Host</a>.</td>
 </tr>
 <tr class="even">
-<td><p>`Installing Advanced Server on a</p></td>
-<td><p>Linux Host &lt;installing_advanced_server_on_a_linux_host&gt;`_.</p></td>
-</tr>
-<tr class="odd">
 <td>edb-as12-slony-replication</td>
 <td>This package installs the meta RPM for Slony-I.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>edb-as12-slony-replication-core</td>
 <td>This package contains core portions of Slony-I to build a master-slave system that includes all features and capabilities needed to replicate large databases to a reasonably limited number of slave systems.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>edb-as12-slony-replication-docs</td>
 <td>This package contains the Slony project documentation (in pdf form).</td>
 </tr>
-<tr class="even">
-<td>edb-as12-slony-replication-tools</td>
-<td>This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see</td>
-</tr>
 <tr class="odd">
-<td><p>`Installing Advanced Server on a</p></td>
-<td><p>Linux Host &lt;installing_advanced_server_on_a_linux_host&gt;`_.</p></td>
+<td>edb-as12-slony-replication-tools</td>
+<td>This package contains the Slony altperl tools and utilities that are useful when deploying Slony replication environments. Before installing this package, you must install EPEL; for detailed information about installing EPEL, see <a href="#installing_advanced_server_on_a_linux_host">Installing Advanced Server on a Linux Host</a>.</td>
 </tr>
 <tr class="even">
 <td>edb-as12-hdfs-fdw</td>
@@ -630,6 +780,9 @@ Please note: The available package list is subject to change.
 </tr>
 </tbody>
 </table>
+</div>
+
+<div id="configuring_a_package_installation" class="registered_link"></div>
 
 ## Configuring a Package Installation
 
@@ -651,9 +804,7 @@ After specifying any options in the service configuration file, you can create t
 
 **On RHEL or CentOS 6.x**
 
-To create a database cluster in the `PGDATA` directory that listens on the port specified by the `PGPORT` environment variable specified in the service configuration file (described in [Using a Service Configuration File on CentOS or Redhat 6.x](using_a_service_configuration_file_on_centos_or_redhat_6x)), assume `root`
-
-privileges, and invoke the `service` script:
+To create a database cluster in the `PGDATA` directory that listens on the port specified by the `PGPORT` environment variable specified in the service configuration file (described in [Using a Service Configuration File on CentOS or Redhat 6.x](02_using_a_package_manager_to_install_advanced_server#using_a_service_configuration_file_on_centos_or_redhat_6x)), assume `root` privileges, and invoke the `service` script:
 
 > `service edb-as-12 initdb`
 
@@ -705,9 +856,9 @@ Note
 
 The data directory is created under `/var/lib/edb-as/12/main2` and configuration directory is created under `/etc/edb-as/12/main/`.
 
-newpage
-
 </div>
+
+<div id="using_a_service_configuration_file_on_centos_or_redhat_6x" class="registered_link"></div>
 
 ### Using a Service Configuration File on CentOS or Redhat 6.x
 
@@ -721,19 +872,11 @@ The file contains the following environment variables:
   - `PGPORT` specifies the listener port for the database server.
   - `PGDATA` specifies the path to the data directory.
   - `PGLOG` specifies the location of the log file to which the server writes startup information.
-
-<!-- end list -->
-
-  - \- Use `INITDBOPTS` to specify any `initdb` option or options that you wish  
-    to apply to the new cluster. For more information, see
-
-[Specifying Cluster Options with INITDBOPTS](specifying_cluster_options_with_initdbopts).
+  - Use `INITDBOPTS` to specify any `initdb` option or options that you wish to apply to the new cluster. For more information, see [Specifying Cluster Options with INITDBOPTS](02_using_a_package_manager_to_install_advanced_server#specifying_cluster_options_with_initdbopts).
 
 You can modify the `edb-as-12.sysconfig` file before using the service command to invoke the `startup` script to change the listener port, data directory location, startup log location or installation mode. If you plan to create more than one instance on the same system, you may wish to copy the `edb-as-12.sysconfig` file (and the associated `edb-as-12` startup script) and modify the file contents for each additional instance that resides on the same host.
 
-<div id="specifying_cluster_options_with_initdbopts">
-
-</div>
+<div id="specifying_cluster_options_with_initdbopts" class="registered_link"></div>
 
 #### Specifying Cluster Options with INITDBOPTS
 

@@ -2,11 +2,13 @@
 title: "Performing a BART Upgrade"
 ---
 
+<div id="upgrade" class="registered_link"></div>
+
+
 This section outlines the process of upgrading BART from an existing version to the latest version.
 
-\- [Upgrading from BART 2.0](upgrading_from_bart_2.0) describes the upgrade process from BART 2.0 to the latest version.
-
-\- [Upgrading from BART older versions](upgrading_from_older_versions_\(except_2.0\)_to_latest_versions_of_bart) describes the upgrade process from previous BART versions (except 2.0) to the latest version.
+  - [Upgrading from BART 2.0](05_upgrade#upgrading_from_bart_2.0) describes the upgrade process from BART 2.0 to the latest version.
+  - [Upgrading from BART older versions](05_upgrade#upgrading_from_older_versions_except_2.0_to_latest_versions_of_bart) describes the upgrade process from previous BART versions (except 2.0) to the latest version.
 
 **Upgrade Restrictions**
 
@@ -15,6 +17,8 @@ The following restrictions apply with regard to previous BART versions.
   - When using the latest version of BART (for example 2.5.2), the BART backup catalog (as specified by the `backup_path` parameter of the BART configuration file) must not be the same directory that was used by the previous BART versions (for example 2.5.1) for their backup catalogs. New full backups and incremental backups taken using the latest BART version must be stored in a new BART backup catalog.
   - You can take incremental backups using the latest version (for example 2.5.2) only when the parent backup (full or incremental backup) has been taken with the latest version (for example 2.5.2).
   - Using the latest version (for example 2.5.2), you can restore incremental backups taken only with the latest version of BART (for example 2.5.2). However, using the latest version (for example 2.5.2) you can restore full backups that were taken with older versions (for example 2.5.1).
+
+<div id="upgrading_from_older_versions_except_2.0_to_latest_versions_of_bart" class="registered_link"></div>
 
 ## Upgrading from older versions of BART (except 2.0) to the latest version
 
@@ -56,7 +60,7 @@ For additional information about restoration of incremental backups on remote ho
 
 If the `bart --version` command returns an error stating the `PATH` is not available after switching from `root` user to another BART user account, adjust the setting of the `PATH` environment variable to include the location of the BART 2.5 executable (the `bin` subdirectory) in the `~/.bashrc` or `~/.bash_profile` files of the following user accounts:
 
-\- The BART user account on the BART host. See [Configuring the BART host](configuring_the_bart_host) for more information about BART user account.
+  - The BART user account on the BART host. See [Configuring the BART host](03_configuration#configuring_the_bart_host) for more information about BART user account.
 
   - The remote user account on the remote host to which incremental backups are to be restored. For details, see the *EDB Postgres Backup and Recovery User Guide* available at:
     
@@ -76,15 +80,13 @@ After upgrading to BART 2.5.x.x, you must take a new full backup of your system 
 
 </div>
 
-<div id="upgrading_from_bart_2.0">
-
-</div>
+<div id="upgrading_from_bart_2.0" class="registered_link"></div>
 
 ## Upgrading from BART 2.0
 
 Perform the following steps to upgrade BART 2.0 to the latest version of BART:
 
-**Step 1:** Install the latest version of BART; for details, see [Using an RPM Package to Install BART](installing_bart_using_an_rpm_package).
+**Step 1:** Install the latest version of BART; for details, see [Using an RPM Package to Install BART](02_installing_bart_using_an_rpm_package#installing_bart_using_an_rpm_package).
 
 **Step 2:** Save a copy of your BART 2.0 configuration file. The default location of the BART 2.0 configuration file is `/usr/edb/bart2.0/etc/bart.cfg`.
 
@@ -112,9 +114,7 @@ The `bart.cfg` configuration file is only required on the BART 2.5.x.x host from
 
 **Step 5:** Adjust the setting of the `PATH` environment variable to include the location of the BART 2.5.x.x executable (the `bin` subdirectory) in the `~/.bashrc` or `~/.bash_profile` files for the following user accounts:
 
-\- The BART user account on the BART host. See [Configuring the BART host](configuring_the_bart_host), Step 3 for more
-
-> information.
+  - The BART user account on the BART host. See [Configuring the BART host](03_configuration#configuring_the_bart_host), Step 3 for more information.
 
   - The user account on the remote host to which incremental backups will be restored. For details, see the *EDB Postgres Backup and Recovery User Guide* available at:
     
