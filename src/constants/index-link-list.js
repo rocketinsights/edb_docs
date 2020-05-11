@@ -11,14 +11,20 @@ export const indexLinkList = [
     ],
   },
   {
-    sectionName: 'Development',
+    sectionName: 'Learn',
     links: [
-      { title: 'Getting Started', url: '/getting_started' },
-      { title: 'Working with Containers', url: '/epas/2' },
-      { title: 'Performance', url: '/performance' },
-      { title: 'Security', url: '/epas/2' },
-      { title: 'Connecting to the Database', url: '/epas/2' },
-      { title: 'Contributing', url: '/epas/2' },
+      { title: 'Getting Started', url: '/learn/getting_started' },
+      { title: 'Connecting to Postgres', url: '/learn/connecting_to_postgres' },
+      {
+        title: 'Schema Planning and Design',
+        url: '/learn/schema_planning_and_design',
+      },
+      { title: 'Working with SQL', url: '/learn/working_with_sql' },
+      { title: 'Maximizing Performance', url: '/learn/maximizing_performance' },
+      {
+        title: 'Scaling and Reliability',
+        url: '/learn/scaling_and_reliability',
+      },
     ],
   },
 ];

@@ -3,7 +3,10 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
-  if (node.internal.type === 'Mdx' && node.fileAbsolutePath.includes('/docs')) {
+  if (
+    node.internal.type === 'Mdx' &&
+    node.fileAbsolutePath.includes('/docs/')
+  ) {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
     let relativeFilePath = createFilePath({
       node,
@@ -39,13 +42,13 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
   if (
     node.internal.type === 'Mdx' &&
-    node.fileAbsolutePath.includes('/learn/')
+    node.fileAbsolutePath.includes('/learn_docs/')
   ) {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
     let relativeFilePath = createFilePath({
       node,
       getNode,
-      basePath: 'learn',
+      basePath: 'learn_docs',
     });
 
     relativeFilePath = relativeFilePath.substring(
@@ -59,12 +62,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       node,
       name: 'path',
       value: relativeFilePath,
-    });
-    // Creates new query'able field with name of 'path'
-    createNodeField({
-      node,
-      name: 'topic',
-      value: topic,
     });
   }
 };
@@ -81,7 +78,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             path
             product
             version
-            topic
           }
         }
       }
@@ -93,7 +89,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   const docs = result.data.allMdx.nodes.filter(file => !!file.fields.version);
-  const learn = result.data.allMdx.nodes.filter(file => !!file.fields.topic);
+  const learn = result.data.allMdx.nodes.filter(file => !file.fields.version);
 
   const versionIndex = {};
   docs.forEach(doc => {
@@ -128,14 +124,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   learn.forEach(doc => {
-    const navLinks = learn.filter(
-      node => node.fields.topic === doc.fields.topic,
-    );
     actions.createPage({
       path: doc.fields.path,
       component: require.resolve('./src/templates/learn-doc.js'),
       context: {
-        navLinks: navLinks,
+        navLinks: learn,
       },
     });
   });
