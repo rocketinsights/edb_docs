@@ -3,7 +3,10 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
-  if (node.internal.type === 'Mdx') {
+  if (
+    node.internal.type === 'Mdx' &&
+    node.fileAbsolutePath.includes('/docs/')
+  ) {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
     let relativeFilePath = createFilePath({
       node,
@@ -37,6 +40,30 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       value: version,
     });
   }
+  if (
+    node.internal.type === 'Mdx' &&
+    node.fileAbsolutePath.includes('/learn_docs/')
+  ) {
+    // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
+    let relativeFilePath = createFilePath({
+      node,
+      getNode,
+      basePath: 'learn_docs',
+    });
+
+    relativeFilePath = relativeFilePath.substring(
+      0,
+      relativeFilePath.length - 1,
+    );
+    const topic = relativeFilePath.split('/')[1];
+
+    // Creates new query'able field with name of 'path'
+    createNodeField({
+      node,
+      name: 'path',
+      value: relativeFilePath,
+    });
+  }
 };
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
@@ -61,7 +88,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     reporter.panic('failed to create docs', result.errors);
   }
 
-  const docs = result.data.allMdx.nodes;
+  const docs = result.data.allMdx.nodes.filter(file => !!file.fields.version);
+  const learn = result.data.allMdx.nodes.filter(file => !file.fields.version);
 
   const versionIndex = {};
   docs.forEach(doc => {
@@ -91,6 +119,16 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
+      },
+    });
+  });
+
+  learn.forEach(doc => {
+    actions.createPage({
+      path: doc.fields.path,
+      component: require.resolve('./src/templates/learn-doc.js'),
+      context: {
+        navLinks: learn,
       },
     });
   });
