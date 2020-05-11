@@ -13,9 +13,9 @@ export const indexLinkList = [
   {
     sectionName: 'Development',
     links: [
-      { title: 'Getting Started', url: '/epas/2' },
+      { title: 'Getting Started', url: '/getting_started' },
       { title: 'Working with Containers', url: '/epas/2' },
-      { title: 'Performance', url: '/epas/2' },
+      { title: 'Performance', url: '/performance' },
       { title: 'Security', url: '/epas/2' },
       { title: 'Connecting to the Database', url: '/epas/2' },
       { title: 'Contributing', url: '/epas/2' },
