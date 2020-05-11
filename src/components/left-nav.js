@@ -42,10 +42,10 @@ const SubList = ({ children, collapsed }) => {
   }
 };
 
-const baseUrl = path => {
+const baseUrl = (path, depth) => {
   return path
     .split('/')
-    .slice(0, 3)
+    .slice(0, depth)
     .join('/');
 };
 
@@ -108,9 +108,13 @@ const TreeNode = ({ node, path }) => {
   );
 };
 
-const LeftNav = ({ navLinks, path }) => {
-  const newList = filterAndSort(navLinks, baseUrl(path));
+const LeftNav = ({ navLinks, path, withVersions }) => {
+  const newList = withVersions
+    ? filterAndSort(navLinks, baseUrl(path, 3))
+    : filterAndSort(navLinks, baseUrl(path, 2));
   const tree = makeTree(newList);
+  console.log(navLinks);
+  console.log(baseUrl(path));
   return (
     <FixedCol>
       <EdbLogo />

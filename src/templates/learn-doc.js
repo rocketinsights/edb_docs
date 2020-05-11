@@ -5,7 +5,6 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/left-nav';
 import PageTableOfContents from '../components/table-of-contents';
-import VersionDropdown from '../components/version-dropdown';
 import styled from '@emotion/styled';
 import SearchBar from '../components/search-bar';
 
@@ -32,24 +31,9 @@ const navStyles = {
   height: '65px',
 };
 
-const getProductUrlBase = path => {
-  return path
-    .split('/')
-    .slice(0, 2)
-    .join('/');
-};
-
-const makeVersionArray = (versions, path) => {
-  return versions.map(version => ({
-    version: version,
-    url: `${getProductUrlBase(path)}/${version}`,
-  }));
-};
-
-const DocTemplate = ({ data, pageContext }) => {
+const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
-  const { navLinks, versions } = pageContext;
-  const versionArray = makeVersionArray(versions, mdx.fields.path);
+  const { navLinks } = pageContext;
   return (
     <Layout>
       <Row>
@@ -57,7 +41,7 @@ const DocTemplate = ({ data, pageContext }) => {
           <LeftNav
             navLinks={navLinks}
             path={mdx.fields.path}
-            withVersions={true}
+            withVersions={false}
           />
         </PaddedCol>
         <Col className="m-0 p-0">
@@ -66,12 +50,6 @@ const DocTemplate = ({ data, pageContext }) => {
           </Navbar>
           <Container>
             <h1>{mdx.frontmatter.title}</h1>
-            {versionArray.length > 1 && (
-              <VersionDropdown
-                versionArray={versionArray}
-                path={mdx.fields.path}
-              />
-            )}
             <MDXRenderer>{mdx.body}</MDXRenderer>
           </Container>
           <Col md={2}>
@@ -85,4 +63,4 @@ const DocTemplate = ({ data, pageContext }) => {
   );
 };
 
-export default DocTemplate;
+export default LearnDocTemplate;
