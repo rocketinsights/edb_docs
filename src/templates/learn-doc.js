@@ -7,6 +7,7 @@ import LeftNav from '../components/left-nav';
 import PageTableOfContents from '../components/table-of-contents';
 import styled from '@emotion/styled';
 import SearchBar from '../components/search-bar';
+import { navOrder } from '../constants/learn-nav-order';
 
 export const query = graphql`
   query($path: String!) {
@@ -42,6 +43,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
             navLinks={navLinks}
             path={mdx.fields.path}
             withVersions={false}
+            navOrder={navOrder}
           />
         </PaddedCol>
         <Col className="m-0 p-0">

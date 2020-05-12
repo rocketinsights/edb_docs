@@ -91,6 +91,21 @@ const makeTree = edges => {
   return newEdges[0].items;
 };
 
+const orderTree = (tree, order) => {
+  if (!order) {
+    return tree;
+  }
+  let result = [];
+  for (let navItem of order) {
+    for (let leaf of tree) {
+      if (leaf.path.includes(navItem)) {
+        result.push(leaf);
+      }
+    }
+  }
+  return result;
+};
+
 const TreeNode = ({ node, path }) => {
   return (
     <ListItem key={node.path}>
@@ -108,13 +123,11 @@ const TreeNode = ({ node, path }) => {
   );
 };
 
-const LeftNav = ({ navLinks, path, withVersions }) => {
+const LeftNav = ({ navLinks, path, withVersions, navOrder = null }) => {
   const newList = withVersions
     ? filterAndSort(navLinks, baseUrl(path, 3))
     : filterAndSort(navLinks, baseUrl(path, 2));
-  const tree = makeTree(newList);
-  console.log(navLinks);
-  console.log(baseUrl(path));
+  const tree = orderTree(makeTree(newList), navOrder);
   return (
     <FixedCol>
       <EdbLogo />
