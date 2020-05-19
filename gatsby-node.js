@@ -115,7 +115,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     );
     actions.createPage({
       path: doc.fields.path,
-      component: require.resolve('./src/templates/post.js'),
+      component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],

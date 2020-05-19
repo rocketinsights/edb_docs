@@ -4,6 +4,7 @@ import { Col } from 'react-bootstrap';
 
 const Content = styled(Col)`
   background-color: white;
+  min-height: 100vh;
   height: 100%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   z-index: 2;

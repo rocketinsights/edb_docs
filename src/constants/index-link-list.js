@@ -1,17 +1,6 @@
 export const indexLinkList = [
   {
-    sectionName: 'Products',
-    links: [
-      { title: 'EDB Postgres Advanced Server', url: '/epas/12' },
-      { title: 'EDB Postgres Ark Platform', url: '/ark/1' },
-      { title: 'EDB Postgres Backup and Recovery Tool', url: '/bart/1' },
-      { title: 'EDB Postgres Cloud Database Service', url: '/cds/1' },
-      { title: 'EDB Postgres Enterprise Manager', url: '/pem/1' },
-      { title: 'EDB Postgres Failover Manager', url: '/efm/1' },
-    ],
-  },
-  {
-    sectionName: 'Learn',
+    sectionName: 'Getting Started',
     links: [
       { title: 'Getting Started', url: '/learn/getting_started' },
       { title: 'Connecting to Postgres', url: '/learn/connecting_to_postgres' },
@@ -25,6 +14,22 @@ export const indexLinkList = [
         title: 'Scaling and Reliability',
         url: '/learn/scaling_and_reliability',
       },
+    ],
+  },
+  {
+    sectionName: 'EDB Products',
+    links: [
+      { title: 'EDB Postgres Advanced Server', url: '/epas/12' },
+      { title: 'Cloud Database Service', url: '/cds/1' },
+      { title: 'Ark Platform', url: '/ark/1' },
+    ],
+  },
+  {
+    sectionName: 'EDB Postgres Tools',
+    links: [
+      { title: 'Backup and Recovery Tool', url: '/bart/1' },
+      { title: 'Postgres Enterprise Manager', url: '/pem/1' },
+      { title: 'Failover Manager', url: '/efm/1' },
     ],
   },
 ];
