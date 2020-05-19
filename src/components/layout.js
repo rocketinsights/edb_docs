@@ -79,12 +79,16 @@ const Layout = ({ children }) => {
         <html lang="en" />
         <title>{title}</title>
         <meta name="description" content={description} />
-        <script src="https://kit.fontawesome.com/8b48506750.js" crossorigin="anonymous"></script>
+        <script
+          src="https://kit.fontawesome.com/8b48506750.js"
+          crossorigin="anonymous"
+        ></script>
       </Helmet>
       <main
         css={css`
           margin: 0 auto;
           width: 100%;
+          max-width: 1200px;
         `}
       >
         {children}

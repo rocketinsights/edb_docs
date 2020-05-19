@@ -12,6 +12,7 @@ import {
 } from '../constants/index-link-list';
 import styled from '@emotion/styled';
 import Layout from '../components/layout';
+import ContentCol from '../components/content-col';
 
 const FlexColumn = styled('div')`
   display: flex;
@@ -26,6 +27,7 @@ const FlexColumn = styled('div')`
 
 const PaddedCol = styled(Col)`
   padding-top: 1.5rem;
+  height: 100vh;
 `;
 
 const HeadlineWithStrap = ({ headline, strap }) => {
@@ -44,26 +46,30 @@ const navStyles = {
 export default () => {
   return (
     <Layout>
-      <Row>
-        <PaddedCol style={{ height: '100vh' }} md={2} className="border-right">
-          <EdbLogo />
-          <IndexLinks indexLinkList={indexLinkList} />
-        </PaddedCol>
-        <Col className="m-0 p-0">
-          <Navbar className="border-bottom fluid" style={navStyles}>
-            <SearchBar />
-          </Navbar>
-          <Container>
-            <h1>Welcome To EDB Docs</h1>
-            <ProductGroups linkGroups={linkGroups} />
-            <HeadlineWithStrap
-              headline=" Learn EDB Postgres"
-              strap="Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, asperiores!"
-            />
-            <ArticleStubs articles={articles} />
-          </Container>
-        </Col>
-      </Row>
+      <Container fluid>
+        <Row>
+          <PaddedCol md={3}>
+            <EdbLogo />
+            <IndexLinks indexLinkList={indexLinkList} />
+          </PaddedCol>
+          <ContentCol md={9}>
+            <Navbar className="border-bottom fluid" style={navStyles}>
+              <SearchBar />
+            </Navbar>
+            <Row>
+              <Col md={12}>
+                <h1>Welcome To EDB Docs</h1>
+                <ProductGroups linkGroups={linkGroups} />
+                <HeadlineWithStrap
+                  headline=" Learn EDB Postgres"
+                  strap="Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, asperiores!"
+                />
+                <ArticleStubs articles={articles} />
+              </Col>
+            </Row>
+          </ContentCol>
+        </Row>
+      </Container>
     </Layout>
   );
 };
