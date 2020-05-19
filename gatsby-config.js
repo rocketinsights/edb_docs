@@ -128,18 +128,16 @@ module.exports = {
         path: 'static/images',
       },
     },
-    {
-      // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.ALGOLIA_APP_ID,
-        // Careful, no not prefix this with GATSBY_, since that way users can change
-        // the data in the index.
-        apiKey: process.env.ALGOLIA_API_KEY,
-        indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
-        queries,
-        chunkSize: 10000, // default: 1000
-      },
-    },
+    // {
+    //   // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
+    //   resolve: `gatsby-plugin-algolia`,
+    //   options: {
+    //     appId: process.env.ALGOLIA_APP_ID || 'none',
+    //     apiKey: process.env.ALGOLIA_API_KEY || 'none',
+    //     indexName: process.env.ALGOLIA_INDEX_NAME || 'none', // for all queries
+    //     queries,
+    //     chunkSize: 10000, // default: 1000
+    //   },
+    // },
   ],
 };
