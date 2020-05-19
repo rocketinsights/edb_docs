@@ -2,7 +2,7 @@ import React from 'react';
 import IndexLinks from '../components/index-links';
 import ProductGroups from '../components/product-groups';
 import ArticleStubs from '../components/article-stubs';
-import SearchBar from '../components/search-bar';
+import SearchBar from '../components/search';
 import EdbLogo from '../components/edb-logo';
 import { Container, Row, Col, Navbar } from 'react-bootstrap';
 import {
