@@ -11,6 +11,11 @@ const HitTitle = styled('h4')`
 
 const HitContainer = styled('div')`
   padding: 0.5rem 0;
+
+  mark {
+    background-color: #00adf2 !important;
+    color: white !important;
+  }
 `;
 
 const SmallSnippet = styled(Snippet)`

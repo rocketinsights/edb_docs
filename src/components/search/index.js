@@ -56,6 +56,12 @@ const IndexHeader = styled('div')`
   }
 `;
 
+const SearchBox2 = styled(SearchBox)`
+  button {
+    display: none;
+  }
+`;
+
 const SearchBar = () => {
   const [query, setQuery] = useState(``);
   return (
@@ -75,7 +81,7 @@ const SearchBar = () => {
         <div style={{ margin: '10px' }}>
           <i class="fas fa-search"></i>
         </div>
-        <SearchBox />
+        <SearchBox2 />
       </div>
       <HitsWrapper show={query.length > 0}>
         {indexes.map(({ title, index }) => (
