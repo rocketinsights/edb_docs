@@ -1,15 +1,13 @@
-To run this locally you will need to have Gatsby installed on your machine
-`npm i -g gatsby-cli`
+## Setup
+1. This project uses `nvm` to manage the node version. You should install the correct node version with `nvm install`.
+2. Install yarn and gatsby with `npm i -g gatsby-cli` and `npm i -g yarn`
+3. Install all the bits and bobs with `yarn`
+4. Run the site locally with `gatsby develop`
 
-Install all the bits and bobs
-`npm i`
+## Deployment
+Deploy the site to GH Pages with `yarn run deploy`
 
-Run the site locally
-`gatsby develop`
-
-Deploy the site to GH Pages
-`npm run deploy`
-
+## Migrating RST files
 To migrate RST files, place the folder in a new `content` folder and run this script in the terminal
 `for i in content/**/*.rst ; do python3 scripts/pre_pandoc_script.py ${i%}; echo "$i" && pandoc --wrap=none $i -f rst -t gfm -o ${i%.*}.mdx ; done ; python3 scripts/post_pandoc_script.py`
 
