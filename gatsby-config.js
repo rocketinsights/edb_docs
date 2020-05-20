@@ -42,37 +42,69 @@ const transformNodeLearn = node => {
   return newNode;
 };
 
+const makePathDictionary = nodes => {
+  let dictionary = {};
+  for (let node of nodes) {
+    dictionary[node.fields.path] = node.frontmatter.title;
+  }
+  return dictionary;
+};
+
+const makeBreadcrumbs = (node, dictionary, advocacy = false) => {
+  let depth = advocacy ? 3 : 4;
+  let trail = '';
+  const path = node.fields.path;
+  const pathPieces = path.split('/');
+  for (let i = depth; i < pathPieces.length; i++) {
+    let parentPath = pathPieces.slice(0, i).join('/');
+    trail += dictionary[parentPath] + ' / ';
+  }
+  return trail;
+};
+
+const addBreadcrumbsToNodes = (nodes, advocacy = false) => {
+  const pathDictionary = makePathDictionary(nodes);
+  let newNodes = [];
+  for (let node of nodes) {
+    let newNode = node;
+    newNode['breadcrumb'] = makeBreadcrumbs(node, pathDictionary, advocacy);
+    newNodes.push(newNode);
+  }
+  return newNodes;
+};
+
 const products = ['epas', 'cds', 'ark'];
 
 const queries = [
   {
     query: docQuery,
     transformer: ({ data }) =>
-      data.allMdx.nodes
-        .filter(
+      addBreadcrumbsToNodes(
+        data.allMdx.nodes.filter(
           node =>
             !!node.fields.product && products.includes(node.fields.product),
-        )
-        .map(node => transformNodeDocs(node)),
+        ),
+      ).map(node => transformNodeDocs(node)),
     indexName: 'edb-products', // overrides main index name, optional
   },
   {
     query: docQuery,
     transformer: ({ data }) =>
-      data.allMdx.nodes
-        .filter(
+      addBreadcrumbsToNodes(
+        data.allMdx.nodes.filter(
           node =>
             !!node.fields.product && !products.includes(node.fields.product),
-        )
-        .map(node => transformNodeDocs(node)),
+        ),
+      ).map(node => transformNodeDocs(node)),
     indexName: 'edb-tools', // overrides main index name, optional
   },
   {
     query: docQuery,
     transformer: ({ data }) =>
-      data.allMdx.nodes
-        .filter(node => !node.fields.product)
-        .map(node => transformNodeLearn(node)),
+      addBreadcrumbsToNodes(
+        data.allMdx.nodes.filter(node => !node.fields.product),
+        true,
+      ).map(node => transformNodeLearn(node)),
     indexName: 'advocacy', // overrides main index name, optional
   },
 ];
@@ -132,9 +164,9 @@ module.exports = {
     //   // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
     //   resolve: `gatsby-plugin-algolia`,
     //   options: {
-    //     appId: process.env.ALGOLIA_APP_ID || 'none',
-    //     apiKey: process.env.ALGOLIA_API_KEY || 'none',
-    //     indexName: process.env.ALGOLIA_INDEX_NAME || 'none', // for all queries
+    //     appId: process.env.ALGOLIA_APP_ID,
+    //     apiKey: process.env.ALGOLIA_API_KEY,
+    //     indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
     //     queries,
     //     chunkSize: 10000, // default: 1000
     //   },
