@@ -9,8 +9,8 @@ const HitsWrapper = styled('div')`
   position: absolute;
   left: 2em;
   top: 4em;
-  width: 80vw;
-  max-width: 30em;
+  width: 60vw;
+  max-width: 800px;
   box-shadow: 0 0 5px 0;
   padding: 0.7em 0 0.4em;
   background: white;

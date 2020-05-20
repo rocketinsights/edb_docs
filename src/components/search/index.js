@@ -47,11 +47,18 @@ const IndexHeader = styled('div')`
   h3 {
     font-size: 0.875rem;
     margin: 0 1em 0 0;
+    font-weight: 700;
   }
 
   span {
     font-size: 0.875rem;
     margin-top: 0;
+  }
+`;
+
+const SearchBox2 = styled(SearchBox)`
+  button {
+    display: none;
   }
 `;
 
@@ -74,7 +81,7 @@ const SearchBar = () => {
         <div style={{ margin: '10px' }}>
           <i class="fas fa-search"></i>
         </div>
-        <SearchBox />
+        <SearchBox2 />
       </div>
       <HitsWrapper show={query.length > 0}>
         {indexes.map(({ title, index }) => (
