@@ -47,6 +47,7 @@ const IndexHeader = styled('div')`
   h3 {
     font-size: 0.875rem;
     margin: 0 1em 0 0;
+    font-weight: 700;
   }
 
   span {
