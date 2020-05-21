@@ -116,6 +116,7 @@ module.exports = {
     description: 'A docs site',
   },
   plugins: [
+    'gatsby-plugin-sass',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
     'gatsby-transformer-sharp',
@@ -138,7 +139,6 @@ module.exports = {
         plugins: [{ resolve: 'gatsby-remark-images' }],
       },
     },
-
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -159,6 +159,14 @@ module.exports = {
         name: 'images',
         path: 'static/images',
       },
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /icons/ // See below to configure properly
+        }
+      }
     },
     // {
     //   // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
