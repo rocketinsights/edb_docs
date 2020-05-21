@@ -1,32 +1,30 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import styled from '@emotion/styled';
-
-const List = styled('ul')`
-  padding: 0;
-  list-style: none;
-`;
-
-const SectionName = styled('div')`
-  font-weight: 700;
-`;
+import DottedBox from './icons/dotted-box';
 
 const IndexLinks = ({ indexLinkList }) => (
   <>
     {indexLinkList.map(section => {
       return (
-        <div key={section.sectionName}>
-          <SectionName>{section.sectionName}</SectionName>
-          <List>
-            {section.links.map(link => {
-              return (
-                <li key={link.title}>
-                  <Link to={link.url}>{link.title}</Link>
-                </li>
-              );
-            })}
-          </List>
-        </div>
+        <ul key={section.sectionName} className="list-unstyled mt-0">
+          <li className="mt-3 mb-2 font-weight-bold text-muted text-uppercase small">
+            {section.sectionName}
+          </li>
+          {section.links.map(link => {
+            return (
+              <li key={link.title} className="ml-0">
+                <Link to={link.url} className="d-block py-1 align-middle">
+                  <DottedBox
+                    className="opacity-2 mr-2 mt-n1"
+                    width="20"
+                    height="20"
+                  />
+                  {link.title}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       );
     })}
   </>
