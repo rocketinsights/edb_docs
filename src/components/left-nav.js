@@ -83,6 +83,31 @@ const orderTree = (tree, order) => {
   return result;
 };
 
+const Back = () => {
+  return (
+    <li className="ml-0 mb-3">
+      <Link to="/" className="d-block py-1 align-middle small text-dark">
+        <ArrowLeft className="fill-black mt-n1 mr-1" width="12" height="12" />
+        Back
+      </Link>
+    </li>
+  );
+}
+
+const SectionHeading = ({ newList }) => {
+  return (
+    <li className="ml-0 mb-4 d-flex align-items-center">
+      <DottedBox className="opacity-2 mr-2" width="48" height="48" />
+      <Link
+        to="/"
+        className="d-block py-1 align-middle balance-text h5 m-0 text-dark"
+      >
+        {newList[0].title}
+      </Link>
+    </li>
+  );
+}
+
 const TreeChevron = ({ node, path }) => {
   let chevron = <ChevronRight className="opacity-2" width="16" height="16" />;
 
@@ -131,23 +156,8 @@ const LeftNav = ({ navLinks, path, withVersions, navOrder = null }) => {
   const tree = orderTree(makeTree(newList), navOrder);
   return (
     <ul className="list-unstyled mt-0">
-      <li className="ml-0 mb-3">
-        <Link to="/" className="d-block py-1 align-middle small text-dark">
-          <ArrowLeft className="fill-black mt-n1 mr-1" width="12" height="12" />
-          Back
-        </Link>
-      </li>
-
-      <li className="ml-0 mb-4 d-flex align-items-center">
-        <DottedBox className="opacity-2 mr-2" width="48" height="48" />
-        <Link
-          to="/"
-          className="d-block py-1 align-middle balance-text h5 m-0 text-dark"
-        >
-          {newList[0].title}
-        </Link>
-      </li>
-
+      <Back />
+      <SectionHeading newList={newList}/>
       {tree.map(node => (
         <TreeNode node={node} path={path} key={node.path} />
       ))}
