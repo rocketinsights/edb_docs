@@ -5,7 +5,6 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/left-nav';
 import TableOfContents from '../components/table-of-contents';
-import { navOrder } from '../constants/learn-nav-order';
 import TopBar from '../components/top-bar';
 import SideNavigation from '../components/side-navigation';
 import MainContent from '../components/main-content';
@@ -35,7 +34,6 @@ const ContentRow = ({ children }) => (
 const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
   const { navLinks } = pageContext;
-
   return (
     <Layout>
       <TopBar />
@@ -45,7 +43,6 @@ const LearnDocTemplate = ({ data, pageContext }) => {
             navLinks={navLinks}
             path={mdx.fields.path}
             withVersions={false}
-            navOrder={navOrder}
           />
         </SideNavigation>
         <MainContent>
