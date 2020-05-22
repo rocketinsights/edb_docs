@@ -2,18 +2,8 @@ export const indexLinkList = [
   {
     sectionName: 'Getting Started',
     links: [
-      { title: 'Getting Started', url: '/learn/getting_started' },
+      { title: 'Installing Postgres', url: '/learn/installing_postgres' },
       { title: 'Connecting to Postgres', url: '/learn/connecting_to_postgres' },
-      {
-        title: 'Schema Planning and Design',
-        url: '/learn/schema_planning_and_design',
-      },
-      { title: 'Working with SQL', url: '/learn/working_with_sql' },
-      { title: 'Maximizing Performance', url: '/learn/maximizing_performance' },
-      {
-        title: 'Scaling and Reliability',
-        url: '/learn/scaling_and_reliability',
-      },
     ],
   },
   {

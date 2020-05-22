@@ -55,13 +55,18 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       0,
       relativeFilePath.length - 1,
     );
-    const topic = relativeFilePath.split('/')[1];
+    const topic = relativeFilePath.split('/')[2];
 
     // Creates new query'able field with name of 'path'
     createNodeField({
       node,
       name: 'path',
       value: relativeFilePath,
+    });
+    createNodeField({
+      node,
+      name: 'topic',
+      value: topic,
     });
   }
 };
@@ -78,6 +83,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             path
             product
             version
+            topic
           }
         }
       }
@@ -124,11 +130,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   learn.forEach(doc => {
+    const navLinks = learn.filter(
+      node => node.fields.topic === doc.fields.topic,
+    );
     actions.createPage({
       path: doc.fields.path,
       component: require.resolve('./src/templates/learn-doc.js'),
       context: {
-        navLinks: learn,
+        navLinks: navLinks,
       },
     });
   });
