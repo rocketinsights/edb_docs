@@ -70,19 +70,9 @@ const SearchBar = () => {
       indexName={indexes[0].index}
       onSearchStateChange={({ query }) => setQuery(query)}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          width: '100%',
-        }}
-      >
-        <div style={{ margin: '10px' }}>
-          <i class="fas fa-search"></i>
-        </div>
-        <SearchBox2 />
-      </div>
+      <SearchBox2 
+        className="form-control form-control-lg border-0 pl-3"
+      />
       <HitsWrapper show={query.length > 0}>
         {indexes.map(({ title, index }) => (
           <IndexItem>

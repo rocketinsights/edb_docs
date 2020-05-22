@@ -1,14 +1,15 @@
 import React from 'react';
-import { Container, Row, Col, Navbar } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/left-nav';
-import PageTableOfContents from '../components/table-of-contents';
+import TableOfContents from '../components/table-of-contents';
 import VersionDropdown from '../components/version-dropdown';
-import styled from '@emotion/styled';
-import SearchBar from '../components/search-bar';
-import ContentCol from '../components/content-col';
+import TopBar from '../components/top-bar';
+import SideNavigation from '../components/side-navigation';
+import MainContent from '../components/main-content';
+import Footer from '../components/footer';
 
 export const query = graphql`
   query($path: String!) {
@@ -25,15 +26,6 @@ export const query = graphql`
   }
 `;
 
-const PaddedCol = styled(Col)`
-  padding-top: 1.5rem;
-  height: 100vh;
-`;
-
-const navStyles = {
-  height: '65px',
-};
-
 const getProductUrlBase = path => {
   return path
     .split('/')
@@ -48,44 +40,60 @@ const makeVersionArray = (versions, path) => {
   }));
 };
 
+const ContentHeaderWithVersion = ({ title, path, versionArray }) => (
+  <div className="d-flex align-items-center justify-content-between">
+    <h1 className="balance-text">{title}</h1>
+    <div class="dropdown">
+      {versionArray.length > 1 && (
+        <VersionDropdown versionArray={versionArray} path={path} />
+      )}
+    </div>
+  </div>
+);
+
+const ContentRow = ({ children }) => (
+  <div class="container p-0 mt-4">
+    <Row>{children}</Row>
+  </div>
+);
+
 const DocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
   const { navLinks, versions } = pageContext;
   const versionArray = makeVersionArray(versions, mdx.fields.path);
+
   return (
     <Layout>
-      <Container fluid>
-        <Row>
-          <PaddedCol md={2}>
-            <LeftNav
-              navLinks={navLinks}
-              path={mdx.fields.path}
-              withVersions={true}
-            />
-          </PaddedCol>
-          <ContentCol>
-            <Navbar className="border-bottom fluid" style={navStyles}>
-              <SearchBar />
-            </Navbar>
-            <Row>
-              <Col md={10}>
-                <h1>{mdx.frontmatter.title}</h1>
-                {versionArray.length > 1 && (
-                  <VersionDropdown
-                    versionArray={versionArray}
-                    path={mdx.fields.path}
-                  />
-                )}
-                <MDXRenderer>{mdx.body}</MDXRenderer>
-              </Col>
-              <Col md={2}>
-                {mdx.tableOfContents.items && (
-                  <PageTableOfContents toc={mdx.tableOfContents.items} />
-                )}
-              </Col>
-            </Row>
-          </ContentCol>
-        </Row>
+      <TopBar />
+      <Container className="p-0 d-flex bg-white">
+        <SideNavigation>
+          <LeftNav
+            navLinks={navLinks}
+            path={mdx.fields.path}
+            withVersions={true}
+          />
+        </SideNavigation>
+        <MainContent>
+          <ContentHeaderWithVersion
+            title={mdx.frontmatter.title}
+            path={mdx.fields.path}
+            versionArray={versionArray}
+          />
+
+          <ContentRow>
+            <Col md={9}>
+              <MDXRenderer>{mdx.body}</MDXRenderer>
+            </Col>
+
+            <Col md={3}>
+              {mdx.tableOfContents.items && (
+                <TableOfContents toc={mdx.tableOfContents.items} />
+              )}
+            </Col>
+          </ContentRow>
+
+          <Footer />
+        </MainContent>
       </Container>
     </Layout>
   );

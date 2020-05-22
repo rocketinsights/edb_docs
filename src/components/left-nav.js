@@ -1,30 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
-import EdbLogo from './edb-logo';
-
-const FixedCol = styled('div')`
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding-top: 1.5rem;
-`;
-
-const List = styled('ul')`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const ListItem = styled('li')`
-  padding: 0.25rem 0;
-`;
-
-const SubListContainer = styled('ul')`
-  list-style-type: none;
-  padding-left: 20px;
-`;
+import DottedBox from './icons/dotted-box';
+import ArrowLeft from './icons/arrow-left';
+import ChevronDown from './icons/chevron-down';
+import ChevronRight from './icons/chevron-right';
+import { Button } from 'react-bootstrap';
 
 const DisplayNone = styled('div')`
   display: none;
@@ -38,7 +19,9 @@ const SubList = ({ children, collapsed }) => {
       </DisplayNone>
     );
   } else {
-    return <SubListContainer>{children}</SubListContainer>;
+    return (
+      <ul className="ml-5 list-unstyled align-items-center">{children}</ul>
+    );
   }
 };
 
@@ -68,12 +51,6 @@ const filterAndSort = (nodes, url) => {
       return 0;
     });
 };
-
-const ProductTitle = styled('h3')`
-  font-size: 1rem;
-  font-weight: 700;
-  padding-top: 1rem;
-`;
 
 const makeTree = edges => {
   let newEdges = edges;
@@ -106,12 +83,61 @@ const orderTree = (tree, order) => {
   return result;
 };
 
+const Back = () => {
+  return (
+    <li className="ml-0 mb-3">
+      <Link to="/" className="d-block py-1 align-middle small text-dark">
+        <ArrowLeft className="fill-black mt-n1 mr-1" width="12" height="12" />
+        Back
+      </Link>
+    </li>
+  );
+};
+
+const SectionHeading = ({ newList }) => {
+  return (
+    <li className="ml-0 mb-4 d-flex align-items-center">
+      <DottedBox className="opacity-2 mr-2" width="52" height="52" />
+      <Link
+        to="/"
+        className="d-block py-1 align-middle balance-text h5 m-0 text-dark"
+      >
+        {newList[0].title}
+      </Link>
+    </li>
+  );
+};
+
+const TreeChevron = ({ node, path }) => {
+  let chevron = <ChevronRight className="opacity-2" width="16" height="16" />;
+
+  if (node.items.length === 0) {
+    return null;
+  } else if (path.includes(node.path)) {
+    chevron = <ChevronDown className="opacity-2" width="16" height="16" />;
+  }
+
+  return (
+    <Button variant="link" className="d-inline-block p-0 lh-1 mr-2">
+      {chevron}
+    </Button>
+  );
+};
+
 const TreeNode = ({ node, path }) => {
   return (
-    <ListItem key={node.path}>
-      <Link to={node.path} className={path === node.path ? 'active' : ''}>
-        {node.title}
-      </Link>
+    <li className="ml-0 align-items-center" key={node.path}>
+      <div className="d-flex align-items-center">
+        <TreeChevron node={node} path={path} />
+        <Link
+          to={node.path}
+          className={`d-inline-block py-1 align-middle ${
+            path === node.path ? 'active font-weight-bold' : ''
+          }`}
+        >
+          {node.title}
+        </Link>
+      </div>
       {node.items.length > 0 && (
         <SubList collapsed={!path.includes(node.path)}>
           {node.items.map(subNode => (
@@ -119,7 +145,7 @@ const TreeNode = ({ node, path }) => {
           ))}
         </SubList>
       )}
-    </ListItem>
+    </li>
   );
 };
 
@@ -129,16 +155,13 @@ const LeftNav = ({ navLinks, path, withVersions, navOrder = null }) => {
     : filterAndSort(navLinks, baseUrl(path, 2));
   const tree = orderTree(makeTree(newList), navOrder);
   return (
-    <FixedCol>
-      <EdbLogo />
-      <Link to="/">← Back</Link>
-      <ProductTitle>{newList[0].title}</ProductTitle>
-      <List>
-        {tree.map(node => (
-          <TreeNode node={node} path={path} key={node.path} />
-        ))}
-      </List>
-    </FixedCol>
+    <ul className="list-unstyled mt-0">
+      <Back />
+      <SectionHeading newList={newList} />
+      {tree.map(node => (
+        <TreeNode node={node} path={path} key={node.path} />
+      ))}
+    </ul>
   );
 };
 

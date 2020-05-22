@@ -1,33 +1,18 @@
 import React from 'react';
-import styled from '@emotion/styled';
 
-const FixedCol = styled('div')`
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  padding-top: 1.5rem;
-`;
-
-const AnchorLink = styled('a')`
-  text-decoration: none !important;
-  color: #999;
-  font-size: 0.875rem;
-
-  && :hover {
-    color: black;
-  }
-`;
-
-const PageTableOfContents = ({ toc }) => (
-  <FixedCol>
+const TableOfContents = ({ toc }) => (
+  <ul className="list-unstyled border-left pl-4 lh-12 toc-sticky pt-3">
+    <li className="mb-2 font-weight-bold text-muted text-uppercase small">
+      On this page
+    </li>
     {toc.map(item => (
-      <div key={item.title}>
-        <AnchorLink href={item.url}>{item.title}</AnchorLink>
-      </div>
+      <li key={item.title}>
+        <a className="d-block py-2 align-middle" href={item.url}>
+          {item.title}
+        </a>
+      </li>
     ))}
-  </FixedCol>
+  </ul>
 );
 
-export default PageTableOfContents;
+export default TableOfContents;
