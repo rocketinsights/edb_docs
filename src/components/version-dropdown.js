@@ -1,40 +1,31 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { Dropdown } from 'react-bootstrap';
-import { Link } from 'gatsby';
-import { css } from '@emotion/core';
-
-const FloatRightDropdown = styled(Dropdown)`
-  float: right;
-`;
-
-const LightGrayDropdown = styled(Dropdown.Toggle)`
-  background-color: #e8e8e8 !important;
-  color: black !important;
-  border: none;
-`;
 
 const VersionDropdown = ({ versionArray, path }) => {
-  return (
-    <FloatRightDropdown>
-      <LightGrayDropdown id="dropdown-basic">
-        Version {path.split('/')[2]}
-      </LightGrayDropdown>
+  const activeVersion = path.split('/')[2];
 
-      <Dropdown.Menu>
+  return (
+    <Dropdown>
+      <Dropdown.Toggle variant="primary">
+        Version {activeVersion}&nbsp;
+        {
+          // must be a better way to get space between the text and caret
+        }
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu alignRight>
         {versionArray.map(version => (
-          <Link to={version.url} key={version.url}>
-            <div
-              css={css`
-                display: block;
-              `}
-            >
-              Version {version.version}
-            </div>
-          </Link>
+          <Dropdown.Item
+            href={version.url}
+            key={version.url}
+            active={activeVersion === version.version}
+            className={activeVersion === version.version && 'font-weight-bold'}
+          >
+            Version {version.version}
+          </Dropdown.Item>
         ))}
       </Dropdown.Menu>
-    </FloatRightDropdown>
+    </Dropdown>
   );
 };
 

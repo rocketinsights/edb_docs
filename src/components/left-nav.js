@@ -92,12 +92,12 @@ const Back = () => {
       </Link>
     </li>
   );
-}
+};
 
 const SectionHeading = ({ newList }) => {
   return (
     <li className="ml-0 mb-4 d-flex align-items-center">
-      <DottedBox className="opacity-2 mr-2" width="48" height="48" />
+      <DottedBox className="opacity-2 mr-2" width="52" height="52" />
       <Link
         to="/"
         className="d-block py-1 align-middle balance-text h5 m-0 text-dark"
@@ -106,7 +106,7 @@ const SectionHeading = ({ newList }) => {
       </Link>
     </li>
   );
-}
+};
 
 const TreeChevron = ({ node, path }) => {
   let chevron = <ChevronRight className="opacity-2" width="16" height="16" />;
@@ -157,7 +157,7 @@ const LeftNav = ({ navLinks, path, withVersions, navOrder = null }) => {
   return (
     <ul className="list-unstyled mt-0">
       <Back />
-      <SectionHeading newList={newList}/>
+      <SectionHeading newList={newList} />
       {tree.map(node => (
         <TreeNode node={node} path={path} key={node.path} />
       ))}

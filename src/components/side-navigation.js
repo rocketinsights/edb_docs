@@ -9,12 +9,12 @@ const Logo = () => {
       </Link>
     </h1>
   );
-}
+};
 
 const SideNavigation = ({ children }) => {
   return (
-    <nav className="sidebar d-none d-md-block bg-light">
-      <div className="sidebar-sticky d-none d-md-block bg-light border-right">
+    <nav className="sidebar d-none d-md-block bg-light border-right">
+      <div className="sidebar-sticky pl-0 pr-4 pb-4">
         <Logo />
         {children}
       </div>
