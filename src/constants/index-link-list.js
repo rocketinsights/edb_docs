@@ -2,8 +2,14 @@ export const indexLinkList = [
   {
     sectionName: 'Getting Started',
     links: [
-      { title: 'Installing Postgres', url: '/learn/installing_postgres' },
-      { title: 'Connecting to Postgres', url: '/learn/connecting_to_postgres' },
+      {
+        title: 'Installing Postgres',
+        url: '/getting-started/installing_postgres',
+      },
+      {
+        title: 'Connecting to Postgres',
+        url: '/getting-started/connecting_to_postgres',
+      },
     ],
   },
   {
