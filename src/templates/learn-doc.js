@@ -4,10 +4,11 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/left-nav';
-import PageTableOfContents from '../components/table-of-contents';
+import TableOfContents from '../components/table-of-contents';
 import TopBar from '../components/top-bar';
 import SideNavigation from '../components/side-navigation';
 import MainContent from '../components/main-content';
+import Footer from '../components/footer';
 
 export const query = graphql`
   query($path: String!) {
@@ -24,10 +25,15 @@ export const query = graphql`
   }
 `;
 
+const ContentRow = ({ children }) => (
+  <div class="container p-0 mt-4">
+    <Row>{children}</Row>
+  </div>
+);
+
 const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
   const { navLinks } = pageContext;
-  console.log(navLinks);
   return (
     <Layout>
       <TopBar />
@@ -40,17 +46,21 @@ const LearnDocTemplate = ({ data, pageContext }) => {
           />
         </SideNavigation>
         <MainContent>
-          <Row>
-            <Col md={10}>
-              <h1>{mdx.frontmatter.title}</h1>
+          <h1 class="balance-text">{mdx.frontmatter.title}</h1>
+
+          <ContentRow>
+            <Col md={9}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
             </Col>
-            <Col md={2}>
+
+            <Col md={3}>
               {mdx.tableOfContents.items && (
-                <PageTableOfContents toc={mdx.tableOfContents.items} />
+                <TableOfContents toc={mdx.tableOfContents.items} />
               )}
             </Col>
-          </Row>
+          </ContentRow>
+
+          <Footer />
         </MainContent>
       </Container>
     </Layout>
