@@ -7,24 +7,6 @@ import ChevronDown from './icons/chevron-down';
 import ChevronRight from './icons/chevron-right';
 import { Button } from 'react-bootstrap';
 
-const DisplayNone = styled('div')`
-  display: none;
-`;
-
-const SubList = ({ children, collapsed }) => {
-  if (collapsed) {
-    return (
-      <DisplayNone>
-        <ul>{children}</ul>
-      </DisplayNone>
-    );
-  } else {
-    return (
-      <ul className="ml-5 list-unstyled align-items-center">{children}</ul>
-    );
-  }
-};
-
 const baseUrl = (path, depth) => {
   return path
     .split('/')
@@ -83,6 +65,25 @@ const orderTree = (tree, order) => {
   return result;
 };
 
+
+const DisplayNone = styled('div')`
+  display: none;
+`;
+
+const SubList = ({ children, collapsed }) => {
+  if (collapsed) {
+    return (
+      <DisplayNone>
+        <ul>{children}</ul>
+      </DisplayNone>
+    );
+  } else {
+    return (
+      <ul className="ml-4 list-unstyled align-items-center">{children}</ul>
+    );
+  }
+};
+
 const Back = () => {
   return (
     <li className="ml-0 mb-3">
@@ -108,27 +109,10 @@ const SectionHeading = ({ newList }) => {
   );
 };
 
-const TreeChevron = ({ node, path }) => {
-  let chevron = <ChevronRight className="opacity-2" width="16" height="16" />;
-
-  if (node.items.length === 0) {
-    return null;
-  } else if (path.includes(node.path)) {
-    chevron = <ChevronDown className="opacity-2" width="16" height="16" />;
-  }
-
-  return (
-    <Button variant="link" className="d-inline-block p-0 lh-1 mr-2">
-      {chevron}
-    </Button>
-  );
-};
-
 const TreeNode = ({ node, path }) => {
   return (
     <li className="ml-0 align-items-center" key={node.path}>
       <div className="d-flex align-items-center">
-        <TreeChevron node={node} path={path} />
         <Link
           to={node.path}
           className={`d-inline-block py-1 align-middle ${
