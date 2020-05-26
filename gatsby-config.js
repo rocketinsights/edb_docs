@@ -10,13 +10,13 @@ const docQuery = `
       frontmatter {
         title
       }
-      excerpt
       id
       fields {
         product
         path
         version
       }
+      rawBody
     }
   }
  }
@@ -73,38 +73,86 @@ const addBreadcrumbsToNodes = (nodes, advocacy = false) => {
   return newNodes;
 };
 
+const splitNodeContent = nodes => {
+  let result = [];
+  for (let node of nodes) {
+    let order = 1;
+    let content = node.rawBody.replace('\n\n', '\n').replace('\n\n', '\n');
+    const contentArray = content.split('\n');
+    let contentAggregator = '';
+    for (let i = 0; i < contentArray.length; i++) {
+      const section = contentArray[i];
+      if (sectionCheck(section)) {
+        contentAggregator += section + ' ';
+      }
+      if (
+        contentAggregator.length > 500 ||
+        (contentAggregator.length > 0 && i == contentArray.length - 1)
+      ) {
+        let newNode = { ...node };
+        delete newNode['rawBody'];
+        newNode['excerpt'] = contentAggregator;
+        newNode.id = newNode.id + '-' + order;
+        order += 1;
+        result.push(newNode);
+        contentAggregator = '';
+      }
+    }
+  }
+  return result;
+};
+
+const sectionCheck = section => {
+  if (
+    section.length < 6 ||
+    RegExp('</?table>').test(section) ||
+    RegExp('<div class=.*>').test(section) ||
+    RegExp('</div>').test(section) ||
+    section === '```text'
+  ) {
+    return false;
+  }
+  return true;
+};
+
 const products = ['epas', 'cds', 'ark'];
 
 const queries = [
   {
     query: docQuery,
     transformer: ({ data }) =>
-      addBreadcrumbsToNodes(
-        data.allMdx.nodes.filter(
-          node =>
-            !!node.fields.product && products.includes(node.fields.product),
-        ),
-      ).map(node => transformNodeDocs(node)),
+      splitNodeContent(
+        addBreadcrumbsToNodes(
+          data.allMdx.nodes.filter(
+            node =>
+              !!node.fields.product && products.includes(node.fields.product),
+          ),
+        ).map(node => transformNodeDocs(node)),
+      ),
     indexName: 'edb-products', // overrides main index name, optional
   },
   {
     query: docQuery,
     transformer: ({ data }) =>
-      addBreadcrumbsToNodes(
-        data.allMdx.nodes.filter(
-          node =>
-            !!node.fields.product && !products.includes(node.fields.product),
-        ),
-      ).map(node => transformNodeDocs(node)),
+      splitNodeContent(
+        addBreadcrumbsToNodes(
+          data.allMdx.nodes.filter(
+            node =>
+              !!node.fields.product && !products.includes(node.fields.product),
+          ),
+        ).map(node => transformNodeDocs(node)),
+      ),
     indexName: 'edb-tools', // overrides main index name, optional
   },
   {
     query: docQuery,
     transformer: ({ data }) =>
-      addBreadcrumbsToNodes(
-        data.allMdx.nodes.filter(node => !node.fields.product),
-        true,
-      ).map(node => transformNodeLearn(node)),
+      splitNodeContent(
+        addBreadcrumbsToNodes(
+          data.allMdx.nodes.filter(node => !node.fields.product),
+          true,
+        ).map(node => transformNodeLearn(node)),
+      ),
     indexName: 'advocacy', // overrides main index name, optional
   },
 ];
@@ -161,12 +209,12 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-react-svg",
+      resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
-          include: /icons/ // See below to configure properly
-        }
-      }
+          include: /icons/, // See below to configure properly
+        },
+      },
     },
     // {
     //   // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
