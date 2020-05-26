@@ -197,10 +197,10 @@ module.exports = {
     {
       resolve: `gatsby-source-git`,
       options: {
-        name: `learn_docs`,
-        path: 'learn_docs',
+        name: `advocacy_docs`,
+        path: 'advocacy_docs',
         remote: `https://github.com/rocketinsights/edb_docs_advocacy`,
-        patterns: `learn_docs/**`,
+        patterns: `advocacy_docs/**`,
       },
     },
     {
