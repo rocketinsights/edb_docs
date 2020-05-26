@@ -84,15 +84,18 @@ const splitNodeContent = nodes => {
       const section = contentArray[i];
       if (sectionCheck(section)) {
         contentAggregator += section + ' ';
-        if (contentAggregator.length > 500 || i == contentArray.length - 1) {
-          let newNode = { ...node };
-          delete newNode['rawBody'];
-          newNode['excerpt'] = contentAggregator;
-          newNode.id = newNode.id + '-' + order;
-          order += 1;
-          result.push(newNode);
-          contentAggregator = '';
-        }
+      }
+      if (
+        contentAggregator.length > 500 ||
+        (contentAggregator.length > 0 && i == contentArray.length - 1)
+      ) {
+        let newNode = { ...node };
+        delete newNode['rawBody'];
+        newNode['excerpt'] = contentAggregator;
+        newNode.id = newNode.id + '-' + order;
+        order += 1;
+        result.push(newNode);
+        contentAggregator = '';
       }
     }
   }
