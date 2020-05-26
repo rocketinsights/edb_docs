@@ -10,7 +10,6 @@ const docQuery = `
       frontmatter {
         title
       }
-      excerpt
       id
       fields {
         product
@@ -88,7 +87,7 @@ const splitNodeContent = nodes => {
         if (contentAggregator.length > 500 || i == contentArray.length - 1) {
           let newNode = { ...node };
           delete newNode['rawBody'];
-          newNode['section'] = contentAggregator;
+          newNode['excerpt'] = contentAggregator;
           newNode.id = newNode.id + '-' + order;
           order += 1;
           result.push(newNode);
@@ -214,16 +213,16 @@ module.exports = {
         },
       },
     },
-    {
-      // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_API_KEY,
-        indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
-        queries,
-        chunkSize: 10000, // default: 1000
-      },
-    },
+    // {
+    //   // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
+    //   resolve: `gatsby-plugin-algolia`,
+    //   options: {
+    //     appId: process.env.ALGOLIA_APP_ID,
+    //     apiKey: process.env.ALGOLIA_API_KEY,
+    //     indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
+    //     queries,
+    //     chunkSize: 10000, // default: 1000
+    //   },
+    // },
   ],
 };
