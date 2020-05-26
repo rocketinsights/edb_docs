@@ -195,10 +195,12 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: `gatsby-source-git`,
       options: {
-        name: 'learn_docs',
+        name: `learn_docs`,
         path: 'learn_docs',
+        remote: `https://github.com/rocketinsights/edb_docs_advocacy`,
+        patterns: `learn_docs/**`,
       },
     },
     {
