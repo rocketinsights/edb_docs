@@ -788,7 +788,7 @@ DELETE
 Use the `DELETE` statement to delete one or more rows from a table. The syntax for the ECPGPlus `DELETE` statement is the same as the syntax for the SQL statement, but you can use parameter markers and host variables any place that an expression is allowed. The syntax is:
 
 ``` text
-[FOR <exec_count>] DELETE FROM [ONLY] <table> [[AS] <alias>]
+[FOR <exec_count>] DELETE FROM [ONLY] <table class="table"> [[AS] <alias>]
   [USING <using_list>]
   [WHERE <condition> | WHERE CURRENT OF <cursor_name>]
   [{RETURNING|RETURN} * | <output_expression> [[ AS] <output_name>]
@@ -1286,7 +1286,7 @@ INSERT
 Use the `INSERT` statement to add one or more rows to a table. The syntax for the ECPGPlus INSERT statement is the same as the syntax for the SQL statement, but you can use parameter markers and host variables any place that a value is allowed. The syntax is:
 
 ``` text
-[FOR <exec_count>] INSERT INTO <table> [(<column> [, ...])]
+[FOR <exec_count>] INSERT INTO <table class="table"> [(<column> [, ...])]
 
 {DEFAULT VALUES |
 
@@ -1776,7 +1776,7 @@ Use an `UPDATE` statement to modify the data stored in a table. The syntax is:
 
 ``` text
 EXEC SQL [AT <database_name>][FOR <exec_count>]
-UPDATE [ ONLY ] <table> [ [ AS ] <alias> ]
+UPDATE [ ONLY ] <table class="table"> [ [ AS ] <alias> ]
 SET {<column> = { <expression> | DEFAULT } |
 (<column> [, ...]) = ({ <expression>|DEFAULT } [, ...])} [, ...]
 [ FROM <from_list> ]

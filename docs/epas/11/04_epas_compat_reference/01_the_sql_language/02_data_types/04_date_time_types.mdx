@@ -1,9 +1,8 @@
 ---
-title: "Date/Time Types"
+title: 'Date/Time Types'
 ---
 
 <div id="date_time_types" class="registered_link"></div>
-
 
 The following discussion of the date/time types assumes that the configuration parameter, `edb_redwood_date`, has been set to `TRUE` whenever a table is created or altered.
 
@@ -12,59 +11,71 @@ Advanced Server supports the date/time types shown in the following table.
 Table ‑ Date/Time Types
 
 <div class="table-with-scroll">
-<table>
-<tbody>
-<tr class="odd">
-<td>Name</td>
-<td>Storage Size</td>
-<td>Description</td>
-<td>Low Value</td>
-<td>High Value</td>
-<td>Resolution</td>
-</tr>
-<tr class="even">
-<td>DATE</td>
-<td>8 bytes</td>
-<td>Date and time</td>
-<td>4713 BC</td>
-<td>5874897 AD</td>
-<td>1 second</td>
-</tr>
-<tr class="odd">
-<td><p>INTERVAL DAY TO SECOND</p>
-<p>[(p)]</p></td>
-<td><p>12 bytes</p></td>
-<td><p>Period of time</p></td>
-<td><p>-178000000 years</p></td>
-<td><p>178000000 years</p></td>
-<td><p>1 microsecond / 14 digits</p></td>
-</tr>
-<tr class="even">
-<td>INTERVAL YEAR TO MONTH</td>
-<td>12 bytes</td>
-<td>Period of time</td>
-<td>-178000000 years</td>
-<td>178000000 years</td>
-<td>1 microsecond / 14 digits</td>
-</tr>
-<tr class="odd">
-<td>TIMESTAMP [(p)]</td>
-<td>8 bytes</td>
-<td>Date and time</td>
-<td>4713 BC</td>
-<td>5874897 AD</td>
-<td>1 microsecond</td>
-</tr>
-<tr class="even">
-<td>TIMESTAMP [(p)] WITH TIME ZONE</td>
-<td>8 bytes</td>
-<td>Date and time with time zone</td>
-<td>4713 BC</td>
-<td>5874897 AD</td>
-<td>1 microsecond</td>
-</tr>
-</tbody>
-</table>
+  <table class="table">
+    <tbody>
+      <tr class="odd">
+        <td>Name</td>
+        <td>Storage Size</td>
+        <td>Description</td>
+        <td>Low Value</td>
+        <td>High Value</td>
+        <td>Resolution</td>
+      </tr>
+      <tr class="even">
+        <td>DATE</td>
+        <td>8 bytes</td>
+        <td>Date and time</td>
+        <td>4713 BC</td>
+        <td>5874897 AD</td>
+        <td>1 second</td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <p>INTERVAL DAY TO SECOND</p>
+          <p>[(p)]</p>
+        </td>
+        <td>
+          <p>12 bytes</p>
+        </td>
+        <td>
+          <p>Period of time</p>
+        </td>
+        <td>
+          <p>-178000000 years</p>
+        </td>
+        <td>
+          <p>178000000 years</p>
+        </td>
+        <td>
+          <p>1 microsecond / 14 digits</p>
+        </td>
+      </tr>
+      <tr class="even">
+        <td>INTERVAL YEAR TO MONTH</td>
+        <td>12 bytes</td>
+        <td>Period of time</td>
+        <td>-178000000 years</td>
+        <td>178000000 years</td>
+        <td>1 microsecond / 14 digits</td>
+      </tr>
+      <tr class="odd">
+        <td>TIMESTAMP [(p)]</td>
+        <td>8 bytes</td>
+        <td>Date and time</td>
+        <td>4713 BC</td>
+        <td>5874897 AD</td>
+        <td>1 microsecond</td>
+      </tr>
+      <tr class="even">
+        <td>TIMESTAMP [(p)] WITH TIME ZONE</td>
+        <td>8 bytes</td>
+        <td>Date and time with time zone</td>
+        <td>4713 BC</td>
+        <td>5874897 AD</td>
+        <td>1 microsecond</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 When `DATE` appears as the data type of a column in the data definition language (DDL) commands, `CREATE TABLE` or `ALTER TABLE`, it is translated to `TIMESTAMP` at the time the table definition is stored in the database. Thus, a time component will also be stored in the column along with the date.
