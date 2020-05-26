@@ -1,14 +1,11 @@
-import React from 'react';
 import balanceText from 'balance-text';
+import { useEffect } from 'react';
 
-class TextBalancer extends React.Component {
-  componentDidMount() {
+const TextBalancer = () => {
+  useEffect(() => {
     balanceText();
-  }
-
-  render() {
-    return null;
-  }
+  });
+  return null;
 }
 
 export default TextBalancer;
