@@ -43,7 +43,7 @@ const makeVersionArray = (versions, path) => {
 const ContentHeaderWithVersion = ({ title, path, versionArray }) => (
   <div className="d-flex align-items-center justify-content-between">
     <h1 className="balance-text">{title}</h1>
-    <div class="dropdown">
+    <div className="dropdown">
       {versionArray.length > 1 && (
         <VersionDropdown versionArray={versionArray} path={path} />
       )}
@@ -52,7 +52,7 @@ const ContentHeaderWithVersion = ({ title, path, versionArray }) => (
 );
 
 const ContentRow = ({ children }) => (
-  <div class="container p-0 mt-4">
+  <div className="container p-0 mt-4">
     <Row>{children}</Row>
   </div>
 );

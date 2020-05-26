@@ -3,9 +3,6 @@ import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import DottedBox from './icons/dotted-box';
 import ArrowLeft from './icons/arrow-left';
-import ChevronDown from './icons/chevron-down';
-import ChevronRight from './icons/chevron-right';
-import { Button } from 'react-bootstrap';
 
 const baseUrl = (path, depth) => {
   return path
