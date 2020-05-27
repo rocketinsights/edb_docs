@@ -39,6 +39,11 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'version',
       value: version,
     });
+    createNodeField({
+      node,
+      name: 'topic',
+      value: null,
+    });
   }
   if (
     node.internal.type === 'Mdx' &&

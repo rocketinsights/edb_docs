@@ -31,6 +31,52 @@ const ContentRow = ({ children }) => (
   </div>
 );
 
+const getChildren = (path, navLinks) => {
+  return navLinks.filter(
+    node =>
+      node.fields.path.includes(path) &&
+      node.fields.path.split('/').length === path.split('/').length + 1,
+  );
+};
+
+const Tiles = ({ mdx, navLinks }) => {
+  const { path } = mdx.fields;
+  const depth = path.split('/').length;
+  if (depth === 3) {
+    const tiles = getChildren(path, navLinks).map(child => {
+      let newChild = { ...child };
+      const { path } = newChild.fields;
+      newChild['children'] = getChildren(path, navLinks);
+      return newChild;
+    });
+    return (
+      <>
+        {tiles.map(tile => {
+          return (
+            <>
+              <div>{tile.frontmatter.title}</div>
+              {tile.children.map(child => (
+                <div>{child.frontmatter.title}</div>
+              ))}
+            </>
+          );
+        })}
+      </>
+    );
+  }
+  if (depth === 4) {
+    const tiles = getChildren(path, navLinks);
+    return (
+      <>
+        {tiles.map(tile => (
+          <div>{tile.frontmatter.title}</div>
+        ))}
+      </>
+    );
+  }
+  return <div>hi</div>;
+};
+
 const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
   const { navLinks } = pageContext;
@@ -51,6 +97,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
           <ContentRow>
             <Col md={9}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
+              <Tiles mdx={mdx} navLinks={navLinks} />
             </Col>
 
             <Col md={3}>
