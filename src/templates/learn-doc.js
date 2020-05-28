@@ -15,6 +15,7 @@ export const query = graphql`
     mdx(fields: { path: { eq: $path } }) {
       frontmatter {
         title
+        description
       }
       fields {
         path
@@ -49,14 +50,19 @@ const Tiles = ({ mdx, navLinks }) => {
       newChild['children'] = getChildren(path, navLinks);
       return newChild;
     });
+    console.log(tiles);
+
     return (
       <>
         {tiles.map(tile => {
           return (
             <>
               <div>{tile.frontmatter.title}</div>
+              <div>{tile.frontmatter.description}</div>
               {tile.children.map(child => (
-                <div>{child.frontmatter.title}</div>
+                <>
+                  <div>{child.frontmatter.title}</div>
+                </>
               ))}
             </>
           );
@@ -66,10 +72,14 @@ const Tiles = ({ mdx, navLinks }) => {
   }
   if (depth === 4) {
     const tiles = getChildren(path, navLinks);
+    console.log(tiles);
     return (
       <>
         {tiles.map(tile => (
-          <div>{tile.frontmatter.title}</div>
+          <>
+            <div>{tile.frontmatter.title}</div>
+            <div>{tile.frontmatter.description}</div>
+          </>
         ))}
       </>
     );
