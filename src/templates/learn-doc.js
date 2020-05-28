@@ -72,7 +72,6 @@ const Tiles = ({ mdx, navLinks }) => {
   }
   if (depth === 4) {
     const tiles = getChildren(path, navLinks);
-    console.log(tiles);
     return (
       <>
         {tiles.map(tile => (
