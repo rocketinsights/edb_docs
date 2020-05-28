@@ -13,7 +13,7 @@ const VersionDropdown = ({ versionArray, path }) => {
         }
       </Dropdown.Toggle>
 
-      <Dropdown.Menu alignRight>
+      <Dropdown.Menu>
         {versionArray.map(version => (
           <Dropdown.Item
             href={version.url}
