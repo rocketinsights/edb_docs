@@ -5,7 +5,6 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Layout from '../components/layout';
 import LeftNav from '../components/left-nav';
 import TableOfContents from '../components/table-of-contents';
-import VersionDropdown from '../components/version-dropdown';
 import TopBar from '../components/top-bar';
 import SideNavigation from '../components/side-navigation';
 import MainContent from '../components/main-content';
@@ -48,19 +47,8 @@ const makeVersionArray = (versions, path) => {
   }));
 };
 
-const ContentHeaderWithVersion = ({ title, path, versionArray }) => (
-  <div className="d-flex align-items-center justify-content-between">
-    <h1 className="balance-text">{title}</h1>
-    <div class="dropdown">
-      {versionArray.length > 1 && (
-        <VersionDropdown versionArray={versionArray} path={path} />
-      )}
-    </div>
-  </div>
-);
-
 const ContentRow = ({ children }) => (
-  <div class="container p-0 mt-4">
+  <div className="container p-0 mt-4">
     <Row>{children}</Row>
   </div>
 );
@@ -88,15 +76,12 @@ const DocTemplate = ({ data, pageContext }) => {
             navLinks={navLinks}
             path={mdx.fields.path}
             withVersions={true}
+            versionArray={versionArray}
             navOrder={navOrder}
           />
         </SideNavigation>
         <MainContent>
-          <ContentHeaderWithVersion
-            title={mdx.frontmatter.title}
-            path={mdx.fields.path}
-            versionArray={versionArray}
-          />
+          <h1 className="balance-text">{mdx.frontmatter.title}</h1>
 
           <ContentRow>
             <Col md={9}>
