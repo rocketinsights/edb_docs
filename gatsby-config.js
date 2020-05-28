@@ -92,7 +92,7 @@ const splitNodeContent = nodes => {
         let newNode = { ...node };
         delete newNode['rawBody'];
         newNode['excerpt'] = contentAggregator;
-        newNode.id = newNode.id + '-' + order;
+        newNode.id = newNode.path + '-' + order;
         order += 1;
         result.push(newNode);
         contentAggregator = '';
