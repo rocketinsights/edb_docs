@@ -10,6 +10,7 @@ import TopBar from '../components/top-bar';
 import SideNavigation from '../components/side-navigation';
 import MainContent from '../components/main-content';
 import Footer from '../components/footer';
+import { leftNavs } from '../constants/left-navs';
 
 export const query = graphql`
   query($path: String!) {
@@ -31,6 +32,13 @@ const getProductUrlBase = path => {
     .split('/')
     .slice(0, 2)
     .join('/');
+};
+
+const getProductAndVersion = path => {
+  return {
+    product: path.split('/')[1],
+    version: path.split('/')[2],
+  };
 };
 
 const makeVersionArray = (versions, path) => {
@@ -57,10 +65,19 @@ const ContentRow = ({ children }) => (
   </div>
 );
 
+const getNavOrder = (product, version, leftNavs) => {
+  if (leftNavs[product] && leftNavs[product][version]) {
+    return leftNavs[product][version];
+  }
+  return null;
+};
+
 const DocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
   const { navLinks, versions } = pageContext;
   const versionArray = makeVersionArray(versions, mdx.fields.path);
+  const { product, version } = getProductAndVersion(mdx.fields.path);
+  const navOrder = getNavOrder(product, version, leftNavs);
 
   return (
     <Layout>
@@ -71,6 +88,7 @@ const DocTemplate = ({ data, pageContext }) => {
             navLinks={navLinks}
             path={mdx.fields.path}
             withVersions={true}
+            navOrder={navOrder}
           />
         </SideNavigation>
         <MainContent>

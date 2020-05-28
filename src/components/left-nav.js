@@ -54,14 +54,20 @@ const orderTree = (tree, order) => {
   let result = [];
   for (let navItem of order) {
     for (let leaf of tree) {
-      if (leaf.path.includes(navItem)) {
-        result.push(leaf);
+      if (leaf.path.includes(navItem.path)) {
+        let newLeaf = { ...leaf };
+        if (navItem.title) {
+          newLeaf.title = navItem.title;
+        }
+        result.push(newLeaf);
       }
+    }
+    if (!navItem.path) {
+      result.push(navItem);
     }
   }
   return result;
 };
-
 
 const DisplayNone = styled('div')`
   display: none;
@@ -107,6 +113,14 @@ const SectionHeading = ({ newList }) => {
 };
 
 const TreeNode = ({ node, path }) => {
+  if (!node.path) {
+    return (
+      <li className="ml-0 align-items-center" key={node.path}>
+        {node.title}
+      </li>
+    );
+  }
+
   return (
     <li className="ml-0 align-items-center" key={node.path}>
       <div className="d-flex align-items-center">
