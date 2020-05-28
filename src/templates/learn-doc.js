@@ -15,7 +15,6 @@ export const query = graphql`
     mdx(fields: { path: { eq: $path } }) {
       frontmatter {
         title
-        description
       }
       fields {
         path
