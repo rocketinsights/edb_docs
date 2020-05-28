@@ -1,0 +1,47 @@
+.sidebar {
+  width: 300px; /* sidebar was expanding occasionally */
+}
+
+.toc-sticky {
+  position: sticky;
+  top: 0;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.ais-SearchBox {
+  width: 100%;
+
+  input {
+    @extend .form-control;
+    @extend .form-control-lg;
+    @extend .border-0;
+    @extend .pl-3;
+    @extend .bg-white;
+  }
+
+  button {
+    display: none;
+  }
+}
+
+.ais-Hits {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  mark {
+    @extend .bg-primary;
+
+    font-weight: bolder;
+    color: white;
+  }
+
+  .dropdown-item {
+    white-space: normal;
+  }
+}
