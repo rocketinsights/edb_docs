@@ -86,7 +86,7 @@ const splitNodeContent = nodes => {
         contentAggregator += section + ' ';
       }
       if (
-        contentAggregator.length > 500 ||
+        contentAggregator.length > 1000 ||
         (contentAggregator.length > 0 && i == contentArray.length - 1)
       ) {
         let newNode = { ...node };
@@ -222,12 +222,12 @@ module.exports = {
       // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
       resolve: `gatsby-plugin-algolia`,
       options: {
-        enablePartialUpdates: true,
         appId: process.env.ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_API_KEY,
         indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
         queries,
-        chunkSize: 10000, // default: 1000
+        chunkSize: 10000, // default: 1000,
+        enablePartialUpdates: true,
       },
     },
   ],
