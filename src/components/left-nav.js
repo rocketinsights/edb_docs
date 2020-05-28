@@ -115,7 +115,7 @@ const SectionHeading = ({ newList }) => {
 const TreeNode = ({ node, path }) => {
   if (!node.path) {
     return (
-      <li className="ml-0 align-items-center" key={node.path}>
+      <li className="mt-3 mb-2 font-weight-bold text-muted text-uppercase small" key={node.path}>
         {node.title}
       </li>
     );
