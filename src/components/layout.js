@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
       </Helmet>
       <MDXProvider
         components={{
-          table: props => <table {...props} class="table" />,
+          table: props => <table {...props} className="table" />,
         }}
       >
         {children}
