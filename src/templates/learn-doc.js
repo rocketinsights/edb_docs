@@ -9,6 +9,7 @@ import TopBar from '../components/top-bar';
 import SideNavigation from '../components/side-navigation';
 import MainContent from '../components/main-content';
 import Footer from '../components/footer';
+import CardDecks from '../components/card-decks';
 
 export const query = graphql`
   query($path: String!) {
@@ -49,38 +50,12 @@ const Tiles = ({ mdx, navLinks }) => {
       newChild['children'] = getChildren(path, navLinks);
       return newChild;
     });
-    console.log(tiles);
 
-    return (
-      <>
-        {tiles.map(tile => {
-          return (
-            <>
-              <div>{tile.frontmatter.title}</div>
-              <div>{tile.frontmatter.description}</div>
-              {tile.children.map(child => (
-                <>
-                  <div>{child.frontmatter.title}</div>
-                </>
-              ))}
-            </>
-          );
-        })}
-      </>
-    );
+    return <CardDecks cards={tiles} groupSize={2} cardType="full" />;
   }
   if (depth === 4) {
     const tiles = getChildren(path, navLinks);
-    return (
-      <>
-        {tiles.map(tile => (
-          <>
-            <div>{tile.frontmatter.title}</div>
-            <div>{tile.frontmatter.description}</div>
-          </>
-        ))}
-      </>
-    );
+    return <CardDecks cards={tiles} groupSize={3} cardType="simple" />;
   }
   return <div>hi</div>;
 };
@@ -101,18 +76,26 @@ const LearnDocTemplate = ({ data, pageContext }) => {
         <MainContent>
           <h1 className="balance-text">{mdx.frontmatter.title}</h1>
 
-          <ContentRow>
-            <Col md={9}>
+          { 
+            mdx.tableOfContents.item ?
+            <ContentRow>
+              <Col md={9}>
+                <MDXRenderer>{mdx.body}</MDXRenderer>
+                <Tiles mdx={mdx} navLinks={navLinks} />
+              </Col>
+
+              <Col md={3}>
+                {mdx.tableOfContents.items && (
+                  <TableOfContents toc={mdx.tableOfContents.items} />
+                )}
+              </Col>
+            </ContentRow>
+            :
+            <>
               <MDXRenderer>{mdx.body}</MDXRenderer>
               <Tiles mdx={mdx} navLinks={navLinks} />
-            </Col>
-
-            <Col md={3}>
-              {mdx.tableOfContents.items && (
-                <TableOfContents toc={mdx.tableOfContents.items} />
-              )}
-            </Col>
-          </ContentRow>
+            </>
+          }
 
           <Footer />
         </MainContent>
