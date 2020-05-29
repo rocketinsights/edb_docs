@@ -46,25 +46,15 @@ const CardDecks = ({ cards, colSize = 4, cardType = 'simple' }) => {
   return (
     <div className="card-deck row no-gutters">
       {cards.map(card => {
-        switch (cardType) {
-          case 'full': {
-            return (
-              <Col key={card.fields.path} md={colSize} className="d-flex">
-                <FullCard card={card} />
-              </Col>
-            );
-          }
-          case 'simple': {
-            return (
-              <Col key={card.fields.path} md={colSize} className="d-flex">
-                <SimpleCard card={card} />
-              </Col>
-            );
-          }
-          default: {
-            return <></>;
-          }
-        }
+        return (
+          <Col key={card.fields.path} md={colSize} className="d-flex">
+            {cardType === 'full' ? (
+              <FullCard card={card} />
+            ) : (
+              <SimpleCard card={card} />
+            )}
+          </Col>
+        );
       })}
     </div>
   );
