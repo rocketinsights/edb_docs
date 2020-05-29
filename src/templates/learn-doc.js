@@ -96,11 +96,10 @@ const LearnDocTemplate = ({ data, pageContext }) => {
           <LeftNav
             navLinks={navLinks}
             path={mdx.fields.path}
-            withVersions={false}
           />
         </SideNavigation>
         <MainContent>
-          <h1 class="balance-text">{mdx.frontmatter.title}</h1>
+          <h1 className="balance-text">{mdx.frontmatter.title}</h1>
 
           <ContentRow>
             <Col md={9}>

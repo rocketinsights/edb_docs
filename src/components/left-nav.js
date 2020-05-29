@@ -99,7 +99,21 @@ const Back = () => {
   );
 };
 
-const SectionHeading = ({ newList, versionArray, path }) => {
+const SectionHeading = ({ newList, path }) => {
+  return (
+    <li className="ml-0 mb-4 d-flex align-items-center">
+      <DottedBox className="opacity-2 mr-2" width="48" height="48" />
+      <Link
+        to="/"
+        className="d-block py-1 align-middle balance-text h5 m-0 text-dark"
+      >
+        {newList[0].title}
+      </Link>
+    </li>
+  );
+};
+
+const SectionHeadingWithVersions = ({ newList, path, versionArray }) => {
   return (
     <li className="ml-0 mb-4 d-flex align-items-center">
       <DottedBox className="opacity-2 mr-2" width="120" height="90" />
@@ -111,9 +125,7 @@ const SectionHeading = ({ newList, versionArray, path }) => {
           {newList[0].title}
         </Link>
         <div>
-          {versionArray.length > 1 && (
-            <VersionDropdown versionArray={versionArray} path={path} />
-          )}
+          <VersionDropdown versionArray={versionArray} path={path} />
         </div>
       </div>
     </li>
@@ -152,15 +164,19 @@ const TreeNode = ({ node, path }) => {
   );
 };
 
-const LeftNav = ({ navLinks, path, withVersions, versionArray, navOrder = null }) => {
-  const newList = withVersions
+const LeftNav = ({ navLinks, path, versionArray, navOrder = null }) => {
+  const newList = versionArray
     ? filterAndSort(navLinks, baseUrl(path, 3))
     : filterAndSort(navLinks, baseUrl(path, 2));
   const tree = orderTree(makeTree(newList), navOrder);
   return (
     <ul className="list-unstyled mt-0">
       <Back />
-      <SectionHeading newList={newList} versionArray={versionArray} path={path} />
+      {
+        versionArray && versionArray.length > 1 ?
+        <SectionHeadingWithVersions newList={newList} path={path} versionArray={versionArray} /> :
+        <SectionHeading newList={newList} path={path} />
+      }
       {tree.map(node => (
         <TreeNode node={node} path={path} key={node.path + node.title} />
       ))}
