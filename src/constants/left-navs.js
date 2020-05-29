@@ -3,19 +3,15 @@ export const leftNavs = {
     '12': [
       {
         path: null,
-        title: 'Getting Started',
       },
       {
         path: 'epas_inst_linux',
-        title: null,
       },
       {
         path: 'epas_inst_windows',
-        title: null,
       },
       {
         path: 'epas_upgrade_guide',
-        title: null,
       },
       {
         path: null,

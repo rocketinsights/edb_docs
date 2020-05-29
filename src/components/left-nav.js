@@ -16,6 +16,7 @@ const filterAndSort = (nodes, url) => {
   return nodes
     .map(node => ({
       title: node.frontmatter.title,
+      nav_title: node.frontmatter.nav_title,
       path: node.fields.path,
       items: [],
       itemObj: {},
@@ -56,11 +57,7 @@ const orderTree = (tree, order) => {
   for (let navItem of order) {
     for (let leaf of tree) {
       if (leaf.path.includes(navItem.path)) {
-        let newLeaf = { ...leaf };
-        if (navItem.title) {
-          newLeaf.title = navItem.title;
-        }
-        result.push(newLeaf);
+        result.push(leaf);
       }
     }
     if (!navItem.path) {
@@ -135,8 +132,11 @@ const SectionHeadingWithVersions = ({ newList, path, versionArray }) => {
 const TreeNode = ({ node, path }) => {
   if (!node.path) {
     return (
-      <li className="mt-3 mb-2 font-weight-bold text-muted text-uppercase small" key={node.path}>
-        {node.title}
+      <li
+        className="mt-3 mb-2 font-weight-bold text-muted text-uppercase small"
+        key={node.path}
+      >
+        {node.nav_title ? node.nav_title : node.title}
       </li>
     );
   }
@@ -150,7 +150,7 @@ const TreeNode = ({ node, path }) => {
             path === node.path ? 'active font-weight-bold' : ''
           }`}
         >
-          {node.title}
+          {node.nav_title ? node.nav_title : node.title}
         </Link>
       </div>
       {node.items.length > 0 && (
@@ -169,14 +169,19 @@ const LeftNav = ({ navLinks, path, versionArray, navOrder = null }) => {
     ? filterAndSort(navLinks, baseUrl(path, 3))
     : filterAndSort(navLinks, baseUrl(path, 2));
   const tree = orderTree(makeTree(newList), navOrder);
+  console.log(navLinks);
   return (
     <ul className="list-unstyled mt-0">
       <Back />
-      {
-        versionArray && versionArray.length > 1 ?
-        <SectionHeadingWithVersions newList={newList} path={path} versionArray={versionArray} /> :
+      {versionArray && versionArray.length > 1 ? (
+        <SectionHeadingWithVersions
+          newList={newList}
+          path={path}
+          versionArray={versionArray}
+        />
+      ) : (
         <SectionHeading newList={newList} path={path} />
-      }
+      )}
       {tree.map(node => (
         <TreeNode node={node} path={path} key={node.path + node.title} />
       ))}
