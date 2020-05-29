@@ -9,14 +9,10 @@ const FullCard = ({ card }) => (
     </Link>
     <div className="card-body">
       <h3 className="card-title balance-text">
-        <Link to={card.fields.path}>
-          {card.frontmatter.title}
-        </Link>
+        <Link to={card.fields.path}>{card.frontmatter.title}</Link>
       </h3>
 
-      <p className="card-text">
-        {card.frontmatter.description}
-      </p>
+      <p className="card-text">{card.frontmatter.description}</p>
 
       {card.children.map(child => (
         <Link
@@ -29,7 +25,7 @@ const FullCard = ({ card }) => (
       ))}
     </div>
   </div>
-)
+);
 
 const SimpleCard = ({ card }) => (
   <div className="card rounded shadow-sm p-2">
@@ -40,20 +36,18 @@ const SimpleCard = ({ card }) => (
         </Link>
       </h3>
 
-      <p className="card-text">
-        {card.frontmatter.description}
-      </p>
+      <p className="card-text">{card.frontmatter.description}</p>
     </div>
   </div>
-)
+);
 
-const CardDecks = ({ cards, groupSize = 3, cardType = "simple"}) => {
+const CardDecks = ({ cards, groupSize = 3, cardType = 'simple' }) => {
   let groupedCards = [];
   for (let i = 0; i < cards.length; i += groupSize) {
-    let group = []
+    let group = [];
     for (let j = 0; j < groupSize; j++) {
-      if (cards[i+j]) {
-        group.push(cards[i+j]);
+      if (cards[i + j]) {
+        group.push(cards[i + j]);
       }
     }
     groupedCards.push(group);
@@ -66,10 +60,10 @@ const CardDecks = ({ cards, groupSize = 3, cardType = "simple"}) => {
           <div key={i} className="card-deck mt-4">
             {cardGroup.map(card => {
               switch (cardType) {
-                case "full": {
+                case 'full': {
                   return <FullCard key={card.fields.path} card={card} />;
                 }
-                case "simple": {
+                case 'simple': {
                   return <SimpleCard key={card.fields.path} card={card} />;
                 }
                 default: {

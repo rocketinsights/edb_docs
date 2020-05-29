@@ -68,16 +68,12 @@ const LearnDocTemplate = ({ data, pageContext }) => {
       <TopBar />
       <Container className="p-0 d-flex bg-white">
         <SideNavigation>
-          <LeftNav
-            navLinks={navLinks}
-            path={mdx.fields.path}
-          />
+          <LeftNav navLinks={navLinks} path={mdx.fields.path} />
         </SideNavigation>
         <MainContent>
           <h1 className="balance-text">{mdx.frontmatter.title}</h1>
 
-          { 
-            mdx.tableOfContents.item ?
+          {mdx.tableOfContents.item ? (
             <ContentRow>
               <Col md={9}>
                 <MDXRenderer>{mdx.body}</MDXRenderer>
@@ -90,12 +86,12 @@ const LearnDocTemplate = ({ data, pageContext }) => {
                 )}
               </Col>
             </ContentRow>
-            :
+          ) : (
             <>
               <MDXRenderer>{mdx.body}</MDXRenderer>
               <Tiles mdx={mdx} navLinks={navLinks} />
             </>
-          }
+          )}
 
           <Footer />
         </MainContent>
