@@ -162,6 +162,7 @@ module.exports = {
   siteMetadata: {
     title: 'Docs Site',
     description: 'A docs site',
+    advocacyRepo: 'https://github.com/rocketinsights/edb_docs_advocacy',
   },
   plugins: [
     'gatsby-plugin-sass',
