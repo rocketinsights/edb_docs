@@ -75,7 +75,6 @@ const DocTemplate = ({ data, pageContext }) => {
           <LeftNav
             navLinks={navLinks}
             path={mdx.fields.path}
-            withVersions={true}
             versionArray={versionArray}
             navOrder={navOrder}
           />
