@@ -88,7 +88,6 @@ const Tiles = ({ mdx, navLinks }) => {
 const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
   const { navLinks, githubLink } = pageContext;
-  debugger;
 
   return (
     <Layout>
