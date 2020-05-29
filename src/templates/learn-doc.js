@@ -97,8 +97,11 @@ const LearnDocTemplate = ({ data, pageContext }) => {
           <LeftNav navLinks={navLinks} path={mdx.fields.path} />
         </SideNavigation>
         <MainContent>
-          <h1 className="balance-text">{mdx.frontmatter.title}</h1>
-          <a href={githubLink}>edit on github</a>
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 className="balance-text">{mdx.frontmatter.title}</h1>
+            <a href={githubLink || '#'} className="btn btn-sm btn-primary px-4" >Edit this page</a>
+          </div>
+
           <ContentRow>
             <Col md={9}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
