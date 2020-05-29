@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import { Col } from 'react-bootstrap';
 import DottedBox from '../components/icons/dotted-box';
 
 const FullCard = ({ card }) => (
-  <div className="card rounded shadow-sm p-2">
+  <div className="card rounded shadow-sm p-2 mt-4">
     <Link to={card.fields.path}>
       <DottedBox className="opacity-1 mt-3 ml-3" width="100" height="100" />
     </Link>
@@ -28,7 +29,7 @@ const FullCard = ({ card }) => (
 );
 
 const SimpleCard = ({ card }) => (
-  <div className="card rounded shadow-sm p-2">
+  <div className="card rounded shadow-sm p-2 mt-4">
     <div className="card-body">
       <h3 className="card-title balance-text">
         <Link className="stretched-link" to={card.fields.path}>
@@ -41,40 +42,31 @@ const SimpleCard = ({ card }) => (
   </div>
 );
 
-const CardDecks = ({ cards, groupSize = 3, cardType = 'simple' }) => {
-  let groupedCards = [];
-  for (let i = 0; i < cards.length; i += groupSize) {
-    let group = [];
-    for (let j = 0; j < groupSize; j++) {
-      if (cards[i + j]) {
-        group.push(cards[i + j]);
-      }
-    }
-    groupedCards.push(group);
-  }
-
+const CardDecks = ({ cards, colSize = 4, cardType = 'simple' }) => {
   return (
-    <>
-      {groupedCards.map((cardGroup, i) => {
-        return (
-          <div key={i} className="card-deck mt-4">
-            {cardGroup.map(card => {
-              switch (cardType) {
-                case 'full': {
-                  return <FullCard key={card.fields.path} card={card} />;
-                }
-                case 'simple': {
-                  return <SimpleCard key={card.fields.path} card={card} />;
-                }
-                default: {
-                  return <></>;
-                }
-              }
-            })}
-          </div>
-        );
+    <div className="card-deck row no-gutters">
+      {cards.map(card => {
+        switch (cardType) {
+          case 'full': {
+            return (
+              <Col key={card.fields.path} md={colSize} className="d-flex">
+                <FullCard card={card} />
+              </Col>
+            );
+          }
+          case 'simple': {
+            return (
+              <Col key={card.fields.path} md={colSize} className="d-flex">
+                <SimpleCard card={card} />
+              </Col>
+            );
+          }
+          default: {
+            return <></>;
+          }
+        }
       })}
-    </>
+    </div>
   );
 };
 

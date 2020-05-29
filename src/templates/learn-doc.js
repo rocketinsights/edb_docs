@@ -51,11 +51,11 @@ const Tiles = ({ mdx, navLinks }) => {
       return newChild;
     });
 
-    return <CardDecks cards={tiles} groupSize={2} cardType="full" />;
+    return <CardDecks cards={tiles} colSize={6} cardType="full" />;
   }
   if (depth === 4) {
     const tiles = getChildren(path, navLinks);
-    return <CardDecks cards={tiles} groupSize={3} cardType="simple" />;
+    return <CardDecks cards={tiles} colSize={4} cardType="simple" />;
   }
   return <div>hi</div>;
 };
