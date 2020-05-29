@@ -147,7 +147,7 @@ const TreeNode = ({ node, path }) => {
         <Link
           to={node.path}
           className={`d-inline-block py-1 align-middle lh-12 ${
-            path === node.path ? 'active font-weight-bold' : ''
+            path === node.path ? 'active font-weight-bold text-dark' : ''
           }`}
         >
           {node.title}
