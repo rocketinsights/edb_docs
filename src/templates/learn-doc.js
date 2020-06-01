@@ -74,7 +74,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
         <MainContent>
           <div class="d-flex justify-content-between align-items-center">
             <h1 className="balance-text">{mdx.frontmatter.title}</h1>
-            <a href={githubLink || '#'} className="btn btn-sm btn-primary px-4" >Edit this page</a>
+            <a href={githubLink || '#'} className="btn btn-sm btn-primary px-4 text-nowrap" >Edit this page</a>
           </div>
 
           {mdx.tableOfContents.item ? (
