@@ -121,9 +121,13 @@ const SectionHeadingWithVersions = ({ newList, path, versionArray }) => {
         >
           {newList[0].title}
         </Link>
-        <div>
-          <VersionDropdown versionArray={versionArray} path={path} />
-        </div>
+        {versionArray.length > 1 ? (
+          <div>
+            <VersionDropdown versionArray={versionArray} path={path} />
+          </div>
+        ) : (
+          <div className="text-muted">Version {versionArray[0].version}</div>
+        )}
       </div>
     </li>
   );
@@ -173,7 +177,7 @@ const LeftNav = ({ navLinks, path, versionArray, navOrder = null }) => {
   return (
     <ul className="list-unstyled mt-0">
       <Back />
-      {versionArray && versionArray.length > 1 ? (
+      {versionArray ? (
         <SectionHeadingWithVersions
           newList={newList}
           path={path}
