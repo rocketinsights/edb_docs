@@ -62,7 +62,8 @@ const Tiles = ({ mdx, navLinks }) => {
 
 const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
-  const { navLinks } = pageContext;
+  const { navLinks, githubLink } = pageContext;
+
   return (
     <Layout>
       <TopBar />
@@ -71,7 +72,10 @@ const LearnDocTemplate = ({ data, pageContext }) => {
           <LeftNav navLinks={navLinks} path={mdx.fields.path} />
         </SideNavigation>
         <MainContent>
-          <h1 className="balance-text">{mdx.frontmatter.title}</h1>
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 className="balance-text">{mdx.frontmatter.title}</h1>
+            <a href={githubLink || '#'} className="btn btn-sm btn-primary px-4" >Edit this page</a>
+          </div>
 
           {mdx.tableOfContents.item ? (
             <ContentRow>
