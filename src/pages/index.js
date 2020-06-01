@@ -27,8 +27,8 @@ export const query = graphql`
 `;
 
 export default data => {
-  const { advocacyLinks } = data.data.file.childAdvocacyDocsJson;
-  console.log(advocacyLinks);
+  const advocacyLinks =
+    data.data.file.childAdvocacyDocsJson.advocacyLinks || [];
   return (
     <Layout>
       <TopBar />
