@@ -3,6 +3,7 @@ export const leftNavs = {
     '12': [
       {
         path: null,
+        title: 'Getting Started',
       },
       {
         path: 'epas_inst_linux',
@@ -18,16 +19,16 @@ export const leftNavs = {
         title: 'For Oracle Developers',
       },
       {
-        path: 'epas_compat_tools_guide',
-        title: null,
+        path: '06_epas_compat_ora_dev_guide',
+      },
+      {
+        path: 'epas_compat_reference',
       },
       {
         path: 'epas_compat_bip_guide',
-        title: 'Built-in Package Guide',
       },
       {
         path: 'epas_compat_tools_guide',
-        title: 'Tools and Utilities',
       },
       {
         path: null,
@@ -35,15 +36,12 @@ export const leftNavs = {
       },
       {
         path: 'epas_guide',
-        title: 'EDB Postgres Advanced Server',
       },
       {
         path: 'ecpgplus_guide',
-        title: 'ECPG Plus',
       },
       {
         path: 'language_pack',
-        title: 'Language Pack',
       },
     ],
   },
