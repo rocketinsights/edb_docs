@@ -41,7 +41,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       node,
       name: 'topic',
-      value: null,
+      value: 'null',
     });
   }
   if (
