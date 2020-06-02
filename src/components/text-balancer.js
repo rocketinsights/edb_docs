@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 const TextBalancer = () => {
   useEffect(() => {
     balanceText();
+    balanceText.updateWatched();
   });
   return null;
 }
