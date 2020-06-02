@@ -171,6 +171,22 @@ module.exports = {
     'gatsby-transformer-json',
     'gatsby-plugin-sharp',
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'docs',
+        path: 'docs',
+      },
+    },
+    {
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `advocacy_docs`,
+        path: 'advocacy_docs',
+        remote: `https://github.com/rocketinsights/edb_docs_advocacy`,
+        patterns: `advocacy_docs/**`,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-mdx',
       options: {
         defaultLayouts: {
@@ -186,22 +202,6 @@ module.exports = {
           },
         ],
         plugins: [{ resolve: 'gatsby-remark-images' }],
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'docs',
-        path: 'docs',
-      },
-    },
-    {
-      resolve: `gatsby-source-git`,
-      options: {
-        name: `advocacy_docs`,
-        path: 'advocacy_docs',
-        remote: `https://github.com/rocketinsights/edb_docs_advocacy`,
-        patterns: `advocacy_docs/**`,
       },
     },
     {
