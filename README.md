@@ -3,7 +3,8 @@
 1. This project uses `nvm` to manage the node version. You should install the correct node version with `nvm install`.
 2. Install yarn and gatsby with `npm i -g gatsby-cli` and `npm i -g yarn`
 3. Install all the bits and bobs with `yarn`
-4. Run the site locally with `gatsby develop`
+4. Pull the shared icon files down with `git submodule update --init`
+5. Run the site locally with `gatsby develop`
 
 ## Deployment
 
