@@ -1,21 +1,19 @@
 ---
-title: "DEQUEUE"
+title: 'DEQUEUE'
 ---
-
-
 
 The `DEQUEUE` procedure dequeues a message. The signature is:
 
 > `DEQUEUE(`
-> 
+>
 > > `<queue_name> IN VARCHAR2`,
-> > 
+> >
 > > `<dequeue_options> IN DBMS_AQ.DEQUEUE_OPTIONS_T,`
-> > 
+> >
 > > `<message_properties> OUT DBMS_AQ.MESSAGE_PROPERTIES_T,`
-> > 
+> >
 > > `<payload> OUT type_name`,
-> > 
+> >
 > > `<msgid> OUT RAW)`
 
 **Parameters**
@@ -23,14 +21,14 @@ The `DEQUEUE` procedure dequeues a message. The signature is:
 `<queue_name>`
 
 > The name (optionally schema-qualified) of an existing queue. If you omit the schema name, the server will use the schema specified in the `SEARCH_PATH`. Please note that unlike Oracle, unquoted identifiers are converted to lower case before storing. To include special characters or use a case-sensitive name, enclose the name in double quotes.
-> 
+>
 > For detailed information about creating a queue, please see `DBMS_AQADM.CREATE_QUEUE`.
 
 `<dequeue_options>`
 
 > `<dequeue_options>` is a value of the type, `dequeue_options_t`:
 
-``` text
+```text
 DEQUEUE_OPTIONS_T IS RECORD(
   consumer_name CHARACTER VARYING(30),
   dequeue_mode INTEGER,
@@ -47,69 +45,129 @@ DEQUEUE_OPTIONS_T IS RECORD(
 Currently, the supported parameter values for `dequeue_options_t` are:
 
 <div class="table-with-scroll">
-<table>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 85%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><code>consumer_name</code></td>
-<td>Must be <code>NULL</code>.</td>
-</tr>
-<tr class="even">
-<td><code>dequeue_mode</code></td>
-<td><p>The locking behavior of the dequeue operation. Must be either:</p>
-<p><code>DBMS_AQ.BROWSE</code> – Read the message without obtaining a lock.</p>
-<p><code>DBMS_AQ.LOCKED</code> – Read the message after acquiring a lock.</p>
-<p><code>DBMS_AQ.REMOVE</code> – Read the message before deleting the message.</p>
-<p><code>DBMS_AQ.REMOVE_NODATA</code> – Read the message, but do not delete the message.</p></td>
-</tr>
-<tr class="odd">
-<td><code>navigation</code></td>
-<td><p>Identifies the message that will be retrieved. Must be either:</p>
-<p><code>FIRST_MESSAGE</code> – The first message within the queue that matches the search term.</p>
-<p><code>NEXT_MESSAGE</code> – The next message that is available that matches the first term.</p></td>
-</tr>
-<tr class="even">
-<td><code>visibility</code></td>
-<td>Must be <code>ON_COMMIT</code> – if you roll back the current transaction the dequeued item will remain in the queue.</td>
-</tr>
-<tr class="odd">
-<td><code>wait</code></td>
-<td><p>Must be a number larger than 0, or:</p>
-<p><code>DBMS_AQ.FOREVER</code> – Wait indefinitely.</p>
-<p><code>DBMS_AQ.NO_WAIT</code> – Do not wait.</p></td>
-</tr>
-<tr class="even">
-<td><code>msgid</code></td>
-<td>The message ID of the message that will be dequeued.</td>
-</tr>
-<tr class="odd">
-<td><code>correlation</code></td>
-<td>Accepted for compatibility, and ignored.</td>
-</tr>
-<tr class="even">
-<td><code>deq_condition</code></td>
-<td>A <code>VARCHAR2</code> expression that evaluates to a <code>BOOLEAN</code> value indicating if the message should be dequeued</td>
-</tr>
-<tr class="odd">
-<td><code>transformation</code></td>
-<td>Accepted for compatibility, and ignored.</td>
-</tr>
-<tr class="even">
-<td><code>delivery_mode</code></td>
-<td>Must be <code>PERSISTENT</code>; buffered messages are not supported at this time.</td>
-</tr>
-</tbody>
-</table>
+  <table class="table">
+    <colgroup>
+      <col style="width: 14%" />
+      <col style="width: 85%" />
+    </colgroup>
+    <tbody>
+      <tr class="odd">
+        <td>
+          <code>consumer_name</code>
+        </td>
+        <td>
+          Must be <code>NULL</code>.
+        </td>
+      </tr>
+      <tr class="even">
+        <td>
+          <code>dequeue_mode</code>
+        </td>
+        <td>
+          <p>The locking behavior of the dequeue operation. Must be either:</p>
+          <p>
+            <code>DBMS_AQ.BROWSE</code> – Read the message without obtaining a
+            lock.
+          </p>
+          <p>
+            <code>DBMS_AQ.LOCKED</code> – Read the message after acquiring a
+            lock.
+          </p>
+          <p>
+            <code>DBMS_AQ.REMOVE</code> – Read the message before deleting the
+            message.
+          </p>
+          <p>
+            <code>DBMS_AQ.REMOVE_NODATA</code> – Read the message, but do not
+            delete the message.
+          </p>
+        </td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <code>navigation</code>
+        </td>
+        <td>
+          <p>Identifies the message that will be retrieved. Must be either:</p>
+          <p>
+            <code>FIRST_MESSAGE</code> – The first message within the queue that
+            matches the search term.
+          </p>
+          <p>
+            <code>NEXT_MESSAGE</code> – The next message that is available that
+            matches the first term.
+          </p>
+        </td>
+      </tr>
+      <tr class="even">
+        <td>
+          <code>visibility</code>
+        </td>
+        <td>
+          Must be <code>ON_COMMIT</code> – if you roll back the current
+          transaction the dequeued item will remain in the queue.
+        </td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <code>wait</code>
+        </td>
+        <td>
+          <p>Must be a number larger than 0, or:</p>
+          <p>
+            <code>DBMS_AQ.FOREVER</code> – Wait indefinitely.
+          </p>
+          <p>
+            <code>DBMS_AQ.NO_WAIT</code> – Do not wait.
+          </p>
+        </td>
+      </tr>
+      <tr class="even">
+        <td>
+          <code>msgid</code>
+        </td>
+        <td>The message ID of the message that will be dequeued.</td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <code>correlation</code>
+        </td>
+        <td>Accepted for compatibility, and ignored.</td>
+      </tr>
+      <tr class="even">
+        <td>
+          <code>deq_condition</code>
+        </td>
+        <td>
+          A <code>VARCHAR2</code> expression that evaluates to a{' '}
+          <code>BOOLEAN</code> value indicating if the message should be
+          dequeued
+        </td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <code>transformation</code>
+        </td>
+        <td>Accepted for compatibility, and ignored.</td>
+      </tr>
+      <tr class="even">
+        <td>
+          <code>delivery_mode</code>
+        </td>
+        <td>
+          Must be <code>PERSISTENT</code>; buffered messages are not supported
+          at this time.
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 `<message_properties>`
 
 `<message_properties>` is a value of the type, `message_properties_t`:
 
-``` text
+```text
 message_properties_t IS RECORD(
   priority INTEGER,
   delay INTEGER,
@@ -155,7 +213,7 @@ The supported values for `message_properties_t` are:
 
 The following anonymous block calls `DBMS_AQ.DEQUEUE`, retrieving a message from the queue and a payload:
 
-``` text
+```text
 DECLARE
 
   dequeue_options    DBMS_AQ.DEQUEUE_OPTIONS_T;

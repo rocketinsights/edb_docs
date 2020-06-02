@@ -22,13 +22,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
     const version = relativeFilePath.split('/')[2];
 
-    // Creates new query'able field with name of 'path'
+    // Creates new query'able fields
     createNodeField({
       node,
       name: 'path',
       value: relativeFilePath,
     });
-    // Creates new query'able field with name of 'path'
     createNodeField({
       node,
       name: 'product',
@@ -39,16 +38,21 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'version',
       value: version,
     });
+    createNodeField({
+      node,
+      name: 'topic',
+      value: 'null',
+    });
   }
   if (
     node.internal.type === 'Mdx' &&
-    node.fileAbsolutePath.includes('/learn_docs/')
+    node.fileAbsolutePath.includes('/advocacy_docs/')
   ) {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
     let relativeFilePath = createFilePath({
       node,
       getNode,
-      basePath: 'learn_docs',
+      basePath: 'advocacy_docs',
     });
 
     relativeFilePath = relativeFilePath.substring(
@@ -78,6 +82,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         nodes {
           frontmatter {
             title
+            navTitle
+            description
           }
           fields {
             path
@@ -85,6 +91,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             version
             topic
           }
+          fileAbsolutePath
         }
       }
     }
@@ -133,11 +140,16 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     const navLinks = learn.filter(
       node => node.fields.topic === doc.fields.topic,
     );
+    const githubLink =
+      'https://github.com/rocketinsights/edb_docs_advocacy/edit/master/advocacy_docs' +
+      doc.fields.path +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
     actions.createPage({
       path: doc.fields.path,
       component: require.resolve('./src/templates/learn-doc.js'),
       context: {
         navLinks: navLinks,
+        githubLink: githubLink,
       },
     });
   });

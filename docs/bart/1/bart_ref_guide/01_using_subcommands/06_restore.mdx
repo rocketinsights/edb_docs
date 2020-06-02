@@ -1,16 +1,12 @@
 ---
-title: "RESTORE"
+title: 'RESTORE'
 ---
-
-
 
 The `RESTORE` subcommand restores a backup and its archived WAL files for the designated database server to the specified directory location.
 
 **Syntax for Restore**:
 
-> 
-> 
-> ``` text
+> ```text
 > bart RESTORE –s <server_name> -p <restore_path>
 > [ –i { <backup_id> | <backup_name> } ]
 > [ -r <remote_user>@<remote_host_address> ]
@@ -20,13 +16,13 @@ The `RESTORE` subcommand restores a backup and its archived WAL files for the de
 > [ -c ]
 > ```
 
-To view detailed information about the `RESTORE` subcommand, see the *EDB Postgres Backup and Recovery User Guide* available at:
+To view detailed information about the `RESTORE` subcommand, see the _EDB Postgres Backup and Recovery User Guide_ available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
 If the backup is restored to a different database cluster directory than where the original database cluster resided, then certain operations dependent upon the database cluster location may fail. This happens if their supporting service scripts are not updated to reflect the new directory location of restored backup.
 
-For information about the use and modification of service scripts, see the *EDB Postgres Advanced Server Installation Guide* available at:
+For information about the use and modification of service scripts, see the _EDB Postgres Advanced Server Installation Guide_ available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
@@ -50,153 +46,175 @@ The following table lists the service scripts with Database Cluster Location for
 | postgresql-11        | /etc/init.d              | Service script for PostgreSQL 11 from interactive installer       |
 | postgresql-12        | /etc/init.d              | Service script for PostgreSQL 12 from interactive installer       |
 
-Before modifying the service unit files for Advanced Server in RHEL 7/CentOS 7, review the instructions in the *Modifying the Data Directory Location on CentOS or RedHat 7.x* section in the *EDB Postgres Advanced Server Installation Guide* for your release available at:
+Before modifying the service unit files for Advanced Server in RHEL 7/CentOS 7, review the instructions in the _Modifying the Data Directory Location on CentOS or RedHat 7.x_ section in the _EDB Postgres Advanced Server Installation Guide_ for your release available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
 The following table lists the service unit files and scripts with Database Cluster Location for RHEL 7/CentOS 7.
 
 <div class="table-with-scroll">
-<table>
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 23%" />
-<col style="width: 58%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>File Name</td>
-<td>Location</td>
-<td>Description</td>
-</tr>
-<tr class="even">
-<td>postgres-reg.ini</td>
-<td>/etc</td>
-<td>Product information for upgrades</td>
-</tr>
-<tr class="odd">
-<td><p>ppas-9.5.service</p>
-<p>ppas-9.5.sh</p></td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file and script for Advanced Server 9.5 from interactive installer</td>
-</tr>
-<tr class="even">
-<td><p>edb-as-9.6.service</p>
-<p>edb-as-9.6.sh</p></td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file and script for Advanced Server 9.6 from interactive installer</td>
-</tr>
-<tr class="odd">
-<td><p>edb-as-10.service</p>
-<p>edb-as-10.sh</p></td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file and script for Advanced Server 10 from interactive installer</td>
-</tr>
-<tr class="even">
-<td>edb-as-11</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file and script for Advanced Server 11 from interactive installer</td>
-</tr>
-<tr class="odd">
-<td><p>ppas-9.5.service</p>
-<p>ppas-9.5.sh</p></td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file and script for Advanced Server 9.5 from RPM package</td>
-</tr>
-<tr class="even">
-<td>edb-as-9.6.service</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for Advanced Server 9.6 from RPM package</td>
-</tr>
-<tr class="odd">
-<td>edb-as-10.service</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for Advanced Server 10 from RPM package</td>
-</tr>
-<tr class="even">
-<td>edb-as-11</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for Advanced Server 11 from RPM package</td>
-</tr>
-<tr class="odd">
-<td>postgresql-9.5.service</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for PostgreSQL 9.5 from interactive installer</td>
-</tr>
-<tr class="even">
-<td>postgresql-9.6.service</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for PostgreSQL 9.6 from interactive installer</td>
-</tr>
-<tr class="odd">
-<td>postgresql-10.service</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for PostgreSQL 10 from interactive installer</td>
-</tr>
-<tr class="even">
-<td>postgresql-11</td>
-<td>/usr/lib/systemd/system</td>
-<td>Service unit file for PostgreSQL 11 from interactive installer</td>
-</tr>
-</tbody>
-</table>
+  <table class="table">
+    <colgroup>
+      <col style="width: 18%" />
+      <col style="width: 23%" />
+      <col style="width: 58%" />
+    </colgroup>
+    <tbody>
+      <tr class="odd">
+        <td>File Name</td>
+        <td>Location</td>
+        <td>Description</td>
+      </tr>
+      <tr class="even">
+        <td>postgres-reg.ini</td>
+        <td>/etc</td>
+        <td>Product information for upgrades</td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <p>ppas-9.5.service</p>
+          <p>ppas-9.5.sh</p>
+        </td>
+        <td>/usr/lib/systemd/system</td>
+        <td>
+          Service unit file and script for Advanced Server 9.5 from interactive
+          installer
+        </td>
+      </tr>
+      <tr class="even">
+        <td>
+          <p>edb-as-9.6.service</p>
+          <p>edb-as-9.6.sh</p>
+        </td>
+        <td>/usr/lib/systemd/system</td>
+        <td>
+          Service unit file and script for Advanced Server 9.6 from interactive
+          installer
+        </td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <p>edb-as-10.service</p>
+          <p>edb-as-10.sh</p>
+        </td>
+        <td>/usr/lib/systemd/system</td>
+        <td>
+          Service unit file and script for Advanced Server 10 from interactive
+          installer
+        </td>
+      </tr>
+      <tr class="even">
+        <td>edb-as-11</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>
+          Service unit file and script for Advanced Server 11 from interactive
+          installer
+        </td>
+      </tr>
+      <tr class="odd">
+        <td>
+          <p>ppas-9.5.service</p>
+          <p>ppas-9.5.sh</p>
+        </td>
+        <td>/usr/lib/systemd/system</td>
+        <td>
+          Service unit file and script for Advanced Server 9.5 from RPM package
+        </td>
+      </tr>
+      <tr class="even">
+        <td>edb-as-9.6.service</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for Advanced Server 9.6 from RPM package</td>
+      </tr>
+      <tr class="odd">
+        <td>edb-as-10.service</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for Advanced Server 10 from RPM package</td>
+      </tr>
+      <tr class="even">
+        <td>edb-as-11</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for Advanced Server 11 from RPM package</td>
+      </tr>
+      <tr class="odd">
+        <td>postgresql-9.5.service</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for PostgreSQL 9.5 from interactive installer</td>
+      </tr>
+      <tr class="even">
+        <td>postgresql-9.6.service</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for PostgreSQL 9.6 from interactive installer</td>
+      </tr>
+      <tr class="odd">
+        <td>postgresql-10.service</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for PostgreSQL 10 from interactive installer</td>
+      </tr>
+      <tr class="even">
+        <td>postgresql-11</td>
+        <td>/usr/lib/systemd/system</td>
+        <td>Service unit file for PostgreSQL 11 from interactive installer</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 **Options**
 
-  - `-s <server_name>` or `--server <server_name>`
+- `-s <server_name>` or `--server <server_name>`
 
 > `<server_name>` is the name of the database server to be restored.
 
-  - `-p <restore_path>` or `--restore-path <restore_path>`
+- `-p <restore_path>` or `--restore-path <restore_path>`
 
 > `<restore_path>` is the directory path where the backup of the database server is to be restored. The directory must be empty and have the proper ownership and privileges assigned to it.
 
-  - `-i { <backup_id> | <backup_name> }` or `--backupid { <backup_id> | <backup_name>}`
-    
-      - `backup_id` is the backup identifier of the backup to be used for the restoration and `<backup_name>` is the user-defined alphanumeric name for the backup.
-      - If the option is omitted, the default is to use the latest backup.
+- `-i { <backup_id> | <backup_name> }` or `--backupid { <backup_id> | <backup_name>}`
 
-  - `-r <remote_user>@<remote_host_address>` or `--remote-host <remote_user@remote_host_address>`
-    
-      - `<remote_user>` is the user account on the remote database server host that accepts a passwordless SSH/SCP login connection and is the owner of the directory where the backup is to be restored.
-      - `<remote_host_address>` is the IP address of the remote host to which the backup is to be restored. This option must be specified if the `remote_host` parameter for this database server is not set in the BART configuration file.
-    
-    > For information about the `remote_host` parameter, see the configuration section of the *EDB Postgres Backup and Recovery Installation and Upgrade Guide* available at:
-    > 
-    > <https://www.enterprisedb.com/edb-docs/>
+  - `backup_id` is the backup identifier of the backup to be used for the restoration and `<backup_name>` is the user-defined alphanumeric name for the backup.
+  - If the option is omitted, the default is to use the latest backup.
 
-  - `-w <number_of_workers>` or `--workers <number_of_workers>`
+- `-r <remote_user>@<remote_host_address>` or `--remote-host <remote_user@remote_host_address>`
+
+  - `<remote_user>` is the user account on the remote database server host that accepts a passwordless SSH/SCP login connection and is the owner of the directory where the backup is to be restored.
+  - `<remote_host_address>` is the IP address of the remote host to which the backup is to be restored. This option must be specified if the `remote_host` parameter for this database server is not set in the BART configuration file.
+
+  > For information about the `remote_host` parameter, see the configuration section of the _EDB Postgres Backup and Recovery Installation and Upgrade Guide_ available at:
+  >
+  > <https://www.enterprisedb.com/edb-docs/>
+
+- `-w <number_of_workers>` or `--workers <number_of_workers>`
 
 > `<number_of_workers>` is the number of worker processes to run in parallel to stream the modified blocks of an incremental backup to the restore location. If the `-w` option is omitted, the default is `1` worker process.
-> 
+>
 > For example, if four worker processes are specified, four receiver processes on the restore host and four streamer processes on the BART host are used. The output of each streamer process is connected to the input of a receiver process. When the receiver gets to the point where it needs a modified block file, it obtains those modified blocks from its input. With this method, the modified block files are never written to the restore host disk.
 
-  - `-t <timeline_id>` or `--target-tli <timeline_id>`
+- `-t <timeline_id>` or `--target-tli <timeline_id>`
 
 > `<timeline_id>` is the integer identifier of the timeline to be used for replaying the archived WAL files for point-in-time recovery.
 
-  - `-x <target_xid>` or `--target-xid <target_xid>`
+- `-x <target_xid>` or `--target-xid <target_xid>`
 
 > `<target_xid>` is the integer identifier of the transaction ID that determines the transaction up to and including, which point-in-time recovery encompasses.
 
-  - `-g <target_timestamp>` or `--target-timestamp <target_timestamp>`
+- `-g <target_timestamp>` or `--target-timestamp <target_timestamp>`
 
 > `<target_timestamp>` is the timestamp that determines the point in time up to and including, which point-in-time recovery encompasses.
 
-  - `-c` or `--copy-wals`
+- `-c` or `--copy-wals`
 
 > Specify this option to copy archived WAL files from the BART backup catalog to `<restore_path>/archived_wals` directory.
-> 
-> The `restore_command` retrieves the WAL files from `<restore_path>/archived_wals` for the database server archive recovery. If the `-c` option is omitted and the `copy_wals_during_restore` parameter in the BART configuration file is not enabled in a manner applicable to this database server, then the `restore_command` in the `postgresql.conf` retrieves the archived WAL files directly from the BART backup catalog. For information about the `copy_wals_during_restore` parameter, see the *EDB Postgres Backup and Recovery Installation and Upgrade Guide* available at:
-> 
+>
+> The `restore_command` retrieves the WAL files from `<restore_path>/archived_wals` for the database server archive recovery. If the `-c` option is omitted and the `copy_wals_during_restore` parameter in the BART configuration file is not enabled in a manner applicable to this database server, then the `restore_command` in the `postgresql.conf` retrieves the archived WAL files directly from the BART backup catalog. For information about the `copy_wals_during_restore` parameter, see the _EDB Postgres Backup and Recovery Installation and Upgrade Guide_ available at:
+>
 > > <https://www.enterprisedb.com/edb-docs/>
 
 **Example**
 
 The following example restores a database server(named `mktg`) to the `/opt/restore` directory up to timestamp `2015-12-15 10:47:00`:
 
-``` text
+```text
 -bash-4.1$ bart RESTORE -s mktg -i 1450194208824 -p /opt/restore -t 1 -g
 '2015-12-15 10:47:00'
 INFO: restoring backup '1450194208824' of server 'mktg'
@@ -210,7 +228,7 @@ INFO: tablespace(s) restored
 
 The following parameters are set in the `postgresql.auto.conf` file:
 
-``` text
+```text
 restore_command = 'scp -o BatchMode=yes -o PasswordAuthentication=no
 enterprisedb@192.168.2.22:/opt/backup/mktg/archived_wals/%f %p'
 recovery_target_time = '2015-12-15 10:47:00'
@@ -219,7 +237,7 @@ recovery_target_timeline = 1
 
 The following is a list of the restored files and subdirectories:
 
-``` text
+```text
 [root@localhost restore]# pwd
 /opt/restore
 [root@localhost restore]# ls -l
@@ -253,7 +271,7 @@ postgresql.auto.conf
 
 The following example performs a `RESTORE` operation with the `copy_wals_during_restore` parameter enabled to copy the archived WAL files to the local `<restore_path>/archived_wals` directory:
 
-``` text
+```text
 -bash-4.1$ bart RESTORE -s hr -i hr_2017-03-29T13:50 -p
 /opt/restore_pg95 -t 1 -g '2017-03-29 14:01:00'
 INFO: restoring backup 'hr_2017-03-29T13:50' of server 'hr'
@@ -268,7 +286,7 @@ INFO: restore completed successfully
 
 The following parameters are set in the `postgresql.auto.conf` file:
 
-``` text
+```text
 restore_command = 'cp archived_wals/%f %p'
 recovery_target_time = '2017-03-29 14:01:00'
 recovery_target_timeline = 1
@@ -276,7 +294,7 @@ recovery_target_timeline = 1
 
 The following is a list of the restored files and subdirectories:
 
-``` text
+```text
 -bash-4.1$ pwd
 /opt/restore_pg95
 -bash-4.1$ ls -l
