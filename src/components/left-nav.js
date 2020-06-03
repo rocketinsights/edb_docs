@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import DottedBox from './icons/dotted-box';
 import ArrowLeft from './icons/arrow-left';
@@ -67,17 +66,9 @@ const orderTree = (tree, order) => {
   return result;
 };
 
-const DisplayNone = styled('div')`
-  display: none;
-`;
-
 const SubList = ({ children, collapsed }) => {
   if (collapsed) {
-    return (
-      <DisplayNone>
-        <ul>{children}</ul>
-      </DisplayNone>
-    );
+    return null;
   } else {
     return (
       <ul className="ml-4 list-unstyled align-items-center">{children}</ul>
