@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
         <html lang="en" />
         <title>{title}</title>
         <meta name="description" content={description} />
-        <body className="bg-light" />
+        <body className="bg-light fixed-container" />
       </Helmet>
       <MDXProvider
         components={{

@@ -67,7 +67,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <TopBar />
-      <Container className="p-0 d-flex bg-white">
+      <Container className="p-0 d-flex bg-white fixed-container">
         <SideNavigation>
           <LeftNav navLinks={navLinks} path={mdx.fields.path} />
         </SideNavigation>
@@ -79,12 +79,12 @@ const LearnDocTemplate = ({ data, pageContext }) => {
 
           {mdx.tableOfContents.item ? (
             <ContentRow>
-              <Col md={9}>
+              <Col xs={9}>
                 <MDXRenderer>{mdx.body}</MDXRenderer>
                 <Tiles mdx={mdx} navLinks={navLinks} />
               </Col>
 
-              <Col md={3}>
+              <Col xs={3}>
                 {mdx.tableOfContents.items && (
                   <TableOfContents toc={mdx.tableOfContents.items} />
                 )}
