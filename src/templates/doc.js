@@ -62,15 +62,15 @@ const getNavOrder = (product, version, leftNavs) => {
 
 const convertOrderToObjects = (navOrder, navLinks) => {
   let result = [];
-  let navObject = { title: null, linkItems: [] };
+  let navObject = { title: null, guides: [] };
   for (let item of navOrder) {
     if (!item.path && item.title) {
-      if (navObject.linkItems.length > 0) {
+      if (navObject.guides.length > 0) {
         result.push({ ...navObject });
       }
-      navObject = { title: item.title, linkItems: [] };
+      navObject = { title: item.title, guides: [] };
     } else if (item.path) {
-      navObject.linkItems.push(getLinkItemFromPath(item.path, navLinks));
+      navObject.guides.push(getLinkItemFromPath(item.path, navLinks));
     }
   }
   result.push({ ...navObject });
@@ -88,23 +88,34 @@ const getLinkItemFromPath = (path, navLinks) => {
   return null;
 };
 
-const Blocks = ({ blocks }) => (
+const Sections = ({ sections }) => (
   <>
-    {blocks.map(block => (
-      <Block block={block} />
+    {sections.map(section => (
+      <Section section={section} key={section.title} />
     ))}
   </>
 );
 
-const Block = ({ block }) => (
-  <div>
-    <h2>{block.title}</h2>
-    {block.linkItems.map(linkItem => (
-      <>
-        <Link to={linkItem.fields.path}>{linkItem.frontmatter.title}</Link>
-        <div>{linkItem.frontmatter.description || linkItem.excerpt}</div>
-      </>
-    ))}
+const Section = ({ section }) => (
+  <div className="card-deck my-4">
+    <div className="card rounded shadow-sm p-2">
+      <div className="card-body">
+        <h3 className="card-title balance-text">{section.title}</h3>
+        {section.guides.map(guide => (
+          <div key={guide.frontmatter.title}>
+            <Link
+              to={guide.fields.path}
+              className="btn btn-link btn-block text-left p-0"
+            >
+              {guide.frontmatter.title}
+            </Link>
+            <div className="card-text small text-muted">
+              {guide.frontmatter.description || guide.excerpt}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 );
 
@@ -114,8 +125,8 @@ const DocTemplate = ({ data, pageContext }) => {
   const versionArray = makeVersionArray(versions, mdx.fields.path);
   const { product, version } = getProductAndVersion(mdx.fields.path);
   const navOrder = getNavOrder(product, version, leftNavs);
-  const blocks = navOrder ? convertOrderToObjects(navOrder, navLinks) : null;
-  console.log(navLinks);
+  const sections = navOrder ? convertOrderToObjects(navOrder, navLinks) : null;
+
   return (
     <Layout>
       <TopBar />
@@ -130,7 +141,6 @@ const DocTemplate = ({ data, pageContext }) => {
         </SideNavigation>
         <MainContent>
           <h1 className="balance-text">{mdx.frontmatter.title}</h1>
-
           <ContentRow>
             <Col md={9}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
@@ -142,8 +152,7 @@ const DocTemplate = ({ data, pageContext }) => {
               )}
             </Col>
           </ContentRow>
-          {navOrder && <Blocks blocks={blocks} />}
-
+          {navOrder && <Sections sections={sections} />}
           <Footer />
         </MainContent>
       </Container>
