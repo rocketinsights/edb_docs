@@ -113,7 +113,7 @@ const SectionHeading = ({ newList, path }) => {
 const SectionHeadingWithVersions = ({ newList, path, versionArray }) => {
   return (
     <li className="ml-0 mb-4 d-flex align-items-center">
-      <DottedBox className="opacity-2 mr-2" width="120" height="90" />
+      <DottedBox className="opacity-2 mr-2" width="90" height="90" />
       <div className="rightsidenoclass">
         <Link
           to="/"
