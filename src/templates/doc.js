@@ -130,7 +130,7 @@ const DocTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <TopBar />
-      <Container className="p-0 d-flex bg-white">
+      <Container className="p-0 d-flex bg-white fixed-container">
         <SideNavigation>
           <LeftNav
             navLinks={navLinks}
@@ -142,11 +142,11 @@ const DocTemplate = ({ data, pageContext }) => {
         <MainContent>
           <h1 className="balance-text">{mdx.frontmatter.title}</h1>
           <ContentRow>
-            <Col md={9}>
+            <Col xs={9}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
             </Col>
 
-            <Col md={3}>
+            <Col xs={3}>
               {mdx.tableOfContents.items && (
                 <TableOfContents toc={mdx.tableOfContents.items} />
               )}

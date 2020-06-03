@@ -30,8 +30,8 @@ const SideNavigationFooter = () => (
 
 const SideNavigation = ({ children }) => {
   return (
-    <nav className="sidebar d-none d-md-block bg-light border-right">
-      <div className="sidebar-sticky pl-0 pr-4 pb-4">
+    <nav className="sidebar d-block bg-light border-right">
+      <div className="sidebar-sticky ml-1 pl-0 pr-4 pb-4">
         <LogoLink />
         {children}
         <SideNavigationFooter />
