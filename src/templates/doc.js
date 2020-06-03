@@ -102,17 +102,21 @@ const Section = ({ section }) => (
       <div className="card-body">
         <h3 className="card-title balance-text">{section.title}</h3>
         {section.guides.map(guide => (
-          <div key={guide.frontmatter.title}>
+          <>
             <Link
               to={guide.fields.path}
               className="btn btn-link btn-block text-left p-0"
+              key={`${guide.frontmatter.title}-link`}
             >
               {guide.frontmatter.title}
             </Link>
-            <div className="card-text small text-muted">
+            <p
+              className="card-text small text-muted"
+              key={`${guide.frontmatter.title}-paragraph`}
+            >
               {guide.frontmatter.description || guide.excerpt}
-            </div>
-          </div>
+            </p>
+          </>
         ))}
       </div>
     </div>
