@@ -120,12 +120,15 @@ const Section = ({ section }) => (
 );
 
 const DocTemplate = ({ data, pageContext }) => {
-  const { mdx } = data;
+  const { fields, frontmatter, body, tableOfContents } = data.mdx;
+  const { path } = fields;
+  const depth = path.split('/').length;
   const { navLinks, versions } = pageContext;
-  const versionArray = makeVersionArray(versions, mdx.fields.path);
-  const { product, version } = getProductAndVersion(mdx.fields.path);
+  const versionArray = makeVersionArray(versions, path);
+  const { product, version } = getProductAndVersion(path);
   const navOrder = getNavOrder(product, version, leftNavs);
-  const sections = navOrder ? convertOrderToObjects(navOrder, navLinks) : null;
+  const sections =
+    navOrder && depth === 3 ? convertOrderToObjects(navOrder, navLinks) : null;
 
   return (
     <Layout>
@@ -134,25 +137,25 @@ const DocTemplate = ({ data, pageContext }) => {
         <SideNavigation>
           <LeftNav
             navLinks={navLinks}
-            path={mdx.fields.path}
+            path={path}
             versionArray={versionArray}
             navOrder={navOrder}
           />
         </SideNavigation>
         <MainContent>
-          <h1 className="balance-text">{mdx.frontmatter.title}</h1>
+          <h1 className="balance-text">{frontmatter.title}</h1>
           <ContentRow>
             <Col md={9}>
-              <MDXRenderer>{mdx.body}</MDXRenderer>
+              <MDXRenderer>{body}</MDXRenderer>
             </Col>
 
             <Col md={3}>
-              {mdx.tableOfContents.items && (
-                <TableOfContents toc={mdx.tableOfContents.items} />
+              {tableOfContents.items && (
+                <TableOfContents toc={tableOfContents.items} />
               )}
             </Col>
           </ContentRow>
-          {navOrder && <Sections sections={sections} />}
+          {sections && <Sections sections={sections} />}
           <Footer />
         </MainContent>
       </Container>

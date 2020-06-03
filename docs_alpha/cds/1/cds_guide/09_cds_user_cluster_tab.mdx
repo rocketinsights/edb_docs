@@ -1,0 +1,261 @@
+---
+title: "Using the Cluster Tab"
+---
+
+<div id="cds_user_cluster_tab" class="registered_link"></div>
+
+
+Use the `Clusters` tab to create, monitor and manage active clusters.
+
+![*The Clusters tab.*](images/cds_user_cluster_tab.png)
+
+<div class="index">
+
+cluster health
+
+</div>
+
+Indicators in the columns to the right of a cluster name display the current health of the cluster. Click on a column name to sort the contents of the column; click a second time to reverse the sort-order.
+
+  - The `VM` column displays the state of the virtual machine on which the cluster resides.
+  - The `HA` column displays the state of the high-availability cluster.
+  - The `DB` column displays the state of the database server.
+  - The `UP` column displays the current status of the packages installed on the cluster. Periodically, the cluster manager performs a check to see if the packages are up to date.
+
+Status indicators provide quick visual feedback about each feature:
+
+|                                               |                                                                             |
+| --------------------------------------------- | --------------------------------------------------------------------------- |
+| ![icon1](images/cds_user_green_checkmark.png) | A green checkmark indicates that an object is healthy.                      |
+| ![icon2](images/cds_user_yellow_alert.png)    | A yellow alert symbol calls attention to an object that requires attention. |
+| ![icon3](images/cds_user_red_error.png)       | A red error symbol signifies that an object is not available.               |
+| ![icon4](images/cds_user_orange_busy.png)     | A busy-indicator signals that the cluster is processing a request.          |
+| ![icon5](images/cds_user_grey_question.png)   | A question mark indicates that the state of the resource is unknown.        |
+
+<div class="index">
+
+download log files log files
+
+</div>
+
+To download an archive of log files, right-click on a node name and select:
+
+  - `Download DB Logs` to download database server logs.
+  - `Download pgPool Logs` to download pgPool (load balancing) logs.
+
+![*Downloading log files.*](images/cds_user_cluster_download_logs.png)
+
+The menu options are context sensitive, displaying log types only for software that is deployed on the selected node. The archive name is in the following form:
+
+> `<address>-<log_type>-<date>.tar.gz`
+
+Where:
+
+> *address* is the address of the selected node.
+> 
+> *log_type* is the type of log file (server type or pgPool).
+> 
+> *date* is the date that the archive was generated.
+
+Archive preparation can take some time if your log files are large; the download will begin when the preparation completes.
+
+<div class="index">
+
+icons
+
+</div>
+
+Use the icons along the left side of the `Clusters` tab to create new clusters or manage existing clusters:
+
+|                                           |                                                                                                                                                                                                                                                                                                                                                        |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![icon6](images/cds_user_new_cluster.png) | Use the `New Cluster` icon to create a new Postgres cluster.                                                                                                                                                                                                                                                                                           |
+| ![icon7](images/cds_user_scale_up.png)    | Select the `Scale Up` icon to manually add one or more replicas to the current cluster, or add additional storage to the current cluster servers.                                                                                                                                                                                                      |
+| ![icon8](images/cds_user_scale_down.png)  | Use the `Scale Down` icon to remove one or more specified replicas from the cluster.                                                                                                                                                                                                                                                                   |
+| ![icon9](images/cds_user_backup.png)      | Select the `Backup` icon to take a backup of the highlighted cluster (a single backup of the cluster data, and a backup of the cluster configuration files).                                                                                                                                                                                           |
+| |icon10                                   | Select the `Clone` icon to copy the master node of the selected database into a *clone* of the original master node. When you clone a database, only the master node is recreated in the new cluster.                                                                                                                                                  |
+| |icon11                                   | You can use the `Upgrade` icon to open a dialog that allows you to perform a yum update (keeping the same server version) or perform an upgrade to a later server version. After performing an update, the cluster nodes will be rebooted (initiating any kernel updates required). Please note that a software update can take some time to complete. |
+| |icon12                                   | Use the `Scale Machine Type` icon to change the size of the virtual machine for the selected cluster. CDS will copy the cluster into a new cluster of a different server class (i.e. RAM and CPU), and optionally re-assign the IP address of the existing cluster to the new cluster.                                                                 |
+| |icon13                                   | Use the `Restart/Reload DB Servers` icon to access a dialog that allows you to manage server operations.                                                                                                                                                                                                                                               |
+| |icon14                                   | Use the `Administrative Settings` icon to access a popup dialog that allows you to view or modify the ownership and notification email address of the currently selected cluster.                                                                                                                                                                      |
+| |icon15                                   | Use the `Delete Cluster` icon to delete the currently selected cluster. A popup dialog will ask you to confirm your decision to terminate a cluster; once terminated, a cluster may only be restored from a backup.                                                                                                                                    |
+
+By default, the box next to `Release elastic IP address` is checked. Deselect this option if you wish to retain the IP address for re-use with other clusters. If you release the IP address, it will be made available for use by other clusters.
+
+When you terminate an active cluster, backups are not deleted. Backups (including user data) are retained until they are selected and deleted from the `Backups` tab.
+
+The panels located at the bottom of the `Clusters` tab provide easy access to helpful statistical usage and activity information about the currently selected cluster. Three navigation bars control the display; click a bar to access one of the following panels:
+
+  - Open the `Details` panel to view information about the selected cluster.
+  - Open the `Monitoring` panel to view usage statistics for the selected cluster.
+  - Open the `Events` panel to review event logs describing activities on the selected cluster.
+
+<div class="index">
+
+The Details Panel
+
+</div>
+
+## The Details Panel
+
+Click the `Details` navigation bar to open the `Details` panel.
+
+![*The Details panel on the Clusters tab.*](images/cds_details_tab.png)
+
+The left pane of the `Details` panel displays information about the currently selected cluster:
+
+  - The name of the cluster
+  - The date and time that the cluster was created
+  - The name of the database superuser
+  - The name of the cluster owner
+  - The email address to which notifications about the cluster will be sent
+  - The cluster size
+  - If the cluster is encrypted
+  - If applicable, the IOPS value for the cluster
+  - The region in which the cluster resides
+  - The virtual network or VPC ID in which the cluster resides
+  - The cluster's hardware type or Server Class
+  - The engine type and version that resides on the server
+  - If a template was used when provisioning the cluster, the template name
+  - If the cluster is configured to update when provisioned
+
+You can use controls on the `Details` panel to specify:
+
+  - Failover preferences for the cluster
+  - Auto-scaling thresholds for the cluster
+  - Backup preferences for the cluster
+  - If continuous archiving should be enabled for the cluster
+
+Please note: If a template was used to specify the configuration details for the cluster, the template may prohibit access to auto-scaling or manual scaling functionality.
+
+<div class="index">
+
+cluster healing mode
+
+</div>
+
+**Selecting a Cluster Healing Mode**
+
+Use the `Cluster healing mode` radio buttons to specify the type of failover that should be employed:
+
+  - Select the `Replace failed master with a new master` radio button to specify that the cluster manager should create a new master to replace a failed master node.
+    
+    When replacing a failed master node with a new master node, the data volumes from the failed instance are attached to the new master node, preserving data integrity, while the replicas continue serving client queries.
+
+  - Select the `Replace failed master with existing replica` radio button to specify that the cluster manager should promote a replica node to be the new master node for the cluster.
+    
+    When replacing a failed master node with an existing replica, a replica node is marked for promotion to master node, while the other replica nodes are re-configured to replicate data from the new master node. Since replica nodes use asynchronous replication, any data that was committed to the old master node, but not pushed to the replica prior to the node failure will be lost.
+
+Please note that replacing a failed master node with a new master node can take a bit longer than promoting a replica node to the role of master, but it does have the advantage of guaranteeing that no committed data will be lost. If recovery time for your cluster is more important than preserving any non-replicated transactions, then select Replace failed master with existing replica as the healing mode.
+
+<div class="index">
+
+auto-scaling thresholds
+
+</div>
+
+**Adjusting Auto-Scaling Thresholds**
+
+Use the `Auto-Scaling Thresholds` controls on the `Details` panel to adjust the threshold at which CDS automatically scales up cluster resources. When auto-scaling in enabled, CDS monitors the server storage and connection resources in use, and automatically adds additional resources when usage exceeds a user specified percent.
+
+  - When the `% of Storage Size used` is reached, CDS will automatically increase your data space by 50%.
+  - When the `# of Server Connections` is reached, CDS adds replica nodes.
+
+Use the Auto Scale Options controls to adjust the threshold at which CDS automatically scales up cluster resources. The Auto Scale Options controls are located on the Details panel; to access the Details panel, navigate to the Clusters tab, and highlight the name of a cluster.
+
+![*Auto Scale Options controls.*](images/cds_user_cluster_details_autoscale.png)
+
+Adjust the `Auto Scale Options` sliders to increase or decrease the thresholds at which automatic scaling is invoked. When you modify the values, CDS will display a New Value Saved notice, alerting you that your changes have been saved.
+
+<div class="index">
+
+backup settings
+
+</div>
+
+**Modifying Backup Settings**
+
+Use the fields in the `Backup Settings` box to change your backup preferences for the selected cluster:
+
+  - Use the `Backup Window` drop-down listbox to select an optimal time to process cluster backups; specify a time when the number of clients accessing the database is minimal.
+
+  - Use the `Backup Retention` field to specify the number of backups that should be stored for the selected cluster.
+
+  - Select the checkbox next to `Continuous Archiving (Point-in-Time Recovery)` to enable point-in-time recovery for a cluster. When enabled, a base backup is automatically performed that can to be used to restore to a specific point in time. All subsequent automatic scheduled backups will also support point-in-time recovery. Note that if you deselect this option, the cluster (and subsequent automatic backups) will be re-configured to not include support for point-in-time recovery.
+    
+    When point-in-time recovery is enabled, the value specified in the Backup Retention field determines the duration of the point-in-time recovery backup window. For example, if you specify a value of 7, the backup window will be 7 calendar days long. When the backup retention threshold is reached, the oldest base backup is removed, as well as any WAL files required to perform a recovery with that backup.
+
+<div class="index">
+
+connection status cluster information
+
+</div>
+
+**Reviewing Cluster Connection and Status Information**
+
+The right side of the Details panel contains a status overview and connection information for the selected cluster. If you have created replicas, the secondary server nodes are listed below the master node in the tree control; expand the tree control to view the status of the replication nodes.
+
+Status indicators on the `Clusters` tab provide quick visual feedback about the status of your cluster:
+
+  - A green checkmark indicates that an object is healthy.
+  - A yellow alert symbol calls attention to an object that requires attention.
+  - A red error symbol signifies that an object is not available.
+  - A question mark indicates that the state of the resource is unknown.
+
+On the Details panel, use the settings icon in the upper-right corner of the `` `UP `` column to open a tab that allows you to select the columns that will be displayed in the panel.
+
+![*The column selection tab.*](images/cds_user_cluster_details_column_selection.png)
+
+The columns display:
+
+  - The `AZ` column displays the Availability Zone in which the cluster resides.
+  - The `VPC ID` column displays the identifier of the VPC on which the cluster resides.
+  - The `LBPORT` column displays the port number to which a client application should connect to utilize load balancing.
+  - The `DBPORT` column displays the default listener port for the Advanced Server or PostgreSQL server.
+  - The `CXN` column displays the current number of connections to the node.
+  - The `VM` column displays the state of the virtual machine on which the cluster resides.
+  - The `HA` column displays the state of the high-availability cluster.
+  - The `DB` column displays the state of the database server.
+  - The `UP` column displays the current status of the packages installed on the cluster. Periodically, the cluster manager performs a check to see if the packages are up to date. If an update becomes available, the UP column will display a yellow alert symbol (if the update is non-critical), or a red error symbol (if the update is a critical security alert).
+
+<div class="index">
+
+monitoring
+
+</div>
+
+## The Monitoring Panel
+
+Click the `Monitoring` navigation bar to open the `Monitoring` panel.
+
+The `Monitoring` panel displays graphs that allow you to review statistical usage information about the amount of storage and the CPU load for the selected cluster.
+
+![*The Monitoring panel displays usage information.*](images/cds_monitoring.png)
+
+Use the `Time Range` drop-down listbox to modify the time period that the charted information on the `Monitoring` panel spans.
+
+The graphs on the `Monitoring` panel display resource usage information:
+
+  - The `Data Space` chart displays the amount of allocated data space used by the selected cluster. The red line denotes the threshold specified by the Data Space Threshold slider on the Details panel (the threshold at which the cluster will be scaled-up). The blue line indicates the amount of the data space that is currently in use.
+  - The `Connections` chart displays a graph of the number of connections to the cluster during the selected time range. The red line denotes the threshold specified by the Connections slider on the Details panel.
+  - The `Load` chart displays the processing load placed on the CPU by connecting clients. The value displayed is the actual load average as read from the program, /proc/loadavg. The chart shows the number of jobs in the run queue or waiting for disk I/O, averaged over 15 minute periods.
+  - The `Replication Lag` chart displays the replication lag (in seconds) for the cluster. Each replica node is displayed as a separate colored line on the chart; the key at the bottom of the chart identifies the IP address of the node.
+
+<div class="index">
+
+events
+
+</div>
+
+## The Events Panel
+
+Click the `Events` navigation bar to open the `Events` panel.
+
+The `Events` panel displays an event log containing a history of selected events for the connected user.
+
+![*The Events panel displays server activity.*](images/cds_events.png)
+
+Highlight a cluster name to display only events for that cluster; if you do not select a cluster, the `Events` panel will display the collected events for the connected user.
+
+  - Click a column heading to sort the logged activity by the selected column; click again to reverse the sort order.
+  - Use the mouse to select multiple rows from the event log for copy and paste operations.
