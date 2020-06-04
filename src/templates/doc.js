@@ -102,17 +102,21 @@ const Section = ({ section }) => (
       <div className="card-body">
         <h3 className="card-title balance-text">{section.title}</h3>
         {section.guides.map(guide => (
-          <div key={guide.frontmatter.title}>
+          <>
             <Link
               to={guide.fields.path}
               className="btn btn-link btn-block text-left p-0"
+              key={`${guide.frontmatter.title}-link`}
             >
               {guide.frontmatter.title}
             </Link>
-            <div className="card-text small text-muted">
+            <p
+              className="card-text small text-muted"
+              key={`${guide.frontmatter.title}-paragraph`}
+            >
               {guide.frontmatter.description || guide.excerpt}
-            </div>
-          </div>
+            </p>
+          </>
         ))}
       </div>
     </div>
@@ -133,7 +137,7 @@ const DocTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <TopBar />
-      <Container className="p-0 d-flex bg-white">
+      <Container className="p-0 d-flex bg-white fixed-container">
         <SideNavigation>
           <LeftNav
             navLinks={navLinks}
@@ -145,11 +149,11 @@ const DocTemplate = ({ data, pageContext }) => {
         <MainContent>
           <h1 className="balance-text">{frontmatter.title}</h1>
           <ContentRow>
-            <Col md={9}>
+            <Col xs={9}>
               <MDXRenderer>{body}</MDXRenderer>
             </Col>
 
-            <Col md={3}>
+            <Col xs={3}>
               {tableOfContents.items && (
                 <TableOfContents toc={tableOfContents.items} />
               )}
