@@ -5,7 +5,6 @@ import Layout from './layout';
 import LeftNav from './left-nav';
 import Logo from './logo';
 import MainContent from './main-content';
-import SearchBar from './search-bar';
 import SearchNavigation from './search-navigation';
 import SideNavigation from './side-navigation';
 import TableOfContents from './table-of-contents';
@@ -21,7 +20,6 @@ export {
   LeftNav,
   Logo,
   MainContent,
-  SearchBar,
   SearchNavigation,
   SideNavigation,
   TableOfContents,
