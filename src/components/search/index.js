@@ -8,6 +8,8 @@ import {
   connectStateResults,
 } from 'react-instantsearch-dom';
 import { PageHit } from './hitComps';
+import { Close } from '../icons';
+import { Button } from 'react-bootstrap';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -55,15 +57,23 @@ const ResultGroup = ({ title, index, last }) => (
 
 const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => (
   <>
-    <form noValidate action="" role="search">
+    <form noValidate action="" role="search" className='d-flex'>
       <input
         className="form-control form-control-lg border-0 pl-3 bg-white"
-        type="search"
+        type="text"
+        aria-label="search"
         placeholder="Search"
         value={currentRefinement}
         onChange={e => refine(e.currentTarget.value)}
         onFocus={onFocus}
       />
+      <Button
+        variant="link"
+        onClick={(e) => { e.preventDefault(); refine(''); }}
+        className={`${query.length === 0 && 'd-none'}`}
+      >
+        <Close className="opacity-5" width="20" height="20" />
+      </Button>
     </form>
     <div
       className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${query.length > 0 && focus ? 'show' : ''}`}
