@@ -2,14 +2,16 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import Layout from '../components/layout';
-import LeftNav from '../components/left-nav';
-import TableOfContents from '../components/table-of-contents';
-import TopBar from '../components/top-bar';
-import SideNavigation from '../components/side-navigation';
-import MainContent from '../components/main-content';
-import Footer from '../components/footer';
-import CardDecks from '../components/card-decks';
+import {
+  CardDecks,
+  Footer,
+  Layout,
+  LeftNav,
+  MainContent,
+  SideNavigation,
+  TableOfContents,
+  TopBar,
+} from '../components';
 
 export const query = graphql`
   query($path: String!) {
@@ -74,7 +76,12 @@ const LearnDocTemplate = ({ data, pageContext }) => {
         <MainContent>
           <div className="d-flex justify-content-between align-items-center">
             <h1 className="balance-text">{mdx.frontmatter.title}</h1>
-            <a href={githubLink || '#'} className="btn btn-sm btn-primary px-4 text-nowrap" >Edit this page</a>
+            <a
+              href={githubLink || '#'}
+              className="btn btn-sm btn-primary px-4 text-nowrap"
+            >
+              Edit this page
+            </a>
           </div>
 
           {mdx.tableOfContents.item ? (

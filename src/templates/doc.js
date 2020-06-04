@@ -2,13 +2,15 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { graphql, Link } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import Layout from '../components/layout';
-import LeftNav from '../components/left-nav';
-import TableOfContents from '../components/table-of-contents';
-import TopBar from '../components/top-bar';
-import SideNavigation from '../components/side-navigation';
-import MainContent from '../components/main-content';
-import Footer from '../components/footer';
+import {
+  Footer,
+  Layout,
+  LeftNav,
+  MainContent,
+  SideNavigation,
+  TableOfContents,
+  TopBar,
+} from '../components';
 import { leftNavs } from '../constants/left-navs';
 
 export const query = graphql`
