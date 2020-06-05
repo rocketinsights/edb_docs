@@ -59,7 +59,7 @@ const Tiles = ({ mdx, navLinks }) => {
     const tiles = getChildren(path, navLinks);
     return <CardDecks cards={tiles} colSize={4} cardType="simple" />;
   }
-  return <div>hi</div>;
+  return null;
 };
 
 const LearnDocTemplate = ({ data, pageContext }) => {
@@ -84,7 +84,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
             </a>
           </div>
 
-          {mdx.tableOfContents.item ? (
+          {mdx.tableOfContents.items ? (
             <ContentRow>
               <Col xs={9}>
                 <MDXRenderer>{mdx.body}</MDXRenderer>
