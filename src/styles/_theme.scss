@@ -1,16 +1,20 @@
 // EDB Ivory Bootstrap Theme
 
 // colors
-$blue:        #4D89B1;
-$purple:      #8171B5;
-$red:         #B22424;
-$orange:      #FF3E00;
-$yellow:      #FFA319;
-$green:       #88B84A;
-$cyan:        #21ABC1;
-$secondary:   #7AABCC;
+$blue:        #4D89B1; // rgb(77, 137, 177)
+$indigo:      #6610F2; // rgb(103, 16, 242)
+$purple:      #8171B5; // rgb(129, 113, 181)
+$pink:        #E83E8C; // rgb(232, 62, 141)
+$red:         #B22424; // rgb(178, 36, 36)
+$orange:      #FF3E00; // rgb(255, 62, 0)
+$yellow:      #FFA319; // rgb(255, 163, 25)
+$green:       #88B84A; // rgb(136, 184, 74)
+$teal:        #20C997; // rgb(32, 201, 151)
+$cyan:        #21ABC1; // rgb(33, 171, 193)
+$secondary:   #7AABCC; // rgb(122, 171, 204)
+$light:       #F0F4F7; // rgb(240, 244, 247)
+$dark:        #102D40; // rgb(16, 45, 64)
 $info:        $orange;
-$dark:        #102D40;
 $gray-100:    #EBEFF2;
 $gray-200:    #CED5D9;
 $gray-300:    #B2BABF;
@@ -26,6 +30,7 @@ $yiq-text-dark: #000000;
 // typography
 $body-color: $dark;
 $font-family-sans-serif: "Signika", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-monospace: "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 $font-weight-normal: 300;
 $font-weight-bold: 600;
 $headings-font-weight: 600;

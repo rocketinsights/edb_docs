@@ -1,0 +1,200 @@
+/* Line-height */
+.lh-1 { line-height: 1; }
+.lh-12 { line-height: 1.2; }
+
+/* gray backgrounds */
+.bg-gray-1 { background-color: $gray-100; }
+.bg-gray-2 { background-color: $gray-200; }
+.bg-gray-3 { background-color: $gray-300; }
+.bg-gray-4 { background-color: $gray-400; }
+.bg-gray-5 { background-color: $gray-500; }
+.bg-gray-6 { background-color: $gray-600; }
+.bg-gray-7 { background-color: $gray-700; }
+.bg-gray-8 { background-color: $gray-800; }
+.bg-gray-9 { background-color: $gray-900; }
+.bg-black { background-color: $black; }
+
+/* opacity */
+.opacity-0 { opacity: 0; }
+.opacity-1 { opacity: .1; }
+.opacity-2 { opacity: .2; }
+.opacity-3 { opacity: .3; }
+.opacity-4 { opacity: .4; }
+.opacity-5 { opacity: .5; }
+.opacity-6 { opacity: .6; }
+.opacity-7 { opacity: .7; }
+.opacity-8 { opacity: .8; }
+.opacity-9 { opacity: .9; }
+
+/* max and min 50% */
+.max-w-50 { max-width: 50%; }
+.max-h-50 { max-height: 50%; }
+.min-w-50 { min-width: 50%; }
+.min-h-50 { min-height: 50%; }
+
+.d-contents { display: contents; }
+
+.balance-text { text-wrap: balance; }
+
+/* fill colors */
+$fill-colors: ();
+$fill-colors: map-merge(
+  map-merge($theme-colors, map-remove($colors, "gray", "gray-dark")),
+  (
+    "gray-100": $gray-100,
+    "gray-200": $gray-200,
+    "gray-300": $gray-300,
+    "gray-400": $gray-400,
+    "gray-500": $gray-500,
+    "gray-600": $gray-600,
+    "gray-700": $gray-700,
+    "gray-800": $gray-800,
+    "gray-900": $gray-900,
+    "white": $white,
+    "black": $black,
+  )
+);
+
+@each $color, $value in $fill-colors {
+  .fill-#{$color} { fill: $value; }
+}
+.fill-inherit { fill: currentColor!important; }
+
+/*
+  width and height pixel responsiveness
+  written as hpx-<breakpoint size>-<# of px>
+  or wpx-<breakpoint size>-<# of px>
+  (e.x wpx-sm-200)
+*/
+
+$px-sizes: ();
+$i: 0;
+@while $i <= 500 {
+  $px-sizes: map-merge(
+    (#{$i} : #{$i}px),
+    $px-sizes
+  );
+  $i: $i + 10;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $prop, $abbrev in (width: wpx, height: hpx) {
+      @each $size, $length in $px-sizes {
+        .#{$abbrev}#{$infix}-#{$size} { #{$prop}: $length !important; }
+      }
+    }
+  }
+}
+
+/*
+  Setup for text alignment so that on smaller screens it centers but on larger it does
+  not. Specifically done for the subcribe section. May be useful later
+*/
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-down($breakpoint){
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    .text-center#{$infix} { text-align: center !important; }
+  }
+}
+
+
+/* FLOATING LABELS */
+/* Floating form labels using "form-label-group" class instead of "form-group" */
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group > input,
+.form-label-group > label,
+.form-label-group > select {
+  height: 3.125rem;
+  padding: .75rem;
+}
+
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: gray;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder,
+.form-label-group input:-ms-input-placeholder,
+.form-label-group input::-ms-input-placeholder,
+.form-label-group input::-moz-placeholder, 
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group select:required:invalid { color: gray; } 
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: gray;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: gray;
+  }
+  .form-label-group input:not(:placeholder-shown) {
+    padding-top: inherit;
+    padding-bottom: inherit;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: gray;
+  }
+  .form-label-group input:not(:placeholder-shown) {
+    padding-top: inherit;
+    padding-bottom: inherit;
+  }
+}
+
+
+/* utility badge colors for partners page */
+.badge-silver { 
+  background-color: #d9d9d9;
+  background-image: linear-gradient(315deg, #d9d9d9 0%, #f6f2f2 74%);
+}
+.badge-gold { 
+  background-color: #fbb034;
+  background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
+}
+.badge-platinum {
+  background-color: #e3efe8;
+  background-image: linear-gradient(315deg, #96a7cf 0%, #e3efe8 74%);
+}
