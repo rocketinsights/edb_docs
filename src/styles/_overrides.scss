@@ -14,9 +14,13 @@
 }
 
 .balance-text {
-  text-wrap: balance;  /* Apply (proposed) CSS style */
+  text-wrap: balance; /* Apply (proposed) CSS style */
 }
 
 .fixed-container {
   min-width: 1320px;
+}
+
+.toctree {
+  display: none;
 }
