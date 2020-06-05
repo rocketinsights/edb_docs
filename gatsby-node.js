@@ -85,6 +85,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             navTitle
             description
           }
+          excerpt(pruneLength: 100)
           fields {
             path
             product
