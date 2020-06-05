@@ -9,9 +9,7 @@
 ### Running Katacoda embeds locally
 If you need to run the Katacoda embeds during local development, you'll need to have SSL setup locally.
 
-1. Run the server with `gatsby develop --https`. When promped, enter your root password. This will configured a local certificate for the development server to use.
-2. Install `certutil`, which will handle browser acceptance of your local cert. See [this Gatsby doc](https://www.gatsbyjs.org/docs/local-https/#manual-installation-of-certutil) to accomplish that. TLDR on Mac, run `brew install nss`.
-3. Run `gatsby develop --https` again. The site should now be available at `https://localhost:8000`, and katacoda embeds should work.
+1. Run the server with `gatsby develop --https`. When promped, enter your root password. This will configured a local certificate for the development server to use. If you have issues, see [this Gatsby doc](https://www.gatsbyjs.org/docs/local-https/#manual-installation-of-certutil).
 
 ## Deployment
 
