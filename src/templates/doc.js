@@ -7,6 +7,7 @@ import {
   Layout,
   LeftNav,
   MainContent,
+  PrevNext,
   SideNavigation,
   TableOfContents,
   TopBar,
@@ -111,9 +112,7 @@ const Section = ({ section }) => (
             >
               {guide.frontmatter.title}
             </Link>
-            <span
-              className="small text-muted"
-            >
+            <span className="small text-muted">
               {guide.frontmatter.description || guide.excerpt}
             </span>
           </p>
@@ -159,6 +158,7 @@ const DocTemplate = ({ data, pageContext }) => {
               )}
             </Col>
           </ContentRow>
+          {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
           <Footer />
         </MainContent>

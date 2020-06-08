@@ -6,6 +6,11 @@
 4. Pull the shared icon files down with `git submodule update --init`
 5. Run the site locally with `gatsby develop`
 
+### Running Katacoda embeds locally
+If you need to run the Katacoda embeds during local development, you'll need to have SSL setup locally.
+
+1. Run the server with `gatsby develop --https`. When promped, enter your root password. This will configured a local certificate for the development server to use. If you have issues, see [this Gatsby doc](https://www.gatsbyjs.org/docs/local-https/#manual-installation-of-certutil).
+
 ## Deployment
 
 Deploy the site to GH Pages with `yarn run deploy`
