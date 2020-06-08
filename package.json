@@ -44,9 +44,15 @@
     "react-instantsearch-dom": "^6.5.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "babel-jest": "^26.0.1",
+    "babel-preset-gatsby": "^0.4.8",
     "gh-pages": "^2.2.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.0.1",
     "prettier": "^1.19.1",
     "react-refresh": "^0.8.3",
+    "react-test-renderer": "^16.13.1",
     "typescript": "^3.9.3"
   },
   "repository": {

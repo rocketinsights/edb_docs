@@ -1,6 +1,7 @@
 ```
-title:"Modifying the Data Directory Location on CentOS or Redhat 7.x"
-```
+​```hmtl
+title: "Modifying the Data Directory Location on CentOS or Redhat 7.x"
+---
 
 <div id="modifying_the_data_directory_location_on_centos_or_redhat_7_x" class="registered_link"></div>
 
@@ -8,15 +9,15 @@ On a CentOS or RedHat version 7.x host, the unit file is named `edb-as-11.servic
 
 By default, data files reside under `/var/lib/edb/as11/data` directory. To use a data directory that resides in a non-default location, create a copy of the unit file under the `/etc` directory:
 
-`cp /usr/lib/systemd/system/edb-as-11.service`
-   `/etc/systemd/system/`
+> `cp /usr/lib/systemd/system/edb-as-11.service`
+>    `/etc/systemd/system/`
 
 After copying the unit file to the new location, modify the service file (`/etc/systemd/system/edb-as-11.service`) with your editor of choice, correcting any required paths.
 
 Then, use the following command to reload `systemd`, updating the modified service scripts:
 
-​			`systemctl daemon-reload`
+> `systemctl daemon-reload`
 
 Then, start the Advanced Server service with the following command:
 
-​			`systemctl start edb-as-11`
+> `systemctl start edb-as-11`
