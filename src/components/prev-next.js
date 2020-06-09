@@ -26,15 +26,15 @@ const PrevNext = ({ navLinks, path }) => {
   const { prevLink, nextLink } = getPrevAndNextLinks(sortedLinks, path);
 
   return (
-    <div class="d-flex justify-content-between mt-5">
+    <div className="d-flex justify-content-between mt-5">
       <div>
         {prevLink && (
           <Link
             to={prevLink.path}
-            class="p-3 d-inline-block btn btn-outline-primary text-left"
+            className="p-3 d-inline-block btn btn-outline-primary text-left"
           >
-            <h5 class="m-0">&larr; Prev</h5>
-            <p class="m-0 small balance-text">{prevLink.title}</p>
+            <h5 className="m-0">&larr; Prev</h5>
+            <p className="m-0 small balance-text">{prevLink.title}</p>
           </Link>
         )}
       </div>
@@ -42,10 +42,10 @@ const PrevNext = ({ navLinks, path }) => {
         {nextLink && (
           <Link
             to={nextLink.path}
-            class="p-3 d-inline-block btn btn-outline-primary text-right"
+            className="p-3 d-inline-block btn btn-outline-primary text-right"
           >
-            <h5 class="m-0">Next &rarr;</h5>
-            <p class="m-0 small balance-text">{nextLink.title}</p>
+            <h5 className="m-0">Next &rarr;</h5>
+            <p className="m-0 small balance-text">{nextLink.title}</p>
           </Link>
         )}
       </div>
