@@ -1,20 +1,15 @@
 ---
 
-title: ""Using a Service Configuration File on CentOS or Redhat 6.x"
+title:"Using a Service Configuration File on CentOS or Redhat 6.x"
 ---
 
-<div
-  id="using_a_service_configuration_file_on_centos_or_redhat_6"
-  class="registered_link"
-></div>
+<div id="using_a_service_configuration_file_on_centos_or_redhat_6" class="registered_link"></div>
 
 On a CentOS or RedHat version 6.x host, the RPM installer creates a service configuration file named `edb-as-11.sysconfig` in `/etc/sysconfig/edb/as11` (see Figure 4.1). Please note that options specified in the service configuration file are only enforced if `initdb` is invoked via the service command; if you manually invoke `initdb` (at the command line), you must specify the other options (such as the location of the `data` directory and installation mode) on the command line.
 
 ![](images/the_advanced_server_service_configuration_file.png)
 
-<center>
-  <i>Figure 4.1 -The Advanced Server service configuration file.</i>
-</center>
+<center><i>Figure 4.1 -The Advanced Server service configuration file.</i></center>
 
 The file contains the following environment variables:
 

@@ -1,12 +1,9 @@
 ---
 
-title: ""Creating a Database Cluster and Starting the Service"
+title:"Creating a Database Cluster and Starting the Service"
 ---
 
-<div
-  id="creating_a_database_cluster_and_starting_the_service"
-  class="registered_link"
-></div>
+<div id="creating_a_database_cluster_and_starting_the_service" class="registered_link"></div>
 
 The PostgreSQL `initdb` command creates a database cluster. After installing Advanced Server, you must manually configure the service and invoke `initdb` to create your cluster. When invoking `initdb`, you can:
 
@@ -20,7 +17,7 @@ https://www.postgresql.org/docs/11/static/app-initdb.html
 
 After specifying any options in the service configuration file, you can create the database cluster and start the service; these steps are platform specific.
 
-**_On RHEL or CentOS 6.x_**
+***On RHEL or CentOS 6.x***
 
 To create a database cluster in the `PGDATA` directory that listens on the port specified by the `PGPORT` environment variable specified in the service configuration file (described in Section [4.4.2](https://www.enterprisedb.com/edb-docs/d/edb-postgres-advanced-server/installation-getting-started/installation-guide-for-linux/11/EDB_Postgres_Advanced_Server_Installation_Guide_Linux.1.14.html#pID0E0BI0HA)), assume `root` privileges, and invoke the `service` script:
 
@@ -34,7 +31,9 @@ After creating a database cluster, start the database server with the command:
 
 > `service edb-as-11 start`
 
-**_On RHEL or CentOS 7.x_**
+
+
+***On RHEL or CentOS 7.x***
 
 To invoke `initdb` on a RHEL or CentOS 7.x system, with the options specified in the service configuration file, assume the identity of the operating system superuser:
 
@@ -50,7 +49,9 @@ After creating the cluster, use systemctl to start, stop, or restart the service
 
 > `systemctl { start | stop | restart } edb-as-11`
 
-**_On Debian 9x or Ubuntu 18.04_**
+
+
+***On Debian 9x or Ubuntu 18.04***
 
 You can initialize multiple clusters using the bundled scripts. To create a new cluster, assume root privileges, and invoke the bundled script:
 
@@ -65,3 +66,4 @@ To list all the available clusters, use the following command:
 > `/usr/bin/epas_lsclusters`
 
 Note: The data directory is created under `/var/lib/edb-as/11/main2` and configuration directory is created under `/etc/edb-as/11/main/`.
+
