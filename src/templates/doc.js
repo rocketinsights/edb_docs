@@ -110,7 +110,7 @@ const Section = ({ section }) => (
               to={guide.fields.path}
               className="btn btn-link btn-block text-left p-0"
             >
-              {guide.frontmatter.title}
+              {guide.frontmatter.navTitle}
             </Link>
             <span className="small text-muted">
               {guide.frontmatter.description || guide.excerpt}
