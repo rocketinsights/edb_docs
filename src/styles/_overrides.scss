@@ -43,3 +43,17 @@
     white-space: normal;
   }
 }
+
+pre {
+  code {
+    color: white;
+    background: none;
+  }
+}
+
+code {
+  background-color: $light;
+  border-radius: $border-radius;
+  padding: map-get($spacers, 1);
+  color: $code-color;
+}
