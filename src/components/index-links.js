@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import Icon from './icons';
+import Icon, { iconNames } from './icon';
 
 const IndexLinks = ({ indexLinkList }) => (
   <>
@@ -15,7 +15,7 @@ const IndexLinks = ({ indexLinkList }) => (
               <li key={link.title} className="ml-0">
                 <Link to={link.url} className="d-block py-1 align-middle">
                   <Icon
-                    iconName="dottedbox"
+                    iconName={iconNames.DOTTED_BOX}
                     className="opacity-2 mr-2 mt-n1"
                     width="20"
                     height="20"

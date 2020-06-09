@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { indexLinkList } from '../constants/index-link-list';
-import Icon from '../components/icons';
+import Icon, { iconNames } from '../components/icon';
 import {
   Footer,
   IndexLinks,
@@ -48,7 +48,11 @@ export default data => {
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
               <div className="ml-3">
                 <Icon
-                  iconName="dottedbox" className="opacity-1" width="64" height="64" />
+                  iconName={iconNames.DOTTED_BOX}
+                  className="opacity-1"
+                  width="64"
+                  height="64"
+                />
               </div>
               <div className="card-body">
                 <a
@@ -65,7 +69,11 @@ export default data => {
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
               <div className="ml-3">
                 <Icon
-                  iconName="dottedbox" className="opacity-1" width="64" height="64" />
+                  iconName={iconNames.DOTTED_BOX}
+                  className="opacity-1"
+                  width="64"
+                  height="64"
+                />
               </div>
               <div className="card-body">
                 <a
@@ -88,7 +96,11 @@ export default data => {
               <div className="card-title d-flex justify-content-start align-items-start">
                 <a href="docs-product.php">
                   <Icon
-                    iconName="dottedbox" className="opacity-1" width="150" height="150" />
+                    iconName={iconNames.DOTTED_BOX}
+                    className="opacity-1"
+                    width="150"
+                    height="150"
+                  />
                 </a>
                 <div className="ml-4">
                   <h3 className="balance-text">
@@ -210,7 +222,7 @@ export default data => {
             <div className="card rounded shadow-sm p-2">
               <a href="docs-product.php">
                 <Icon
-                  iconName="dottedbox"
+                  iconName={iconNames.DOTTED_BOX}
                   className="img-fluid opacity-1 mt-3 ml-3"
                   width="150"
                   height="150"
@@ -236,7 +248,7 @@ export default data => {
             <div className="card rounded shadow-sm p-2">
               <a href="docs-product.php">
                 <Icon
-                  iconName="dottedbox"
+                  iconName={iconNames.DOTTED_BOX}
                   className="img-fluid opacity-1 mt-3 ml-3"
                   width="150"
                   height="150"
@@ -260,7 +272,7 @@ export default data => {
             <div className="card rounded shadow-sm p-2">
               <a href="docs-product.php">
                 <Icon
-                  iconName="dottedbox"
+                  iconName={iconNames.DOTTED_BOX}
                   className="img-fluid opacity-1 mt-3 ml-3"
                   width="150"
                   height="150"
