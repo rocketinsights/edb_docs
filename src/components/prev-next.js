@@ -27,7 +27,7 @@ const PrevNext = ({ navLinks, path }) => {
 
   return (
     <div className="d-flex justify-content-between mt-5">
-      <div>
+      <div className="max-w-40">
         {prevLink && (
           <Link
             to={prevLink.path}
@@ -38,7 +38,7 @@ const PrevNext = ({ navLinks, path }) => {
           </Link>
         )}
       </div>
-      <div>
+      <div className="max-w-40">
         {nextLink && (
           <Link
             to={nextLink.path}

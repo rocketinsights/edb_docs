@@ -57,3 +57,7 @@ code {
   padding: map-get($spacers, 1);
   color: $code-color;
 }
+
+.max-w-40 {
+  max-width: 40%;
+}
