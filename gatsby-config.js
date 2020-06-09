@@ -215,6 +215,7 @@ module.exports = {
             resolve: `gatsby-remark-autolink-headers`,
             options: {
               isIconAfterHeader: true,
+              className: 'ml-1'
             },
           },
         ],
