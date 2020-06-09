@@ -14,6 +14,29 @@
 .bg-gray-9 { background-color: $gray-900; }
 .bg-black { background-color: $black; }
 
+/* nudge classes */
+@for $nudge from 1 through 20 {
+  .ny-n#{$nudge}{
+    margin-top: -#{$nudge}px;
+    margin-bottom: #{$nudge}px;
+  }
+  
+  .ny-#{$nudge}{
+    margin-top: #{$nudge}px;
+    margin-bottom: -#{$nudge}px;
+  }
+
+  .nx-n#{$nudge}{
+    margin-left: -#{$nudge}px;
+    margin-right: #{$nudge}px;
+  }
+
+  .nx-#{$nudge}{
+    margin-left: #{nudge}px;
+    margin-right: -#{$nudge}px;
+  }
+}
+
 /* opacity */
 .opacity-0 { opacity: 0; }
 .opacity-1 { opacity: .1; }
@@ -33,8 +56,8 @@
 .min-h-50 { min-height: 50%; }
 
 .d-contents { display: contents; }
-
 .balance-text { text-wrap: balance; }
+.CodeMirror { height: 100% !important; }
 
 /* fill colors */
 $fill-colors: ();
@@ -58,7 +81,7 @@ $fill-colors: map-merge(
 @each $color, $value in $fill-colors {
   .fill-#{$color} { fill: $value; }
 }
-.fill-inherit { fill: currentColor!important; }
+.fill-inherit { fill: currentColor; }
 
 /*
   width and height pixel responsiveness
@@ -89,6 +112,28 @@ $i: 0;
   }
 }
 
+/* Add more width and height helpers to bolster Bootstrap's existing relative sizing classes */
+/* https://getbootstrap.com/docs/4.5/utilities/sizing/#relative-to-the-parent */
+.w-10 { width: 10% !important; }
+.w-20 { width: 20% !important; }
+.w-30 { width: 30% !important; }
+.w-40 { width: 40% !important; }
+/* w-50 already exists in Bootstrap */
+.w-60 { width: 60% !important; }
+.w-70 { width: 70% !important; }
+.w-80 { width: 80% !important; }
+.w-90 { width: 90% !important; }
+
+.h-10 { height: 10% !important; }
+.h-20 { height: 20% !important; }
+.h-30 { height: 30% !important; }
+.h-40 { height: 40% !important; }
+/* h-50 already exists in Bootstrap */
+.h-60 { height: 60% !important; }
+.h-70 { height: 70% !important; }
+.h-80 { height: 80% !important; }
+.h-90 { height: 90% !important; }
+
 /*
   Setup for text alignment so that on smaller screens it centers but on larger it does
   not. Specifically done for the subcribe section. May be useful later
@@ -100,9 +145,97 @@ $i: 0;
   }
 }
 
+/* bg colors */
+.bg-blue{ background-color: $blue !important; }
+.bg-indigo{ background-color: $indigo !important; }
+.bg-purple{ background-color: $purple !important; }
+.bg-red{ background-color: $red !important; }
+.bg-orange{ background-color: $orange !important; }
+.bg-yellow{ background-color: $yellow !important; }
+.bg-green{ background-color: $green !important; }
+.bg-teal{ background-color: $teal !important; }
+.bg-cyan{ background-color: $cyan !important; }
+.bg-primary{ background-color: $primary !important; }
+.bg-secondary{ background-color: $secondary !important; }
+.bg-danger{ background-color: $danger !important; }
+.bg-warning{ background-color: $warning !important; }
+.bg-info{ background-color: $info !important; }
+.bg-black{ background-color: $black !important; }
+.bg-white{ background-color: $white !important; }
+.bg-light{ background-color: $light !important; }
+.bg-dark{ background-color: $dark !important; }
+.bg-gray-100{ background-color: $gray-100 !important; }
+.bg-gray-200{ background-color: $gray-200 !important; }
+.bg-gray-300{ background-color: $gray-300 !important; }
+.bg-gray-400{ background-color: $gray-400 !important; }
+.bg-gray-500{ background-color: $gray-500 !important; }
+.bg-gray-600{ background-color: $gray-600 !important; }
+.bg-gray-700{ background-color: $gray-700 !important; }
+.bg-gray-800{ background-color: $gray-800 !important; }
+.bg-gray-900{ background-color: $gray-900 !important; }
+
+/* 10% opacity colors */
+.bg-blue-10{ background-color: rgba($blue, 0.1) !important; }
+.bg-indigo-10{ background-color: rgba($indigo, 0.1) !important; }
+.bg-purple-10{ background-color: rgba($pink, 0.1) !important; }
+.bg-red-10{ background-color: rgba($red, 0.1) !important; }
+.bg-orange-10{ background-color: rgba($orange, 0.1) !important; }
+.bg-yellow-10{ background-color: rgba($yellow, 0.1) !important; }
+.bg-green-10{ background-color: rgba($green, 0.1) !important; }
+.bg-teal-10{ background-color: rgba($teal, 0.1) !important; }
+.bg-cyan-10{ background-color: rgba($cyan, 0.1) !important; }
+.bg-primary-10{ background-color: rgba($primary, 0.1) !important; }
+.bg-secondary-10{ background-color: rgba($secondary, 0.1) !important; }
+.bg-danger-10{ background-color: rgba($danger, 0.1) !important; }
+.bg-warning-10{ background-color: rgba($warning, 0.1) !important; }
+.bg-info-10{ background-color: rgba($info, 0.1) !important; }
+.bg-black-10{ background-color: rgba($black, 0.1) !important; }
+.bg-white-10{ background-color: rgba($white, 0.1) !important; }
+.bg-light-10{ background-color: rgba($light, 0.1) !important; }
+.bg-dark-10{ background-color: rgba($dark, 0.1) !important; }
+.bg-gray-100-10{ background-color: rgba($gray-100, 0.1) !important; }
+.bg-gray-200-10{ background-color: rgba($gray-200, 0.1) !important; }
+.bg-gray-300-10{ background-color: rgba($gray-300, 0.1) !important; }
+.bg-gray-400-10{ background-color: rgba($gray-400, 0.1) !important; }
+.bg-gray-500-10{ background-color: rgba($gray-500, 0.1) !important; }
+.bg-gray-600-10{ background-color: rgba($gray-600, 0.1) !important; }
+.bg-gray-700-10{ background-color: rgba($gray-700, 0.1) !important; }
+.bg-gray-800-10{ background-color: rgba($gray-800, 0.1) !important; }
+.bg-gray-900-10{ background-color: rgba($gray-900, 0.1) !important; }
+
+/* text colors */
+.text-blue{ color: $blue !important; }
+.text-indigo{ color: $indigo !important; }
+.text-purple{ color: $purple !important; }
+.text-red{ color: $red !important; }
+.text-orange{ color: $orange !important; }
+.text-yellow{ color: $yellow !important; }
+.text-green{ color: $green !important; }
+.text-teal{ color: $teal !important; }
+.text-cyan{ color: $cyan !important; }
+.text-primary{ color: $primary !important; }
+.text-secondary{ color: $secondary !important; }
+.text-danger{ color: $danger !important; }
+.text-warning{ color: $warning !important; }
+.text-info{ color: $info !important; }
+.text-black{ color: $black !important; }
+.text-white{ color: $white !important; }
+.text-light{ color: $light !important; }
+.text-dark{ color: $dark !important; }
+.text-gray-100{ color: $gray-100 !important; }
+.text-gray-200{ color: $gray-200 !important; }
+.text-gray-300{ color: $gray-300 !important; }
+.text-gray-400{ color: $gray-400 !important; }
+.text-gray-500{ color: $gray-500 !important; }
+.text-gray-600{ color: $gray-600 !important; }
+.text-gray-700{ color: $gray-700 !important; }
+.text-gray-800{ color: $gray-800 !important; }
+.text-gray-900{ color: $gray-900 !important; }
+
 
 /* FLOATING LABELS */
 /* Floating form labels using "form-label-group" class instead of "form-group" */
+/* Based on https://getbootstrap.com/docs/4.5/examples/floating-labels/ */
 
 .form-label-group {
   position: relative;
