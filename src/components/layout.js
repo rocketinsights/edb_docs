@@ -6,15 +6,28 @@ import { MDXProvider } from '@mdx-js/react';
 
 import '../styles/index.scss';
 
-const Layout = ({ children, pageTitle }) => {
-  const { title, description } = useSiteMetadata();
+const Layout = ({ children, pageMeta }) => {
+  const { baseUrl, imageUrl, title, description } = useSiteMetadata();
+  const meta = pageMeta || {};
+  console.log(baseUrl);
 
   return (
     <>
       <Helmet>
         <html lang="en" />
-        <title>{pageTitle || title}</title>
-        <meta name="description" content={description} />
+        <title>{meta.title || title}</title>
+        <meta name="description" content={meta.description || description} />
+        <meta property="og:title" content={meta.title || title} />
+        <meta
+          property="og:description"
+          content={meta.description || description}
+        />
+        <meta property="og:image" content={imageUrl} />
+        <meta
+          property="og:url"
+          content={meta.path ? baseUrl + meta.path : baseUrl}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
         <body className="bg-light fixed-container" />
       </Helmet>
       <MDXProvider

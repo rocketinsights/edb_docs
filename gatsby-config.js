@@ -160,8 +160,11 @@ const queries = [
 module.exports = {
   pathPrefix: config.gatsby.pathPrefix,
   siteMetadata: {
-    title: 'Docs Site',
-    description: 'A docs site',
+    title: 'EDB Docs',
+    description:
+      'EDB supercharges Postgres with products, services, and support to help you control database risk, manage costs, and scale efficiently.',
+    baseUrl: 'https://edb-docs.herokuapp.com',
+    imageUrl: 'https://edb-docs.herokuapp.com/images/social.jpg',
   },
   plugins: [
     'gatsby-plugin-sass',
@@ -215,7 +218,7 @@ module.exports = {
             resolve: `gatsby-remark-autolink-headers`,
             options: {
               isIconAfterHeader: true,
-              className: 'ml-1'
+              className: 'ml-1',
             },
           },
         ],
@@ -241,7 +244,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          `source code pro\:400` // you can also specify font weights and styles
+          `source code pro\:400`, // you can also specify font weights and styles
         ],
       },
     },

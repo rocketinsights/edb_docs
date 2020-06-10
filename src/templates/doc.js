@@ -19,6 +19,7 @@ export const query = graphql`
     mdx(fields: { path: { eq: $path } }) {
       frontmatter {
         title
+        description
       }
       fields {
         path
@@ -132,9 +133,13 @@ const DocTemplate = ({ data, pageContext }) => {
   const navOrder = getNavOrder(product, version, leftNavs);
   const sections =
     navOrder && depth === 3 ? convertOrderToObjects(navOrder, navLinks) : null;
-
+  const pageMeta = {
+    title: frontmatter.title,
+    description: frontmatter.description,
+    path: path,
+  };
   return (
-    <Layout pageTitle={frontmatter.title}>
+    <Layout pageMeta={pageMeta}>
       <TopBar />
       <Container className="p-0 d-flex bg-white fixed-container">
         <SideNavigation>
