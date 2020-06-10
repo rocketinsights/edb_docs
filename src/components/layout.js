@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import useSiteMetadata from '../hooks/use-sitemetadata';
 import TextBalancer from '../components/text-balancer';
 import { MDXProvider } from '@mdx-js/react';
+import Icon from '../components/icon';
 
 import '../styles/index.scss';
 
@@ -25,6 +26,7 @@ const Layout = ({ children, pageTitle }) => {
               <pre className="m-0" {...props} />
             </figure>
           ),
+          Icon,
         }}
       >
         {children}

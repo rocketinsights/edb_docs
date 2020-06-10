@@ -99,7 +99,7 @@ export const iconNames = {
 };
 
 function formatIconName(name) {
-  return name && name.replace(/ /g, '').toLowerCase();
+  return name && name.replace(/ |-/g, '').toLowerCase();
 }
 
 function IconType({ iconName, ...rest }) {
