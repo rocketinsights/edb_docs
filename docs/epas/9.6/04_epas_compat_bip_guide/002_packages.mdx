@@ -1,0 +1,932 @@
+---
+title: Packages
+---
+
+
+This chapter discusses the concept of packages in Advanced Server. A *package* is a named collection of functions, procedures, variables, cursors, user-defined record types, and records that are referenced using a common qualifier – the package identifier. Packages have the following characteristics:
+ - Packages provide a convenient means of organizing the functions and procedures that perform a related purpose. Permission to use the package functions and procedures is dependent upon one privilege granted to the entire package. All of the package programs must be referenced with a common name.
+ - Certain functions, procedures, variables, types, etc. in the package can be declared as *public*. Public entities are visible and can be referenced by other programs that are given EXECUTE privilege on the package. For public functions and procedures, only their signatures are visible - the program names, parameters if any, and return types of functions. The SPL code of these functions and procedures is not accessible to others, therefore applications that utilize a package are dependent only upon the information available in the signature – not in the procedural logic itself.
+ - Other functions, procedures, variables, types, etc. in the package can be declared as *private*. Private entities can be referenced and used by function and procedures within the package, but not by other external applications. Private entities are for use only by programs within the package.
+ - Function and procedure names can be overloaded within a package. One or more functions/procedures can be defined with the same name, but with different signatures. This provides the capability to create identically named programs that perform the same job, but on different types of input.
+
+## Package Components
+
+Packages consist of two main components:
+ - The *package specification*: This is the public interface, (these are the elements which can be referenced outside the package). We declare all database objects that are to be a part of our package within the specification.
+ - The *package body*: This contains the actual implementation of all the database objects declared within the package specification.
+
+The package body implements the specifications in the package specification. It contains implementation details and private declarations which are invisible to the application. You can debug, enhance or replace a package body without changing the specifications. Similarly, you can change the body without recompiling the calling programs because the implementation details are invisible to the application.
+
+### Package Specification Syntax
+
+The package specification defines the user interface for a package (the API). The specification lists the functions, procedures, types, exceptions and cursors that are visible to a user of the package.
+
+The syntax used to define the interface for a package is:
+
+CREATE \[ OR REPLACE \] PACKAGE *package\_name*
+
+\[ *authorization\_clause* \]
+
+{ IS | AS }
+
+\[ *declaration;* \] ...
+
+\[ *procedure\_or\_function\_declaration* \] *...*
+
+END \[ *package\_name* \] ;
+
+Where *authorization\_clause* :=
+
+> { AUTHID DEFINER } | { AUTHID CURRENT\_USER }
+
+Where *procedure\_or\_function\_declaration* :=
+
+> *procedure\_declaration* | *function\_declaration*
+
+Where *procedure\_declaration* :=
+
+> PROCEDURE *proc\_name* \[ *argument\_list* \];
+>
+> \[ *restriction\_pragma*; \]
+
+Where *function\_declaration* :=
+
+> FUNCTION *func\_name* \[ *argument\_list* \]
+>
+> RETURN *rettype* \[ DETERMINISTIC \];
+>
+> \[ *restriction\_pragma*; \]
+
+Where *argument\_list* :=
+
+> ( *argument\_declaration* \[, ...\] )
+
+Where *argument\_declaration* :=
+
+> *argname* \[ IN | IN OUT | OUT \] *argtype* \[ DEFAULT *value* \]
+
+Where *restriction\_pragma* :=
+
+> PRAGMA RESTRICT\_REFERENCES(*name*, *restrictions*)
+
+Where *restrictions* :=
+
+> *restriction* \[, ... \]
+
+**Parameters**
+
+*package\_name*
+
+> *package\_name* is an identifier assigned to the package - each package must have a name unique within the schema.
+
+AUTHID DEFINER
+
+> If you omit the AUTHID clause or specify AUTHID DEFINER, the privileges of the package owner are used to determine access privileges to database objects.
+
+AUTHID CURRENT\_USER
+
+> If you specify AUTHID CURRENT\_USER, the privileges of the current user executing a program in the package are used to determine access privileges.
+
+*declaration*
+
+> *declaration* is an identifier of a public variable. A public variable can be accessed from outside of the package using the syntax *package\_name.variable*. There can be zero, one, or more public variables. Public variable definitions must come before procedure or function declarations.
+>
+> *declaration* can be any of the following:
+ - > Variable Declaration
+ - > Record Declaration
+ - > Collection Declaration
+ - > REF CURSOR and Cursor Variable Declaration
+ - > TYPE Definitions for Records, Collections, and REF CURSORs
+ - > Exception
+ - > Object Variable Declaration
+
+*proc\_name*
+
+The name of a public procedure.
+
+*argname*
+
+The name of an argument. The argument is referenced by this name within the function or procedure body.
+
+IN | IN OUT | OUT
+
+The argument mode. IN declares the argument for input only. This is the default. IN OUT allows the argument to receive a value as well as return a value. OUT specifies the argument is for output only.
+
+*argtype*
+
+The data type(s) of an argument. An argument type may be a base data type, a copy of the type of an existing column using %TYPE, or a user-defined type such as a nested table or an object type. A length must not be specified for any base type - for example, specify VARCHAR2, not VARCHAR2(10).
+
+The type of a column is referenced by writing *tablename*.*columnname*%TYPE; using this can sometimes help make a procedure independent from changes to the definition of a table.
+
+DEFAULT *value*
+
+The DEFAULT clause supplies a default value for an input argument if one is not supplied in the invocation. DEFAULT may not be specified for arguments with modes IN OUT or OUT.
+
+*func\_name*
+
+The name of a public function.
+
+*rettype*
+
+The return data type.
+
+DETERMINISTIC
+
+DETERMINISTIC is a synonym for IMMUTABLE. A DETERMINISTIC function cannot modify the database and always reaches the same result when given the same argument values; it does not do database lookups or otherwise use information not directly present in its argument list. If you include this clause, any call of the function with all-constant arguments can be immediately replaced with the function value.
+
+*restriction*
+
+> The following keywords are accepted for compatibility and ignored:
+>
+> RNDS
+>
+> RNPS
+>
+> TRUST
+>
+> WNDS
+>
+> WNPS
+
+### Package Body Syntax
+
+Package implementation details reside in the package body; the package body may contain objects that are not visible to the package user. Advanced Server supports the following syntax for the package body:
+
+> CREATE \[ OR REPLACE \] PACKAGE BODY *package\_name*
+>
+> { IS | AS }
+>
+> \[ *private\_declaration;* \] ...
+>
+> \[ *procedure\_or\_function\_definition* \] *...*
+>
+> \[ *package\_initializer* \]
+>
+> END \[ *package\_name* \] ;
+
+Where *procedure\_or\_function\_definition* :=
+
+> *procedure\_definition* | *function\_definition*
+
+Where *procedure\_definition* :=
+
+> PROCEDURE *proc\_name*\[ *argument\_list* \]
+>
+> \[ *options\_list* \]
+>
+> { IS | AS }
+>
+> *procedure\_body*
+>
+> END \[ *proc\_name* \] ;
+
+Where *procedure\_body* :=
+
+> \[ *declaration*; \] \[, ...\]
+>
+> BEGIN
+>
+> *statement*; \[...\]
+>
+> \[ EXCEPTION
+>
+> { WHEN *exception* \[OR *exception*\] \[...\]\] THEN *statement*; }
+>
+> \[...\]
+>
+> \]
+
+Where *function\_definition* :=
+
+> FUNCTION *func\_name* \[ *argument\_list* \]
+>
+> RETURN *rettype* \[ DETERMINISTIC \]
+>
+> \[ *options\_list* \]
+>
+> { IS | AS }
+>
+> *function\_body*
+>
+> END \[ *func\_name* \] ;
+
+Where *function\_body* :=
+
+> \[ *declaration*; \] \[, ...\]
+>
+> BEGIN
+>
+> *statement*; \[...\]
+>
+> \[ EXCEPTION
+>
+> { WHEN *exception* \[ OR *exception* \] \[...\] THEN *statement*; }
+>
+> \[...\]
+>
+> \]
+
+Where *argument\_list* :=
+
+> ( *argument\_declaration* \[, ...\] )
+
+Where *argument\_declaration* :=
+
+> *argname* \[ IN | IN OUT | OUT \] *argtype* \[ DEFAULT *value* \]
+
+Where *options\_list* :=
+
+> *option* \[ ... \]
+
+Where *option* :=
+
+> STRICT
+> LEAKPROOF
+>
+> PARALLEL { UNSAFE | RESTRICTED | SAFE }
+>
+> COST *execution\_cost*
+>
+> ROWS *result\_rows*
+>
+> SET *config\_param* { TO *value* | = *value |* FROM CURRENT }
+
+Where *package\_initializer* :=
+
+> BEGIN
+>
+> *statement;* \[...\]
+>
+> END;
+
+**Parameters**
+
+*package\_name*
+
+> *package\_name* is the name of the package for which this is the package body. There must be an existing package specification with this name.
+
+*private\_declaration*
+
+> *private\_declaration* is an identifier of a private variable that can be accessed by any procedure or function within the package. There can be zero, one, or more private variables. *private\_declaration* can be any of the following:
+ - > Variable Declaration
+ - > Record Declaration
+ - > Collection Declaration
+ - > REF CURSOR and Cursor Variable Declaration
+ - > TYPE Definitions for Records, Collections, and REF CURSORs
+ - > Exception
+ - > Object Variable Declaration
+
+*proc\_name*
+
+The name of the procedure being created.
+
+*declaration*
+
+A variable, type, REF CURSOR, or subprogram declaration. If subprogram declarations are included, they must be declared after all other variable, type, and REF CURSOR declarations.
+
+*statement*
+
+An SPL program statement. Note that a DECLARE - BEGIN - END block is considered an SPL statement unto itself. Thus, the function body may contain nested blocks.
+
+*exception*
+
+An exception condition name such as NO\_DATA\_FOUND, OTHERS, etc.
+
+*func\_name*
+
+The name of the function being created.
+
+*rettype*
+
+The return data type, which may be any of the types listed for *argtype*. As for *argtype*, a length must not be specified for *rettype*.
+
+DETERMINISTIC
+
+Include DETERMINISTIC to specify that the function will always return the same result when given the same argument values. A DETERMINISTIC function must not modify the database.
+
+Note: the DETERMINISTIC keyword is equivalent to the PostgreSQL IMMUTABLE option.
+
+Note: If DETERMINISTIC is specified for a public function in the package body, it must also be specified for the function declaration in the package specification. (For private functions, there is no function declaration in the package specification.)
+
+*declaration*
+
+A variable, type, REF CURSOR, or subprogram declaration. If subprogram declarations are included, they must be declared after all other variable, type, and REF CURSOR declarations.
+
+*argname*
+
+The name of a formal argument. The argument is referenced by this name within the procedure body.
+
+IN | IN OUT | OUT
+
+The argument mode. IN declares the argument for input only. This is the default. IN OUT allows the argument to receive a value as well as return a value. OUT specifies the argument is for output only.
+
+*argtype*
+
+The data type(s) of an argument. An argument type may be a base data type, a copy of the type of an existing column using %TYPE, or a user-defined type such as a nested table or an object type. A length must not be specified for any base type - for example, specify VARCHAR2, not VARCHAR2(10).
+
+The type of a column is referenced by writing *tablename*.*columnname*%TYPE; using this can sometimes help make a procedure independent from changes to the definition of a table.
+
+DEFAULT *value*
+
+The DEFAULT clause supplies a default value for an input argument if one is not supplied in the procedure call. DEFAULT may not be specified for arguments with modes IN OUT or OUT.
+
+> Please note: the following options are not compatible with Oracle databases; they are extensions to Oracle package syntax provided by Advanced Server only.
+
+STRICT
+
+> The STRICT keyword specifies that the function will not be executed if called with a NULL argument; instead the function will return NULL.
+
+LEAKPROOF
+
+> The LEAKPROOF keyword specifies that the function will not reveal any information about arguments, other than through a return value.
+
+PARALLEL { UNSAFE | RESTRICTED | SAFE }
+
+> The PARALLEL clause enables the use of parallel sequential scans (parallel mode). A parallel sequential scan uses multiple workers to scan a relation in parallel during a query in contrast to a serial sequential scan.
+>
+> When set to UNSAFE, the procedure or function cannot be executed in parallel mode. The presence of such a procedure or function forces a serial execution plan. This is the default setting if the PARALLEL clause is omitted.
+>
+> When set to RESTRICTED, the procedure or function can be executed in parallel mode, but the execution is restricted to the parallel group leader. If the qualification for any particular relation has anything that is parallel restricted, that relation won't be chosen for parallelism.
+>
+> When set to SAFE, the procedure or function can be executed in parallel mode with no restriction.
+
+*execution\_cost*
+
+> *execution\_cost* specifies a positive number giving the estimated execution cost for the function, in units of cpu\_operator\_cost. If the function returns a set, this is the cost per returned row. The default is 0.0025.
+
+*result\_rows*
+
+> *result\_rows* is the estimated number of rows that the query planner should expect the function to return. The default is 1000.
+
+SET
+
+> Use the *SET* clause to specify a parameter value for the duration of the function:
+>
+> *config\_param* specifies the parameter name.
+>
+> *value* specifies the parameter value.
+>
+> *FROM CURRENT* guarantees that the parameter value is restored when the function ends.
+
+*package\_initializer*
+
+> The statements in the *package\_initializer* are executed once per user’s session when the package is first referenced.
+
+Please Note: The STRICT, LEAKPROOF, PARALLEL, COST, ROWS and SET keywords provide extended functionality for Advanced Server and are not supported by Oracle.
+
+## Creating Packages
+
+A package is not an executable piece of code; rather it is a repository of code. When you use a package, you actually execute or make reference to an element within a package.
+
+### Creating the Package Specification
+
+The package specification contains the definition of all the elements in the package that can be referenced from outside of the package. These are called the public elements of the package, and they act as the package interface. The following code sample is a package specification:
+
+\--
+
+\-- Package specification for the 'emp\_admin' package.
+
+\--
+
+CREATE OR REPLACE PACKAGE emp\_admin
+
+IS
+
+FUNCTION get\_dept\_name (
+
+p\_deptno NUMBER DEFAULT 10
+
+)
+
+RETURN VARCHAR2;
+
+FUNCTION update\_emp\_sal (
+
+p\_empno NUMBER,
+
+p\_raise NUMBER
+
+)
+
+RETURN NUMBER;
+
+PROCEDURE hire\_emp (
+
+p\_empno NUMBER,
+
+p\_ename VARCHAR2,
+
+p\_job VARCHAR2,
+
+p\_sal NUMBER,
+
+p\_hiredate DATE DEFAULT sysdate,
+
+p\_comm NUMBER DEFAULT 0,
+
+p\_mgr NUMBER,
+
+p\_deptno NUMBER DEFAULT 10
+
+);
+
+PROCEDURE fire\_emp (
+
+p\_empno NUMBER
+
+);
+
+END emp\_admin;
+
+This code sample creates the emp\_admin package specification. This package specification consists of two functions and two stored procedures. We can also add the OR REPLACE clause to the CREATE PACKAGE statement for convenience.
+
+### Creating the Package Body
+
+The body of the package contains the actual implementation behind the package specification. For the above emp\_admin package specification, we shall now create a package body which will implement the specifications. The body will contain the implementation of the functions and stored procedures in the specification.
+
+\--
+
+\-- Package body for the 'emp\_admin' package.
+
+\--
+
+CREATE OR REPLACE PACKAGE BODY emp\_admin
+
+IS
+
+\--
+
+\-- Function that queries the 'dept' table based on the department
+
+\-- number and returns the corresponding department name.
+
+\--
+
+FUNCTION get\_dept\_name (
+
+p\_deptno IN NUMBER DEFAULT 10
+
+)
+
+RETURN VARCHAR2
+
+IS
+
+v\_dname VARCHAR2(14);
+
+BEGIN
+
+SELECT dname INTO v\_dname FROM dept WHERE deptno = p\_deptno;
+
+RETURN v\_dname;
+
+EXCEPTION
+
+WHEN NO\_DATA\_FOUND THEN
+
+DBMS\_OUTPUT.PUT\_LINE('Invalid department number ' || p\_deptno);
+
+RETURN '';
+
+END;
+
+\--
+
+\-- Function that updates an employee's salary based on the
+
+\-- employee number and salary increment/decrement passed
+
+\-- as IN parameters. Upon successful completion the function
+
+\-- returns the new updated salary.
+
+\--
+
+FUNCTION update\_emp\_sal (
+
+p\_empno IN NUMBER,
+
+p\_raise IN NUMBER
+
+)
+
+RETURN NUMBER
+
+IS
+
+v\_sal NUMBER := 0;
+
+BEGIN
+
+SELECT sal INTO v\_sal FROM emp WHERE empno = p\_empno;
+
+v\_sal := v\_sal + p\_raise;
+
+UPDATE emp SET sal = v\_sal WHERE empno = p\_empno;
+
+RETURN v\_sal;
+
+EXCEPTION
+
+WHEN NO\_DATA\_FOUND THEN
+
+DBMS\_OUTPUT.PUT\_LINE('Employee ' || p\_empno || ' not found');
+
+RETURN -1;
+
+WHEN OTHERS THEN
+
+DBMS\_OUTPUT.PUT\_LINE('The following is SQLERRM:');
+
+DBMS\_OUTPUT.PUT\_LINE(SQLERRM);
+
+DBMS\_OUTPUT.PUT\_LINE('The following is SQLCODE:');
+
+DBMS\_OUTPUT.PUT\_LINE(SQLCODE);
+
+RETURN -1;
+
+END;
+
+\--
+
+\-- Procedure that inserts a new employee record into the 'emp' table.
+
+\--
+
+PROCEDURE hire\_emp (
+
+p\_empno NUMBER,
+
+p\_ename VARCHAR2,
+
+p\_job VARCHAR2,
+
+p\_sal NUMBER,
+
+p\_hiredate DATE DEFAULT sysdate,
+
+p\_comm NUMBER DEFAULT 0,
+
+p\_mgr NUMBER,
+
+p\_deptno NUMBER DEFAULT 10
+
+)
+
+AS
+
+BEGIN
+
+INSERT INTO emp(empno, ename, job, sal, hiredate, comm, mgr, deptno)
+
+VALUES(p\_empno, p\_ename, p\_job, p\_sal,
+
+p\_hiredate, p\_comm, p\_mgr, p\_deptno);
+
+END;
+
+\--
+
+\-- Procedure that deletes an employee record from the 'emp' table based
+
+\-- on the employee number.
+
+\--
+
+PROCEDURE fire\_emp (
+
+p\_empno NUMBER
+
+)
+
+AS
+
+BEGIN
+
+DELETE FROM emp WHERE empno = p\_empno;
+
+END;
+
+END;
+
+## Referencing a Package
+
+To reference the types, items and subprograms that are declared within a package specification, we use the dot notation. For example:
+
+*package\_name*.*type\_name*
+
+*package\_name*.*item\_name*
+
+*package\_name*.*subprogram\_name*
+
+To invoke a function from the emp\_admin package specification, we will execute the following SQL command.
+
+SELECT emp\_admin.get\_dept\_name(10) FROM DUAL;
+
+Here we are invoking the get\_dept\_name function declared within the package emp\_admin. We are passing the department number as an argument to the function, which will return the name of the department. Here the value returned should be ACCOUNTING, which corresponds to department number 10.
+
+## Using Packages With User Defined Types
+
+The following example incorporates the various user-defined types discussed in earlier chapters within the context of a package.
+
+The package specification of emp\_rpt shows the declaration of a record type, emprec\_typ, and a weakly-typed REF CURSOR, emp\_refcur, as publicly accessible along with two functions and two procedures. Function, open\_emp\_by\_dept, returns the REF CURSOR type, EMP\_REFCUR. Procedures, fetch\_emp and close\_refcur, both declare a weakly-typed REF CURSOR as a formal parameter.
+
+CREATE OR REPLACE PACKAGE emp\_rpt
+
+IS
+
+TYPE emprec\_typ IS RECORD (
+
+empno NUMBER(4),
+
+ename VARCHAR(10)
+
+);
+
+TYPE emp\_refcur IS REF CURSOR;
+
+FUNCTION get\_dept\_name (
+
+p\_deptno IN NUMBER
+
+) RETURN VARCHAR2;
+
+FUNCTION open\_emp\_by\_dept (
+
+p\_deptno IN emp.deptno%TYPE
+
+) RETURN EMP\_REFCUR;
+
+PROCEDURE fetch\_emp (
+
+p\_refcur IN OUT SYS\_REFCURSOR
+
+);
+
+PROCEDURE close\_refcur (
+
+p\_refcur IN OUT SYS\_REFCURSOR
+
+);
+
+END emp\_rpt;
+
+The package body shows the declaration of several private variables - a static cursor, dept\_cur, a table type, depttab\_typ, a table variable, t\_dept, an integer variable, t\_dept\_max, and a record variable, r\_emp.
+
+CREATE OR REPLACE PACKAGE BODY emp\_rpt
+
+IS
+
+CURSOR dept\_cur IS SELECT \* FROM dept;
+
+TYPE depttab\_typ IS TABLE of dept%ROWTYPE
+
+INDEX BY BINARY\_INTEGER;
+
+t\_dept DEPTTAB\_TYP;
+
+t\_dept\_max INTEGER := 1;
+
+r\_emp EMPREC\_TYP;
+
+FUNCTION get\_dept\_name (
+
+p\_deptno IN NUMBER
+
+) RETURN VARCHAR2
+
+IS
+
+BEGIN
+
+FOR i IN 1..t\_dept\_max LOOP
+
+IF p\_deptno = t\_dept(i).deptno THEN
+
+RETURN t\_dept(i).dname;
+
+END IF;
+
+END LOOP;
+
+RETURN 'Unknown';
+
+END;
+
+FUNCTION open\_emp\_by\_dept(
+
+p\_deptno IN emp.deptno%TYPE
+
+) RETURN EMP\_REFCUR
+
+IS
+
+emp\_by\_dept EMP\_REFCUR;
+
+BEGIN
+
+OPEN emp\_by\_dept FOR SELECT empno, ename FROM emp
+
+WHERE deptno = p\_deptno;
+
+RETURN emp\_by\_dept;
+
+END;
+
+PROCEDURE fetch\_emp (
+
+p\_refcur IN OUT SYS\_REFCURSOR
+
+)
+
+IS
+
+BEGIN
+
+DBMS\_OUTPUT.PUT\_LINE('EMPNO ENAME');
+
+DBMS\_OUTPUT.PUT\_LINE('----- -------');
+
+LOOP
+
+FETCH p\_refcur INTO r\_emp;
+
+EXIT WHEN p\_refcur%NOTFOUND;
+
+DBMS\_OUTPUT.PUT\_LINE(r\_emp.empno || ' ' || r\_emp.ename);
+
+END LOOP;
+
+END;
+
+PROCEDURE close\_refcur (
+
+p\_refcur IN OUT SYS\_REFCURSOR
+
+)
+
+IS
+
+BEGIN
+
+CLOSE p\_refcur;
+
+END;
+
+BEGIN
+
+OPEN dept\_cur;
+
+LOOP
+
+FETCH dept\_cur INTO t\_dept(t\_dept\_max);
+
+EXIT WHEN dept\_cur%NOTFOUND;
+
+t\_dept\_max := t\_dept\_max + 1;
+
+END LOOP;
+
+CLOSE dept\_cur;
+
+t\_dept\_max := t\_dept\_max - 1;
+
+END emp\_rpt;
+
+This package contains an initialization section that loads the private table variable, t\_dept, using the private static cursor, dept\_cur. t\_dept serves as a department name lookup table in function, get\_dept\_name.
+
+Function, open\_emp\_by\_dept returns a REF CURSOR variable for a result set of employee numbers and names for a given department. This REF CURSOR variable can then be passed to procedure, fetch\_emp, to retrieve and list the individual rows of the result set. Finally, procedure, close\_refcur, can be used to close the REF CURSOR variable associated with this result set.
+
+The following anonymous block runs the package function and procedures. In the anonymous block's declaration section, note the declaration of cursor variable, v\_emp\_cur, using the package’s public REF CURSOR type, EMP\_REFCUR. v\_emp\_cur contains the pointer to the result set that is passed between the package function and procedures.
+
+DECLARE
+
+v\_deptno dept.deptno%TYPE DEFAULT 30;
+
+v\_emp\_cur emp\_rpt.EMP\_REFCUR;
+
+BEGIN
+
+v\_emp\_cur := emp\_rpt.open\_emp\_by\_dept(v\_deptno);
+
+DBMS\_OUTPUT.PUT\_LINE('EMPLOYEES IN DEPT \#' || v\_deptno ||
+
+': ' || emp\_rpt.get\_dept\_name(v\_deptno));
+
+emp\_rpt.fetch\_emp(v\_emp\_cur);
+
+DBMS\_OUTPUT.PUT\_LINE('\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*');
+
+DBMS\_OUTPUT.PUT\_LINE(v\_emp\_cur%ROWCOUNT || ' rows were retrieved');
+
+emp\_rpt.close\_refcur(v\_emp\_cur);
+
+END;
+
+The following is the result of this anonymous block.
+
+EMPLOYEES IN DEPT \#30: SALES
+
+EMPNO ENAME
+
+\----- -------
+
+7499 ALLEN
+
+7521 WARD
+
+7654 MARTIN
+
+7698 BLAKE
+
+7844 TURNER
+
+7900 JAMES
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+6 rows were retrieved
+
+The following anonymous block illustrates another means of achieving the same result. Instead of using the package procedures, fetch\_emp and close\_refcur, the logic of these programs is coded directly into the anonymous block. In the anonymous block’s declaration section, note the addition of record variable, r\_emp, declared using the package’s public record type, EMPREC\_TYP.
+
+DECLARE
+
+v\_deptno dept.deptno%TYPE DEFAULT 30;
+
+v\_emp\_cur emp\_rpt.EMP\_REFCUR;
+
+r\_emp emp\_rpt.EMPREC\_TYP;
+
+BEGIN
+
+v\_emp\_cur := emp\_rpt.open\_emp\_by\_dept(v\_deptno);
+
+DBMS\_OUTPUT.PUT\_LINE('EMPLOYEES IN DEPT \#' || v\_deptno ||
+
+': ' || emp\_rpt.get\_dept\_name(v\_deptno));
+
+DBMS\_OUTPUT.PUT\_LINE('EMPNO ENAME');
+
+DBMS\_OUTPUT.PUT\_LINE('----- -------');
+
+LOOP
+
+FETCH v\_emp\_cur INTO r\_emp;
+
+EXIT WHEN v\_emp\_cur%NOTFOUND;
+
+DBMS\_OUTPUT.PUT\_LINE(r\_emp.empno || ' ' ||
+
+r\_emp.ename);
+
+END LOOP;
+
+DBMS\_OUTPUT.PUT\_LINE('\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*');
+
+DBMS\_OUTPUT.PUT\_LINE(v\_emp\_cur%ROWCOUNT || ' rows were retrieved');
+
+CLOSE v\_emp\_cur;
+
+END;
+
+The following is the result of this anonymous block.
+
+EMPLOYEES IN DEPT \#30: SALES
+
+EMPNO ENAME
+
+\----- -------
+
+7499 ALLEN
+
+7521 WARD
+
+7654 MARTIN
+
+7698 BLAKE
+
+7844 TURNER
+
+7900 JAMES
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+6 rows were retrieved
+
+## Dropping a Package
+
+The syntax for deleting an entire package or just the package body is as follows:
+
+DROP PACKAGE \[ BODY \] *package\_name*;
+
+If the keyword, BODY, is omitted, both the package specification and the package body are deleted - i.e., the entire package is dropped. If the keyword, BODY, is specified, then only the package body is dropped. The package specification remains intact. *package\_name* is the identifier of the package to be dropped.
+
+Following statement will destroy only the package body of *emp\_admin*:
+
+DROP PACKAGE BODY emp\_admin;
+
+The following statement will drop the entire *emp\_admin* package:
+
+DROP PACKAGE emp\_admin;
+

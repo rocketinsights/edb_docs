@@ -1,0 +1,39 @@
+---
+title: Introduction
+navTitle: Tools and Utilities Guide
+---
+
+
+The tools and utilities documented in this guide allow a developer that is accustomed to working with Oracle utilities to work with Advanced Server in a familiar environment.
+
+The sections in this guide describe compatible tools and utilities that are supported by Advanced Server. These include:
+ - EDB\*Plus
+ - EDB\*Loader
+ - EDB\*Wrap
+ - Dynamic Runtime Instrumentation
+
+For detailed information about the features supported by Advanced Server, please consult the complete library of Advanced Server guides available at:
+
+<http://www.enterprisedb.com/products-services-training/products/documentation>
+
+## What’s New
+
+The following database compatibility for Oracle features have been added to Advanced Server 9.5 to create Advanced Server 9.6:
+ - Advanced Server now supports use of the Postgres password file to initially log into EDB\*Plus or to change the connection to EDB\*Plus with the CONNECT command. This capability provides additional security in that the user’s password is not exposed when making the connection to EDB\*Plus. For more information, see Sections <span class="underline">2.1</span> and <span class="underline">2.2.6</span>.
+ - Advanced Server now supports the SET TRIMSPOOL command in EDB\*Plus to trim trailing spaces from each output line in the file specified by the SPOOL command. For more information, see Section <span class="underline">2.2.26</span>.
+ - Advanced Server now supports additional functionality for EDB\*Loader including use of a column name in the field condition of the WHEN clause to control loading of data records into the specified table, the RECORDS DELIMITED BY clause to specify a character other than the default newline character to terminate each record in the data file, the BOUNDFILLER clause for preventing the use of a field in the data file for loading a column in a table, but allowing it to be used in an expression for a subsequent column, specification of the length for a data type in the control file’s description of the data record, for example CHAR(3), support of the NULLIF clause to set a column to null if the field condition evaluates to TRUE, and use of a SELECT statement in the expression of a field definition to return a value for a column. For more information, see Section <span class="underline">3.2</span>.
+ - Advanced Server now supports Dynamic Runtime Instrumentation Tools Architecture (DRITA) access to statistics for lightweight lock wait events. For more information, see Section <span class="underline">5</span>.
+
+## Typographical Conventions Used in this Guide
+
+Certain typographical conventions are used in this manual to clarify the meaning and usage of various commands, statements, programs, examples, etc. This section provides a summary of these conventions.
+
+In the following descriptions a *term* refers to any word or group of words which may be language keywords, user-supplied values, literals, etc. A term’s exact meaning depends upon the context in which it is used.
+ - *Italic font* introduces a new term, typically, in the sentence that defines it for the first time.
+ - Fixed-width (mono-spaced) font is used for terms that must be given literally such as SQL commands, specific table and column names used in the examples, programming language keywords, etc. For example, SELECT \* FROM emp;
+ - *Italic fixed-width font* is used for terms for which the user must substitute values in actual usage. For example, DELETE FROM *table\_name*;
+ - A vertical pipe | denotes a choice between the terms on either side of the pipe. A vertical pipe is used to separate two or more alternative terms within square brackets (optional choices) or braces (one mandatory choice).
+ - Square brackets \[ \] denote that one or none of the enclosed term(s) may be substituted. For example, \[ a | b \], means choose one of “a” or “b” or neither of the two.
+ - Braces {} denote that exactly one of the enclosed alternatives must be specified. For example, { a | b }, means exactly one of “a” or “b” must be specified.
+ - Ellipses ... denote that the proceeding term may be repeated. For example, \[ a | b \] ... means that you may have the sequence, “b a a b a”.
+

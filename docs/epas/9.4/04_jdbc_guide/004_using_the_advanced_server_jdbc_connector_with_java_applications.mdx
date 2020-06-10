@@ -1,0 +1,290 @@
+---
+title: Using the Advanced Server JDBC Connector with Java applications
+---
+
+
+With Java and the Advanced Server JDBC Connector in place, a Java application can access an Advanced Server database. Listing 1.1 creates an application that executes a query and prints the result set.
+
+Listing 1.1
+
+> import java.sql.\*;
+
+public class ListEmployees
+
+{
+
+public static void main(String\[\] args)
+
+{
+
+try
+
+{
+
+Class.forName("com.edb.Driver");
+
+String url = "jdbc:edb://localhost:5444/edb";
+
+String user = "enterprisedb";
+
+String password = "enterprisedb";
+
+Connection con = DriverManager.getConnection(url, user, password);
+
+Statement stmt = con.createStatement();
+
+ResultSet rs = stmt.executeQuery("SELECT \* FROM emp");
+
+while(rs.next())
+
+{
+
+System.out.println(rs.getString(1));
+
+}
+
+rs.close();
+
+stmt.close();
+
+con.close();
+
+System.out.println("Command successfully executed");
+
+}
+
+catch(ClassNotFoundException e)
+
+{
+
+System.out.println("Class Not Found : " + e.getMessage());
+
+}
+
+catch(SQLException exp)
+
+{
+
+System.out.println("SQL Exception: " + exp.getMessage());
+
+System.out.println("SQL State: " + exp.getSQLState());
+
+System.out.println("Vendor Error: " + exp.getErrorCode());
+
+}
+
+}
+
+}
+
+This example is simple, but it demonstrates the fundamental steps required to interact with an Advanced Server database from a Java application:
+ - Load the JDBC driver
+ - Build connection properties
+ - Connect to the database server
+ - Execute an SQL statement
+ - Process the result set
+ - Clean up
+ - Handle any errors that may occur
+
+## Loading the Advanced Server JDBC Connector
+
+The Advanced Server JDBC driver is written in Java and is distributed in the form of a compiled JAR (Java Archive) file. Use the Class.forName() method to load the driver. The forName() method dynamically loads a Java class at runtime. When an application calls the forName() method, the JVM (Java Virtual Machine) attempts to find the compiled form (the bytecode) that implements the requested class.
+
+The Advanced Server JDBC driver is named com.edb.Driver:
+
+Class.forName("com.edb.Driver");
+
+After loading the bytecode for the driver, the driver registers itself with another JDBC class (named DriverManager) that is responsible for managing all the JDBC drivers installed on the current system.
+
+If the JVM is unable to locate the named driver, it throws a ClassNotFound exception (which is intercepted with a catch block near the end of the program). The DriverManager is designed to handle multiple JDBC driver objects. You can write a Java application that connects to more than one database system via JDBC. The next section explains how to select a specific driver.
+
+## Connecting to the Database
+
+After the driver has loaded and registered itself with the DriverManager, the ListEmployees class can attempt to connect to the database server, as shown in the following code fragment:
+
+String url = "jdbc:edb://localhost:5444/edb";
+
+String user = "enterprisedb";
+
+String password = "enterprisedb";
+
+Connection con = DriverManager.getConnection(url, user, password);
+
+All JDBC connections start with the DriverManager. The DriverManager class offers a static method called getConnection() that is responsible for creating a connection to the database. When you call the getConnection() method, the DriverManager must decide which JDBC driver to use to connect to the database; that decision is based on a URL (Uniform Resource Locator) that you pass to getConnection().
+
+A JDBC URL takes the following general format:
+
+jdbc:\<driver\>:\<connection parameters\>
+
+The first component in a JDBC URL is always jdbc. When using the Advanced Server JDBC Connector, the second component (the driver) is edb.
+
+The Advanced Server JDBC URL takes one of the following forms:
+
+jdbc:edb:\<*database*\>
+
+jdbc:edb://\<*host*\>/\<*database*\>
+
+jdbc:edb://\<*host*\>:\<*port*\>/\<*database*\>
+
+Table 1.1 shows the various connection parameters:
+
+Table 1.1 - Connection Parameters
+
+| Name     | Description                                                                                              |
+| -------- | -------------------------------------------------------------------------------------------------------- |
+| host     | The host name of the server. Defaults to localhost.                                                      |
+| port     | The port number the server is listening on. Defaults to the Advanced Server standard port number (5444). |
+| database | The database name.                                                                                       |
+
+### Additional Connection Properties
+
+In addition to the standard connection parameters, the Advanced Server JDBC driver supports connection properties that control behavior specific to EnterpriseDB. You can specify these properties in the connection URL or as a Properties object parameter passed to DriverManager.getConnection(). Listing 1.2 demonstrates how to use a Properties object to specify additional connection properties:
+
+Listing 1.2
+
+String url = "jdbc:edb://localhost/edb";
+
+Properties props = new Properties();
+
+props.setProperty("user", "enterprisedb");
+
+props.setProperty("password", "enterprisedb");
+
+props.setProperty("sslfactory", "org.postgresql.ssl.NonValidatingFactory");
+
+props.setProperty("ssl", "true");
+
+Connection con = DriverManager.getConnection(url, props);
+
+To specify additional connection properties in the URL, add a question mark and an ampersand-separated list of keyword-value pairs:
+
+String url = "jdbc:edb://localhost/edb?user=enterprisedb\&ssl=true";
+
+Some of the additional connection properties are shown in Table 1.2:
+
+Table 1.2 - Additional Connection Properties
+
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>User</td>
+<td>String</td>
+<td>The database user on whose behalf the connection is being made.</td>
+</tr>
+<tr class="even">
+<td>password</td>
+<td>String</td>
+<td>The database user’s password.</td>
+</tr>
+<tr class="odd">
+<td>Ssl</td>
+<td>Boolean</td>
+<td>Requests an authenticated, encrypted SSL connection</td>
+</tr>
+<tr class="even">
+<td>loglevel</td>
+<td>Integer</td>
+<td><p>The value of loglevel determines the amount of detail printed to the DriverManager’s current value for LogStream or LogWriter. It currently supports values of:</p>
+<p>com.edb.Driver.DEBUG</p>
+<p>com.edb.Driver.INFO</p>
+<p>Set the value of loglevel to INFO to include sparse log information or to DEBUG to produce significant detail.</p></td>
+</tr>
+<tr class="odd">
+<td>charSet</td>
+<td>String</td>
+<td>The value of charSet determines the character set used for data sent to or received from the database.</td>
+</tr>
+<tr class="even">
+<td>prepareThreshold</td>
+<td>Integer</td>
+<td>The value of prepareThreshold determines the number of PreparedStatement executions required before switching to server side prepared statements. The default is five.</td>
+</tr>
+</tbody>
+</table>
+
+## Executing SQL Statements through Statement Objects
+
+After loading the Advanced Server JDBC Connector driver and connecting to the server, the code in the sample application builds a JDBC Statement object, executes an SQL query, and displays the results.
+
+A Statement object sends SQL statements to a database. There are three kinds of Statement objects. Each is specialized to send a particular type of SQL statement:
+ - A Statement object is used to execute a simple SQL statement with no parameters.
+ - A PreparedStatement object is used to execute a pre-compiled SQL statement with or without IN parameters.
+ - A CallableStatement object is used to execute a call to a database stored procedure.
+
+You must construct a Statement object before executing an SQL statement. The Statement object offers a way to send a SQL statement to the server (and gain access to the result set). Each Statement object belongs to a Connection; use the createStatement() method to ask the Connection to create the Statement object.
+
+A Statement object defines several methods to execute different types of SQL statements. In the sample application, the executeQuery() method executes a SELECT statement:
+
+Statement stmt = con.createStatement();
+
+ResultSet rs = stmt.executeQuery("SELECT \* FROM emp");
+
+The executeQuery() method expects a single argument: the SQL statement that you want to execute. executeQuery() returns data from the query in a ResultSet object. If the server encounters an error while executing the SQL statement provided, it throws an SQLException (and does not return a ResultSet).
+
+## Retrieving Results from a ResultSet Object
+
+A ResultSet object is the primary storage mechanism for the data returned by an SQL statement. Each ResultSet object contains both data and *metadata* (in the form of a ResultSetMetaData object). ResultSetMetaData includes useful information about results returned by the SQL command: column names, column count, row count, column length, and so on.
+
+To access the row data stored in a ResultSet object, an application calls one or more *getter* methods. A *getter* method retrieves the value in particular column of the current row. There are many different *getter* methods; each method returns a value of a particular type. For example, the getString() method returns a STRING type; the getDate() method returns a Date, and the getInt() method returns an INT type. When an application calls a *getter* method, JDBC tries to convert the value into the requested type.
+
+Each ResultSet keeps an internal pointer that points to the current row. When the executeQuery() method returns a ResultSet, the pointer is positioned *before* the first row; if an application calls a *getter* method before moving the pointer, the *getter* method will fail. To advance to the next (or first) row, call the ResultSet’s next() method. ResultSet.next() is a boolean method; it returns TRUE if there is another row in the ResultSet or FALSE if you have moved past the last row.
+
+After moving the pointer to the first row, the sample application uses the getString() *getter* method to retrieve the value in the first column and then prints that value. Since ListEmployees calls rs.next() and rs.getString() in a loop, it processes each row in the result set. ListEmployees exits the loop when rs.next() moves the pointer past the last row and returns FALSE.
+
+while(rs.next())
+
+{
+
+System.out.println(rs.getString(1));
+
+}
+
+When using the ResultSet interface, remember:
+ - You must call next()before reading any values. next() returns true if another row is available and prepares the row for processing.
+ - Under the JDBC specification, an application should access each row in the ResultSet only once. It is safest to stick to this rule, although at the current time, the Advanced Server JDBC driver will allow you to access a field as many times as you want.
+ - When you’ve finished using a ResultSet, call the close() method to free the resources held by that object.
+
+## Freeing Resources
+
+Every JDBC object consumes some number of resources. A ResultSet object, for example, may contain a copy of every row returned by a query; a Statement object may contain the text of the last command executed, and so forth. It’s usually a good idea to free up those resources when the application no longer needs them. The sample application releases the resources consumed by the Result, Statement, and Connection objects by calling each object’s close() method:
+
+rs.close();
+
+stmt.close();
+
+con.close();
+
+If you attempt to use a JDBC object after closing it, that object will throw an error.
+
+## Handling Errors
+
+When connecting to an external resource (such as a database server), errors are bound to occur; your code should include a way to handle these errors. Both JDBC and the Advanced Server JDBC Connector provide various types of error handling. The ListEmployees class (Listing 1.1) demonstrates how to handle an error using try/catch blocks.
+
+When a JDBC object throws an error (an object of type SQLException or of a type derived from SQLException), the SQLException object exposes three different pieces of error information:
+ - The error message.
+ - The SQL State.
+ - A vendor-specific error code.
+
+In the example, the following code displays the value of these components should an error occur:
+
+System.out.println("SQL Exception: " + exp.getMessage());
+
+System.out.println("SQL State: " + exp.getSQLState());
+
+System.out.println("Vendor Error: " + exp.getErrorCode());
+
+For example, if the server tries to connect to a database that does not exist on the specified host, the following error message is displayed:
+
+SQL Exception: FATAL: database "acctg" does not exist
+
+SQL State: 3D000
+
+Vendor Error: 0
+

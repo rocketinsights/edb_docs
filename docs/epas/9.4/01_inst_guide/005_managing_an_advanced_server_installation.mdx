@@ -1,0 +1,225 @@
+---
+title: Managing an Advanced Server Installation
+---
+
+
+Unless otherwise noted, the commands and paths noted in the following section assume that you have performed an installation with the interactive installer.
+
+## Starting and Stopping Advanced Server and Supporting Components
+
+A service is a program that runs in the background and requires no user interaction (in fact, a service provides no user interface); a service can be configured to start at boot time, or manually on demand. Services are best controlled using the platform-specific operating system service control utility.
+
+The following table lists the service names that are installed with a default Advanced Server installation.
+
+| Component Name  | Linux Service Name   | Windows Service Name                               |
+| --------------- | -------------------- | -------------------------------------------------- |
+| Advanced Server | ppas-9.4             | ppas-9.4                                           |
+| Infinite Cache  | ppas-infinitecache   | N/A                                                |
+| pgAgent         | ppas-agent-9.4       | Postgres Plus Advanced Server 9.4 Scheduling Agent |
+| PgBouncer       | pgbouncer            | pgbouncer                                          |
+| PgPool          | ppas-pgpool          | N/A                                                |
+| Slony           | ppas-replication-9.4 | ppas-replication-9.4                               |
+
+Advanced Server's database server, and the services of Advanced Server's supporting components can be controlled at the command line or through operating system-specific graphical interfaces.
+
+Please Note: if you stop or restart the Advanced Server service, the dependent pgAgent service is also stopped. You must manually restart the pgAgent service.
+
+<span id="_Using_pg_ctl_to_1" class="anchor"></span>
+
+### Using pg\_ctl to Control Advanced Server
+
+You can use the pg\_ctl utility to control an Advanced Server service from the command line on any platform. pg\_ctl allows you to start, stop, or restart the Advanced Server database server, reload the configuration parameters, or display the status of a running server. You can invoke the utility with the command:
+
+> pg\_ctl -D *data*\_*directory action*
+
+*data\_directory*
+
+> *data\_directory* is the location of the data controlled by the Advanced Server cluster.
+
+*action*
+
+> *action* specifies the action taken by the pg\_ctl utility. Specify:
+ - start to start the service.
+ - stop to stop the service.
+ - restart to stop and then start the service.
+ - reload sends the server a SIGHUP signal, reloading configuration parameters
+ - status to discover the current status of the service.
+
+For more information about using the pg\_ctl utility, or the command line options available, please see the official PostgreSQL core documentation, available at:
+
+<http://www.enterprisedb.com/docs/en/9.4/pg/app-pg-ctl.html>
+
+**Choosing Between pg\_ctl and the service Command**
+
+You can use the pg\_ctl utility to manage the status of an Advanced Server cluster, but it is important to note that pg\_ctl does not alert the operating system service controller to changes in the status of a server, so it is beneficial to use the service command whenever possible.
+
+Note that when you invoke the installer with the --extract-only option, the installer does not create a service, it merely unpacks the server. If you have installed Advanced Server by invoking the installer with the --extract-only option, and not completed the installation with the installation script (runAsRoot.sh or runAsAdmin.sh) you must use the pg\_ctl command to control the server.
+
+## Controlling a Service on Linux
+
+On Linux platforms, service scripts reside in the /etc/init.d directory.
+
+You can control a service at the command line with the service command. The Linux service controller mechanism allows you to start and stop the server gracefully. Using the service command to change the status of a service allows the service controller to keep track of the server status (the pg\_ctl command does not alert the service controller to changes in the status of a server).
+
+The service command can be used to manage an Advanced Server cluster, as well as the services of component software installed with Advanced Server.
+
+The command must be in your search path and must be invoked with superuser privileges. Open a command line, and issue the command:
+
+> service *service*\_*name* *action*
+
+*service\_name*
+
+> *service\_name* is the name of the service.
+
+*action*
+
+> *action* specifies the action taken by the service command. Specify:
+ - start to start the service.
+ - stop to stop the service.
+ - restart to stop and then start the service.
+ - status to discover the current status of the service.
+
+The Linux service command invokes a script (with the same name as the service) that resides in /etc/init.d. If your Linux distribution does not support the service command, you can call the script directly by entering:
+
+> /etc/init.d/*service*\_*name* *action*
+
+*service\_name*
+
+> *service*\_*name* specifies the name of the service.
+
+*action*
+
+> *action* specifies the action taken by the service command. Specify:
+ - start to start the service.
+ - stop to stop the service.
+ - restart to stop and then start the service.
+ - status to discover the current status of the service.
+
+### Using the edbstart and edbstop Utilities
+
+Note: edbstart and edbstop functionality is supported only on Linux hosts that are running Advanced Server installations performed with the Interactive installer. RPM installations do not support edbstart and edbstop.
+
+While the autostart scripts created during an Advanced Server installation control a single database cluster, the edbstart and edbstop utilities can control multiple database clusters on the same host, with a single configuration file.
+
+The edbstart and edbstop utilities use a file named edbtab (described below) to determine which instances of Advanced Server should start when the operating system boots, and stop when the host is shut down.
+
+Before using the edbstart or edbstop utilities, you should disable the Advanced Server autostart scripts. The commands that disable the scripts are platform specific; open a command line, assume superuser privileges and enter the command:
+
+On Fedora/Redhat:
+
+> chkconfig --level 2345 ppas-9.4 off
+
+On Debian/Ubuntu:
+
+> update-rc.d ppas-9.4 disable
+
+After disabling the Advanced Server service, use an editor to create a file named edbtab in the /etc directory, or copy the sample file located in:
+
+> /opt/PostgresPlus/9.4AS/scripts/server/autostart/edbtab
+
+Edit the edbtab file, (shown in Figure 5.1) specifying a list of the Advanced Server clusters that the edbstart and edbstop programs will control, and an indicator that designates if the cluster should be automatically started and stopped.
+
+![](./images/image79.png)
+
+*Figure 5.1 — The sample edbtab file.*
+
+The edbtab file entry should take the form:
+
+> *edb\_home directory*:*edb\_data\_directory*:\[Y|N\]
+
+*edb\_home\_directory*
+
+> *edb\_home\_directory* specifies the home directory of the Advanced Server installation that the edbstart/edbstop utilities will control.
+
+*edb*\_*data*\_*directory*
+
+> *edb*\_*data*\_*directory* specifies the data directory of the database cluster that the edbstart/edbstop utilities will control. *edb\_data\_directory* is the same as the value of $PGDATA for a specified cluster.
+
+\[Y|N\]
+
+> Y specifies that edbstart and edbstop should control the service; N specifies that the user will control the service manually.
+
+Include a separate entry in the edbtab file for each Advanced Server cluster that you wish to control with edbstart and edbstop.
+
+After editing the edbtab file, copy the edb\_autostart script to /etc/init.d. By default, the edb\_autostart script is located in:
+
+> /opt/PostgresPlus/9.4AS/scripts/server/autostart
+
+Copy the edbstart and edbstop scripts to $EDBHOME. Make the scripts executable with the following command:
+
+> chmod +x edbstart
+> chmod +x edbstop
+> chmod+x edbstart edbstop /etc/init.d/edb\_autostart
+
+Enable the edb\_autostart service with the commands:
+
+> chkconfig --level 2345 edb\_autostart on
+> chkconfig --add edb\_autostart
+
+For the service to take effect, you must restart your system.
+
+**Manually Controlling the Server with edbstart and edbstop**
+
+You can use edbstart and edbstop at the command line to manually control all of the clusters specified in the edbtab file, or to control an individual cluster. Call edbstart without an argument to start all of the clusters listed within the edbtab file; invoke edbstop without an argument to stop all of the clusters listed in the edbtab file. You can control an individual cluster by specifying the cluster's data directory as an argument. The following command starts a cluster:
+
+> edbstart /opt/PostgresPlus/9.4AS/data
+
+While the following command stops a cluster:
+
+> edbstop /opt/PostgresPlus/9.4AS/data
+
+### Configuring Component Services to AutoStart at System Reboot
+
+After installing, configuring and starting the Slony, pgpool-II or Infinite Cache services on a Linux system, you must manually configure your system to autostart the service when your system reboots.
+
+To configure a service to autostart on a Linux system, open a command line, assume superuser privileges, and enter the following command.
+
+> On a Redhat-compatible Linux system:
+>
+> /sbin/chkconfig *service\_name* on
+>
+> On a Debian-compatible Linux system, use the command:
+>
+> /usr/sbin/update-rc.d *service\_name* enable
+>
+> Where *service\_name* specifies the name of the service.
+
+Please note: If you are using a Windows system, the Slony service will be configured to autostart by default. On Windows, you can use the Service Properties dialog to control the service startup type. For more information about controlling a service on Windows, see [Section 5.3](#controlling-a-service-on-windows).
+
+## Controlling a Service on Windows
+
+The Windows operating system includes a graphical service controller that offers point-and-click control of Advanced Server and the services associated with Advanced Server components. The service controller simplifies changing the status of a server and configuring server start up behavior.
+
+The Services utility can be accessed through the Windows Control Panel, or by navigating through the Start menu to Run; when the Run dialog opens, enter services.msc and click OK. When the Services window opens, use the scroll bar to move through the listed services to highlight ppas-9.4 (see Figure 5.2).
+
+![](./images/image80.png)
+
+*Figure 5.2 — The Advanced Server service in the Windows Services window.*
+
+The Services window shows that the Advanced Server service (ppas-9.4) is currently Started, and has a Startup Type of Automatic.
+ - The Stop the service option stops the instance of Advanced Server.
+
+> Important Note: any user (or client application) connected to the Advanced Server instance will be abruptly disconnected if you stop the service.
+ - Use the Pause the service option to tell Advanced Server to reload the server configuration parameters. The Pause the service option is an effective way to reset the server parameters without disrupting user sessions for many of the configuration parameters. See [Section 6](#configuring-advanced-server), *Configuring Advanced Server* for more information about the parameters that can be updated with a server reload.
+
+> Please Note: A limitation in Windows causes Advanced Server to generate an error message after performing a parameter reload. To confirm that the reload command has successfully updated the parameters, query the pg\_settings table to verify that the change has taken effect.
+ - Use the Start the service option to start the Advanced Server service.
+ - Use the Restart the service option to stop and then start the Advanced Server. Please note that any user sessions will be terminated when you stop the service. This option is useful to reset server parameters that only take effect on server start.
+
+### Controlling Server Startup Behavior on Windows
+
+You can use the Windows Services utility to control the startup behavior of the server. To alter the startup properties of a server, navigate through the Control Panel to the Services utility, or navigate through the Start menu to Run; when the Run dialog opens, enter services.msc and click OK.
+
+Right click on the name of the service you wish to change and select Properties from the context menu to open the Properties dialog.
+
+Use the drop-down listbox in the Startup type field (shown in Figure 5.3) to specify how the Advanced Server service will behave when the host starts.
+
+![](./images/image81.png)
+
+*Figure 5.3 — Specifying Advanced Server’s startup behavior.*
+ - Specify Automatic (Delayed Start) to instruct the service controller to start after boot.
+ - Specify Automatic to instruct the service controller to start and stop the server whenever the system starts or stops.
+ - Specify Manual to instruct the service controller that the server must be started manually.
+
+Specify Disabled to instruct the service controller to disable the service; after disabling the service, you must stop the service or restart the server to make the change take effect. Once disabled, the server’s status cannot be changed until Startup type is reset to Automatic (Delayed Start), Automatic or Manual.
+

@@ -1,0 +1,28 @@
+---
+title: JDBC Installation
+---
+
+
+The Advanced Server JDBC Connector is included with a standard distribution of Postgres Plus Advanced Server. To install Advanced Server and the JDBC connector, launch the graphical installer. When the Advanced Server Select Components window opens (shown in Figure 3.1), confirm that the box next to Connectors is checked to include the JDBC Connector in the installation.
+
+![:::PPAS\_9.4\_screenshot updates:4.24.png](./images/image6.png)
+
+Figure 3.1 - The Advanced Server Select Components Window
+
+You can also install the Advanced Server Connectors without installing a complete version of Advanced Server. Invoke the Advanced Server installation wizard; when the Features dialog opens, uncheck the box to the left of Database Server (and other unwanted components) before choosing Next.
+
+To use the JDBC Connector, you must have Java installed on your system (version 1.6.0 or later). You can download a Java installer that matches your environment from the Sun Developer Network website at [*http://java.sun.com/javase/downloads/index.jsp*](http://java.sun.com/javase/downloads/index.jsp). Detailed installation instructions are available through the associated Docs link on the same page.
+
+## Configuring the Advanced Server JDBC Connector
+
+Advanced Server 9.4 ships with the following JDBC drivers:
+ - edb-jdbc15.jar supports JDBC version 3
+ - edb-jdbc16.jar supports JDBC version 4
+ - edb-jdbc17.jar supports JDBC version 4.1
+
+To make the JDBC driver available to Java, you must either copy the appropriate java .jar file for the JDBC version that you are using to your $*java\_home*/jre/lib/ext directory or append the location of the .jar file to the CLASSPATH environment variable.
+
+Note that if you choose to append the location of the jar file to the CLASSPATH environment variable, you must include the complete pathname:
+
+> /opt/PostgresPlus/connectors/jdbc/edb-jdbcxx.jar
+
