@@ -134,7 +134,7 @@ const DocTemplate = ({ data, pageContext }) => {
     navOrder && depth === 3 ? convertOrderToObjects(navOrder, navLinks) : null;
 
   return (
-    <Layout>
+    <Layout pageTitle={frontmatter.title}>
       <TopBar />
       <Container className="p-0 d-flex bg-white fixed-container">
         <SideNavigation>
