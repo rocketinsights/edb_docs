@@ -7,7 +7,6 @@ const getPrevAndNextLinks = (links, path) => {
   const idx = links.findIndex((element, index, array) => {
     return element.path === path;
   });
-  console.log(idx);
   if (idx > 0) {
     result.prevLink = links[idx - 1];
   }
