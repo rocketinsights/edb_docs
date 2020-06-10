@@ -67,7 +67,7 @@ export const iconNames = {
   DEVELOPER: 'developer',
   DOCS: 'docs',
   DOTTED_BOX: 'dottedbox',
-  EARTH: 'earch',
+  EARTH: 'earth',
   EASY: 'easy',
   EDB_BADGE: 'edbbadge',
   EDB_DOCS_LOGO_DARK: 'edbdocslogodark',
