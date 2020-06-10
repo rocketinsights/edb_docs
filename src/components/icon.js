@@ -23,6 +23,7 @@ import EasySvg from '../../static/edb-icons/easy.svg';
 import EdbBadgeSvg from '../../static/edb-icons/edb-badge.svg';
 import EdbDocsLogoDarkSvg from '../../static/edb-icons/edb-docs-logo-dark.svg';
 import EdbLogoDarkSvg from '../../static/edb-icons/edb-logo-dark.svg';
+import EdbSymbolSvg from '../../static/edb-icons/edb-symbol.svg';
 import EnergySvg from '../../static/edb-icons/energy.svg';
 import ExportSvg from '../../static/edb-icons/export.svg';
 import FileSvg from '../../static/edb-icons/file.svg';
@@ -37,6 +38,7 @@ import LearningSvg from '../../static/edb-icons/learning.svg';
 import LinkedinSvg from '../../static/edb-icons/linkedin.svg';
 import NetworkSvg from '../../static/edb-icons/network.svg';
 import Network2Svg from '../../static/edb-icons/network2.svg';
+import NewsSvg from '../../static/edb-icons/news.svg';
 import PostgresqlSvg from '../../static/edb-icons/postgresql.svg';
 import PresentationSvg from '../../static/edb-icons/presentation.svg';
 import ProcessImprovementSvg from '../../static/edb-icons/process-improvement.svg';
@@ -70,6 +72,7 @@ export const iconNames = {
   EDB_BADGE: 'edbbadge',
   EDB_DOCS_LOGO_DARK: 'edbdocslogodark',
   EDB_LOGO_DARK: 'edblogodark',
+  EDB_SYMBOL: 'edbsymbol',
   ENERGY: 'energy',
   EXPORT: 'export',
   FILE: 'file',
@@ -84,6 +87,7 @@ export const iconNames = {
   LINKEDIN: 'linkedin',
   NETWORK: 'network',
   NETWORK_2: 'network2',
+  NEWS: 'news',
   POSTGRESQL: 'postgresql',
   PRESENTATION: 'presentation',
   PROCESS_IMPROVEMENT: 'processimprovement',
@@ -146,6 +150,8 @@ function IconType({ iconName, ...rest }) {
       return <EdbDocsLogoDarkSvg {...rest} />;
     case iconNames.EDB_LOGO_DARK:
       return <EdbLogoDarkSvg {...rest} />;
+    case iconNames.EDB_SYMBOL:
+      return <EdbSymbolSvg {...rest} />;
     case iconNames.ENERGY:
       return <EnergySvg {...rest} />;
     case iconNames.EXPORT:
@@ -174,6 +180,8 @@ function IconType({ iconName, ...rest }) {
       return <NetworkSvg {...rest} />;
     case iconNames.NETWORK_2:
       return <Network2Svg {...rest} />;
+    case iconNames.NEWS:
+      return <NewsSvg {...rest} />;
     case iconNames.POSTGRESQL:
       return <PostgresqlSvg {...rest} />;
     case iconNames.PRESENTATION:
