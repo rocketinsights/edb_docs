@@ -9,7 +9,6 @@ import '../styles/index.scss';
 const Layout = ({ children, pageMeta }) => {
   const { baseUrl, imageUrl, title, description } = useSiteMetadata();
   const meta = pageMeta || {};
-  console.log(baseUrl);
 
   return (
     <>
