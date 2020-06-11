@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { graphql, Link } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
+  DevOnly,
   Footer,
   Layout,
   LeftNav,
@@ -120,9 +121,11 @@ const Section = ({ section }) => (
               </span>
             </p>
           ) : (
-            <span className="badge badge-light" key={Math.random()}>
-              Link Missing! Check left-navs.js
-            </span>
+            <DevOnly key={Math.random()}>
+              <span className="badge badge-light">
+                Link Missing! Check left-navs.js
+              </span>
+            </DevOnly>
           ),
         )}
       </div>
