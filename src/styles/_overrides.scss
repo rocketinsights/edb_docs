@@ -46,8 +46,7 @@
 
 pre {
   code {
-    color: white;
-    background: none;
+    padding: 0;
   }
 }
 
@@ -56,6 +55,7 @@ code {
   border-radius: $border-radius;
   padding: map-get($spacers, 1);
   color: $code-color;
+  font-family: $font-family-monospace !important;
 }
 
 .max-w-40 {
