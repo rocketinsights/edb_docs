@@ -66,7 +66,7 @@ export const leftNavs = {
         path: '04_jdbc_guide',
       },
       {
-        path: '05_migration_toolkit',
+        path: '05_migration_guide',
       },
       {
         path: '06_.net_guide',
