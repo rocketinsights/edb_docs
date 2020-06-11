@@ -34,8 +34,8 @@ const Layout = ({ children, pageMeta }) => {
         components={{
           table: props => <table {...props} className="table" />,
           pre: props => (
-            <figure className="bg-dark p-3 m-0 mb-3 rounded">
-              <pre className="m-0" {...props} />
+            <figure>
+              <pre {...props} />
             </figure>
           ),
           Icon,
