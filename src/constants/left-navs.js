@@ -6,7 +6,7 @@ export const leftNavs = {
         title: 'Getting Started',
       },
       {
-        path: 'epas_inst_linuxxx',
+        path: 'epas_inst_linux',
       },
       {
         path: 'epas_inst_windows',
