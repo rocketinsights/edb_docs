@@ -17,7 +17,7 @@ Deploy the site to GH Pages with `yarn run deploy`
 
 ## Icons
 
-We're using the shared [edb-icons repository](https://github.com/rocketinsights/edb-icons) as a git submodule. Any updates to icons should be made in this repository. When you're ready to pull in changes, run `yarn update-icons`. This will create/update iconNames.js, IconTypes.js and pull down the latest icons from the edb-icons repo.
+We're using the shared [edb-icons repository](https://github.com/rocketinsights/edb-icons) as a git submodule. Any updates to icons should be made in this repository. When you're ready to pull in changes, run `yarn update-icons`. This will create/update `iconNames.js`, `iconType.js`, and pull down the latest icons from the `edb-icons` repo.
 
 ## Migrating RST files
 
