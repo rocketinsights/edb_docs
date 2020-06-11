@@ -1,0 +1,1998 @@
+---
+title: EDB-ODBC Driver Functionality
+---
+
+
+You can use ODBC functions to query ODBC for specific information about the various attributes of the connection between EDB-ODBC and the server.
+ - SQLGetInfo() returns information about the EDB-ODBC driver and Advanced Server.
+ - SQLGetEnvAttr() returns information about ODBC environment attributes.
+ - SQLGetConnectAttr() returns information about attributes specific to an individual connection.
+ - SQLGetStmtAttr() returns information about the attributes specific to an individual statement.
+
+You can also use ODBC functions to set various attributes of the objects that you use to interface with ODBC:
+ - Use the SQLSetConnectAttr() function to set connection attributes.
+ - Use the SQLSetEnvAttr() function to set environment attributes.
+ - Use the SQLSetStmtAttr() function to set statement attributes.
+
+## SQLGetInfo()
+
+The ODBC SQLGetInfo() function returns information about the EDB-ODBC driver and Advanced Server. You must have an open connection to call SQLGetInfo(), unless you specify SQL\_ODBC\_VER as the *info\_type*. The signature for SQLGetInfo() is:
+
+> SQLRETURN SQLGetInfo
+>
+> (
+>
+> SQLHDBC *conn\_handle*, // Input
+>
+> SQLUSMALLINT *info\_type*, // Input
+>
+> SQLPOINTER *info\_pointer*, // Output
+>
+> SQLSMALLINT *buffer\_len*, // Input
+>
+> SQLSMALLINT \**string\_length\_pointer* // Output
+>
+> );
+
+*conn\_handle*
+
+The connection handle.
+
+*info\_type*
+
+The type of information SQLGetInfo() is retrieving.
+
+*info\_pointer*
+
+A pointer to a memory buffer that will hold the retrieved value.
+
+If the *info\_type* argument is SQL\_DRIVER\_HDESC or SQL\_DRIVER\_HSTMT, the *info\_pointer* argument is both Input and Output.
+
+*buffer\_len*
+
+*buffer\_len* is the length of the allocated memory buffer pointed to by *info\_pointer*. If *info\_pointer* is NULL, *buffer\_len* is ignored. If the returned value is a fixed size, *buffer\_len* is ignored. *buffer\_len* is only used if the requested value is returned in the form of a character string.
+
+*string\_length\_pointer*
+
+*string\_length\_pointer* is a pointer to an SQLSMALLINT value. SQLGetInfo() writes the size of the requested value in this integer.
+
+A typical usage is to call SQLGetInfo() with a NULL info\_pointer to obtain the length of the requested value, allocate the required number of bytes, and then call SQLGetInfo() again (providing the address of the newly allocated buffer) to obtain the actual value. The first call retrieves the number of bytes required to hold the value; the second call retrieves the value.
+
+If the size of the returned value exceeds buffer\_len, the information is truncated and NULL terminated. If the returned value is a fixed size, string\_length is ignored (and the size of the requested value is not provided by SQLGetInfo()).
+
+SQLGetInfo() writes information in one of the following formats:
+ - a SQLUINTEGER bitmask
+ - a SQLUINTEGER flag
+ - a SQLUINTEGER binary value
+ - a SQLUSMALLINT value
+ - a NULL terminated character string
+
+SQLGetInfo() returns SQL\_SUCCESS, SQL\_SUCCESS\_WITH\_INFO, SQL\_ERROR, or SQL\_INVALID\_HANDLE.
+
+The following table lists the information returned by EDB-ODBC about the Advanced Server connection:
+
+<table>
+<thead>
+<tr class="header">
+<th>SQL info_type Argument</th>
+<th>Description</th>
+<th>EDB_ODBC/Advanced Server Returns:</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SQL_ACCESSIBLE_PROCEDURES</td>
+<td>Indicates if procedures returned by SQLProcedures()can be executed by the application.</td>
+<td><p>Returns N</p>
+<p>Some procedures executed by the SQLProcedures() function may be executed by the application.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_ACCESSIBLE_TABLES</td>
+<td>Indicates if the user has SELECT privileges on all table names returned by SQLTables().</td>
+<td><p>Returns N</p>
+<p>The user may not have select privileges on one or more tables returned by the SQLTables() function.</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_ACTIVE_CONNECTIONS</p>
+<p>prev. SQL_MAX_DRIVER_CONNECTIONS</p></td>
+<td>Indicates the maximum number of connections EDB-ODBC can support.</td>
+<td><p>Returns 0</p>
+<p>There is no specified limit to the number of connections allowed.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_ACTIVE_ENVIRONMENTS</td>
+<td>The number of active environments EDB-ODBC can support.</td>
+<td><p>Returns 0</p>
+<p>There is no specified limit to the number of environments allowed.</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_ACTIVE_STATEMENTS</p>
+<p>prev.</p>
+<p>SQL_MAX_CONCURRENT_ACTIVITIES</p></td>
+<td>Indicates the maximum number of active statements EDB-ODBC can support.</td>
+<td><p>Returns 0</p>
+<p>There is no specified limit to the number of active statements allowed.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_AGGREGATE_FUNCTION</td>
+<td>Identifies the aggregate functions supported by the server and driver.</td>
+<td>Returns SQL_AF_ALL</td>
+</tr>
+<tr class="odd">
+<td>SQL_ALTER_DOMAIN</td>
+<td>Identifies the ALTER DOMAIN clauses supported by the server.</td>
+<td><p>Returns 0</p>
+<p>ALTER DOMAIN clauses are not supported.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_ALTER_TABLE</td>
+<td>Identifies the ALTER TABLE clauses supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_AT_ADD_COLUMN</p>
+<p>SQL_AT_DROP_TABLE_CONSTRAINT_CASCADE</p>
+<p>SQL_AT_DROP_TABLE_CONSTRAINT</p>
+<p>SQL_AT_CONSTRAINT_INITIALLY_DEFERRED</p>
+<p>SQL_AT_CONSTRAINT_INITIALLY_IMMEDIATE</p>
+<p>SQL_AT_CONSTRAINT_DEFERRABLE</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_ASYNC_MODE</td>
+<td>Level of Asynchronous Mode Supported by EDB-ODBC.</td>
+<td><p>Returns SQL_AM_NONE</p>
+<p>Asynchronous mode is not supported.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_BATCH_ROW_COUNT</td>
+<td>Indicates how the driver returns row counts.</td>
+<td><p>Returns SQL_BRC_EXPLICIT</p>
+<p>Row Counts are available when executed by calling SQLExecute or SQLExecDirect.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_BATCH_SUPPORT</td>
+<td>Indicates support for batch statement execution.</td>
+<td><p>Returns:</p>
+<p>SQL_BS_SELECT_EXPLICIT</p>
+<p>SQL_BS_ROW_COUNT_EXPLICIT</p>
+<p>The driver supports explicit batches with result set and row count generating statements.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_BOOKMARK_PERSISTENCE</td>
+<td>Indicates level of support for bookmarks.</td>
+<td><p>Returns:</p>
+<p>SQL_BP_DELETE</p>
+<p>SQL_BP_TRANSACTION</p>
+<p>SQL_BP_UPDATE</p>
+<p>SQL_BP_SCROLL</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_CATALOG_LOCATION</p>
+<p>Now SQL_QUALIFIER_LOCATION</p></td>
+<td>Indicates the position of the catalog in a qualified table name.</td>
+<td><p>Returns SQL_CL_START</p>
+<p>The catalog portion of a qualified table name is at the beginning of the name.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_CATALOG_NAME</p>
+<p>Now SQL_QUALIFIER_NAME</p></td>
+<td>Indicates support for catalog names.</td>
+<td><p>Returns Y</p>
+<p>The server supports catalog names</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_CATALOG_NAME_SEPARATOR</p>
+<p>Now SQL_QUALIFIER_NAME_SEPARATOR</p></td>
+<td>Character separating the catalog name from the adjacent name element.</td>
+<td><p>Returns '.'</p>
+<p>The server expects a '.' character between the qualifier and the table name.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_CATALOG_TERM</p>
+<p>Now SQL_QUALIFIER_TERM</p></td>
+<td>The term used to describe a catalog.</td>
+<td>Returns catalog</td>
+</tr>
+<tr class="odd">
+<td><p>SQL_CATALOG_USAGE</p>
+<p>Now SQL_QUALIFIER USAGE</p></td>
+<td>Indicates the SQL statements that may refer to catalogs.</td>
+<td><p>Returns SQL_CU_DML_STATEMENTS</p>
+<p>Catalog names can be used in SELECT, INSERT, UPDATE, DELETE, SELECT FOR UPDATE and positioned UPDATE and DELETE statements.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_COLLATION_SEQ</td>
+<td>Returns the name of the Collation Sequence.</td>
+<td><p>Returns an empty string</p>
+<p>The name of the default collation is unknown.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_COLUMN_ALIAS</td>
+<td>Indicates server support for column aliases.</td>
+<td><p>Returns Y</p>
+<p>The server supports column aliases.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONCAT_NULL_BEHAVIOR</td>
+<td>Indicates how the server handles concatenation of NULL values.</td>
+<td><p>Returns SQL_CB_NON_NULL</p>
+<p>Concatenation of a NULL value and a non NULL value will result in a NULL value.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_BIGINT</td>
+<td>Indicates conversion support from the BIGINT type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_BINARY</td>
+<td>Indicates conversion support from the BINARY type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_BIT</td>
+<td>Indicates conversion support from the BIT type using the CONVERT function.</td>
+<td><p>Returns:</p>
+<p>SQL_CVT_INTEGER</p>
+<p>SQL_CVT_BIT</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_CHAR</td>
+<td>Indicates conversion support from the CHAR type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_DATE</td>
+<td>Indicates conversion support from the DATE type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_DECIMAL</td>
+<td>Indicates conversion support from the DECIMAL type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_DOUBLE</td>
+<td>Indicates conversion support from the DOUBLE type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_FLOAT</td>
+<td>Indicates conversion support from, the FLOAT type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_FUNCTIONS</td>
+<td>Lists the scalar conversion functions supported by the server and driver using the CONVERT function.</td>
+<td><p>Returns:</p>
+<p>SQL_FN_CVT_CONVERT</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_INTEGER</td>
+<td>Lists the conversion support from the INTEGER type using the CONVERT function.</td>
+<td><p>Returns:</p>
+<p>SQL_CVT_INTEGER</p>
+<p>SQL_CVT_BIT</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_INTERVAL_DAY_TIME</td>
+<td>Indicates conversion support from the INTERVAL_DAY_TIME type using the CONVERT function.</td>
+<td>This info_type is not currently supported.</td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_INTERVAL_YEAR_MONTH</td>
+<td>Indicates conversion support from the INTERVAL_YEAR_MONTH type using the CONVERT function.</td>
+<td>This info_type is not currently supported.</td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_LONGVARBINARY</td>
+<td>Indicates conversion support for the LONG_VARBINARY type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_LONGVARCHAR</td>
+<td>Indicates conversion support for the LONGVARCHAR type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_NUMERIC</td>
+<td>Indicates conversion support for the NUMERIC type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_REAL</td>
+<td>Indicates conversion support for the REAL type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_SMALLINT</td>
+<td>Indicates conversion support for the SMALLINT type using the CONVERT function.</td>
+<td><p>Returns:</p>
+<p>SQL_CVT_INTEGER</p>
+<p>SQL_CVT_BIT</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_TIME</td>
+<td>Indicates conversion support for TIME type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CVT_TIMESTAMP</td>
+<td>Indicates conversion support for TIMESTAMP type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_TINYINT</td>
+<td>Indicates conversion support for the TINYINT type using the CONVERT function.</td>
+<td><p>Returns:</p>
+<p>SQL_CVT_INTEGER</p>
+<p>SQL_CVT_BIT</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_VARBINARY</td>
+<td>Indicates conversion support for the VARBINARY type using the CONVERT function.</td>
+<td><p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_VARCHAR</td>
+<td>Indicates conversion support for VARCHAR type using the CONVERT function.</td>
+<td><p>Returns:</p>
+<p>SQL_CVT_INTEGER</p>
+<p>SQL_CVT_BIT</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_WCHAR</td>
+<td>Indicates conversion support for the WCHAR type using the CONVERT function.</td>
+<td><p>This info_type is valid only when using the Unicode driver.</p>
+<p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CONVERT_WLONGVARCHAR</td>
+<td>Indicates conversion support for the WLONGVARCHAR type using the CONVERT function.</td>
+<td><p>This info_type is valid only when using the Unicode driver.</p>
+<p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CONVERT_WVARCHAR</td>
+<td>Indicates conversion support for the WVARCHAR type using the CONVERT function.</td>
+<td><p>This info_type is valid only when using the Unicode driver.</p>
+<p>Returns 0</p>
+<p>The server does not support conversion.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CORRELATION_NAME</td>
+<td>Indicates server support for correlation names.</td>
+<td><p>Returns SQL_CN_ANY</p>
+<p>Correlation names are supported and can be any valid name.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CREATE_ASSERTION</td>
+<td>Indicates support for the CREATE ASSERTION statement.</td>
+<td><p>Returns 0</p>
+<p>The CREATE ASSERTION statement is not supported.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CREATE_CHARACTER_SET</td>
+<td>Indicates support for CREATE CHARACTER statement.</td>
+<td><p>Returns 0</p>
+<p>The CREATE CHARACTER statement is not supported.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CREATE_COLLATION</td>
+<td>Indicates support for the CREATE COLLATION.</td>
+<td><p>Returns 0</p>
+<p>The CREATE COLLATION statement is not supported.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CREATE_DOMAIN</td>
+<td>Indicates support for the CREATE DOMAIN statement.</td>
+<td><p>Returns 0</p>
+<p>The CREATE DOMAIN statement is not supported.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CREATE_SCHEMA</td>
+<td>Indicates support for the CREATE SCHEMA statement.</td>
+<td><p>Returns:</p>
+<p>SQL_CS_CREATE_SCHEMA</p>
+<p>SQL_CS_AUTHORIZATION</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CREATE_TABLE</td>
+<td>Indicates support for the CREATE TABLE statement.</td>
+<td><p>Returns:</p>
+<p>SQL_CT_CREATE_TABLE</p>
+<p>SQL_CT_GLOBAL_TEMPORARY</p>
+<p>SQL_CT_CONSTRAINT_INITIALLY_DEFERRED</p>
+<p>SQL_CT_CONSTRAINT_INITIALLY_IMMEDIATE</p>
+<p>SQL_CT_CONSTRAINT_DEFERRABLE</p>
+<p>SQL_CT_COLUMN_CONSTRAINT</p>
+<p>SQL_CT_COLUMN_DEFAULT</p>
+<p>SQL_CT_TABLE_CONSTRAINT</p>
+<p>SQL_CT_CONSTRAINT_NAME_DEFINITION</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CREATE_TRANSLATION</td>
+<td>Indicates support for the CREATE TRANSLATION statement.</td>
+<td><p>Returns 0</p>
+<p>The CREATE TRANSLATION statement is not supported.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CREATE_VIEW</td>
+<td>Indicates support for the CREATE VIEW statement.</td>
+<td>Returns SQL_CV_CREATE_VIEW</td>
+</tr>
+<tr class="odd">
+<td>SQL_CURSOR_COMMIT_BEHAVIOR</td>
+<td>Indicates how a COMMIT operation affects the cursor.</td>
+<td><p>Returns SQL_CB_PRESERVE</p>
+<p>Cursors are unchanged, and can continue to fetch data.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_CURSOR_ROLLBACK_BEHAVIOR</td>
+<td>Indicates the server behavior after a ROLLBACK operation.</td>
+<td><p>Returns SQL_CB_PRESERVE</p>
+<p>Cursors are unchanged, and can continue to fetch data.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_CURSOR_SENSITIVITY</td>
+<td>Indicates how the server synchronizes changes to a result set.</td>
+<td>This info_type is not currently supported.</td>
+</tr>
+<tr class="even">
+<td>SQL_DATA_SOURCE_NAME</td>
+<td>Returns the server name used during connection.</td>
+<td>The value returned is determined by the connection properties.</td>
+</tr>
+<tr class="odd">
+<td>SQL_DATA_SOURCE_READ_ONLY</td>
+<td>Indicates if the connection is in READ ONLY mode.</td>
+<td>The value returned is determined by the connection properties.</td>
+</tr>
+<tr class="even">
+<td>SQL_DATABASE_NAME</td>
+<td>Returns the name of the database.</td>
+<td>The value returned is determined by the connection properties.</td>
+</tr>
+<tr class="odd">
+<td>SQL_DATETIME_LITERALS</td>
+<td>Indicates the DATETIME LITERALS supported by the server.</td>
+<td>This info_type is not supported.</td>
+</tr>
+<tr class="even">
+<td>SQL_DBMS_NAME</td>
+<td>Returns the name of the DBMS system.</td>
+<td>Returns the value given by the dbms_name parameter from the odbc.ini file on Linux or the dbms_name field of page 2 of the Advanced Options dialog box when defining a data source in Windows. The default is EnterpriseDB.</td>
+</tr>
+<tr class="odd">
+<td>SQL_DBMS_VER</td>
+<td>Returns the server version.</td>
+<td>Determined by the server.</td>
+</tr>
+<tr class="even">
+<td>SQL_DDL_INDEX</td>
+<td>Indicates support for creating and dropping indexes.</td>
+<td><p>Returns:</p>
+<p>SQL_DI_CREATE_INDEX |</p>
+<p>SQL_DI_DROP_INDEX</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_DEFAULT_TXN_ISOLATION</td>
+<td>Indicates support for transaction isolation by the server.</td>
+<td><p>Returns TXN_READ_COMMITTED</p>
+<p>Non-repeatable or phantom reads are possible; Dirty reads are not.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_DESCRIBE_PARAMETER</td>
+<td>Indicates support for the DESCRIBE INPUT statement.</td>
+<td><p>Returns N</p>
+<p>The DESCRIBE INPUT statement is not supported.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_DM_VER</td>
+<td>The version of the Driver Manager.</td>
+<td>Determined by driver manager.</td>
+</tr>
+<tr class="even">
+<td>SQL_DRIVER_HDBC</td>
+<td>The Driver's connection handle.</td>
+<td>Returns an SQLULEN value that contains the driver’s connection handle.</td>
+</tr>
+<tr class="odd">
+<td>SQL_DRIVER_HDESC</td>
+<td>The Driver descriptor handle.</td>
+<td>Returns an SQLULEN value that contains driver’s descriptor handle.</td>
+</tr>
+<tr class="even">
+<td>SQL_DRIVER_HENV</td>
+<td>The Driver's environment handle.</td>
+<td>Returns an SQLULEN value that contains the driver’s environment handle.</td>
+</tr>
+<tr class="odd">
+<td>SQL_DRIVER_HLIB</td>
+<td>The Driver handle.</td>
+<td>Returns an SQLULEN value that contains the library handle (returned to the ODBC driver manager when the manager loaded the driver).</td>
+</tr>
+<tr class="even">
+<td>SQL_DRIVER_HSTMT</td>
+<td>The Driver's statement handle.</td>
+<td>Returns an SQLULEN value that contains the driver’s statement handle.</td>
+</tr>
+<tr class="odd">
+<td>SQL_DRIVER_NAME</td>
+<td>The name of the driver.</td>
+<td>Returns EDB-ODBC.DLL</td>
+</tr>
+<tr class="even">
+<td>SQL_DRIVER_ODBC_VER</td>
+<td>Identifies the ODBC version that the driver supports.</td>
+<td>Returns 03.50</td>
+</tr>
+<tr class="odd">
+<td>SQL_DRIVER_VER</td>
+<td>Identifies the driver version.</td>
+<td>Returns 9.0.0.6</td>
+</tr>
+<tr class="even">
+<td>SQL_DROP_ASSERTION</td>
+<td>Lists the DROP ASSERTION clauses supported by the server.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="odd">
+<td>SQL_DROP_CHARACTER_SET</td>
+<td>Lists the DROP CHARACTER clauses supported by the server.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="even">
+<td>SQL_DROP_COLLATION</td>
+<td>Lists the DROP COLLATION clauses supported by the server.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="odd">
+<td>SQL_DROP_DOMAIN</td>
+<td>Lists the DROP DOMAIN clauses supported by the server.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="even">
+<td>SQL_DROP_SCHEMA</td>
+<td>Lists the DROP SCHEMA clauses supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_DS_DROP_SCHEMA</p>
+<p>SQL_DS_RESTRICT</p>
+<p>SQL_DS_CASCADE</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_DROP_TABLE</td>
+<td>Lists the DROP TABLE clauses supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_DT_DROP_TABLE</p>
+<p>SQL_DS_RESTRICT</p>
+<p>SQL_DS_CASCADE</p></td>
+</tr>
+<tr class="even">
+<td>SQL_DROP_TRANSLATION</td>
+<td>Lists the DROP TRANSLATION clauses supported by the server.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="odd">
+<td>SQL_DROP_VIEW</td>
+<td>Lists the DROP VIEW clauses supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_DV_DROP_VIEW</p>
+<p>SQL_DS_RESTRICT</p>
+<p>SQL_DS_CASCADE</p></td>
+</tr>
+<tr class="even">
+<td>SQL_DYNAMIC_CURSOR_ATTRIBUTES1</td>
+<td>Describes the first set of dynamic cursor attributes supported by the driver.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="odd">
+<td>SQL_DYNAMIC_CURSOR_ATTRIBUTES2</td>
+<td>Describes the second set of dynamic cursor attributes supported by the driver.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="even">
+<td>SQL_EXPRESSIONS_IN_ORDERBY</td>
+<td>Indicates server support for ORDER BY.</td>
+<td>Returns Y</td>
+</tr>
+<tr class="odd">
+<td>SQL_FETCH_DIRECTION</td>
+<td>Indicates FETCH order options (deprecated in ODBC 3.0).</td>
+<td><p>Returns:</p>
+<p>SQL_FD_FETCH_NEXT</p>
+<p>SQL_FD_FETCH_FIRS</p>
+<p>SQL_FD_FETCH_LAST</p>
+<p>SQL_FD_FETCH_PRIOR</p>
+<p>SQL_FD_FETCH_ABSOLUTE</p>
+<p>SQL_FD_FETCH_RELATIVE</p>
+<p>SQL_FD_FETCH_BOOKMARK</p></td>
+</tr>
+<tr class="even">
+<td>SQL_FILE_USAGE</td>
+<td>Indicates how a single-tier driver treats files on the server.</td>
+<td><p>Returns SQL_FILE_NOT_SUPPORTED</p>
+<p>The driver is not a single-tier file.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1</td>
+<td>Describes the forward-only cursor attributes supported by the driver.</td>
+<td>Returns SQL_CA1_NEXT</td>
+</tr>
+<tr class="even">
+<td>SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES2</td>
+<td>Describes extended attributes for the forward-only cursor designated by SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1.</td>
+<td><p>Returns:</p>
+<p>SQL_CA2_READ_ONLY_CONCURRENCY</p>
+<p>SQL_CA2_CRC_EXACT</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_GETDATA_EXTENSIONS</td>
+<td>Lists supported extensions to SQLGetData.</td>
+<td><p>Returns:</p>
+<p>SQL_GD_ANY_COLUMN</p>
+<p>SQL_GD_ANY_ORDER</p>
+<p>SQL_GD_BLOCK</p>
+<p>SQL_GD_BOUND</p></td>
+</tr>
+<tr class="even">
+<td>SQL_GROUP_BY</td>
+<td>Indicates the relationship between a GROUP BY clause and columns in the SELECT list.</td>
+<td>Returns SQL_GB_GROUP_BY_EQUALS_SELECT</td>
+</tr>
+<tr class="odd">
+<td>SQL_IDENTIFIER_CASE</td>
+<td>Indicates case-sensitivity and case-storage of SQL identifiers.</td>
+<td>Returns SQL_IC_LOWER</td>
+</tr>
+<tr class="even">
+<td>SQL_IDENTIFIER_QUOTE_CHAR</td>
+<td>Delimiter used to enclose quote identifiers.</td>
+<td>Returns "</td>
+</tr>
+<tr class="odd">
+<td>SQL_INDEX_KEYWORDS</td>
+<td>Indicates support for the CREATE INDEX statement.</td>
+<td>Returns SQL_IK_NONE</td>
+</tr>
+<tr class="even">
+<td>SQL_INFO_SCHEMA_VIEWS</td>
+<td>Lists the views supported in the INFORMATION_SCHEMA.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="odd">
+<td><p>SQL_INTEGRITY</p>
+<p>Prev. SQL_ODBC_SQL_OPT_IEF</p></td>
+<td>Indicates server support for referential integrity syntax checking.</td>
+<td>Returns N</td>
+</tr>
+<tr class="even">
+<td>SQL_INSERT_STATEMENT</td>
+<td>Indicates level of support for the INSERT statement.</td>
+<td><p>Returns:</p>
+<p>SQL_IS_INSERT_LITERALS | SQL_IS_INSERT_SEARCHED | SQL_IS_SELECT_INTO</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_KEYSET_CURSOR_ATTRIBUTES1</td>
+<td>Describes the first set of keyset cursor attributes supported by the driver.</td>
+<td><p>Returns:</p>
+<p>SQL_CA1_NEXT</p>
+<p>SQL_CA1_ABSOLUTE</p>
+<p>SQL_CA1_RELATIVE</p>
+<p>SQL_CA1_BOOKMARK</p>
+<p>SQL_CA1_LOCK_NO_CHANGE</p>
+<p>SQL_CA1_POS_POSITION</p>
+<p>SQL_CA1_POS_UPDATE</p>
+<p>SQL_CA1_POS_DELETE</p>
+<p>SQL_CA1_POS_REFRESH</p>
+<p>SQL_CA1_BULK_ADD</p>
+<p>SQL_CA1_BULK_UPDATE_BY_BOOKMARK</p>
+<p>SQL_CA1_BULK_DELETE_BY_BOOKMARK</p>
+<p>SQL_CA1_BULK_FETCH_BY_BOOKMARK</p></td>
+</tr>
+<tr class="even">
+<td>SQL_KEYSET_CURSOR_ATTRIBUTES2</td>
+<td>Describes the second set of keyset cursor attributes supported by the driver.</td>
+<td><p>Returns:</p>
+<p>SQL_CA2_READ_ONLY_CONCURRENCY</p>
+<p>SQL_CA2_OPT_ROWVER_CONCURRENCY</p>
+<p>SQL_CA2_SENSITIVITY_ADDITIONS</p>
+<p>SQL_CA2_SENSITIVITY_DELETIONS</p>
+<p>SQL_CA2_SENSITIVITY_UPDATES</p>
+<p>SQL_CA2_CRC_EXACT</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_KEYWORDS</td>
+<td>Identifies the server specific reserved keywords.</td>
+<td><p>Returns ""</p>
+<p>There are no server specific reserved keywords.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_LIKE_ESCAPE_CLAUSE</td>
+<td>Indicates support for an escape character in LIKE predicates.</td>
+<td><p>Returns N</p>
+<p>Advanced Server does not support escape characters in LIKE predicates.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_LOCK_TYPES</td>
+<td>Lists supported lock types (deprecated in ODBC 3.0).</td>
+<td>Returns SQL_LCK_NO_CHANGE</td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_ASYNC_CONCURRENT_STATEMENTS</td>
+<td>The number of active concurrent statements that the driver can support.</td>
+<td>This info_type is currently unsupported.</td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_BINARY_LITERAL_LEN</td>
+<td>The maximum length of a binary literal.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_CATALOG_NAME_LEN</td>
+<td>The maximum length of a catalog name on the server.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_QUALIFIER_NAME_LEN</td>
+<td>The maximum length of a qualifier.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_CHAR_LITERAL_LEN</td>
+<td>The maximum number of characters in a character string.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_COLUMN_NAME_LEN</td>
+<td>The maximum length of a column name.</td>
+<td><p>Returns 64</p>
+<p>Column names cannot exceed 64 characters in length.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_COLUMNS_IN_GROUP_BY</td>
+<td>The maximum number of columns allowed in a GROUP BY clause.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_COLUMNS_IN_INDEX</td>
+<td>The maximum number of columns allowed in an index.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_COLUMNS_IN_ORDER_BY</td>
+<td>The maximum number of columns allowed in an ORDER BY clause.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_COLUMNS_IN_SELECT</td>
+<td>The maximum number of columns allowed in a SELECT list.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_COLUMNS_IN_TABLE</td>
+<td>The maximum number of columns allowed in a table.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_MAX_CONCURRENT_ACTIVITIES</p>
+<p>prev. SQL_MAX_ACTIVE_STATEMENTS</p></td>
+<td>The maximum number of active SQL statements that the driver can support.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_CURSOR_NAME_LEN</td>
+<td>The maximum length of a cursor name.</td>
+<td><p>Returns 32</p>
+<p>A cursor name cannot exceed 32 characters in length.</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_MAX_DRIVER_CONNECTIONS</p>
+<p>prev. SQL_ACTIVE_CONNECTIONS</p></td>
+<td>The maximum number of active connections the driver can support.</td>
+<td><p>Returns 0</p>
+<p>There is no specified limit to the number of connections supported.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_IDENTIFIER_LEN</td>
+<td>The maximum identifier length allowed by the server.</td>
+<td><p>Returns 64</p>
+<p>Identifiers cannot exceed 64 characters in length.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_INDEX_SIZE</td>
+<td>The maximum number of bytes allowed in the (combined) fields of an index.</td>
+<td><p>Returns 0</p>
+<p>The maximum size is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_MAX_OWNER_NAME_LEN</p>
+<p>Now SQL_MAX_SCHEMA_NAME_LEN</p></td>
+<td>The maximum length of an owner name allowed by the server.</td>
+<td><p>Returns 64</p>
+<p>The maximum length of an owner name is 64 characters.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_PROCEDURE_NAME_LEN</td>
+<td>The maximum length of a procedure name allowed by the server.</td>
+<td><p>Returns 0</p>
+<p>The maximum length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_MAX_QUALIFIER_NAME_ LEN</p>
+<p>Now SQL_MAX_CATALOG_NAME_LEN</p></td>
+<td>The maximum length of a qualifier name allowed by the server.</td>
+<td><p>Returns 0</p>
+<p>The maximum length of a qualifier is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_ROW_SIZE</td>
+<td>The maximum length of a row.</td>
+<td><p>Returns 0</p>
+<p>The maximum row length is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_ROW_SIZE_INCLUDES_LONG</td>
+<td>Indicates whether the SQL_MAX_ROW_SIZE includes the length of any LONGVARCHAR or LONGVARBINARY columns in the row.</td>
+<td><p>Returns Y</p>
+<p>SQL_MAX_ROW_SIZE includes the length of any LONGVARCHAR or LONGVARBINARY columns in the row.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_SCHEMA_NAME_LEN</td>
+<td>The maximum length of a schema name allowed by the server.</td>
+<td><p>Returns 64</p>
+<p>The maximum length of a schema name is 64 characters.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_STATEMENT_LEN</td>
+<td>The maximum length of a SQL statement.</td>
+<td><p>Returns 0</p>
+<p>Maximum statement length is limited by available memory.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_TABLE_NAME_LEN</td>
+<td>The maximum length of a table name allowed by the server.</td>
+<td><p>Returns 64</p>
+<p>The maximum length of a table name is 64 characters.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MAX_TABLES_IN_SELECT</td>
+<td>The maximum number of tables allowed in the FROM clause of a SELECT statement.</td>
+<td><p>Returns 0</p>
+<p>The maximum number of tables allowed is unspecified.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MAX_USER_NAME_LEN</td>
+<td>The maximum length of the user name allowed by the server.</td>
+<td><p>Returns 0</p>
+<p>The maximum length of a user name is unspecified.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_MULT_RESULT_SETS</td>
+<td>Indicates server support for multiple result sets.</td>
+<td><p>Returns Y</p>
+<p>Advanced Server supports multiple result sets.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_MULTIPLE_ACTIVE_TXN</td>
+<td>Indicates if the server supports multiple active transactions.</td>
+<td><p>Returns Y</p>
+<p>Advanced Server supports multiple active transactions.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_NEED_LONG_DATA_LEN</td>
+<td>Indicates if the server needs the length of a LONG data value before receiving the value.</td>
+<td><p>Returns N</p>
+<p>Advanced Server does not need the length of a LONG data value before receiving the value.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_NON_NULLABLE_COLUMNS</td>
+<td>Indicates if the server supports NOT NULL values in columns.</td>
+<td><p>Returns SQL_NNC_NON_NULL</p>
+<p>Advanced Server does support NOT NULL values in columns.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_NULL_COLLATION</td>
+<td>Indicates where NULL values are located in a result set.</td>
+<td><p>Returns SQL_NC_HIGH</p>
+<p>The location of NULL values in a data set is determined by the ASC and DESC keywords; NULL values are sorted to the high end of the data set.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_NUMERIC_FUNCTIONS</td>
+<td>Lists the numeric functions supported by the driver and the server.</td>
+<td><p>Returns :</p>
+<p>SQL_FN_NUM_ABS | SQL_FN_NUM_ATAN | SQL_FN_NUM_CEILING | SQL_FN_NUM_COS | SQL_FN_NUM_EXP | SQL_FN_NUM_FLOOR | SQL_FN_NUM_LOG | SQL_FN_NUM_MOD | SQL_FN_NUM_SIGN | SQL_FN_NUM_SIN | SQL_FN_NUM_SQRT | SQL_FN_NUM_TAN | SQL_FN_NUM_RAND | SQL_FN_NUM_POWER | SQL_FN_NUM_ROUND</p></td>
+</tr>
+<tr class="even">
+<td>SQL_ODBC_API_CONFORMANCE</td>
+<td>Indicates the ODBC 3.0 compliance level</td>
+<td><p>Returns SQL_OAC_LEVEL1</p>
+<p>The driver conforms to ODBC Level 1 interface.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_ODBC_INTERFACE_CONFORMANCE</td>
+<td>Indicates the ODBC interface that the driver adheres to.</td>
+<td>Returns SQL_OIC_CORE</td>
+</tr>
+<tr class="even">
+<td>SQL_ODBC_SAG_CLI_CONFORMANCE</td>
+<td>Indicates the SQL Access Group compliance level that the driver adheres to.</td>
+<td><p>Returns SQL_OSCC_NOT_COMPLIANT</p>
+<p>The driver is not SAG CLI compliant.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_ODBC_SQL_CONFORMANCE</td>
+<td>Indicates the SQL grammar level that the driver conforms to.</td>
+<td><p>Returns SQL_OSC_CORE</p>
+<p>The driver conforms to the core grammar level.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_ODBC_SQL_OPT_IEF</p>
+<p>Now SQL_INTEGRITY</p></td>
+<td>Indicates server support for referential integrity syntax checking.</td>
+<td><p>Returns N</p>
+<p>The server does not support referential integrity syntax checking.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_ODBC_VER</td>
+<td>The ODBC version supported by the driver manager</td>
+<td>Returns 03.52.0000</td>
+</tr>
+<tr class="even">
+<td>SQL_OJ_CAPABILITIES</td>
+<td>Identifies the outer joins that are supported by the server.</td>
+<td><p>Returns SQL_OJ_LEFT</p>
+<p>SQL_OJ_RIGHT</p>
+<p>SQL_OJ_FULL</p>
+<p>SQL_OJ_NESTED</p>
+<p>SQL_OJ_NOT_ORDERED</p>
+<p>SQL_OJ_INNER</p>
+<p>SQL_OJ_ALL_COMPARISON_OPS</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_OUTER_JOINS</td>
+<td>Indicates support for outer joins and the outer join escape sequence.</td>
+<td><p>Returns Y</p>
+<p>Outer joins are supported.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_OWNER_TERM</p>
+<p>prev. SQL_SCHEMA_TERM</p></td>
+<td>The term used to describe a schema.</td>
+<td>Returns schema</td>
+</tr>
+<tr class="odd">
+<td>SQL_ORDER_BY_COLUMNS_IN_SELECT</td>
+<td>Indicates if the columns in an ORDER BY clause must be included in the SELECT list.</td>
+<td><p>Returns N</p>
+<p>Columns in an ORDER BY clause do not have to be in the SELECT list.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_OWNER_USAGE</p>
+<p>prev. SQL_SCHEMA_USAGE</p></td>
+<td>Returns a string that indicates which statements support schema qualifiers.</td>
+<td><p>Returns SQL_OU_DML_STATEMENTS</p>
+<p>SQL_OU_TABLE_DEFINITION</p>
+<p>SQL_OU_INDEX_DEFINITION</p>
+<p>SQL_OU_PRIVILEGE_DEFINITION</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_PARAM_ARRAY_ROW_COUNTS</td>
+<td>Indicates if the server will return a single row count or separate row counts for each element in an array when executing a parameterized statement with at least one parameter bound to the array.</td>
+<td><p>Returns SQL_PARC_BATCH</p>
+<p>Separate row counts are available for each element in an array.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_PARAM_ARRAY_SELECTS</td>
+<td>Indicates if the server will return one result set or a separate result set for each element in an array (or if the driver does not allow this feature) when executing a parameterized statement with at least one parameter bound to the array.</td>
+<td><p>Returns SQL_PAS_BATCH</p>
+<p>One data set is available for each element in an array.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_POS_OPERATION</td>
+<td>Lists the options supported by SQLSetPos().</td>
+<td><p>Returns:</p>
+<p>SQL_POS_POSITION</p>
+<p>SQL_POS_REFRESH</p>
+<p>SQL_POS_UPDATE</p>
+<p>SQL_POS_DELETE</p>
+<p>SQL_POS_ADD</p></td>
+</tr>
+<tr class="even">
+<td>SQL_POSITIONED_STATEMENTS</td>
+<td>Lists the supported positioned SQL statements.</td>
+<td><p>Returns:</p>
+<p>SQL_PS_POSITIONED_DELETE | SQL_PS_POSITIONED_UPDATE | SQL_PS_SELECT_FOR_UPDATE</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_PROCEDURE_TERM</td>
+<td>The term used to describe a procedure.</td>
+<td>Returns procedure</td>
+</tr>
+<tr class="even">
+<td>SQL_PROCEDURES</td>
+<td>Indicates if the server and the driver support SQL procedures and procedure invocation syntax.</td>
+<td><p>Returns Y</p>
+<p>The server and driver support procedures and procedure invocation syntax.</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_QUALIFIER_LOCATION</p>
+<p>prev. SQL_CATALOG_LOCATION</p></td>
+<td>Indicates the position of the schema name in a qualified table name.</td>
+<td><p>Returns SQL_CL_START</p>
+<p>The catalog portion of a qualified table name is at the beginning of the name.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_QUALIFIER_NAME</p>
+<p>prev. SQL_CATALOG_NAME</p></td>
+<td>Indicates server support for catalog names.</td>
+<td><p>Returns Y</p>
+<p>The server supports catalog names.</p></td>
+</tr>
+<tr class="odd">
+<td><p>SQL_QUALIFIER_NAME_SEPARATOR</p>
+<p>prev. SQL_CATALOG_NAME_SEPARATOR</p></td>
+<td>Character separating the qualifier name from the adjacent name element.</td>
+<td><p>Returns '.'</p>
+<p>The server expects a '.' character between the qualifier and the table name.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_QUALIFIER_TERM</p>
+<p>prev. SQL_CATALOG_TERM</p></td>
+<td>The term used to describe a qualifier.</td>
+<td>Returns catalog</td>
+</tr>
+<tr class="odd">
+<td><p>SQL_QUALIFIER_USAGE</p>
+<p>prev. SQL_CATALOG_USAGE</p></td>
+<td>Indicates the SQL statements that may refer to qualifiers.</td>
+<td><p>Returns SQL_CU_DML_STATEMENTS</p>
+<p>Catalog names can be used in SELECT, INSERT, UPDATE, DELETE, SELECT FOR UPDATE and positioned UPDATE and DELETE statements.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_QUALIFIER_USAGE</p>
+<p>Now</p>
+<p>SQL_CATALOG_USAGE</p></td>
+<td>Identifies DML statements that support qualifier names.</td>
+<td><p>Returns SQL_CU_DML_STATEMENTS</p>
+<p>Qualifiers can be used in all DML statements (SELECT, INSERT, UPDATE, DELETE, SELECT FOR UPDATE).</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_QUOTED_IDENTIFIER_CASE</td>
+<td>Indicates case sensitivity of quoted identifiers.</td>
+<td><p>Returns SQL_IC_SENSITIVE</p>
+<p>Quoted identifiers are case sensitive.</p></td>
+</tr>
+<tr class="even">
+<td><p>SQL_QUALIFIER_NAME_SEPARATOR</p>
+<p>Now</p>
+<p>SQL CATALOG_NAME_SEPARATOR</p></td>
+<td>The character that separates the name qualifier from the name element.</td>
+<td><p>Returns .</p>
+<p>The '.' character is used as a separator in qualified names.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_QUALIFIER_TERM</td>
+<td>The term used to describe a qualifier.</td>
+<td>Returns catalog</td>
+</tr>
+<tr class="even">
+<td>SQL_QUALIFIER_LOCATION</td>
+<td>The position of the qualifier in a qualified table name.</td>
+<td><p>Returns SQL_CL_START</p>
+<p>The qualifier precedes the table name in a qualified table name.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_ROW_UPDATES</td>
+<td>Indicates if keyset-driven or mixed cursors maintain row versions or values.</td>
+<td><p>Returns Y</p>
+<p>Cursors maintain values for all fetched rows and can detect updates to the row values.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SCHEMA_TERM</td>
+<td>The term used to describe a schema.</td>
+<td>Returns schema</td>
+</tr>
+<tr class="odd">
+<td>SQL_SCHEMA_USAGE</td>
+<td>Indicates the SQL statements that may refer to schemas.</td>
+<td><p>Returns :</p>
+<p>SQL_OU_DML_STATEMENTS</p>
+<p>SQL_OU_TABLE_DEFINITION</p>
+<p>SQL_OU_INDEX_DEFINITION</p>
+<p>SQL_OU_PRIVILEGE_DEFINITION</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SCROLL_CONCURRENCY</td>
+<td>Indicates the cursor concurrency control options supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SCCO_READ_ONLY</p>
+<p>SQL_SCCO_OPT_ROWVER</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SCROLL_OPTIONS</td>
+<td>Indicates the cursor scroll options supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SO_FORWARD_ONLY</p>
+<p>SQL_SO_KEYSET_DRIVEN</p>
+<p>SQL_SO_STATIC</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SEARCH_PATTERN_ESCAPE</td>
+<td>The escape character that allows use of the wildcard characters % and _ in search patterns.</td>
+<td><p>Returns \</p>
+<p>The '\' character is used as an escape character for the '%' and '_' characters in search patterns.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SERVER_NAME</td>
+<td>Indicates the name of the host.</td>
+<td>The returned value is determined by connection properties.</td>
+</tr>
+<tr class="even">
+<td>SQL_SPECIAL_CHARACTERS</td>
+<td>Indicates any special characters allowed in identifier names.</td>
+<td><p>Returns _</p>
+<p>The underscore character is allowed in identifier names.</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SQL_CONFORMANCE</td>
+<td>Indicates the level of SQL-92 compliance.</td>
+<td><p>Returns SQL_SC_SQL92_ENTRY</p>
+<p>The driver is SQL92 Entry level compliant.</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SQL92_DATETIME_FUNCTIONS</td>
+<td>Lists the datetime functions supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SDF_CURRENT_DATE</p>
+<p>SQL_SDF_CURRENT_TIME</p>
+<p>SQL_SDF_CURRENT_TIMESTAMP</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SQL92_FOREIGN_KEY_DELETE_RULE</td>
+<td>Indicates the server-enforced rules for using a foreign key in a DELETE statement.</td>
+<td><p>Returns:</p>
+<p>SQL_SFKD_CASCADE</p>
+<p>SQL_SFKD_NO_ACTION</p>
+<p>SQL_SFKD_SET_DEFAULT</p>
+<p>SQL_SFKD_SET_NULL</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SQL92_FOREIGN_KEY_UPDATE_RULE</td>
+<td>Indicates the server-enforced rules for using a foreign key in an UPDATE statement.</td>
+<td><p>Returns:</p>
+<p>SQL_SFKU_CASCADE</p>
+<p>SQL_SFKU_NO_ACTION</p>
+<p>SQL_SFKU_SET_DEFAULT</p>
+<p>SQL_SFKU_SET_NULL</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SQL92_GRANT</td>
+<td>Indicates the supported GRANT statement clauses.</td>
+<td><p>Returns:</p>
+<p>SQL_SG_DELETE_TABLE</p>
+<p>SQL_SG_INSERT_TABLE</p>
+<p>SQL_SG_REFERENCES_TABLE</p>
+<p>SQL_SG_SELECT_TABLE</p>
+<p>SQL_SG_UPDATE_TABLE</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SQL92_NUMERIC_VALUE_FUNCTIONS</td>
+<td>Lists the scalar numeric functions supported by the server and driver.</td>
+<td><p>Returns:</p>
+<p>SQL_SNVF_BIT_LENGTH</p>
+<p>SQL_SNVF_CHAR_LENGTH</p>
+<p>SQL_SNVF_CHARACTER_LENGTH</p>
+<p>SQL_SNVF_EXTRACT</p>
+<p>SQL_SNVF_OCTET_LENGTH</p>
+<p>SQL_SNVF_POSITION</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SQL92_PREDICATES</td>
+<td>Identifies the predicates of a SELECT statement supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SP_EXISTS</p>
+<p>SQL_SP_ISNOTNULL</p>
+<p>SQL_SP_ISNULL</p>
+<p>SQL_SP_OVERLAPS</p>
+<p>SQL_SP_LIKE</p>
+<p>SQL_SP_IN</p>
+<p>SQL_SP_BETWEEN</p>
+<p>SQL_SP_COMPARISON</p>
+<p>SQL_SP_QUANTIFIED_COMPARISON</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SQL92_RELATIONAL_JOIN_OPERATORS</td>
+<td>Identifies the relational join operators supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SRJO_CROSS_JOIN</p>
+<p>SQL_SRJO_EXCEPT_JOIN</p>
+<p>SQL_SRJO_FULL_OUTER_JOIN</p>
+<p>SQL_SRJO_INNER_JOIN</p>
+<p>SQL_SRJO_INTERSECT_JOIN</p>
+<p>SQL_SRJO_LEFT_OUTER_JOIN</p>
+<p>SQL_SRJO_NATURAL_JOIN</p>
+<p>SQL_SRJO_RIGHT_OUTER_JOIN</p>
+<p>SQL_SRJO_UNION_JOIN</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SQL92_REVOKE</td>
+<td>Identifies the clauses in a REVOKE statement that are supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SR_DELETE_TABLE</p>
+<p>SQL_SR_INSERT_TABLE</p>
+<p>SQL_SR_REFERENCES_TABLE</p>
+<p>SQL_SR_SELECT_TABLE</p>
+<p>SQL_SR_UPDATE_TABLE</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SQL92_ROW_VALUE_CONSTRUCTOR</td>
+<td>Indicates the row value constructor expressions in a SELECT statement that are supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SRVC_VALUE_EXPRESSION</p>
+<p>SQL_SRVC_NULL</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SQL92_STRING_FUNCTIONS</td>
+<td>Lists the string scalar functions supported by the server and driver.</td>
+<td><p>Returns:</p>
+<p>SQL_SSF_CONVERT</p>
+<p>SQL_SSF_LOWER</p>
+<p>SQL_SSF_UPPER</p>
+<p>SQL_SSF_SUBSTRING</p>
+<p>SQL_SSF_TRANSLATE</p>
+<p>SQL_SSF_TRIM_BOTH</p>
+<p>SQL_SSF_TRIM_LEADING</p>
+<p>SQL_SSF_TRIM_TRAILING</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SQL92_VALUE_EXPRESSIONS</td>
+<td>Indicates the value expressions supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SVE_CASE</p>
+<p>SQL_SVE_CAST</p>
+<p>SQL_SVE_COALESCE</p>
+<p>SQL_SVE_NULLIF</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_STANDARD_CLI_CONFORMANCE</td>
+<td>Indicates the CLI standard the driver conforms to.</td>
+<td>This info_type is currently unsupported.</td>
+</tr>
+<tr class="even">
+<td>SQL_STATIC_CURSOR_ATTRIBUTES1</td>
+<td>Describes the first set of static cursor attributes supported by the driver.</td>
+<td><p>Returns:</p>
+<p>SQL_CA1_NEXT</p>
+<p>SQL_CA1_ABSOLUTE</p>
+<p>SQL_CA1_RELATIVE</p>
+<p>SQL_CA1_BOOKMARK</p>
+<p>SQL_CA1_LOCK_NO_CHANGE</p>
+<p>SQL_CA1_POS_POSITION</p>
+<p>SQL_CA1_POS_UPDATE</p>
+<p>SQL_CA1_POS_DELETE</p>
+<p>SQL_CA1_POS_REFRESH</p>
+<p>SQL_CA1_BULK_ADD</p>
+<p>SQL_CA1_BULK_UPDATE_BY_BOOKMARK</p>
+<p>SQL_CA1_BULK_DELETE_BY_BOOKMARK</p>
+<p>SQL_CA1_BULK_FETCH_BY_BOOKMARK</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_STATIC_CURSOR_ATTRIBUTES2</td>
+<td>Describes the second set of static cursor attributes supported by the driver.</td>
+<td><p>Returns:</p>
+<p>SQL_CA2_READ_ONLY_CONCURRENCY</p>
+<p>SQL_CA2_OPT_ROWVER_CONCURRENCY</p>
+<p>SQL_CA2_SENSITIVITY_ADDITIONS</p>
+<p>SQL_CA2_SENSITIVITY_DELETIONS</p>
+<p>SQL_CA2_SENSITIVITY_UPDATES</p>
+<p>SQL_CA2_CRC_EXACT</p></td>
+</tr>
+<tr class="even">
+<td>SQL_STATIC_SENSITIVITY</td>
+<td>Indicates whether changes made to a static cursor by SQLSetPos() or UPDATE or DELETE statements are detected by the application.</td>
+<td><p>Returns:</p>
+<p>SQL_SS_ADDITIONS</p>
+<p>SQL_SS_DELETIONS</p>
+<p>SQL_SS_UPDATES</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_STRING_FUNCTIONS</td>
+<td>Lists the scalar string functions supported by the server and driver.</td>
+<td><p>Returns:</p>
+<p>SQL_FN_STR_CONCAT</p>
+<p>SQL_FN_STR_LTRIM | SQL_FN_STR_LENGTH</p>
+<p>SQL_FN_STR_LOCATE | SQL_FN_STR_LCASE</p>
+<p>SQL_FN_STR_RTRIM</p>
+<p>SQL_FN_STR_SUBSTRING</p>
+<p>SQL_FN_STR_UCASE</p></td>
+</tr>
+<tr class="even">
+<td>SQL_SUBQUERIES</td>
+<td>Identifies the subquery predicates to a SELECT statement supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_SQ_COMPARISON</p>
+<p>SQL_SQ_EXISTS</p>
+<p>SQL_SQ_IN</p>
+<p>SQL_SQ_QUANTIFIED</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_SYSTEM_FUNCTIONS</td>
+<td>Lists the scalar system functions supported by the server and driver.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="even">
+<td>SQL_TABLE_TERM</td>
+<td>The term used to describe a table.</td>
+<td>Returns table</td>
+</tr>
+<tr class="odd">
+<td>SQL_TIMEDATE_ADD_INTERVALS</td>
+<td>Indicates the timestamp intervals supported by the server for the TIMESTAMPADD scalar function.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="even">
+<td>SQL_TIMEDATE_DIFF_INTERVALS</td>
+<td>Indicates the timestamp intervals supported by the server for the TIMESTAMPDIFF scalar function.</td>
+<td>Returns 0</td>
+</tr>
+<tr class="odd">
+<td>SQL_TIMEDATE_FUNCTIONS</td>
+<td>Indicates the date and time functions supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_FN_TD_NOW | SQL_FN_TD_CURDATE|</p>
+<p>SQL_FN_TD_CURTIME</p></td>
+</tr>
+<tr class="even">
+<td>SQL_TXN_CAPABLE</td>
+<td>Identifies the transaction support offered by the server and driver.</td>
+<td><p>Returns SQL_TC_ALL</p>
+<p>Transactions can contain both DML and DDL statements</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_TXN_ISOLATION_OPTION</td>
+<td>Indicates the transaction isolation level supported by the server.</td>
+<td><p>Returns:</p>
+<p>SQL_TXN_READ_COMMITTED</p>
+<p>SQL_TXN_SERIALIZABLE</p></td>
+</tr>
+<tr class="even">
+<td>SQL_UNION</td>
+<td>Indicates server support for the UNION clause.</td>
+<td><p>Returns:</p>
+<p>SQL_U_UNION</p>
+<p>SQL_U_UNION_ALL</p></td>
+</tr>
+<tr class="odd">
+<td>SQL_USER_NAME</td>
+<td>Identifies the name of the user connected to a database; may be different than the login name.</td>
+<td>This value is determined by the connection properties.</td>
+</tr>
+<tr class="even">
+<td>SQL_XOPEN_CLI_YEAR</td>
+<td>The publication year of the X/Open specification that the driver manager complies with.</td>
+<td>This info_type is currently unsupported.</td>
+</tr>
+</tbody>
+</table>
+
+## Connection Attributes
+
+You can use the ODBC SQLGetConnectAttr() and SQLSetConnectAttr() functions to retrieve or set the value of a connection attribute.
+
+### SQLGetConnectAttr()
+
+The SQLGetConnectAttr() function returns the current value of a connection attribute. The signature is:
+
+> SQLRETURN SQLGetConnectAttr
+>
+> (
+>
+> SQLHDBC *conn\_handle,* //Input
+>
+> SQLINTEGER *attribute,* //Input
+>
+> SQLPOINTER *value\_pointer,* //Output
+>
+> SQLINTEGER *buffer\_length,* //Input
+>
+> SQLINTEGER \**string\_length\_pointer* //Output
+>
+> );
+
+*conn\_handle*
+
+The connection handle.
+
+*attribute*
+
+*attribute* identifies the attribute whose value you wish to retrieve.
+
+*value\_pointer*
+
+A pointer to the location in memory that will receive the *attribute* value.
+
+*buffer\_length*
+
+If *attribute* is defined by ODBC and *value\_pointer* points to a character string or binary buffer, *buffer\_length* is the length of *value\_pointer*. If *value\_pointer* points to a fixed-size value (such as an integer), *buffer\_length* is ignored.
+
+If EDB-ODBC defines the attribute, SQLGetConnectAttr() sets the *buffer\_length* parameter. *buffer\_length* can be:
+
+| Value type             | Meaning                                      |
+| ---------------------- | -------------------------------------------- |
+| Character string       | The length of the character string           |
+| Binary buffer          | The result of SQL\_LEN\_BINARY\_ATTR(length) |
+| Fixed length data type | SQL\_IS\_INTEGER or SQL\_IS\_UINTEGER        |
+| Any other type         | SQL\_IS\_POINTER                             |
+
+*string\_length\_pointer*
+
+A pointer to a SQLINTEGER that receives the number of bytes available to return in *value\_pointer*. If *value\_pointer* is NULL, *string\_length\_pointer* is not returned.
+
+This function returns SQL\_SUCCESS, SQL\_SUCCESS\_WITH\_INFO, SQL\_NO\_DATA, SQL\_ERROR or SQL\_INVALID\_HANDLE.
+
+The following table lists the connection attributes supported by EDB-ODBC.
+
+| Attribute                       | Supported? | Notes                                                      |
+| ------------------------------- | ---------- | ---------------------------------------------------------- |
+| SQL\_ATTR\_ACCESS\_MODE         | NO         | SQL\_MODE\_READ\_WRITE                                     |
+| SQL\_ATTR\_ASYNC\_ENABLE        | NO         | SQL\_ASYNC\_ENABLE\_OFF                                    |
+| SQL\_ATTR\_AUTO\_IPD            | NO         |                                                            |
+| SQL\_ATTR\_AUTOCOMMIT           |            | SQL\_AUTOCOMMIT, SQL\_AUTOCOMMIT\_ON, SQL\_AUTOCOMMIT\_OFF |
+| SQL\_ATTR\_CONNECTION\_TIMEOUT  | NO         |                                                            |
+| SQL\_ATTR\_CURRENT\_CATALOG     | NO         |                                                            |
+| SQL\_ATTR\_DISCONNECT\_BEHAVIOR | NO         |                                                            |
+| SQL\_ATTR\_ENLIST\_IN\_DTC      | YES        | For win32 and with conditional compilation                 |
+| SQL\_ATTR\_ENLIST\_IN\_XA       | NO         |                                                            |
+| SQL\_ATTR\_LOGIN\_TIMEOUT       | NO         | SQL\_LOGIN\_TIMEOUT                                        |
+| SQL\_ATTR\_ODBC\_CURSORS        | NO         |                                                            |
+| SQL\_ATTR\_PACKET\_SIZE         | NO         |                                                            |
+| SQL\_ATTR\_QUIET\_MODE          | NO         |                                                            |
+| SQL\_ATTR\_TRACE                | NO         |                                                            |
+| SQL\_ATTR\_TRACEFILE            | NO         |                                                            |
+| SQL\_ATTR\_TRANSLATE\_LIB       | NO         |                                                            |
+| SQL\_ATTR\_TRANSLATE\_OPTION    | NO         |                                                            |
+| SQL\_ATTR\_TXN\_ISOLATION       | YES        | SQL\_TXN\_ISOLATION, SQL\_DEFAULT\_TXN\_ISOLATION          |
+
+### SQLSetConnectAttr()
+
+You can use the ODBC SQLSetConnectAttr() function to set the values of connection attributes. The signature of the function is:
+
+> SQLRETURN SQLSetConnectAttr
+>
+> (
+>
+> SQLHDBC *conn\_handle*, // Input
+>
+> SQLINTEGER *attribute*, // Input
+>
+> SQLPOINTER *value\_pointer*, // Input
+>
+> SQLINTEGER *string\_length*, // Input
+>
+> );
+
+*conn\_handle*
+
+The connection handle
+
+*attribute*
+
+*attribute* identifies the attribute whose value you wish to set
+
+*value\_pointer*
+
+A pointer to the value that the *attribute* will assume.
+
+*string\_length*
+
+If *attribute* is defined by ODBC and *value\_pointer* points to a binary buffer or character string, *string\_length* is the length of *value\_pointer*. If *value\_pointer* points to a fixed-length value (such as an integer), *string\_length* is ignored.
+
+If EDB-ODBC defines the attribute, the application sets the *string\_length* parameter. Possible *string\_length* values are:
+
+| Value Type             | Meaning                                        |
+| ---------------------- | ---------------------------------------------- |
+| Character string       | The length of the character string or SQL\_NTS |
+| Binary buffer          | The result of SQL\_LEN\_BINARY\_ATTR(length)   |
+| Fixed length data type | SQL\_IS\_INTEGER or SQL\_IS\_UINTEGER          |
+| Any other type         | SQL\_IS\_POINTER                               |
+
+SQLSetConnectAttr() returns SQL\_SUCCESS, SQL\_SUCCESS\_WITH\_INFO, SQL\_ERROR, SQL\_STILL\_EXECUTING or SQL\_INVALID\_HANDLE.
+
+You can call SQLSetConnectAttr() any time after the connection handle is allocated, until the time that the connection is closed with a call to SQLFreeHandle(). All attributes set by the call persist until the call to SQLFreeHandle().
+
+Connection attributes have a specific time frame in which they can be set. Some attributes must be set before the connection is established, while others can only be set after a connection is established.
+
+The following table lists the connection attributes and the time frame in which they can be set:
+
+| Attribute                      | Set Before or After establishing a connection? |
+| ------------------------------ | ---------------------------------------------- |
+| SQL\_ATTR\_ACCESS\_MODE        | Before or After                                |
+| SQL\_ATTR\_ASYNC\_ENABLE       | Before or After                                |
+| SQL\_ATTR\_AUTO\_IPD           | Before or After                                |
+| SQL\_ATTR\_AUTOCOMMIT          | Before or After                                |
+| SQL\_ATTR\_CONNECTION\_TIMEOUT | Before or After                                |
+| SQL\_ATTR\_CURRENT\_CATALOG    | Before or After                                |
+| SQL\_ATTR\_ENLIST\_IN\_DTC     | After                                          |
+| SQL\_ATTR\_ENLIST\_IN\_XA      | After                                          |
+| SQL\_ATTR\_LOGIN\_TIMEOUT      | Before                                         |
+| SQL\_ATTR\_ODBC\_CURSORS       | Before                                         |
+| SQL\_ATTR\_PACKET\_SIZE        | Before                                         |
+| SQL\_ATTR\_QUIET\_MODE         | Before or After                                |
+| SQL\_ATTR\_TRACE               | Before or After                                |
+| SQL\_ATTR\_TRACEFILE           | Before or After                                |
+| SQL\_ATTR\_TRANSLATE\_LIB      | After                                          |
+| SQL\_ATTR\_TRANSLATE\_OPTION   | After                                          |
+| SQL\_ATTR\_TXN\_ISOLATION      | Before or After                                |
+
+## Environment Attributes
+
+You can use the ODBC SQLGetEnvAttr() and SQLSetEnvAttr() functions to retrieve or set the value of an environment attribute.
+
+### SQLGetEnvAttr()
+
+Use the SQLGetEnvAttr() function to find the current value of environment attributes on your system. The signature of the function is:
+
+> SQLRETURN SQLGetConnectAttr
+>
+> (
+>
+> SQLHDBC *env\_handle*, // Input
+>
+> SQLINTEGER *attribute*, // Input
+>
+> SQLPOINTER *value\_ptr*, // Output
+>
+> SQLINTEGER *buffer\_length*, // Input
+>
+> SQLINTEGER \**string\_length\_pointer* // Output
+>
+> );
+
+*env\_handle*
+
+The environment handle.
+
+*attribute*
+
+*attribute* identifies the attribute whose value you wish to retrieve.
+
+*value\_pointer*
+
+A pointer to the location in memory that will receive the *attribute* value.
+
+*buffer\_length*
+
+If the attribute is a character string, *buffer\_length* is the length of *value\_ptr*. If the value of the attribute is not a character string, *buffer\_length* is unused.
+
+*string\_length\_pointer*
+
+A pointer to a SQLINTEGER that receives the number of bytes available to return in *value\_pointer*. If *value\_pointer* is NULL, *string\_length\_pointer* is not returned.
+
+This function returns SQL\_SUCCESS, SQL\_SUCCESS\_WITH\_INFO, SQL\_NO\_DATA, SQL\_ERROR or SQL\_INVALID\_HANDLE.
+
+The following table lists the environment attributes supported by EDB-ODBC.
+
+<table>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Supported?</th>
+<th>Restrictions?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SQL_ATTR_CONNECTION_POOLING</td>
+<td>SQL_CP_ONE_PER_DRIVER or SQL_CP_OFF</td>
+<td>Determined by connection properties</td>
+</tr>
+<tr class="even">
+<td>SQL_ATTR_ODBC_VERSION</td>
+<td><p>(SQL_OV_ODBC3)</p>
+<p>(SQL_OV_ODBC2)</p></td>
+<td>NONE</td>
+</tr>
+<tr class="odd">
+<td>SQL_ATTR_OUTPUT_NTS</td>
+<td>SQL_SUCCESS</td>
+<td>NONE</td>
+</tr>
+</tbody>
+</table>
+
+### SQLSetEnvAttr()
+
+You can use the SQLSetEnvAttr() function to set the values of environment attributes. The signature of the function is:
+
+> SQLRETURN SQLSetEnvAttr
+>
+> (
+>
+> SQLHENV *env\_handle*, //Input
+>
+> SQLINTEGER *attribute*, //Input
+>
+> SQLPOINTER *value\_pointer*, //Input
+>
+> SQLINTEGER *string\_length* //Input
+>
+> );
+
+*env\_handle*
+
+The environment handle.
+
+*attribute*
+
+*attribute* identifies the attribute whose value you wish to set.
+
+*value\_pointer*
+
+A pointer to the value assigned to the *attribute*. The value will be a NULL terminated character string or a 32 bit integer value depending on the specified *attribute*.
+
+*string\_length*
+
+If *value\_pointer* is a pointer to a binary buffer or character string, *string\_length* is the length of *value\_pointer*. If the value being assigned to the attribute is a character, *string\_length* is the length of that character string. If *value\_pointer* is NULL, *string\_length* is not returned. If value\_pointer is an integer, *string\_length* is ignored.
+
+SQLSetEnvAttr() returns SQL\_SUCCESS, SQL\_INVALID\_HANDLE, SQL\_ERROR or SQL\_SUCCESS\_WITH\_INFO.
+
+The application must call SQLSetEnvAttr() before allocating a connection handle; all values applied to environment attributes will persist until SQLFreeHandle() is called for the connection. ODBC version 3.x allows you to allocate multiple environment handles simultaneously.
+
+The following table lists the environment attributes you can set with SQLSetAttr().
+
+| Attribute                | Value\_pointer type | Restrictions?                                                                                                                 |
+| ------------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| SQL\_ATTR\_ODBC\_VERSION | 32 bit Integer      | Set this attribute before the application calls any function that includes an SQLHENV argument.                               |
+| SQL\_ATTR\_OUTPUT\_NTS   | 32-bit Integer      | Defaults to SQL\_TRUE. Calls that set this attribute to SQL\_FALSE return SQL\_ERROR/SQLSTATEHYC00 (feature not implemented). |
+
+## Statement Attributes
+
+You can use the ODBC SQLGetStmtAttr() and SQLSetStmtAttr() functions to retrieve and set the value of a statement attribute.
+
+### SQLGetStmtAttr()
+
+The SQLGetStmtAttr() function returns the current value of statement attribute. The signature is:
+
+> SQLRETURN SQLGetConnectAttr
+>
+> (
+>
+> SQLHDBC *stmt\_handle,* //Input
+>
+> SQLINTEGER *attribute,* //Input
+>
+> SQLPOINTER *value\_ptr,* //Output
+>
+> SQLINTEGER *buffer\_length,* //Input
+>
+> SQLINTEGER \**string\_length\_pointer* //Output
+>
+> );
+
+*stmt\_handle*
+
+The statement handle
+
+*attribute*
+
+*attribute* is the attribute value
+
+*value\_pointer*
+
+A pointer to the location in memory that will receive the *attribute* value.
+
+*buffer\_length*
+
+If the attribute is defined by ODBC, *buffer\_length* is the length of *value\_pointer* (if *value\_pointer* points to a character string or binary buffer). If *value\_pointer* points to an integer, *buffer\_length* is ignored.
+
+If EDB-ODBC defines the attribute, the application sets the *buffer\_length* parameter. *buffer\_length* can be:
+
+| Value Type             | Meaning                                      |
+| ---------------------- | -------------------------------------------- |
+| Character string       | The length of the character string           |
+| Binary buffer          | The result of SQL\_LEN\_BINARY\_ATTR(length) |
+| Fixed length data type | SQL\_IS\_INTEGER or SQL\_IS\_UINTEGER        |
+| Any other type         | SQL\_IS\_POINTER                             |
+
+*string\_length\_pointer*
+
+A pointer to an SQLINTEGER that receives the number of bytes required to hold the requested value. If *value\_pointer* is NULL, *string\_length\_pointer* is not returned.
+
+This function returns SQL\_SUCCESS, SQL\_SUCCESS\_WITH\_INFO, SQL\_ERROR or SQL\_INVALID\_HANDLE.
+
+The following table lists the statement attributes supported by EDB-ODBC:
+
+| Attribute                           | Supported? | Restrictions?              |
+| ----------------------------------- | ---------- | -------------------------- |
+| SQL\_ATTR\_APP\_PARAM\_DESC         | YES        |                            |
+| SQL\_ATTR\_APP\_ROW\_DESC           | YES        |                            |
+| SQL\_ATTR\_ASYNC\_ENABLE            | NO         |                            |
+| SQL\_ATTR\_CONCURRENCY              | YES        | SQL\_CONCUR\_READ\_ONLY    |
+| SQL\_ATTR\_CURSOR\_SCROLLABLE       | YES        |                            |
+| SQL\_ATTR\_CURSOR\_TYPE             | YES        | SQL\_CURSOR\_FORWARD\_ONLY |
+| SQL\_ATTR\_CURSOR\_SENSITIVITY      | YES        | SQL\_INSENSITIVE           |
+| SQL\_ATTR\_ENABLE\_AUTO\_IPD        | NO         |                            |
+| SQL\_ATTR\_FETCH\_BOOKMARK\_PTR     | YES        |                            |
+| SQL\_ATTR\_IMP\_PARAM\_DESC         | YES        |                            |
+| SQL\_ATTR\_IMP\_ROW\_DESC           | YES        |                            |
+| SQL\_ATTR\_KEYSET\_SIZE             | NO         |                            |
+| SQL\_ATTR\_MAX\_LENGTH              | NO         |                            |
+| SQL\_ATTR\_MAX\_ROWS                | NO         |                            |
+| SQL\_ATTR\_METADATA\_ID             | YES        |                            |
+| SQL\_ATTR\_NOSCAN                   | NO         |                            |
+| SQL\_ATTR\_PARAM\_BIND\_OFFSET\_PTR | YES        | ODBC V2.0                  |
+| SQL\_ATTR\_PARAM\_BIND\_TYPE        | YES        |                            |
+| SQL\_ATTR\_PARAM\_OPERATION\_PTR    | YES        |                            |
+| SQL\_ATTR\_PARAM\_STATUS\_PTR       | YES        |                            |
+| SQL\_ATTR\_PARAMS\_PROCESSED\_PTR   | YES        |                            |
+| SQL\_ATTR\_PARAMSET\_SIZE           | YES        |                            |
+| SQL\_ATTR\_QUERY\_TIMEOUT           | NO         |                            |
+| SQL\_ATTR\_RETRIEVE\_DATA           | NO         |                            |
+| SQL\_ATTR\_ROW\_BIND\_OFFSET\_PTR   | YES        |                            |
+| SQL\_ATTR\_ROW\_BIND\_TYPE          | NO         |                            |
+| SQL\_ATTR\_ROW\_NUMBER              | YES        |                            |
+| SQL\_ATTR\_ROW\_OPERATION\_PTR      | YES        |                            |
+| SQL\_ATTR\_ROW\_STATUS\_PTR         | YES        |                            |
+| SQL\_ATTR\_ROWS\_FETCHED\_PTR       | YES        |                            |
+| SQL\_ATTR\_ROW\_ARRAY\_SIZE         | YES        |                            |
+| SQL\_ATTR\_SIMULATE\_CURSOR         | NO         |                            |
+| SQL\_ATTR\_USE\_BOOKMARKS           | YES        |                            |
+| SQL\_ROWSET\_SIZE                   | YES        |                            |
+
+### SQLSetStmtAttr()
+
+You can use the SQLSetStmtAttr() function to set the values of environment attributes. The signature is:
+
+> SQLRETURN SQLSetStmtAttr
+>
+> (
+>
+> SQLHENV *stmt\_handle*, //Input
+>
+> SQLINTEGER *attribute*, //Input
+>
+> SQLPOINTER *value\_pointer*, //Input
+>
+> SQLINTEGER *string\_length* //Input
+>
+> );
+
+*stmt\_handle*
+
+*stmt\_handle* is the environment handle.
+
+*attribute*
+
+*attribute* identifies the statement attribute whose value you wish to set.
+
+*value\_pointer*
+
+*value\_pointer* is a pointer to the location in memory that holds the value that will be assigned to the attribute. value\_pointer can be a pointer to:
+ - A null-terminated character string
+ - A binary buffer
+ - A value defined by the driver
+ - A value of the type SQLLEN, SQLULEN or SQLUSMALLINT
+
+Value-pointer can also optionally hold one of the following values:
+ - An ODBC descriptor handle
+ - A SQLUINTEGER value
+ - A SQLULEN value
+ - A signed INTEGER (if attribute is a driver-specific value)
+
+*string\_length*
+
+If *attribute* is defined by ODBC and *value\_pointer* points to a binary buffer or character string, *string\_length* is the length of *value\_pointer*. If *value\_pointer* points to an integer, *string\_length* is ignored.
+
+If EDB-ODBC defines the attribute, the application sets the *string\_length* parameter. Possible *string\_length* values are:
+
+| Value Type             | Meaning                                        |
+| ---------------------- | ---------------------------------------------- |
+| Character string       | The length of the character string or SQL\_NTS |
+| Binary buffer          | The result of SQL\_LEN\_BINARY\_ATTR(length)   |
+| Fixed length data type | SQL\_IS\_INTEGER or SQL\_IS\_UINTEGER          |
+| Any other type         | SQL\_IS\_POINTER                               |
+
+## Error Handling
+
+Diagnostic information for the ODBC functions mentioned in this guide can be retrieved via the ODBC SQLGetDiagRec() function.
+
+### SQLGetDiagRec()
+
+The SQLGetDiagRec() function returns status and error information from a diagnostic record written by the ODBC functions that retrieve or set attribute values. The signature is:
+
+> SQLRETURN SQLGetDiagRec(
+>
+> SQLSMALLINT *handle\_type*, // Input
+>
+> SQLHANDLE *handle*, // Input
+>
+> SQLSMALLINT *record\_number*, // Input
+>
+> SQLCHAR \**SQLState\_pointer*, // Output
+>
+> SQLINTEGER \**native\_error\_pointer*, // Output
+>
+> SQLCHAR \**error\_text\_pointer*, // Output
+>
+> SQLSMALLINT *buffer\_length*, // Input
+>
+> SQLSMALLINT \*text\_length\_pointer // Output
+>
+> );
+
+*handle\_type*
+
+The handle type of the *handle* argument. *handle\_type* must be one of the following:
+ - > SQL\_HANDLE\_ENV specifies an environment handle.
+ - > SQL\_HANDLE\_STMT specifies a statement handle.
+ - > SQL\_HANDLE\_DBC specifies a connection handle.
+ - > SQL\_HANDLE\_DESC specifies a descriptor handle.
+
+*handle*
+
+The handle associated with the attribute error message.
+
+*record\_number*
+
+The status record that the application is seeking information from (must be greater than or equal to 1).
+
+*SQLState\_pointer*
+
+Pointer to a memory buffer that receives the SQLState error code from the record.
+
+*native\_error\_pointer*
+
+Pointer to a buffer that receives the native error message for the data source (contained in the SQL\_DIAG\_NATIVE field).
+
+*error\_text\_pointer*
+
+Pointer to a memory buffer that receives the error text (contained in the SQL\_DIAG\_MESSAGE\_TEXT field)
+
+*buffer\_length*
+
+The length of the *error\_text* buffer.
+
+*text\_length\_pointer*
+
+Pointer to the buffer that receives the size (in characters) of the *error\_text\_pointer* field. If the number of characters in the *error\_text\_pointer* parameter exceeds the number available (in *buffer\_length*), *error\_text\_pointer* will be truncated.
+
+SQLGetDiagRec() returns SQL\_SUCCESS, SQL\_ERROR, SQL\_INVALID\_HANDLE, SQL\_SUCCESS\_WITH\_DATA or SQL\_NO\_DATA
+
+## SUPPORTED ODBC API FUNCTIONS
+
+The following table lists the ODBC functions supported by the EDB-ODBC driver. Use the ODBC SQLGetFunctions() function (specifying a function ID of SQL\_API\_ODBC3\_ALL\_FUNCTIONS) to return a current version of this list.
+
+| ODBC API Function Name | Supported by EDB-ODBC? |
+| ---------------------- | ---------------------- |
+| SQLAllocConnect()      | Yes                    |
+| SQLAllocEnv()          | Yes                    |
+| SQLAllocStmt()         | Yes                    |
+| SQLBindCol()           | Yes                    |
+| SQLCancel()            | Yes                    |
+| SQLColAttributes()     | Yes                    |
+| SQLConnect()           | Yes                    |
+| SQLDescribeCol()       | Yes                    |
+| SQLDisconnect()        | Yes                    |
+| SQLError()             | Yes                    |
+| SQLExecDirect()        | Yes                    |
+| SQLExecute()           | Yes                    |
+| SQLFetch()             | Yes                    |
+| SQLFreeConnect()       | Yes                    |
+| SQLFreeEnv()           | Yes                    |
+| SQLFreeStmt()          | Yes                    |
+| SQLGetCursorName()     | Yes                    |
+| SQLNumResultCols()     | Yes                    |
+| SQLPrepare()           | Yes                    |
+| SQLRowCount()          | Yes                    |
+| SQLSetCursorName()     | Yes                    |
+| SQLSetParam()          | Yes                    |
+| SQLTransact()          | Yes                    |
+| SQLColumns()           | Yes                    |
+| SQLDriverConnect()     | Yes                    |
+| SQLGetConnectOption()  | Yes                    |
+| SQLGetData()           | Yes                    |
+| SQLGetFunctions()      | Yes                    |
+| SQLGetInfo()           | Yes                    |
+| SQLGetStmtOption()     | Yes                    |
+| SQLGetTypeInfo()       | Yes                    |
+| SQLParamData()         | Yes                    |
+| SQLPutData()           | Yes                    |
+| SQLSetConnectOption()  | Yes                    |
+| SQLSetStmtOption()     | Yes                    |
+| SQLSpecialColumns()    | Yes                    |
+| SQLStatistics()        | Yes                    |
+| SQLTables()            | Yes                    |
+| SQLBrowseConnect()     | No                     |
+| SQLColumnPrivileges()  | No                     |
+| SQLDataSources()       | Yes                    |
+| SQLDescribeParam()     | No                     |
+| SQLExtendedFetch()     | Yes                    |
+| SQLForeignKeys()       | Yes                    |
+| SQLMoreResults()       | Yes                    |
+| SQLNativeSQL()         | Yes                    |
+| SQLNumParams()         | Yes                    |
+| SQLParamOptions()      | Yes                    |
+| SQLPrimaryKeys()       | Yes                    |
+| SQLProcedureColumns()  | Yes                    |
+| SQLProcedures()        | Yes                    |
+| SQLSetPos()            | Yes                    |
+| SQLSetScrollOptions()  | No                     |
+| SQLTablePrivileges()   | Yes                    |
+| SQLDrivers()           | Yes                    |
+| SQLBindParameter()     | Yes                    |
+| SQLAllocHandle()       | Yes                    |
+| SQLBindParam()         | Yes                    |
+| SQLCloseCursor()       | Yes                    |
+| SQLColAttribute()      | Yes                    |
+| SQLCopyDesc()          | Yes                    |
+| SQLendTran()           | Yes                    |
+| SQLFetchScroll()       | Yes                    |
+| SQLFreeHandle()        | Yes                    |
+| SQLGetConnectAttr()    | Yes                    |
+| SQLGetDescField()      | Yes                    |
+| SQLGetDescRec()        | Yes                    |
+| SQLGetDiagField()      | Yes                    |
+| SQLGetDiagRec()        | Yes                    |
+| SQLGetEnvAttr()        | Yes                    |
+| SQLGetStmtAttr()       | Yes                    |
+| SQLSetConnectAttr()    | Yes                    |
+| SQLSetDescField()      | Yes                    |
+| SQLSetDescRec()        | No                     |
+| SQLSetEnvAttr()        | Yes                    |
+| SQLSetStmtAttr()       | Yes                    |
+| SQLBulkOperations()    | Yes                    |
+
+## SUPPORTED DATA TYPES
+
+EDB-ODBC supports the following ODBC data types:
+
+| ODBC Data Type       | Corresponding Advanced Server Data Type |
+| -------------------- | --------------------------------------- |
+| SQL\_BIGINT          | PG\_TYPE\_INT8                          |
+| SQL\_BINARY          | PG\_TYPE\_BYTEA                         |
+| SQL\_BIT             | PG\_TYPE\_BOOL or PG\_TYPE\_CHAR        |
+| SQL\_CHAR            | PG\_TYPE\_BPCHAR                        |
+| SQL\_TYPE\_DATE      | PG\_TYPE\_DATE                          |
+| SQL\_DECIMAL         | PG\_TYPE\_NUMERIC                       |
+| SQL\_DOUBLE          | PG\_TYPE\_FLOAT8                        |
+| SQL\_FLOAT           | PG\_TYPE\_FLOAT8                        |
+| SQL\_INTEGER         | PG\_TYPE\_INT4                          |
+| SQL\_LONGVARBINARY   | PG\_TYPE\_BYTEA                         |
+| SQL\_LONGVARCHAR     | PG\_TYPE\_VARCHAR or PG\_TYPE\_TEXT     |
+| SQL\_NUMERIC         | PG\_TYPE\_NUMERIC                       |
+| SQL\_NUMERIC         | PG\_TYPE\_NUMERIC                       |
+| SQL\_REAL            | PG\_TYPE\_FLOAT4                        |
+| SQL\_SMALLINT        | PG\_TYPE\_INT2                          |
+| SQL\_TYPE\_TIME      | PG\_TYPE\_TIME                          |
+| SQL\_TYPE\_TIMESTAMP | PG\_TYPE\_DATETIME                      |
+| SQL\_TINYINT         | PG\_TYPE\_INT2                          |
+| SQL\_VARBINARY       | PG\_TYPE\_BYTEA                         |
+| SQL\_VARCHAR         | PG\_TYPE\_VARCHAR                       |
+
+## Thread Safety
+
+EDB-ODBC is thread safe.

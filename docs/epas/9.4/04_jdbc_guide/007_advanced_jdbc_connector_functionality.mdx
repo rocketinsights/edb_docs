@@ -1,0 +1,1118 @@
+---
+title: Advanced JDBC Connector Functionality
+---
+
+
+The previous example created a graphical user interface that displayed a result set in a JTable. Now we will switch gears and show you some of the more advanced features of the Advanced Server JDBC Connector.
+
+To avoid unnecessary clutter, the rest of the code samples in this document will use the console to interact with the user instead of creating a graphical use interface.
+
+## Reducing Client-side Resource Requirements
+
+The Advanced Server JDBC driver retrieves the results of a SQL query as a ResultSet object. If a query returns a large number of rows, using a batched ResultSet will:
+ - Reduce the amount of time it takes to retrieve the first row.
+ - Save time by retrieving only the rows that you need.
+ - Reduce the memory requirement of the client.
+
+When you reduce the fetch size of a ResultSet object, the driver doesn’t copy the entire ResultSet across the network (from the server to the client). Instead, the driver requests a small number of rows at a time; as the client application moves through the result set, the driver fetches the next batch of rows from the server.
+
+Batched result sets cannot be used in all situations. Not adhering to the following restrictions will make the driver silently fall back to fetching the whole ResultSet at once:
+ - The client application must disable autocommit.
+ - The Statement object must be created with a ResultSet type of TYPE\_FORWARD\_ONLY type (which is the default). TYPE\_FORWARD\_ONLY result sets can only step forward through the ResultSet.
+ - The query must consist of a single SQL statement.
+
+### Modifying the Batch Size of a Statement Object
+
+Limiting the batch size of a ResultSet object can speed the retrieval of data and reduce the resources needed by a client-side application. Listing 1.5 creates a Statement object with a batch size limited to five rows.
+
+Listing 1.5
+
+// Make sure autocommit is off
+
+conn.setAutoCommit(false);
+
+Statement stmt = conn.createStatement();
+
+// Set the Batch Size.
+
+stmt.setFetchSize(5);
+
+ResultSet rs = stmt.executeQuery("SELECT \* FROM emp");
+
+while (rs.next())
+
+System.out.println("a row was returned.");
+
+rs.close();
+
+stmt.close();
+
+The call to conn.setAutoCommit(false) ensures that the server won’t close the ResultSet before you have a chance to retrieve the first row. After preparing the Connection, you can construct a Statement object:
+
+Statement stmt = db.createStatement();
+
+The following code sets the batch size to five (rows) before executing the query:
+
+stmt.setFetchSize(5);
+
+ResultSet rs = stmt.executeQuery("SELECT \* FROM emp");
+
+For each row in the ResultSet object, the call to println() prints a row was returned.
+
+System.out.println("a row was returned.");
+
+Remember, while the ResultSet contains all of the rows in the table, they are only fetched from the server five rows at a time. From the client’s point of view, the only difference between a *batched* result set and an *unbatched* result set is that a batched result may return the first row in less time.
+
+Next, we will look at another feature (the PreparedStatement) that you can use to increase the performance of certain JDBC applications.
+
+## Using PreparedStatements to Send SQL Commands
+
+Many applications execute the same SQL statement over and over again, changing one or more of the data values in the statement between each iteration. If you use a Statement object to repeatedly execute a SQL statement, the server must parse, plan, and optimize the statement every time. JDBC offers another Statement derivative, the PreparedStatement to reduce the amount of work required in such a scenario.
+
+Listing 1.6 demonstrates invoking a PreparedStatement that accepts an employee ID and employee name and inserts that employee information in the emp table:
+
+Listing 1.6
+
+public void AddEmployee(Connection con)
+
+{
+
+try
+
+{
+
+Console c = System.console();
+
+String command = "INSERT INTO emp(empno,ename) VALUES(?,?)";
+
+PreparedStatement stmt = con.prepareStatement(command);
+
+stmt.setObject(1,new Integer(c.readLine("ID:")));
+
+stmt.setObject(2,c.readLine("Name:"));
+
+stmt.execute();
+
+System.out.println("The procedure successfully executed.");
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+Instead of hard-coding data values in the SQL statement, you insert *placeholders* to represent the values that will change with each iteration. Listing 1.6 shows an INSERT statement that includes two placeholders (each represented by a question mark):
+
+String command = "INSERT INTO emp(empno,ename) VALUES(?,?)";
+
+With the parameterized SQL statement in hand, the AddEmployee() method can ask the Connection object to prepare that statement and return a PreparedStatement object:
+
+PreparedStatement stmt = con.prepareStatement(command);
+
+At this point, the PreparedStatement has parsed and planned the INSERT statement, but it does not know what values to add to the table. Before executing the PreparedStatement, you must supply a value for each placeholder by calling a *setter* method. setObject() expects two arguments:
+ - A parameter number; parameter number one corresponds to the the first question mark, parameter number two corresponds to the second question mark, etc.
+ - The value to substitute for the placeholder.
+
+The AddEmployee() method prompts the user for an employee ID and name and calls setObject() with the values supplied by the user:
+
+stmt.setObject(1,new Integer(c.readLine("ID:")));
+
+stmt.setObject(2, c.readLine("Name:"));
+
+And then asks the PreparedStatement object to execute the statement:
+
+stmt.execute();
+
+If the SQL statement executes as expected, AddEmployee() displays a message that confirms the execution. If the server encounters an exception, the error handling code displays an error message.
+
+## Executing Stored Procedures
+
+A stored procedure is a module that is written in EnterpriseDB’s SPL and stored in the database. A stored procedure may define input parameters to supply data to the procedure and output parameters to return data from the procedure. Stored procedures execute *within* the server and consist of database access commands (SQL), control statements, and data structures that manipulate the data obtained from the database.
+
+Stored procedures are especially useful when extensive data manipulation is required before storing data from the client. It is also efficient to use a stored procedure to manipulate data in a batch program.
+
+### Invoking Stored Procedures
+
+The CallableStatement class provides a way for a Java program to call stored procedures. A CallableStatement object can have a variable number of parameters used for input (IN parameters), output (OUT parameters), or both (IN OUT parameters).
+
+The syntax for invoking a stored procedure in JDBC is shown below. Note that the square brackets indicate optional parameters; they are not part of the command syntax.
+
+{call procedure\_name(\[?, ?, ...\])}
+
+The syntax to invoke a procedure that returns a result parameter is:
+
+{? = call procedure\_name(\[?, ?, ...\])}
+
+Each question mark serves as a placeholder for a parameter. The stored procedure determines if the placeholders represent IN, OUT, or IN OUT parameters and the Java code must match. We will show you how to supply values for IN (or IN OUT) parameters and how to retrieve values returned in OUT (or IN OUT) parameters in a moment.
+
+#### Executing a Simple Stored Procedure
+
+Listing 1.7-a shows a stored procedure that increases the salary of each employee by 10%. increaseSalary expects no arguments from the caller and does not return any information:
+
+Listing 1.7-a
+
+CREATE OR REPLACE PROCEDURE increaseSalary
+
+IS
+
+BEGIN
+
+UPDATE emp SET sal = sal \* 1.10;
+
+END;
+
+Listing 1.7-b demonstrates how to invoke the increaseSalary procedure:
+
+Listing 1.7-b
+
+public void SimpleCallSample(Connection con)
+
+{
+
+try
+
+{
+
+CallableStatement stmt = con.prepareCall("{call increaseSalary()}");
+
+stmt.execute();
+
+System.out.println("Stored Procedure executed successfully");
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+To invoke a stored procedure from a Java application, use a CallableStatement object. The CallableStatement class is derived from the Statement class and, like the Statement class, you obtain a CallableStatement object by asking a Connection object to create one for you. To create a CallableStatement from a Connection, use the prepareCall() method:
+
+CallableStatement stmt = con.prepareCall("{call increaseSalary()}");
+
+As the name implies, the prepareCall() method prepares the statement, but does not execute it. As you will see in the next example, an application typically binds parameter values between the call to prepareCall() and the call to execute(). To invoke the stored procedure on the server, call the execute() method.
+
+stmt.execute();
+
+This stored procedure (increaseSalary) did not expect any IN parameters and did not return any information to the caller (using OUT parameters) so invoking the procedure is simply a matter of creating a CallableStatement object and then calling that object’s execute() method.
+
+The next section demonstrates how to invoke a stored procedure that requires data (IN parameters) from the caller.
+
+#### Executing Stored Procedures with IN parameters
+
+The code in the next example first creates and then invokes a stored procedure named empInsert; empInsert requires IN parameters that contain employee information: empno, ename, job, sal, comm, deptno, and mgr. empInsert then inserts that information into the emp table.
+
+Listing 1.8-a creates the stored procedure in the Advanced Server database:
+
+Listing 1.8-a
+
+CREATE OR REPLACE PROCEDURE empInsert(
+
+pEname IN VARCHAR,
+
+pJob IN VARCHAR,
+
+pSal IN FLOAT4,
+
+pComm IN FLOAT4,
+
+pDeptno IN INTEGER,
+
+pMgr IN INTEGER
+
+)
+
+AS
+
+DECLARE
+
+CURSOR getMax IS SELECT MAX(empno) FROM emp;
+
+max\_empno INTEGER := 10;
+
+BEGIN
+
+OPEN getMax;
+
+FETCH getMax INTO max\_empno;
+
+INSERT INTO emp(empno, ename, job, sal, comm, deptno, mgr)
+
+VALUES(max\_empno+1, pEname, pJob, pSal, pComm, pDeptno, pMgr);
+
+CLOSE getMax;
+
+END;
+
+Listing 1.8-b demonstrates how to invoke the stored procedure from Java:
+
+Listing 1.8-b
+
+public void CallExample2(Connection con)
+
+{
+
+try
+
+{
+
+Console c = System.console();
+
+String commandText = "{call empInsert(?,?,?,?,?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+stmt.setObject(1, new String(c.readLine("Employee Name :")));
+
+stmt.setObject(2, new String(c.readLine("Job :")));
+
+stmt.setObject(3, new Float(c.readLine("Salary :")));
+
+stmt.setObject(4, new Float(c.readLine("Commission :")));
+
+stmt.setObject(5, new Integer(c.readLine("Department No :")));
+
+stmt.setObject(6, new Integer(c.readLine("Manager")));
+
+stmt.execute();
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+Each placeholder (?) in the command (commandText) represents a point in the command that is later replaced with data:
+
+String commandText = "{call EMP\_INSERT(?,?,?,?,?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+The setObject() method binds a value to an IN or IN OUT placeholder. Each call to setObject() specifies a parameter number and a value to bind to that parameter:
+
+stmt.setObject(1, new String(c.readLine("Employee Name :")));
+
+stmt.setObject(2, new String(c.readLine("Job :")));
+
+stmt.setObject(3, new Float(c.readLine("Salary :")));
+
+stmt.setObject(4, new Float(c.readLine("Commission :")));
+
+stmt.setObject(5, new Integer(c.readLine("Department No :")));
+
+stmt.setObject(6, new Integer(c.readLine("Manager")));
+
+After supplying a value for each placeholder, this method executes the statement by calling the execute() method.
+
+#### Executing Stored Procedures with OUT parameters
+
+The next example creates and invokes an SPL stored procedure called deptSelect. This procedure requires one IN parameter (department number) and returns two OUT parameters (the department name and location) corresponding to the department number. The code in Listing 1.9-a creates the deptSelect procedure:
+
+Listing 1.9-a
+
+CREATE OR REPLACE PROCEDURE deptSelect
+
+(
+
+p\_deptno IN INTEGER,
+
+p\_dname OUT VARCHAR,
+
+p\_loc OUT VARCHAR
+
+)
+
+AS
+
+DECLARE
+
+CURSOR deptCursor IS SELECT dname, loc FROM dept WHERE deptno=p\_deptno;
+
+BEGIN
+
+OPEN deptCursor;
+
+FETCH deptCursor INTO p\_dname, p\_loc;
+
+CLOSE deptCursor;
+
+END;
+
+Listing 1.9-b shows the Java code required to invoke the deptSelect stored procedure:
+
+Listing 1.9-b
+
+public void GetDeptInfo(Connection con)
+
+{
+
+try
+
+{
+
+Console c = System.console();
+
+String commandText = "{call deptSelect(?,?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+stmt.setObject(1, new Integer(c.readLine("Dept No :")));
+
+stmt.registerOutParameter(2, Types.VARCHAR);
+
+stmt.registerOutParameter(3, Types.VARCHAR);
+
+stmt.execute();
+
+System.out.println("Dept Name: " + stmt.getString(2));
+
+System.out.println("Location : " + stmt.getString(3));
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+Each placeholder (?) in the command (commandText) represents a point in the command that is later replaced with data:
+
+String commandText = "{call deptSelect(?,?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+The setObject() method binds a value to an IN or IN OUT placeholder. When calling setObject() you must identify a placeholder (by its ordinal number) and provide a value to substitute in place of that placeholder:
+
+stmt.setObject(1, new Integer(c.readLine("Dept No :")));
+
+The JDBC type of each OUT parameter must be registered before the CallableStatement object can be executed. Registering the JDBC type is done with the registerOutParameter() method.
+
+stmt.registerOutParameter(2, Types.VARCHAR);
+
+stmt.registerOutParameter(3, Types.VARCHAR);
+
+After executing the statement, the CallableStatement’s getter method retrieves the OUT parameter values: to retrieve a VARCHAR value, use the getString() getter method.
+
+stmt.execute();
+
+System.out.println("Dept Name: " + stmt.getString(2));
+
+System.out.println("Location : " + stmt.getString(3));
+
+In the current example GetDeptInfo() registers two OUT parameters and (after executing the stored procedure) retrieves the values returned in the OUT parameters. Since both OUT parameters are defined as VARCHAR values, GetDeptInfo() uses the getString() method to retrieve the OUT parameters.
+
+#### Executing Stored Procedures with IN OUT parameters
+
+The code in the next example creates and invokes a stored procedure named empQuery defined with one IN parameter (p\_deptno), two IN OUT parameters (p\_empno and p\_ename) and three OUT parameters (p\_job, p\_hiredate and p\_sal). empQuery then returns information about the employee in the two IN OUT parameters and three OUT parameters.
+
+Listing 1.10-a creates a stored procedure named empQuery:
+
+Listing 1.10-a
+
+CREATE OR REPLACE PROCEDURE empQuery
+
+(
+
+p\_deptno IN NUMBER,
+
+p\_empno IN OUT NUMBER,
+
+p\_ename IN OUT VARCHAR2,
+
+p\_job OUT VARCHAR2,
+
+p\_hiredate OUT DATE,
+
+p\_sal OUT NUMBER
+
+)
+
+IS
+
+BEGIN
+
+SELECT empno, ename, job, hiredate, sal
+
+INTO p\_empno, p\_ename, p\_job, p\_hiredate, p\_sal
+
+FROM emp
+
+WHERE deptno = p\_deptno
+
+AND (empno = p\_empno
+
+OR ename = UPPER(p\_ename));
+
+END;
+
+Listing 1.10-b demonstrates invoking the empQuery procedure, providing values for the IN parameters, and handling the OUT and IN OUT parameters:
+
+Listing 1.10-b
+
+public void CallSample4(Connection con)
+
+{
+
+try
+
+{
+
+Console c = System.console();
+
+String commandText = "{call emp\_query(?,?,?,?,?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+stmt.setInt(1, new Integer(c.readLine("Department No:")));
+
+stmt.setInt(2, new Integer(c.readLine("Employee No:")));
+
+stmt.setString(3, new String(c.readLine("Employee Name:")));
+
+stmt.registerOutParameter(2, Types.INTEGER);
+
+stmt.registerOutParameter(3, Types.VARCHAR);
+
+stmt.registerOutParameter(4, Types.VARCHAR);
+
+stmt.registerOutParameter(5, Types.TIMESTAMP);
+
+stmt.registerOutParameter(6, Types.NUMERIC);
+
+stmt.execute();
+
+System.out.println("Employee No: " + stmt.getInt(2));
+
+System.out.println("Employee Name: " + stmt.getString(3));
+
+System.out.println("Job : " + stmt.getString(4));
+
+System.out.println("Hiredate : " + stmt.getTimestamp(5));
+
+System.out.println("Salary : " + stmt.getBigDecimal(6));
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+Each placeholder (?) in the command (commandText) represents a point in the command that is later replaced with data:
+
+String commandText = "{call emp\_query(?,?,?,?,?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+The setInt() method is a type-specific *setter* method that binds an Integer value to an IN or IN OUT placeholder. The call to setInt() specifies a parameter number and provides a value to substitute in place of that placeholder:
+
+stmt.setInt(1, new Integer(c.readLine("Department No:")));
+
+stmt.setInt(2, new Integer(c.readLine("Employee No:")));
+
+The setString() method binds a String value to an IN or IN OUT placeholder:
+
+stmt.setString(3, new String(c.readLine("Employee Name:")));
+
+Before executing the CallableStatement, you must register the JDBC type of each OUT parameter by callin the registerOutParameter() method.
+
+stmt.registerOutParameter(2, Types.INTEGER);
+
+stmt.registerOutParameter(3, Types.VARCHAR);
+
+stmt.registerOutParameter(4, Types.VARCHAR);
+
+stmt.registerOutParameter(5, Types.TIMESTAMP);
+
+stmt.registerOutParameter(6, Types.NUMERIC);
+
+Remember, before calling a procedure with an IN parameter, you must assign a value to that parameter with a setter method. Before calling a procedure with an OUT parameter, you register the type of that parameter; then you can retrieve the value returned by calling a getter method. When calling a procedure that defines an IN OUT parameter, you must perform all three actions:
+ - Assign a value to the parameter.
+ - Register the type of the parameter.
+ - Retrieve the value returned with a getter method.
+
+## Using REF CURSORS with Java
+
+A REF CURSOR is a cursor variable that contains a pointer to a query result set returned by an OPEN statement. Unlike a static cursor, a REF CURSOR is not tied to a particular query. You may open the same REF CURSOR variable any number of times with the **OPEN** statement containing different queries; each time, a new result set is created for that query and made available via the cursor variable. A REF CURSOR can also pass a result set from one procedure to another.
+
+Advanced Server supports the declaration of both *strongly*-*typed* and *weakly-typed* REF CURSORs. A strongly-typed cursor must declare the *shape* (the type of each column) of the expected result set. You can only use a strongly-typed cursor with a query that returns the declared columns; opening the cursor with a query that returns a result set with a different shape will cause the server to throw an exception. On the other hand, a weakly-typed cursor can work with a result set of any shape.
+
+To declare a strongly-typed REF CURSOR:
+
+TYPE \<*cursor\_type\_name*\> IS REF CURSOR RETURN \<*return\_type*\>;
+
+To declare a weakly-typed REF\_CURSOR:
+
+*name* SYS\_REFCURSOR;
+
+### Using a REF CURSOR to retrieve a ResultSet
+
+The stored procedure shown in Listing 1.11-a (getEmpNames) builds two REF CURSORs on the server; the first REF CURSOR contains a list of commissioned employees in the emp table, while the second REF CURSOR contains a list of salaried employees in the emp table:
+
+Listing 1.11-a
+
+CREATE OR REPLACE PROCEDURE getEmpNames
+
+(
+
+commissioned IN OUT SYS\_REFCURSOR,
+
+salaried IN OUT SYS\_REFCURSOR
+
+)
+
+IS
+
+BEGIN
+
+OPEN commissioned FOR SELECT ename FROM emp WHERE comm is NOT NULL;
+
+OPEN salaried FOR SELECT ename FROM emp WHERE comm is NULL;
+
+END;
+
+The RefCursorSample() method (see Listing 1.11-b) invokes the getEmpName() stored procedure and displays the names returned in each of the two REF CURSOR variables:
+
+Listing 1.11-b
+
+public void RefCursorSample(Connection con)
+
+{
+
+try
+
+{
+
+con.setAutoCommit(false);
+
+String commandText = "{call getEmpNames(?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+stmt.setNull(1, Types.REF);
+
+stmt.registerOutParameter(1, Types.REF);
+
+stmt.setNull(2, Types.REF);
+
+stmt.registerOutParameter(2, Types.REF);
+
+stmt.execute();
+
+ResultSet commissioned = (ResultSet)stmt.getObject(1);
+
+System.out.println("Commissioned employees:");
+
+while(commissioned.next())
+
+{
+
+System.out.println(commissioned.getString(1));
+
+}
+
+ResultSet salaried = (ResultSet)stmt.getObject(2);
+
+System.out.println("Salaried employees:");
+
+while(salaried.next())
+
+{
+
+System.out.println(salaried.getString(1));
+
+}
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+A CallableStatement prepares each REF CURSOR (commissioned and salaried). Each cursor is returned as an IN OUT parameter of the stored procedure, getEmpNames():
+
+String commandText = "{call getEmpNames(?,?)}";
+
+CallableStatement stmt = con.prepareCall(commandText);
+
+The call to registerOutParameter() registers the parameter type (Types.REF) of the first REF CURSOR (commissioned) :
+
+stmt.setNull(1, Types.REF);
+
+stmt.registerOutParameter(1, Types.REF);
+
+Another call to registerOutParameter() registers the second parameter type (Types.REF) of the second REF CURSOR (salaried) :
+
+stmt.setNull(2, Types.REF);
+
+stmt.registerOutParameter(2, Types.REF);
+
+A call to stmt.execute() executes the statement:
+
+stmt.execute();
+
+The getObject() method retrieves the values from the first parameter and casts the result to a ResultSet. Then, RefCursorSample iterates through the cursor and prints the name of each commissioned employee:
+
+ResultSet commissioned = (ResultSet)stmt.getObject(1);
+
+while(commissioned.next())
+
+{
+
+System.out.println(commissioned.getString(1));
+
+}
+
+The same getter method retrieves the ResultSet from the second parameter and RefCursorExample iterates through that cursor, printing the name of each salaried employee:
+
+ResultSet salaried = (ResultSet)stmt.getObject(2);
+
+while(salaried.next())
+
+{
+
+System.out.println(salaried.getString(1));
+
+}
+
+## Using BYTEA Data with Java
+
+The BYTEA data type stores a binary string in a sequence of bytes; digital images and sound files are often stored as binary data. Postgres Plus Advanced Server can store and retrieve binary data via the BYTEA data type.
+
+The following Java sample stores BYTEA data in an Advanced Server database and then demonstrates how to retrieve that data. The example requires a bit of setup; Listings 1.12-a, 1.12-b, and 1.12-c create the server-side environment for the Java example.
+
+Listing 1.12-a creates a table (emp\_detail) that stores BYTEA data. emp\_detail contains two columns: the first column stores an employee’s ID number (type INT) and serves as the primary key for the table; the second column stores a photograph of the employee in BYTEA format.
+
+Listing 1.12-a
+
+CREATE TABLE emp\_detail
+
+(
+
+empno INT4 PRIMARY KEY,
+
+pic BYTEA
+
+);
+
+Listing 1.12-b creates a procedure (ADD\_PIC) that inserts a row into the emp\_detail table:
+
+Listing 1.12-b
+
+CREATE OR REPLACE PROCEDURE ADD\_PIC(p\_empno IN int4, p\_photo IN bytea) AS
+
+BEGIN
+
+INSERT INTO emp\_detail VALUES(p\_empno, p\_photo);
+
+END;
+
+And finally, Listing 1.12-c creates a function (GET\_PIC) that returns the photograph for a given employee:
+
+Listing 1.12-c
+
+CREATE OR REPLACE FUNCTION GET\_PIC(p\_empno IN int4) RETURN BYTEA IS
+
+DECLARE
+
+photo BYTEA;
+
+BEGIN
+
+SELECT pic INTO photo from EMP\_DETAIL WHERE empno = p\_empno;
+
+RETURN photo;
+
+END;
+
+### Inserting BYTEA Data into an Advanced Server database
+
+Listing 1.13 shows a Java method that invokes the ADD\_PIC procedure (see Listing 1.12-b) to copy a photograph from the client file system to the emp\_detail table on the server.
+
+Listing 1.13
+
+public void InsertPic(Connection con)
+
+{
+
+try
+
+{
+
+Console c = System.console();
+
+int empno = Integer.parseInt(c.readLine("Employee No :"));
+
+String fileName = c.readLine("Image filename :");
+
+File f = new File(fileName);
+
+if(\!f.exists())
+
+{
+
+System.out.println("Image file not found. Terminating...");
+
+return;
+
+}
+
+CallableStatement stmt = con.prepareCall("{call ADD\_PIC(?, ?)}");
+
+stmt.setInt(1, empno);
+
+stmt.setBinaryStream(2, new FileInputStream(f), (int)f.length());
+
+stmt.execute();
+
+System.out.println("Added image for Employee "+empno);
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+InsertPic() prompts the user for an employee number and the name of an image file:
+
+int empno = Integer.parseInt(c.readLine("Employee No :"));
+
+String fileName = c.readLine("Image filename :");
+
+If the requested file does not exist, InsertPic() displays an error message and terminates:
+
+File f = new File(fileName);
+
+if(\!f.exists())
+
+{
+
+System.out.println("Image file not found. Terminating...");
+
+return;
+}
+
+Next, InsertPic() prepares a CallableStatement object (stmt) that calls the ADD\_PIC procedure. The first placeholder (?) represents the first parameter expected by ADD\_PIC (p\_empno); the second placeholder represents the second parameter (p\_photo). To provide actual values for those placeholders, InsertPic() calls two setter methods. Since the first parameter is of type INTEGER, InsertPic() calls the setInt() method to provide a value for p\_empno. The second parameter is of type BYTEA, so InsertPic() uses a binary setter method; in this case, the method is setBinaryStream():
+
+CallableStatement stmt = con.prepareCall("{call ADD\_PIC(?, ?)}");
+
+stmt.setInt(1, empno);
+
+stmt.setBinaryStream(2 ,new FileInputStream(f), f.length());
+
+Now that the placeholders are bound to actual values, InsertPic() executes the CallableStatement:
+
+stmt.execute();
+
+If all goes well, InsertPic() displays a message verifying that the image has been added to the table. If an error occurs, the catch block displays a message to the user:
+
+System.out.println("Added image for Employee \\""+empno);
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+}
+
+### Retrieving BYTEA Data from an Advanced Server database
+
+Now that you know how to insert BYTEA data from a Java application, Listing 1.14 demonstrates how to retrieve BYTEA data from the server.
+
+Listing 1.14
+
+public static void GetPic(Connection con)
+
+{
+
+try
+
+{
+
+Console c = System.console();
+
+int empno = Integer.parseInt(c.readLine("Employee No :"));
+
+CallableStatement stmt = con.prepareCall("{?=call GET\_PIC(?)}");
+
+stmt.setInt(2, empno);
+
+stmt.registerOutParameter(1, Types.BINARY);
+
+stmt.execute();
+
+byte\[\] b = stmt.getBytes(1);
+
+String fileName = c.readLine("Destination filename :");
+
+FileOutputStream fos = new FileOutputStream(new File(fileName));
+
+fos.write(b);
+
+fos.close();
+
+System.out.println("File saved at \\""+fileName+"\\"");
+
+}
+
+catch(Exception err)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+err.printStackTrace();
+
+}
+
+}
+
+GetPic() starts by prompting the user for an employee ID number:
+
+int empno = Integer.parseInt(c.readLine("Employee No :"));
+
+Next, GetPic() prepares a CallableStatement with one IN parameter and one OUT parameter. The first parameter is the OUT parameter that will contain the photograph retrieved from the database. Since the photograph is BYTEA data, GetPic() registers the parameter as a Type.BINARY. The second parameter is the IN parameter that holds the employee number (an INT), so GetPic() uses the setInt() method to provide a value for the second parameter.
+
+CallableStatement stmt = con.prepareCall("{?=call GET\_PIC(?)}");
+
+stmt.setInt(2, empno);
+
+stmt.registerOutParameter(1, Types.BINARY);
+
+Next, GetPic() uses the getBytes getter method to retrieve the BYTEA data from the CallableStatement:
+
+stmt.execute();
+
+byte\[\] b = stmt.getBytes(1);
+
+The program prompts the user for the name of the file where it will store the photograph:
+
+String fileName = c.readLine("Destination filename :");
+
+The FileOutputStream object writes the binary data that contains the photograph to the destination filename:
+
+FileOutputStream fos = new FileOutputStream(new File(fileName));
+
+fos.write(b);
+
+fos.close();
+
+Finally, GetPic() displays a message confirming that the file has been saved at the new location:
+
+System.out.println("File saved at \\""+fileName+"\\"");
+
+## Asynchronous Notification Handling with NoticeListener
+
+The Advanced Server JDBC Connector provides asynchronous notification handling functionality. A *notification* is a message generated by the server when an SPL (or PL/pgSQL) program executes a RAISE NOTICE statement. Each notification is sent from the server to the client application. To intercept a notification in a JDBC client, an application must create a NoticeListener object (or, more typically, an object derived from NoticeListener).
+
+It is important to understand that a notification is sent to the client as a result of executing an SPL (or PL/pgSQL) program. To generate a notification, you must execute an SQL statement that invokes a stored procedure, function, or trigger: the notification is delivered to the client as the SQL statement executes. Notifications work with any type of statement object; CallableStatement objects, PreparedStatement objects, or simple Statement objects. A JDBC program intercepts a notification by associating a NoticeListener with a Statement object. When the Statement object executes an SQL statement that raises a notice, JDBC invokes the noticeReceived() method in the associated NoticeListener.
+
+Listing 1.15-a shows an SPL procedure that loops through the emp table and gives each employee a 10% raise. As each employee is processed, adjustSalary executes a RAISE NOTICE statement (in this case, the message contained in the notification reports progress to the client application). Listing 1.15-b will demonstrate how to create a NoticeListener that intercepts each notification.
+
+Listing 1.15-a
+
+CREATE OR REPLACE PROCEDURE adjustSalary
+
+IS
+
+v\_empno NUMBER(4);
+
+v\_ename VARCHAR2(10);
+
+CURSOR emp\_cur IS SELECT empno, ename FROM emp;
+
+BEGIN
+
+OPEN emp\_cur;
+
+LOOP
+
+FETCH emp\_cur INTO v\_empno, v\_ename;
+
+EXIT WHEN emp\_cur%NOTFOUND;
+
+UPDATE emp SET sal = sal \* 1.10 WHERE empno = v\_empno;
+
+RAISE NOTICE 'Salary increased for %', v\_ename;
+
+END LOOP;
+
+CLOSE emp\_cur;
+
+END;
+
+Listing 1.15-b shows how to intercept notifications in a JDBC application.
+
+Listing 1.15-b
+
+public void NoticeExample(Connection con)
+
+{
+
+CallableStatement stmt;
+
+try
+
+{
+
+stmt = con.prepareCall("{call adjustSalary()}");
+
+MyNoticeListener listener = new MyNoticeListener();
+
+((BaseStatement)stmt).addNoticeListener(listener);
+
+stmt.execute();
+
+System.out.println("Finished");
+
+}
+
+catch (SQLException e)
+
+{
+
+System.out.println("An error has occurred.");
+
+System.out.println("See full details below.");
+
+e.printStackTrace();
+
+}
+
+}
+
+class MyNoticeListener implements NoticeListener
+
+{
+
+public MyNoticeListener()
+
+{
+
+}
+
+public void noticeReceived(SQLWarning warn)
+
+{
+
+System.out.println("NOTICE: "+ warn.getMessage());
+
+}
+
+}
+
+The NoticeExample() method is straightforward; it expects a single argument, a Connection object, from the caller:
+
+public void NoticeExample(Connection con)
+
+NoticeExample() begins by preparing a call to the adjustSalary procedure shown in example 1.10-a. As you would expect, con.prepareCall() returns a CallableStatement object. Before executing the CallableStatement, you must create an object that implements the NoticeListener interface and add that object to the list of NoticeListeners associated with the CallableStatement:
+
+CallableStatement stmt = con.prepareCall("{call adjustSalary()}");
+
+MyNoticeListener listener = new MyNoticeListener();
+
+((BaseStatement)stmt).addNoticeListener(listener);
+
+Once the NoticeListener is in place, NoticeExample method executes the CallableStatement (invoking the adjustSalary procedure on the server) and displays a message to the user:
+
+stmt.execute();
+
+System.out.println("Finished");
+
+Each time the adjustSalary procedure executes a RAISE NOTICE statement, the server sends the text of the message ("Salary increased for ...") to the Statement (or derivative) object in the client application. JDBC invokes the noticeReceived() method (possibly many times) *before* the call to stmt.execute() completes.
+
+class MyNoticeListener implements NoticeListener
+
+{
+
+public MyNoticeListener()
+
+{
+
+}
+
+public void noticeReceived(SQLWarning warn)
+
+{
+
+System.out.println("NOTICE: "+ warn.getMessage());
+}
+}
+
+When JDBC calls the noticeReceived() method, it creates an SQLWarning object that contains the text of the message generated by the RAISE NOTICE statement on the server.
+
+Notice that each Statement object keeps a *list* of NoticeListeners. When the JDBC driver receives a notification from the server, it consults the list maintained by the Statement object. If the list is empty, the notification is saved in the Statement object (you can retrieve the notifications by calling stmt.getWarnings() once the call to execute() completes). If the list is not empty, the JDBC driver delivers an SQLWarning to each listener, in the order in which the listeners were added to the Statement.
+

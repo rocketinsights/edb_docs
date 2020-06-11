@@ -1,0 +1,60 @@
+---
+title: Requirements Overview
+---
+
+
+The following sections detail the supported platforms and installation requirements for Postgres Plus Advanced Server 9.4.
+
+## Supported Platforms
+
+The Postgres Plus Advanced Server 9.4 RPM packages are supported on the following platforms:
+
+64 bit Linux:
+ - CentOS (x86\_64) 6.x and 7.x
+ - Red Hat Enterprise Linux (x86\_64) 6.x and 7.x
+ - Scientific Linux (x86\_64) 6
+ - Red Hat Enterprise Linux (IBM Power8 Little Endian or ppc64le) 7.x
+
+The Postgres Plus Advanced Server 9.4 interactive installer is supported on the following platforms:
+
+32 bit Windows:
+ - Windows Server 2008 R1
+
+64 bit Windows:
+ - Windows 2012
+ - Windows Server 2008 R1
+ - Windows Server 2008 R2
+
+32 bit and 64 bit Linux:
+ - CentOS 6.x and 7.x
+ - Red Hat Enterprise Linux 6.x and 7.x
+ - OEL 6.x and 7.x
+ - SLES 11.x
+ - Ubuntu 14.04 LTS
+ - Debian 7.x
+ - Amazon Linux
+
+The Connectors (JDBC/.NET/ODBC/OCL) are supported on 32 bit and 64 bit Windows 7 & 8 clients.
+
+**Note**: The data directory of a production database should not be stored on an NFS file system.
+
+## Supported Locales
+
+Advanced Server inherits support for many locales from PostgreSQL. While the installers (RPM and GUI Interactive Installers) have been used successfully in various locales, EnterpriseDB has explicitly tested and certified for the following locales:
+
+en\_US - United States English
+
+zh\_HK - Traditional Chinese with Hong Kong SCS
+
+zh\_TW - Traditional Chinese for Taiwan
+
+zh\_CN - Simplified Chinese
+
+ja\_JP - Japanese
+
+ko\_KR - Korean
+
+For more information about the locales supported by PostgreSQL, please see:
+
+<http://www.enterprisedb.com/docs/en/9.4/pg/charset.html>
+
