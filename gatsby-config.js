@@ -222,7 +222,6 @@ module.exports = {
             },
           },
         ],
-        plugins: [{ resolve: 'gatsby-remark-images' }],
       },
     },
     {
