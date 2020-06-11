@@ -8,7 +8,7 @@ import {
   connectStateResults,
 } from 'react-instantsearch-dom';
 import { PageHit } from './hitComps';
-import Icon, { iconNames } from '../icon';
+import Icon, { iconNames } from '../icon/';
 import { Button } from 'react-bootstrap';
 
 const searchClient = algoliasearch(
