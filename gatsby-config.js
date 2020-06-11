@@ -221,6 +221,12 @@ module.exports = {
               className: 'ml-1',
             },
           },
+          {
+            resolve: 'gatsby-remark-prismjs',
+            options: {
+              noInlineHighlight: true
+            }
+          },
         ],
       },
     },
