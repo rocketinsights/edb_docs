@@ -44,5 +44,40 @@ export const leftNavs = {
         path: 'language_pack',
       },
     ],
+    '9.4': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'inst_guide',
+      },
+      {
+        path: null,
+        title: 'User Guides',
+      },
+      {
+        path: '02_epas_compat_ora_dev_guide',
+      },
+      {
+        path: '03_ecpgplus',
+      },
+      {
+        path: '04_jdbc_guide',
+      },
+      {
+        path: '05_migration_toolkit',
+      },
+      {
+        path: '06_.net_guide',
+      },
+      {
+        path: '07_odbc_guide',
+      },
+      {
+        path: '08_epas_guide',
+      },
+
+    ],
   },
 };

@@ -33,6 +33,7 @@ const Layout = ({ children, pageMeta }) => {
       <MDXProvider
         components={{
           table: props => <table {...props} className="table" />,
+          img: props => <img {...props} className="img-fluid" />,
           pre: props => (
             <figure>
               <pre {...props} />
