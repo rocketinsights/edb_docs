@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import Icon, { iconNames } from './icon';
+import Icon, { iconNames } from './icon/';
 
 const IndexLinks = ({ indexLinkList }) => (
   <>

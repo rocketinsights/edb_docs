@@ -30,7 +30,7 @@ export const query = graphql`
 `;
 
 const ContentRow = ({ children }) => (
-  <div class="container p-0 mt-4">
+  <div className="container p-0 mt-4">
     <Row>{children}</Row>
   </div>
 );
