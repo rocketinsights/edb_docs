@@ -1,5 +1,9 @@
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
+const sortVersions = (a, b) => {
+  return parseFloat(a) - parseFloat(b);
+};
+
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
@@ -130,7 +134,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   for (const product in versionIndex) {
-    versionIndex[product] = versionIndex[product].sort().reverse();
+    versionIndex[product] = versionIndex[product].sort(sortVersions).reverse();
   }
 
   docs.forEach(doc => {
