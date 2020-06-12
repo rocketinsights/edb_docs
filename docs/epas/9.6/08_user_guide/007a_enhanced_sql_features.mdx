@@ -1,0 +1,153 @@
+---
+title: "Enhanced SQL Features"
+---
+
+Advanced Server includes enhanced SQL functionality that provides additional flexibility and convenience. This chapter discusses some of these additions.
+
+## COMMENT
+
+In addition to commenting on objects supported by the PostgreSQL COMMENT command, Advanced Server supports comments on additional object types. The complete supported syntax is:
+
+COMMENT ON
+{
+AGGREGATE *aggregate*\_*name* ( *aggregate*\_*signature* ) |
+CAST (*source*\_*type* AS *target*\_*type*) |
+COLLATION *object*\_*name* |
+COLUMN *relation*\_*name*.*column*\_*name* |
+CONSTRAINT *constraint*\_*name* ON *table*\_*name* |
+CONSTRAINT *constraint*\_*name* ON DOMAIN *domain*\_*name* |
+CONVERSION *object*\_*name* |
+DATABASE *object*\_*name* |
+DOMAIN *object*\_*name* |
+EXTENSION *object*\_*name* |
+EVENT TRIGGER *object*\_*name* |
+FOREIGN DATA WRAPPER *object*\_*name* |
+FOREIGN TABLE *object*\_*name* |
+FUNCTION *func*\_*name* (\[\[*argmode*\] \[*argname*\] *argtype* \[, ...\]\])|
+INDEX *object*\_*name* |
+LARGE OBJECT *large*\_*object*\_*oid* |
+MATERIALIZED VIEW *object*\_*name* |
+OPERATOR *operator*\_*name* (left\_type, right\_type) |
+OPERATOR CLASS *object*\_*name* USING *index*\_*method* |
+OPERATOR FAMILY *object*\_*name* USING *index*\_*method* |
+PACKAGE *object*\_*name*
+POLICY *policy*\_*name* ON *table*\_*name* |
+\[ PROCEDURAL \] LANGUAGE *object*\_*name* |
+PROCEDURE *proc*\_*name* \[(\[\[*argmode*\] \[*argname*\] *argtype* \[, ...\]\])\]
+PUBLIC SYNONYM *object*\_*name*
+ROLE *object*\_*name* |
+RULE *rule*\_*name* ON *table*\_*name* |
+SCHEMA *object*\_*name* |
+SEQUENCE *object*\_*name* |
+SERVER *object*\_*name* |
+TABLE *object*\_*name* |
+TABLESPACE *object*\_*name* |
+TEXT SEARCH CONFIGURATION *object*\_*name* |
+TEXT SEARCH DICTIONARY *object*\_*name* |
+TEXT SEARCH PARSER *object*\_*name* |
+TEXT SEARCH TEMPLATE *object*\_*name* |
+TRANSFORM FOR *type*\_*name* LANGUAGE *lang*\_*name* |
+TRIGGER *trigger*\_*name* ON *table*\_*name* |
+TYPE *object*\_*name* |
+VIEW *object*\_*name*
+} IS *'text'*
+
+where *aggregate*\_*signature* is:
+
+\* |
+\[ *argmode* \] \[ *argname* \] *argtype* \[ , ... \] |
+\[ \[ *argmode* \] \[ *argname* \] *argtype* \[ , ... \] \]
+ORDER BY \[ *argmode* \] \[ *argname* \] *argtype* \[ , ... \]
+
+**Parameters**
+
+*object\_name*
+
+> The name of the object on which you are commenting.
+
+AGGREGATE *aggregate*\_*name* (*aggregate*\_*signature*)
+
+> Include the AGGREGATE clause to create a comment about an aggregate. *aggregate*\_*name* specifies the name of an aggregate, and *aggregate*\_*signature* specifies the associated signature in one of the following forms:
+>
+> \* |
+> \[ *argmode* \] \[ *argname* \] *argtype* \[ , ... \] |
+> \[ \[ *argmode* \] \[ *argname* \] *argtype* \[ , ... \] \]
+> ORDER BY \[ *argmode* \] \[ *argname* \] *argtype* \[ , ... \]
+>
+> Where *argmode* is the mode of a function, procedure, or aggregate argument; argmode may be IN, OUT, INOUT, or VARIADIC. If omitted, the default is IN.
+>
+> *argname* is the name of an aggregate argument.
+>
+> *argtype* is the data type of an aggregate argument.
+
+CAST (*source*\_*type* AS *target*\_*type*)
+
+> Include the CAST clause to create a comment about a cast. When creating a comment about a cast, *source\_type* specifies the source data type of the cast, and *target\_type* specifies the target data type of the cast.
+
+COLUMN *relation*\_*name*.*column*\_*name*
+
+> Include the COLUMN clause to create a comment about a column. *column\_name* specifies name of the column to which the comment applies. *relation\_name* is the table, view, composite type, or foreign table in which a column resides.
+
+CONSTRAINT *constraint*\_*name* ON *table*\_*name*
+CONSTRAINT *constraint*\_*name* ON DOMAIN *domain*\_*name*
+
+> Include the CONSTRAINT clause to add a comment about a constraint. When creating a comment about a constraint, *constraint\_name* specifies the name of the constraint; *table\_name* or *domain\_name* specifies the name of the table or domain on which the constraint is defined.
+
+FUNCTION *func*\_*name* (\[\[*argmode*\] \[*argname*\] *argtype* \[, ...\]\])
+
+> Include the FUNCTION clause to add a comment about a function. *func*\_*name* specifies the name of the function. *argmode* specifies the mode of the function; *argmode* may be IN, OUT, INOUT, or VARIADIC. If omitted, the default is IN. *argname* specifies the name of a function, procedure, or aggregate argument. *argtype* specifies the data type of a function, procedure, or aggregate argument.
+
+*large\_object\_oid*
+
+> *large\_object\_oid* is the system-assigned OID of the large object about which you are commenting.
+
+OPERATOR *operator*\_*name* (left\_type, right\_type)
+
+> Include the OPERATOR clause to add a comment about an operator. *operator*\_*name* specifies the (optionally schema-qualified) name of an operator on which you are commenting. *left*\_*type* and *right*\_*type* are the (optionally schema-qualified) data type(s) of the operator's arguments.
+
+OPERATOR CLASS *object*\_*name* USING *index*\_*method*
+
+> Include the OPERATOR CLASS clause to add a comment about an operator class. *object*\_*name* specifies the (optionally schema-qualified) name of an operator on which you are commenting. *index\_method* specifies the associated index method of the operator class.
+
+OPERATOR FAMILY *object*\_*name* USING *index*\_*method*
+
+> Include the OPERATOR FAMILY clause to add a comment about an operator family. *object*\_*name* specifies the (optionally schema-qualified) name of an operator family on which you are commenting. *index\_method* specifies the associated index method of the operator family.
+
+POLICY *policy*\_*name* ON *table*\_*name*
+
+> Include the POLICY clause to add a comment about a policy. *policy*\_*name* specifies the name of the policy, and *table*\_*name* specifies the table that the policy is associated with.
+
+PROCEDURE *proc*\_*name* \[(\[\[*argmode*\] \[*argname*\] *argtype* \[, ...\]\])\]
+
+> Include the PROCEDURE clause to add a comment about a procedure. *proc*\_*name* specifies the name of the procedure. *argmode* specifies the mode of the procedure; *argmode* may be IN, OUT, INOUT, or VARIADIC. If omitted, the default is IN. *argname* specifies the name of a function, procedure, or aggregate argument. *argtype* specifies the data type of a function, procedure, or aggregate argument.
+
+RULE *rule*\_*name* ON *table*\_*name*
+
+> Include the RULE clause to specify a COMMENT on a rule. *rule*\_*name* specifies the name of the rule, and *table*\_*name* specifies the name of the table on which the rule is defined.
+
+TRANSFORM FOR *type*\_*name* LANGUAGE *lang*\_*name* |
+
+> Include the TRANSFORM FOR clause to specify a COMMENT on a TRANSFORM. *type*\_*name* specifies the name of the data type of the transform and *lang*\_*name* specifies the name of the language of the transform.
+
+TRIGGER *trigger*\_*name* ON *table*\_*name*
+
+> Include the TRIGGER clause to specify a COMMENT on a trigger. *trigger*\_*name* specifies the name of the trigger, and *table*\_*name* specifies the name of the table on which the trigger is defined.
+
+*text*
+
+> The comment, written as a string literal; or NULL to drop the comment.
+
+**Notes:**
+
+Names of tables, aggregates, collations, conversions, domains, foreign tables, functions, indexes, operators, operator classes, operator families, packages, procedures, sequences, text search objects, types, and views can be schema-qualified.
+
+**Example:**
+
+The following example adds a comment to a table named new\_emp:
+
+COMMENT ON TABLE new\_emp IS 'This table contains information about new employees.';
+
+For more information about using the COMMENT command, please see the PostgreSQL core documentation at:
+
+[https://www.postgresql.org/docs/9.6/static/sql-comment.html](https://www.postgresql.org/docs/9.5/static/sql-comment.html)
+
