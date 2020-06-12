@@ -5,7 +5,12 @@ import { products } from '../../constants/products';
 
 const productAndVersion = hit => {
   if (hit.product) {
-    return products[hit.product].name + ' / v' + hit.version + ' / ';
+    return (
+      (products[hit.product] ? products[hit.product].name : hit.product) +
+      ' / v' +
+      hit.version +
+      ' / '
+    );
   }
 };
 
