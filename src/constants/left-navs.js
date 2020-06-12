@@ -59,7 +59,7 @@ export const leftNavs = {
         path: '03_epas_release_notes',
       },
       {
-        path: '3a_epas_upgrade_guide',
+        path: '04_epas_upgrade_guide',
       },
       {
         path: null,
