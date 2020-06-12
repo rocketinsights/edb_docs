@@ -13,7 +13,7 @@ const baseUrl = (path, depth) => {
 
 const productIcon = path => {
   const product = path.split('/')[1];
-  return products[product].iconName;
+  return products[product] ? products[product].iconName : null;
 };
 
 const filterAndSort = (nodes, url) => {
