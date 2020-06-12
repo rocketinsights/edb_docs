@@ -1,18 +1,36 @@
+import IconNames from '../components/icon/iconNames';
+
 export const indexLinkList = [
   {
     sectionName: 'EDB Products',
     links: [
-      { title: 'EDB Postgres Advanced Server', url: '/epas/12' },
-      { title: 'Cloud Database Service', url: '/cds/1' },
+      {
+        title: 'EDB Postgres Advanced Server',
+        url: '/epas/12',
+        iconName: IconNames.EDB_EPAS,
+      },
+      {
+        title: 'Cloud Database Service',
+        url: '/cds/1',
+        iconName: IconNames.CLOUD_DB,
+      },
       { title: 'Ark Platform', url: '/ark/1' },
     ],
   },
   {
     sectionName: 'EDB Postgres Tools',
     links: [
-      { title: 'Backup and Recovery Tool', url: '/bart/1' },
-      { title: 'Postgres Enterprise Manager', url: '/pem/1' },
-      { title: 'Failover Manager', url: '/efm/1' },
+      {
+        title: 'Backup and Recovery Tool',
+        url: '/bart/1',
+        iconName: IconNames.EDB_BART,
+      },
+      {
+        title: 'Postgres Enterprise Manager',
+        url: '/pem/1',
+        iconName: IconNames.EDB_PEM,
+      },
+      { title: 'Failover Manager', url: '/efm/1', iconName: IconNames.EDB_EFM },
     ],
   },
 ];
