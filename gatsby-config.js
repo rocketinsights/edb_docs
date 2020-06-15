@@ -187,6 +187,7 @@ module.exports = {
         // An optional attribute which provides support for CORS check.
         // If you do not provide a crossOrigin option, it will skip CORS for manifest.
         // Any invalid keyword or empty string defaults to `anonymous`
+        optional_permissions: ['clipboardWrite'],
         crossOrigin: `use-credentials`,
       },
     },
@@ -229,8 +230,8 @@ module.exports = {
           {
             resolve: 'gatsby-remark-prismjs',
             options: {
-              noInlineHighlight: true
-            }
+              noInlineHighlight: true,
+            },
           },
         ],
       },

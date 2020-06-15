@@ -36,10 +36,7 @@ import EdbDocsLogoDiscDarkSvg from '../../../static/edb-icons/edb-docs-logo-disc
 import EdbEfmSvg from '../../../static/edb-icons/edb-efm.svg';
 import EdbEpasSvg from '../../../static/edb-icons/edb-epas.svg';
 import EdbLogoDiscDarkSvg from '../../../static/edb-icons/edb-logo-disc-dark.svg';
-<<<<<<< HEAD
-=======
 import EdbLogoSymbolBadgeSvg from '../../../static/edb-icons/edb-logo-symbol-badge.svg';
->>>>>>> develop
 import EdbMigrationPortalSvg from '../../../static/edb-icons/edb-migration-portal.svg';
 import EdbMigrationToolkitSvg from '../../../static/edb-icons/edb-migration-toolkit.svg';
 import EdbPemSvg from '../../../static/edb-icons/edb-pem.svg';
@@ -88,179 +85,176 @@ import VennSvg from '../../../static/edb-icons/venn.svg';
 import WebinarSvg from '../../../static/edb-icons/webinar.svg';
 
 function formatIconName(name) {
- return name && name.replace(/ /g, '').toLowerCase()
+  return name && name.replace(/ /g, '').toLowerCase();
 }
 
 export default function IconType({ iconName, ...rest }) {
- switch(formatIconName(iconName)) {
-   case iconNames.ANNOUNCE:
-     return <AnnounceSvg {...rest} />;
-   case iconNames.ARROW_LEFT:
-     return <ArrowLeftSvg {...rest} />;
-   case iconNames.ARROW_RIGHT:
-     return <ArrowRightSvg {...rest} />;
-   case iconNames.BRAIN_CIRCUIT:
-     return <BrainCircuitSvg {...rest} />;
-   case iconNames.BUSINESSMAN:
-     return <BusinessmanSvg {...rest} />;
-   case iconNames.BUSINESSWOMAN:
-     return <BusinesswomanSvg {...rest} />;
-   case iconNames.C_SHARP:
-     return <CSharpSvg {...rest} />;
-   case iconNames.CASE_STUDY:
-     return <CaseStudySvg {...rest} />;
-   case iconNames.CHANGE:
-     return <ChangeSvg {...rest} />;
-   case iconNames.CHECKMARK:
-     return <CheckmarkSvg {...rest} />;
-   case iconNames.CHEVRON_DOWN:
-     return <ChevronDownSvg {...rest} />;
-   case iconNames.CHEVRON_RIGHT:
-     return <ChevronRightSvg {...rest} />;
-   case iconNames.CLOSE:
-     return <CloseSvg {...rest} />;
-   case iconNames.CLOUD_DB:
-     return <CloudDbSvg {...rest} />;
-   case iconNames.CLOUD_DBA:
-     return <CloudDbaSvg {...rest} />;
-   case iconNames.CLOUD_PRIVATE:
-     return <CloudPrivateSvg {...rest} />;
-   case iconNames.CLOUD_PUBLIC:
-     return <CloudPublicSvg {...rest} />;
-   case iconNames.CODE_WRITING:
-     return <CodeWritingSvg {...rest} />;
-   case iconNames.CONNECT:
-     return <ConnectSvg {...rest} />;
-   case iconNames.CONTACT:
-     return <ContactSvg {...rest} />;
-   case iconNames.CONTAINER:
-     return <ContainerSvg {...rest} />;
-   case iconNames.CONVERT:
-     return <ConvertSvg {...rest} />;
-   case iconNames.DATABASE_ADMIN:
-     return <DatabaseAdminSvg {...rest} />;
-   case iconNames.DELIVER_LOVE:
-     return <DeliverLoveSvg {...rest} />;
-   case iconNames.DEVELOPER:
-     return <DeveloperSvg {...rest} />;
-   case iconNames.DOCS:
-     return <DocsSvg {...rest} />;
-   case iconNames.DOTTED_BOX:
-     return <DottedBoxSvg {...rest} />;
-   case iconNames.EARTH:
-     return <EarthSvg {...rest} />;
-   case iconNames.EASY:
-     return <EasySvg {...rest} />;
-   case iconNames.EDB_BADGE:
-     return <EdbBadgeSvg {...rest} />;
-   case iconNames.EDB_BART:
-     return <EdbBartSvg {...rest} />;
-   case iconNames.EDB_DOCS_LOGO_DISC_DARK:
-     return <EdbDocsLogoDiscDarkSvg {...rest} />;
-   case iconNames.EDB_EFM:
-     return <EdbEfmSvg {...rest} />;
-   case iconNames.EDB_EPAS:
-     return <EdbEpasSvg {...rest} />;
-   case iconNames.EDB_LOGO_DISC_DARK:
-     return <EdbLogoDiscDarkSvg {...rest} />;
-<<<<<<< HEAD
-=======
-   case iconNames.EDB_LOGO_SYMBOL_BADGE:
-     return <EdbLogoSymbolBadgeSvg {...rest} />;
->>>>>>> develop
-   case iconNames.EDB_MIGRATION_PORTAL:
-     return <EdbMigrationPortalSvg {...rest} />;
-   case iconNames.EDB_MIGRATION_TOOLKIT:
-     return <EdbMigrationToolkitSvg {...rest} />;
-   case iconNames.EDB_PEM:
-     return <EdbPemSvg {...rest} />;
-   case iconNames.EDB_REPLICATION:
-     return <EdbReplicationSvg {...rest} />;
-   case iconNames.ENERGY:
-     return <EnergySvg {...rest} />;
-   case iconNames.EXPORT:
-     return <ExportSvg {...rest} />;
-   case iconNames.FILE:
-     return <FileSvg {...rest} />;
-   case iconNames.HAMBURGER:
-     return <HamburgerSvg {...rest} />;
-   case iconNames.HANDSHAKE:
-     return <HandshakeSvg {...rest} />;
-   case iconNames.HIGH_AVAILABILITY:
-     return <HighAvailabilitySvg {...rest} />;
-   case iconNames.IDEA_SHARING:
-     return <IdeaSharingSvg {...rest} />;
-   case iconNames.IMPROVE:
-     return <ImproveSvg {...rest} />;
-   case iconNames.INSTALL:
-     return <InstallSvg {...rest} />;
-   case iconNames.JAVA:
-     return <JavaSvg {...rest} />;
-   case iconNames.KNIGHT:
-     return <KnightSvg {...rest} />;
-   case iconNames.KUBERNETES:
-     return <KubernetesSvg {...rest} />;
-   case iconNames.LAPTOP_CONFIG:
-     return <LaptopConfigSvg {...rest} />;
-   case iconNames.LEARNING:
-     return <LearningSvg {...rest} />;
-   case iconNames.LINKEDIN:
-     return <LinkedinSvg {...rest} />;
-   case iconNames.MIGRATE:
-     return <MigrateSvg {...rest} />;
-   case iconNames.MISSION:
-     return <MissionSvg {...rest} />;
-   case iconNames.NETWORK:
-     return <NetworkSvg {...rest} />;
-   case iconNames.NETWORK2:
-     return <Network2Svg {...rest} />;
-   case iconNames.NEWS:
-     return <NewsSvg {...rest} />;
-   case iconNames.NODEJS:
-     return <NodejsSvg {...rest} />;
-   case iconNames.OPTIONS:
-     return <OptionsSvg {...rest} />;
-   case iconNames.PARTNER:
-     return <PartnerSvg {...rest} />;
-   case iconNames.PHP:
-     return <PhpSvg {...rest} />;
-   case iconNames.POSTGRES_SUPPORT:
-     return <PostgresSupportSvg {...rest} />;
-   case iconNames.POSTGRESQL:
-     return <PostgresqlSvg {...rest} />;
-   case iconNames.PRESENTATION:
-     return <PresentationSvg {...rest} />;
-   case iconNames.PROCESS_IMPROVEMENT:
-     return <ProcessImprovementSvg {...rest} />;
-   case iconNames.PULSE:
-     return <PulseSvg {...rest} />;
-   case iconNames.PYTHON:
-     return <PythonSvg {...rest} />;
-   case iconNames.REMOTE_DBA:
-     return <RemoteDbaSvg {...rest} />;
-   case iconNames.ROCKET:
-     return <RocketSvg {...rest} />;
-   case iconNames.RUBY:
-     return <RubySvg {...rest} />;
-   case iconNames.SEARCH:
-     return <SearchSvg {...rest} />;
-   case iconNames.STACK:
-     return <StackSvg {...rest} />;
-   case iconNames.SUPPORT:
-     return <SupportSvg {...rest} />;
-   case iconNames.TEN_YEARS:
-     return <TenYearsSvg {...rest} />;
-   case iconNames.TICKET:
-     return <TicketSvg {...rest} />;
-   case iconNames.TOOLS:
-     return <ToolsSvg {...rest} />;
-   case iconNames.TUTORIAL:
-     return <TutorialSvg {...rest} />;
-   case iconNames.VENN:
-     return <VennSvg {...rest} />;
-   case iconNames.WEBINAR:
-     return <WebinarSvg {...rest} />;
-   default:
-     return null;
- }
+  switch (formatIconName(iconName)) {
+    case iconNames.ANNOUNCE:
+      return <AnnounceSvg {...rest} />;
+    case iconNames.ARROW_LEFT:
+      return <ArrowLeftSvg {...rest} />;
+    case iconNames.ARROW_RIGHT:
+      return <ArrowRightSvg {...rest} />;
+    case iconNames.BRAIN_CIRCUIT:
+      return <BrainCircuitSvg {...rest} />;
+    case iconNames.BUSINESSMAN:
+      return <BusinessmanSvg {...rest} />;
+    case iconNames.BUSINESSWOMAN:
+      return <BusinesswomanSvg {...rest} />;
+    case iconNames.C_SHARP:
+      return <CSharpSvg {...rest} />;
+    case iconNames.CASE_STUDY:
+      return <CaseStudySvg {...rest} />;
+    case iconNames.CHANGE:
+      return <ChangeSvg {...rest} />;
+    case iconNames.CHECKMARK:
+      return <CheckmarkSvg {...rest} />;
+    case iconNames.CHEVRON_DOWN:
+      return <ChevronDownSvg {...rest} />;
+    case iconNames.CHEVRON_RIGHT:
+      return <ChevronRightSvg {...rest} />;
+    case iconNames.CLOSE:
+      return <CloseSvg {...rest} />;
+    case iconNames.CLOUD_DB:
+      return <CloudDbSvg {...rest} />;
+    case iconNames.CLOUD_DBA:
+      return <CloudDbaSvg {...rest} />;
+    case iconNames.CLOUD_PRIVATE:
+      return <CloudPrivateSvg {...rest} />;
+    case iconNames.CLOUD_PUBLIC:
+      return <CloudPublicSvg {...rest} />;
+    case iconNames.CODE_WRITING:
+      return <CodeWritingSvg {...rest} />;
+    case iconNames.CONNECT:
+      return <ConnectSvg {...rest} />;
+    case iconNames.CONTACT:
+      return <ContactSvg {...rest} />;
+    case iconNames.CONTAINER:
+      return <ContainerSvg {...rest} />;
+    case iconNames.CONVERT:
+      return <ConvertSvg {...rest} />;
+    case iconNames.DATABASE_ADMIN:
+      return <DatabaseAdminSvg {...rest} />;
+    case iconNames.DELIVER_LOVE:
+      return <DeliverLoveSvg {...rest} />;
+    case iconNames.DEVELOPER:
+      return <DeveloperSvg {...rest} />;
+    case iconNames.DOCS:
+      return <DocsSvg {...rest} />;
+    case iconNames.DOTTED_BOX:
+      return <DottedBoxSvg {...rest} />;
+    case iconNames.EARTH:
+      return <EarthSvg {...rest} />;
+    case iconNames.EASY:
+      return <EasySvg {...rest} />;
+    case iconNames.EDB_BADGE:
+      return <EdbBadgeSvg {...rest} />;
+    case iconNames.EDB_BART:
+      return <EdbBartSvg {...rest} />;
+    case iconNames.EDB_DOCS_LOGO_DISC_DARK:
+      return <EdbDocsLogoDiscDarkSvg {...rest} />;
+    case iconNames.EDB_EFM:
+      return <EdbEfmSvg {...rest} />;
+    case iconNames.EDB_EPAS:
+      return <EdbEpasSvg {...rest} />;
+    case iconNames.EDB_LOGO_DISC_DARK:
+      return <EdbLogoDiscDarkSvg {...rest} />;
+    case iconNames.EDB_LOGO_SYMBOL_BADGE:
+      return <EdbLogoSymbolBadgeSvg {...rest} />;
+    case iconNames.EDB_MIGRATION_PORTAL:
+      return <EdbMigrationPortalSvg {...rest} />;
+    case iconNames.EDB_MIGRATION_TOOLKIT:
+      return <EdbMigrationToolkitSvg {...rest} />;
+    case iconNames.EDB_PEM:
+      return <EdbPemSvg {...rest} />;
+    case iconNames.EDB_REPLICATION:
+      return <EdbReplicationSvg {...rest} />;
+    case iconNames.ENERGY:
+      return <EnergySvg {...rest} />;
+    case iconNames.EXPORT:
+      return <ExportSvg {...rest} />;
+    case iconNames.FILE:
+      return <FileSvg {...rest} />;
+    case iconNames.HAMBURGER:
+      return <HamburgerSvg {...rest} />;
+    case iconNames.HANDSHAKE:
+      return <HandshakeSvg {...rest} />;
+    case iconNames.HIGH_AVAILABILITY:
+      return <HighAvailabilitySvg {...rest} />;
+    case iconNames.IDEA_SHARING:
+      return <IdeaSharingSvg {...rest} />;
+    case iconNames.IMPROVE:
+      return <ImproveSvg {...rest} />;
+    case iconNames.INSTALL:
+      return <InstallSvg {...rest} />;
+    case iconNames.JAVA:
+      return <JavaSvg {...rest} />;
+    case iconNames.KNIGHT:
+      return <KnightSvg {...rest} />;
+    case iconNames.KUBERNETES:
+      return <KubernetesSvg {...rest} />;
+    case iconNames.LAPTOP_CONFIG:
+      return <LaptopConfigSvg {...rest} />;
+    case iconNames.LEARNING:
+      return <LearningSvg {...rest} />;
+    case iconNames.LINKEDIN:
+      return <LinkedinSvg {...rest} />;
+    case iconNames.MIGRATE:
+      return <MigrateSvg {...rest} />;
+    case iconNames.MISSION:
+      return <MissionSvg {...rest} />;
+    case iconNames.NETWORK:
+      return <NetworkSvg {...rest} />;
+    case iconNames.NETWORK2:
+      return <Network2Svg {...rest} />;
+    case iconNames.NEWS:
+      return <NewsSvg {...rest} />;
+    case iconNames.NODEJS:
+      return <NodejsSvg {...rest} />;
+    case iconNames.OPTIONS:
+      return <OptionsSvg {...rest} />;
+    case iconNames.PARTNER:
+      return <PartnerSvg {...rest} />;
+    case iconNames.PHP:
+      return <PhpSvg {...rest} />;
+    case iconNames.POSTGRES_SUPPORT:
+      return <PostgresSupportSvg {...rest} />;
+    case iconNames.POSTGRESQL:
+      return <PostgresqlSvg {...rest} />;
+    case iconNames.PRESENTATION:
+      return <PresentationSvg {...rest} />;
+    case iconNames.PROCESS_IMPROVEMENT:
+      return <ProcessImprovementSvg {...rest} />;
+    case iconNames.PULSE:
+      return <PulseSvg {...rest} />;
+    case iconNames.PYTHON:
+      return <PythonSvg {...rest} />;
+    case iconNames.REMOTE_DBA:
+      return <RemoteDbaSvg {...rest} />;
+    case iconNames.ROCKET:
+      return <RocketSvg {...rest} />;
+    case iconNames.RUBY:
+      return <RubySvg {...rest} />;
+    case iconNames.SEARCH:
+      return <SearchSvg {...rest} />;
+    case iconNames.STACK:
+      return <StackSvg {...rest} />;
+    case iconNames.SUPPORT:
+      return <SupportSvg {...rest} />;
+    case iconNames.TEN_YEARS:
+      return <TenYearsSvg {...rest} />;
+    case iconNames.TICKET:
+      return <TicketSvg {...rest} />;
+    case iconNames.TOOLS:
+      return <ToolsSvg {...rest} />;
+    case iconNames.TUTORIAL:
+      return <TutorialSvg {...rest} />;
+    case iconNames.VENN:
+      return <VennSvg {...rest} />;
+    case iconNames.WEBINAR:
+      return <WebinarSvg {...rest} />;
+    default:
+      return null;
+  }
 }
