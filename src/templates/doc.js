@@ -14,12 +14,14 @@ import {
   TopBar,
 } from '../components';
 import { leftNavs } from '../constants/left-navs';
+import { showFrontmatter } from '../constants/utils';
 
 export const query = graphql`
   query($path: String!) {
     mdx(fields: { path: { eq: $path } }) {
       frontmatter {
         title
+        navTitle
         description
       }
       fields {
@@ -175,6 +177,7 @@ const DocTemplate = ({ data, pageContext }) => {
           </ContentRow>
           {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
+          <DevOnly>{showFrontmatter(frontmatter)}</DevOnly>
           <Footer />
         </MainContent>
       </Container>
