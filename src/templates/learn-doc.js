@@ -12,6 +12,7 @@ import {
   TableOfContents,
   TopBar,
 } from '../components';
+import CopyToClipboard from '../components/copy-to-clipboard';
 
 export const query = graphql`
   query($path: String!) {
@@ -108,7 +109,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
               <Tiles mdx={mdx} navLinks={navLinks} />
             </>
           )}
-
+          <CopyToClipboard text="here here" />
           <Footer />
         </MainContent>
       </Container>

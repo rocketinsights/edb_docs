@@ -7,15 +7,21 @@ import ArrowRightSvg from '../../../static/edb-icons/arrow-right.svg';
 import BrainCircuitSvg from '../../../static/edb-icons/brain-circuit.svg';
 import BusinessmanSvg from '../../../static/edb-icons/businessman.svg';
 import BusinesswomanSvg from '../../../static/edb-icons/businesswoman.svg';
+import CSharpSvg from '../../../static/edb-icons/c-sharp.svg';
 import CaseStudySvg from '../../../static/edb-icons/case-study.svg';
+import ChangeSvg from '../../../static/edb-icons/change.svg';
 import CheckmarkSvg from '../../../static/edb-icons/checkmark.svg';
 import ChevronDownSvg from '../../../static/edb-icons/chevron-down.svg';
 import ChevronRightSvg from '../../../static/edb-icons/chevron-right.svg';
 import CloseSvg from '../../../static/edb-icons/close.svg';
 import CloudDbSvg from '../../../static/edb-icons/cloud-db.svg';
 import CloudDbaSvg from '../../../static/edb-icons/cloud-dba.svg';
+import CloudPrivateSvg from '../../../static/edb-icons/cloud-private.svg';
+import CloudPublicSvg from '../../../static/edb-icons/cloud-public.svg';
 import CodeWritingSvg from '../../../static/edb-icons/code-writing.svg';
 import ConnectSvg from '../../../static/edb-icons/connect.svg';
+import ContactSvg from '../../../static/edb-icons/contact.svg';
+import ContainerSvg from '../../../static/edb-icons/container.svg';
 import ConvertSvg from '../../../static/edb-icons/convert.svg';
 import DatabaseAdminSvg from '../../../static/edb-icons/database-admin.svg';
 import DeliverLoveSvg from '../../../static/edb-icons/deliver-love.svg';
@@ -28,7 +34,9 @@ import EdbBadgeSvg from '../../../static/edb-icons/edb-badge.svg';
 import EdbBartSvg from '../../../static/edb-icons/edb-bart.svg';
 import EdbEfmSvg from '../../../static/edb-icons/edb-efm.svg';
 import EdbEpasSvg from '../../../static/edb-icons/edb-epas.svg';
-import EdbMigrationSvg from '../../../static/edb-icons/edb-migration.svg';
+import EdbLogoDiscDarkSvg from '../../../static/edb-icons/edb-logo-disc-dark.svg';
+import EdbMigrationPortalSvg from '../../../static/edb-icons/edb-migration-portal.svg';
+import EdbMigrationToolkitSvg from '../../../static/edb-icons/edb-migration-toolkit.svg';
 import EdbPemSvg from '../../../static/edb-icons/edb-pem.svg';
 import EdbReplicationSvg from '../../../static/edb-icons/edb-replication.svg';
 import EnergySvg from '../../../static/edb-icons/energy.svg';
@@ -40,22 +48,30 @@ import HighAvailabilitySvg from '../../../static/edb-icons/high-availability.svg
 import IdeaSharingSvg from '../../../static/edb-icons/idea-sharing.svg';
 import ImproveSvg from '../../../static/edb-icons/improve.svg';
 import InstallSvg from '../../../static/edb-icons/install.svg';
+import JavaSvg from '../../../static/edb-icons/java.svg';
 import KnightSvg from '../../../static/edb-icons/knight.svg';
 import KubernetesSvg from '../../../static/edb-icons/kubernetes.svg';
 import LaptopConfigSvg from '../../../static/edb-icons/laptop-config.svg';
 import LearningSvg from '../../../static/edb-icons/learning.svg';
 import LinkedinSvg from '../../../static/edb-icons/linkedin.svg';
+import MigrateSvg from '../../../static/edb-icons/migrate.svg';
 import MissionSvg from '../../../static/edb-icons/mission.svg';
 import NetworkSvg from '../../../static/edb-icons/network.svg';
 import Network2Svg from '../../../static/edb-icons/network2.svg';
 import NewsSvg from '../../../static/edb-icons/news.svg';
+import NodejsSvg from '../../../static/edb-icons/nodejs.svg';
+import OptionsSvg from '../../../static/edb-icons/options.svg';
 import PartnerSvg from '../../../static/edb-icons/partner.svg';
+import PhpSvg from '../../../static/edb-icons/php.svg';
 import PostgresSupportSvg from '../../../static/edb-icons/postgres-support.svg';
 import PostgresqlSvg from '../../../static/edb-icons/postgresql.svg';
 import PresentationSvg from '../../../static/edb-icons/presentation.svg';
 import ProcessImprovementSvg from '../../../static/edb-icons/process-improvement.svg';
+import PulseSvg from '../../../static/edb-icons/pulse.svg';
+import PythonSvg from '../../../static/edb-icons/python.svg';
 import RemoteDbaSvg from '../../../static/edb-icons/remote-dba.svg';
 import RocketSvg from '../../../static/edb-icons/rocket.svg';
+import RubySvg from '../../../static/edb-icons/ruby.svg';
 import SearchSvg from '../../../static/edb-icons/search.svg';
 import StackSvg from '../../../static/edb-icons/stack.svg';
 import SupportSvg from '../../../static/edb-icons/support.svg';
@@ -84,8 +100,12 @@ export default function IconType({ iconName, ...rest }) {
      return <BusinessmanSvg {...rest} />;
    case iconNames.BUSINESSWOMAN:
      return <BusinesswomanSvg {...rest} />;
+   case iconNames.C_SHARP:
+     return <CSharpSvg {...rest} />;
    case iconNames.CASE_STUDY:
      return <CaseStudySvg {...rest} />;
+   case iconNames.CHANGE:
+     return <ChangeSvg {...rest} />;
    case iconNames.CHECKMARK:
      return <CheckmarkSvg {...rest} />;
    case iconNames.CHEVRON_DOWN:
@@ -98,10 +118,18 @@ export default function IconType({ iconName, ...rest }) {
      return <CloudDbSvg {...rest} />;
    case iconNames.CLOUD_DBA:
      return <CloudDbaSvg {...rest} />;
+   case iconNames.CLOUD_PRIVATE:
+     return <CloudPrivateSvg {...rest} />;
+   case iconNames.CLOUD_PUBLIC:
+     return <CloudPublicSvg {...rest} />;
    case iconNames.CODE_WRITING:
      return <CodeWritingSvg {...rest} />;
    case iconNames.CONNECT:
      return <ConnectSvg {...rest} />;
+   case iconNames.CONTACT:
+     return <ContactSvg {...rest} />;
+   case iconNames.CONTAINER:
+     return <ContainerSvg {...rest} />;
    case iconNames.CONVERT:
      return <ConvertSvg {...rest} />;
    case iconNames.DATABASE_ADMIN:
@@ -126,8 +154,12 @@ export default function IconType({ iconName, ...rest }) {
      return <EdbEfmSvg {...rest} />;
    case iconNames.EDB_EPAS:
      return <EdbEpasSvg {...rest} />;
-   case iconNames.EDB_MIGRATION:
-     return <EdbMigrationSvg {...rest} />;
+   case iconNames.EDB_LOGO_DISC_DARK:
+     return <EdbLogoDiscDarkSvg {...rest} />;
+   case iconNames.EDB_MIGRATION_PORTAL:
+     return <EdbMigrationPortalSvg {...rest} />;
+   case iconNames.EDB_MIGRATION_TOOLKIT:
+     return <EdbMigrationToolkitSvg {...rest} />;
    case iconNames.EDB_PEM:
      return <EdbPemSvg {...rest} />;
    case iconNames.EDB_REPLICATION:
@@ -150,6 +182,8 @@ export default function IconType({ iconName, ...rest }) {
      return <ImproveSvg {...rest} />;
    case iconNames.INSTALL:
      return <InstallSvg {...rest} />;
+   case iconNames.JAVA:
+     return <JavaSvg {...rest} />;
    case iconNames.KNIGHT:
      return <KnightSvg {...rest} />;
    case iconNames.KUBERNETES:
@@ -160,6 +194,8 @@ export default function IconType({ iconName, ...rest }) {
      return <LearningSvg {...rest} />;
    case iconNames.LINKEDIN:
      return <LinkedinSvg {...rest} />;
+   case iconNames.MIGRATE:
+     return <MigrateSvg {...rest} />;
    case iconNames.MISSION:
      return <MissionSvg {...rest} />;
    case iconNames.NETWORK:
@@ -168,8 +204,14 @@ export default function IconType({ iconName, ...rest }) {
      return <Network2Svg {...rest} />;
    case iconNames.NEWS:
      return <NewsSvg {...rest} />;
+   case iconNames.NODEJS:
+     return <NodejsSvg {...rest} />;
+   case iconNames.OPTIONS:
+     return <OptionsSvg {...rest} />;
    case iconNames.PARTNER:
      return <PartnerSvg {...rest} />;
+   case iconNames.PHP:
+     return <PhpSvg {...rest} />;
    case iconNames.POSTGRES_SUPPORT:
      return <PostgresSupportSvg {...rest} />;
    case iconNames.POSTGRESQL:
@@ -178,10 +220,16 @@ export default function IconType({ iconName, ...rest }) {
      return <PresentationSvg {...rest} />;
    case iconNames.PROCESS_IMPROVEMENT:
      return <ProcessImprovementSvg {...rest} />;
+   case iconNames.PULSE:
+     return <PulseSvg {...rest} />;
+   case iconNames.PYTHON:
+     return <PythonSvg {...rest} />;
    case iconNames.REMOTE_DBA:
      return <RemoteDbaSvg {...rest} />;
    case iconNames.ROCKET:
      return <RocketSvg {...rest} />;
+   case iconNames.RUBY:
+     return <RubySvg {...rest} />;
    case iconNames.SEARCH:
      return <SearchSvg {...rest} />;
    case iconNames.STACK:

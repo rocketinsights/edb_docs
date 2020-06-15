@@ -14,6 +14,7 @@ import {
   TopBar,
 } from '../components';
 import { leftNavs } from '../constants/left-navs';
+import CopyToClipboard from '../components/copy-to-clipboard';
 
 export const query = graphql`
   query($path: String!) {
