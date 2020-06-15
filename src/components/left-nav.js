@@ -19,7 +19,7 @@ const productIcon = path => {
 const filterAndSort = (nodes, url) => {
   return nodes
     .map(node => ({
-      title: node.frontmatter.title,
+      title: node.frontmatter.title || 'TITLE NEEDED',
       navTitle: node.frontmatter.navTitle,
       path: node.fields.path,
       items: [],

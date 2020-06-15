@@ -30,9 +30,14 @@ export default {
  EASY: "easy",
  EDB_BADGE: "edbbadge",
  EDB_BART: "edbbart",
+ EDB_DOCS_LOGO_DISC_DARK: "edbdocslogodiscdark",
  EDB_EFM: "edbefm",
  EDB_EPAS: "edbepas",
  EDB_LOGO_DISC_DARK: "edblogodiscdark",
+<<<<<<< HEAD
+=======
+ EDB_LOGO_SYMBOL_BADGE: "edblogosymbolbadge",
+>>>>>>> develop
  EDB_MIGRATION_PORTAL: "edbmigrationportal",
  EDB_MIGRATION_TOOLKIT: "edbmigrationtoolkit",
  EDB_PEM: "edbpem",

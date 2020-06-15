@@ -32,9 +32,14 @@ import EarthSvg from '../../../static/edb-icons/earth.svg';
 import EasySvg from '../../../static/edb-icons/easy.svg';
 import EdbBadgeSvg from '../../../static/edb-icons/edb-badge.svg';
 import EdbBartSvg from '../../../static/edb-icons/edb-bart.svg';
+import EdbDocsLogoDiscDarkSvg from '../../../static/edb-icons/edb-docs-logo-disc-dark.svg';
 import EdbEfmSvg from '../../../static/edb-icons/edb-efm.svg';
 import EdbEpasSvg from '../../../static/edb-icons/edb-epas.svg';
 import EdbLogoDiscDarkSvg from '../../../static/edb-icons/edb-logo-disc-dark.svg';
+<<<<<<< HEAD
+=======
+import EdbLogoSymbolBadgeSvg from '../../../static/edb-icons/edb-logo-symbol-badge.svg';
+>>>>>>> develop
 import EdbMigrationPortalSvg from '../../../static/edb-icons/edb-migration-portal.svg';
 import EdbMigrationToolkitSvg from '../../../static/edb-icons/edb-migration-toolkit.svg';
 import EdbPemSvg from '../../../static/edb-icons/edb-pem.svg';
@@ -150,12 +155,19 @@ export default function IconType({ iconName, ...rest }) {
      return <EdbBadgeSvg {...rest} />;
    case iconNames.EDB_BART:
      return <EdbBartSvg {...rest} />;
+   case iconNames.EDB_DOCS_LOGO_DISC_DARK:
+     return <EdbDocsLogoDiscDarkSvg {...rest} />;
    case iconNames.EDB_EFM:
      return <EdbEfmSvg {...rest} />;
    case iconNames.EDB_EPAS:
      return <EdbEpasSvg {...rest} />;
    case iconNames.EDB_LOGO_DISC_DARK:
      return <EdbLogoDiscDarkSvg {...rest} />;
+<<<<<<< HEAD
+=======
+   case iconNames.EDB_LOGO_SYMBOL_BADGE:
+     return <EdbLogoSymbolBadgeSvg {...rest} />;
+>>>>>>> develop
    case iconNames.EDB_MIGRATION_PORTAL:
      return <EdbMigrationPortalSvg {...rest} />;
    case iconNames.EDB_MIGRATION_TOOLKIT:
