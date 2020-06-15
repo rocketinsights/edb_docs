@@ -28,6 +28,7 @@ const transformNodeDocs = node => {
   newNode['path'] = node.fields.path;
   newNode['product'] = node.fields.product;
   newNode['version'] = node.fields.version;
+  newNode['productVersion'] = node.fields.product + ' > ' + node.fields.version;
   delete newNode['frontmatter'];
   delete newNode['fields'];
   return newNode;
@@ -115,34 +116,16 @@ const sectionCheck = section => {
   return true;
 };
 
-const products = ['epas', 'cds', 'ark'];
-
 const queries = [
   {
     query: docQuery,
     transformer: ({ data }) =>
       splitNodeContent(
         addBreadcrumbsToNodes(
-          data.allMdx.nodes.filter(
-            node =>
-              !!node.fields.product && products.includes(node.fields.product),
-          ),
+          data.allMdx.nodes.filter(node => !!node.fields.product),
         ).map(node => transformNodeDocs(node)),
       ),
     indexName: 'edb-products', // overrides main index name, optional
-  },
-  {
-    query: docQuery,
-    transformer: ({ data }) =>
-      splitNodeContent(
-        addBreadcrumbsToNodes(
-          data.allMdx.nodes.filter(
-            node =>
-              !!node.fields.product && !products.includes(node.fields.product),
-          ),
-        ).map(node => transformNodeDocs(node)),
-      ),
-    indexName: 'edb-tools', // overrides main index name, optional
   },
   {
     query: docQuery,
@@ -229,8 +212,8 @@ module.exports = {
           {
             resolve: 'gatsby-remark-prismjs',
             options: {
-              noInlineHighlight: true
-            }
+              noInlineHighlight: true,
+            },
           },
         ],
       },
