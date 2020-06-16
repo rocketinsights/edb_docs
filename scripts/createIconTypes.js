@@ -21,16 +21,16 @@ const IconTypeContent = [
   icons.map((icon) => `import ${toPascalCase(icon)}Svg from '../../../static/edb-icons/${icon}.svg';`).join('\n'),
   '',
   'function formatIconName(name) {',
-  " return name && name.replace(/ /g, '').toLowerCase()",
+  "  return name && name.replace(/ /g, '').toLowerCase();",
   '}',
   '',
   'export default function IconType({ iconName, ...rest }) {',
-  ' switch(formatIconName(iconName)) {',
-  icons.map((icon) => `   case iconNames.${toScreamingSnakeCase(icon)}:\n     return <${toPascalCase(icon)}Svg {...rest} />;`).join('\n'),
-  '   default:',
-  '     return null;',
-  ' }',
-  '}',
+  '  switch (formatIconName(iconName)) {',
+  icons.map((icon) => `    case iconNames.${toScreamingSnakeCase(icon)}:\n      return <${toPascalCase(icon)}Svg {...rest} />;`).join('\n'),
+  '    default:',
+  '      return null;',
+  '  }',
+  '}\n',
 ].join('\n');
 
 writeFileSync(`src/components/icon/iconType.js`, IconTypeContent);

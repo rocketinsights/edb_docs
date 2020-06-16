@@ -34,7 +34,7 @@ export default {
   EDB_EFM: 'edbefm',
   EDB_EPAS: 'edbepas',
   EDB_LOGO_DISC_DARK: 'edblogodiscdark',
-  MBOL_BADGE: 'edblogosymbolbadge',
+  EDB_LOGO_SYMBOL_BADGE: 'edblogosymbolbadge',
   EDB_MIGRATION_PORTAL: 'edbmigrationportal',
   EDB_MIGRATION_TOOLKIT: 'edbmigrationtoolkit',
   EDB_PEM: 'edbpem',
