@@ -25,7 +25,7 @@ const CopyToClipboard = ({ text }) => {
       {text}
       {/* Logical shortcut for only displaying the 
           button if the copy command exists */
-      document.queryCommandSupported('copy') && (
+      typeof window !== 'undefined' && document.queryCommandSupported('copy') && (
         <button type="button" class={buttonClass} onClick={copyToClipboard}>
           {buttonText}
         </button>
