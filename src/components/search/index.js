@@ -2,6 +2,7 @@ import React, { useState, useEffect, createRef } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
+  HierarchicalMenu,
   Hits,
   Index,
   connectSearchBox,
@@ -19,7 +20,6 @@ const searchClient = algoliasearch(
 const indexes = [
   { title: 'Learn', index: 'advocacy' },
   { title: 'EDB Products', index: 'edb-products' },
-  { title: 'EDB Postgres Tools', index: 'edb-tools' },
 ];
 
 const Results = connectStateResults(
@@ -28,21 +28,21 @@ const Results = connectStateResults(
 );
 
 const NoResults = connectStateResults(
-  ({ allSearchResults: res }) => (
-    res && indexes.reduce((total, index) => {
-      return total + (res[index.index] ? res[index.index].nbHits : 0)
-    }, 0) === 0 && (
-      <div className="text-center">No Results</div>
-    )
-  )
+  ({ allSearchResults: res }) =>
+    res &&
+    indexes.reduce((total, index) => {
+      return total + (res[index.index] ? res[index.index].nbHits : 0);
+    }, 0) === 0 && <div className="text-center">No Results</div>,
 );
 
 const SearchDivider = connectStateResults(
-  ({ allSearchResults: res, nextIndex }) => (
-    res && nextIndex && res[nextIndex.index] && res[nextIndex.index].nbHits > 0 ? (
+  ({ allSearchResults: res, nextIndex }) =>
+    res &&
+    nextIndex &&
+    res[nextIndex.index] &&
+    res[nextIndex.index].nbHits > 0 ? (
       <div className="dropdown-divider" />
-    ) : null
-  )
+    ) : null,
 );
 
 const Stats = connectStateResults(
@@ -55,17 +55,19 @@ const ResultGroup = ({ title, index, nextIndex }) => (
     <Results>
       <h6 className="dropdown-header">
         {title}
-        <small className="ml-1"><Stats /></small>
+        <small className="ml-1">
+          <Stats />
+        </small>
       </h6>
       <Hits hitComponent={PageHit} />
       <SearchDivider nextIndex={nextIndex} />
     </Results>
   </Index>
-)
+);
 
-const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => (
+const SearchForm = ({ currentRefinement, refine, query, focus, onFocus }) => (
   <>
-    <form noValidate action="" role="search" className='d-flex'>
+    <form noValidate action="" role="search" className="d-flex">
       <input
         className="form-control form-control-lg border-0 pl-3 bg-white"
         type="text"
@@ -77,17 +79,32 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => (
       />
       <Button
         variant="link"
-        onClick={(e) => { e.preventDefault(); refine(''); }}
+        onClick={e => {
+          e.preventDefault();
+          refine('');
+        }}
         className={`${query.length === 0 && 'd-none'}`}
       >
-        <Icon iconName={iconNames.CLOSE} className="opacity-5" width="20" height="20" />
+        <Icon
+          iconName={iconNames.CLOSE}
+          className="opacity-5"
+          width="20"
+          height="20"
+        />
       </Button>
     </form>
     <div
-      className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${query.length > 0 && focus ? 'show' : ''}`}
+      className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${
+        query.length > 0 && focus ? 'show' : ''
+      }`}
     >
       {indexes.map(({ title, index }, i) => (
-        <ResultGroup key={index} title={title} index={index} nextIndex={indexes[i + 1]} />
+        <ResultGroup
+          key={index}
+          title={title}
+          index={index}
+          nextIndex={indexes[i + 1]}
+        />
       ))}
       <NoResults />
     </div>
@@ -96,17 +113,17 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => (
 const Search = connectSearchBox(SearchForm);
 
 const useClickOutside = (ref, handler, events) => {
-  if (!events) events = [`mousedown`, `touchstart`]
+  if (!events) events = [`mousedown`, `touchstart`];
   const detectClickOutside = event =>
-    !ref.current.contains(event.target) && handler()
+    !ref.current.contains(event.target) && handler();
   useEffect(() => {
     for (const event of events)
-      document.addEventListener(event, detectClickOutside)
+      document.addEventListener(event, detectClickOutside);
     return () => {
       for (const event of events)
-        document.removeEventListener(event, detectClickOutside)
-    }
-  })
+        document.removeEventListener(event, detectClickOutside);
+    };
+  });
 };
 
 const SearchBar = () => {
@@ -118,11 +135,14 @@ const SearchBar = () => {
     <div className="w-100" ref={ref}>
       <InstantSearch
         searchClient={searchClient}
-        indexName={indexes[0].index}
+        indexName={indexes[1].index}
         onSearchStateChange={({ query }) => setQuery(query)}
-        className='dropdown'
+        className="dropdown"
       >
-        <Search query={query} focus={focus} onFocus={() => setFocus(true)}/>
+        <Search query={query} focus={focus} onFocus={() => setFocus(true)} />
+        {query.length > 0 && (
+          <HierarchicalMenu attributes={['product', 'productVersion']} />
+        )}
       </InstantSearch>
     </div>
   );
