@@ -111,6 +111,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
               <Tiles mdx={mdx} navLinks={navLinks} />
             </>
           )}
+
           <DevOnly>{showFrontmatter(mdx.frontmatter)}</DevOnly>
 
           <Footer />

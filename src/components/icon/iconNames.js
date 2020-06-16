@@ -81,4 +81,4 @@ export default {
   TUTORIAL: 'tutorial',
   VENN: 'venn',
   WEBINAR: 'webinar',
-}
+};
