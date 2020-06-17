@@ -4,9 +4,11 @@ import {
   InstantSearch,
   Hits,
   Index,
+  Configure,
   connectSearchBox,
   connectStateResults,
 } from 'react-instantsearch-dom';
+import { Link } from 'gatsby';
 import { PageHit } from './hitComps';
 import Icon, { iconNames } from '../icon/';
 import { Button } from 'react-bootstrap';
@@ -17,9 +19,8 @@ const searchClient = algoliasearch(
 );
 
 const indexes = [
-  { title: 'Learn', index: 'advocacy' },
-  { title: 'EDB Products', index: 'edb-products' },
-  { title: 'EDB Postgres Tools', index: 'edb-tools' },
+  { title: 'Guides', index: 'advocacy' },
+  { title: 'Documentation', index: 'edb-products' }
 ];
 
 const Results = connectStateResults(
@@ -50,6 +51,13 @@ const Stats = connectStateResults(
     res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`,
 );
 
+const SeeMore = connectStateResults(
+  ({ searchResults: res, threshold }) =>
+    res && res.nbHits > threshold && (
+      <Link to='#' className="d-block text-center">See more results</Link>
+    )
+);
+
 const ResultGroup = ({ title, index, nextIndex }) => (
   <Index key={index} indexName={index}>
     <Results>
@@ -58,6 +66,7 @@ const ResultGroup = ({ title, index, nextIndex }) => (
         <small className="ml-1"><Stats /></small>
       </h6>
       <Hits hitComponent={PageHit} />
+      <SeeMore threshold={5} />
       <SearchDivider nextIndex={nextIndex} />
     </Results>
   </Index>
@@ -87,7 +96,7 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
 
   return (
     <>
-      <form noValidate action="" role="search" className='search-form d-flex align-items-center mr-3'>
+      <form noValidate action="" autoComplete="off" role="search" className='search-form d-flex align-items-center mr-3'>
         <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
           id='search-input'
@@ -153,6 +162,9 @@ const SearchBar = () => {
         onSearchStateChange={({ query }) => setQuery(query)}
         className='dropdown'
       >
+        <Configure
+          hitsPerPage={5}
+        />
         <Search
           query={query}
           focus={focus}
