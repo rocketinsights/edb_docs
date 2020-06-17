@@ -44,6 +44,7 @@ import EdbMigrationPortalSvg from '../../../static/edb-icons/edb-migration-porta
 import EdbMigrationToolkitSvg from '../../../static/edb-icons/edb-migration-toolkit.svg';
 import EdbPemSvg from '../../../static/edb-icons/edb-pem.svg';
 import EdbReplicationSvg from '../../../static/edb-icons/edb-replication.svg';
+import EdbSymbolSvg from '../../../static/edb-icons/edb-symbol.svg';
 import EnergySvg from '../../../static/edb-icons/energy.svg';
 import EnterpriseSvg from '../../../static/edb-icons/enterprise.svg';
 import ExportSvg from '../../../static/edb-icons/export.svg';
@@ -182,6 +183,8 @@ export default function IconType({ iconName, ...rest }) {
       return <EdbPemSvg {...rest} />;
     case iconNames.EDB_REPLICATION:
       return <EdbReplicationSvg {...rest} />;
+    case iconNames.EDB_SYMBOL:
+      return <EdbSymbolSvg {...rest} />;
     case iconNames.ENERGY:
       return <EnergySvg {...rest} />;
     case iconNames.ENTERPRISE:
