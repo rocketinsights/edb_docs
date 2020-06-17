@@ -82,10 +82,11 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => {
 
   return (
     <>
-      <form noValidate action="" role="search" className='d-flex'>
+      <form noValidate action="" role="search" className='search-form d-flex align-items-center mr-3'>
+        <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
           id='search-input'
-          className="form-control form-control-lg border-0 pl-3 bg-white"
+          className="form-control form-control-lg border-0 pl-3"
           type="text"
           aria-label="search"
           placeholder="Search"
@@ -101,7 +102,11 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => {
         >
           <Icon iconName={iconNames.CLOSE} className="opacity-5" width="20" height="20" />
         </Button>
-      </form>
+        <span
+          className={`slash-indicator text-orange text-center opacity-5 bg-white mr-3 ${query.length > 0 && 'd-none'}`}
+        >
+          /
+        </span>
       <div
         className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${query.length > 0 && focus ? 'show' : ''}`}
       >
@@ -110,6 +115,7 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => {
         ))}
         <NoResults />
       </div>
+      </form>
     </>
   );
 };
