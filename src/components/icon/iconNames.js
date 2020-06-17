@@ -42,6 +42,7 @@ export default {
   EDB_MIGRATION_TOOLKIT: 'edbmigrationtoolkit',
   EDB_PEM: 'edbpem',
   EDB_REPLICATION: 'edbreplication',
+  EDB_SYMBOL: 'edbsymbol',
   ENERGY: 'energy',
   ENTERPRISE: 'enterprise',
   EXPORT: 'export',
