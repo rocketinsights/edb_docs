@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, useCallback, createRef } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
@@ -63,36 +63,56 @@ const ResultGroup = ({ title, index, nextIndex }) => (
   </Index>
 )
 
-const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => (
-  <>
-    <form noValidate action="" role="search" className='d-flex'>
-      <input
-        className="form-control form-control-lg border-0 pl-3 bg-white"
-        type="text"
-        aria-label="search"
-        placeholder="Search"
-        value={currentRefinement}
-        onChange={e => refine(e.currentTarget.value)}
-        onFocus={onFocus}
-      />
-      <Button
-        variant="link"
-        onClick={(e) => { e.preventDefault(); refine(''); }}
-        className={`${query.length === 0 && 'd-none'}`}
+const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => {
+  const inputRef = createRef();
+
+  const focusSearchOnSlash = useCallback((e) => {
+    if (e.key === '/' && inputRef.current.id !== document.activeElement.id) {
+      inputRef.current.focus();
+      e.preventDefault();
+    }
+  }, [inputRef]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", focusSearchOnSlash);
+    return () => {
+      document.removeEventListener("keydown", focusSearchOnSlash);
+    };
+  }, [focusSearchOnSlash]);
+
+  return (
+    <>
+      <form noValidate action="" role="search" className='d-flex'>
+        <input
+          id='search-input'
+          className="form-control form-control-lg border-0 pl-3 bg-white"
+          type="text"
+          aria-label="search"
+          placeholder="Search"
+          value={currentRefinement}
+          onChange={e => refine(e.currentTarget.value)}
+          onFocus={onFocus}
+          ref={inputRef}
+        />
+        <Button
+          variant="link"
+          onClick={(e) => { e.preventDefault(); refine(''); }}
+          className={`${query.length === 0 && 'd-none'}`}
+        >
+          <Icon iconName={iconNames.CLOSE} className="opacity-5" width="20" height="20" />
+        </Button>
+      </form>
+      <div
+        className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${query.length > 0 && focus ? 'show' : ''}`}
       >
-        <Icon iconName={iconNames.CLOSE} className="opacity-5" width="20" height="20" />
-      </Button>
-    </form>
-    <div
-      className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${query.length > 0 && focus ? 'show' : ''}`}
-    >
-      {indexes.map(({ title, index }, i) => (
-        <ResultGroup key={index} title={title} index={index} nextIndex={indexes[i + 1]} />
-      ))}
-      <NoResults />
-    </div>
-  </>
-);
+        {indexes.map(({ title, index }, i) => (
+          <ResultGroup key={index} title={title} index={index} nextIndex={indexes[i + 1]} />
+        ))}
+        <NoResults />
+      </div>
+    </>
+  );
+};
 const Search = connectSearchBox(SearchForm);
 
 const useClickOutside = (ref, handler, events) => {
