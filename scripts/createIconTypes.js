@@ -30,7 +30,7 @@ const IconTypeContent = [
   '    default:',
   '      return null;',
   '  }',
-  '}\n',
+  '};\n',
 ].join('\n');
 
 writeFileSync(`src/components/icon/iconType.js`, IconTypeContent);
