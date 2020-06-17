@@ -5,6 +5,7 @@ import AnnounceSvg from '../../../static/edb-icons/announce.svg';
 import ArrowLeftSvg from '../../../static/edb-icons/arrow-left.svg';
 import ArrowRightSvg from '../../../static/edb-icons/arrow-right.svg';
 import BrainCircuitSvg from '../../../static/edb-icons/brain-circuit.svg';
+import BriefcaseSvg from '../../../static/edb-icons/briefcase.svg';
 import BusinessmanSvg from '../../../static/edb-icons/businessman.svg';
 import BusinesswomanSvg from '../../../static/edb-icons/businesswoman.svg';
 import CSharpSvg from '../../../static/edb-icons/c-sharp.svg';
@@ -23,6 +24,7 @@ import ConnectSvg from '../../../static/edb-icons/connect.svg';
 import ContactSvg from '../../../static/edb-icons/contact.svg';
 import ContainerSvg from '../../../static/edb-icons/container.svg';
 import ConvertSvg from '../../../static/edb-icons/convert.svg';
+import CubesSvg from '../../../static/edb-icons/cubes.svg';
 import DatabaseAdminSvg from '../../../static/edb-icons/database-admin.svg';
 import DeliverLoveSvg from '../../../static/edb-icons/deliver-love.svg';
 import DeveloperSvg from '../../../static/edb-icons/developer.svg';
@@ -32,6 +34,7 @@ import EarthSvg from '../../../static/edb-icons/earth.svg';
 import EasySvg from '../../../static/edb-icons/easy.svg';
 import EdbBadgeSvg from '../../../static/edb-icons/edb-badge.svg';
 import EdbBartSvg from '../../../static/edb-icons/edb-bart.svg';
+import EdbDashboardSvg from '../../../static/edb-icons/edb-dashboard.svg';
 import EdbDocsLogoDiscDarkSvg from '../../../static/edb-icons/edb-docs-logo-disc-dark.svg';
 import EdbEfmSvg from '../../../static/edb-icons/edb-efm.svg';
 import EdbEpasSvg from '../../../static/edb-icons/edb-epas.svg';
@@ -42,6 +45,7 @@ import EdbMigrationToolkitSvg from '../../../static/edb-icons/edb-migration-tool
 import EdbPemSvg from '../../../static/edb-icons/edb-pem.svg';
 import EdbReplicationSvg from '../../../static/edb-icons/edb-replication.svg';
 import EnergySvg from '../../../static/edb-icons/energy.svg';
+import EnterpriseSvg from '../../../static/edb-icons/enterprise.svg';
 import ExportSvg from '../../../static/edb-icons/export.svg';
 import FileSvg from '../../../static/edb-icons/file.svg';
 import HamburgerSvg from '../../../static/edb-icons/hamburger.svg';
@@ -76,6 +80,8 @@ import RocketSvg from '../../../static/edb-icons/rocket.svg';
 import RubySvg from '../../../static/edb-icons/ruby.svg';
 import SearchSvg from '../../../static/edb-icons/search.svg';
 import StackSvg from '../../../static/edb-icons/stack.svg';
+import StarSvg from '../../../static/edb-icons/star.svg';
+import SupportPortalSvg from '../../../static/edb-icons/support-portal.svg';
 import SupportSvg from '../../../static/edb-icons/support.svg';
 import TenYearsSvg from '../../../static/edb-icons/ten-years.svg';
 import TicketSvg from '../../../static/edb-icons/ticket.svg';
@@ -98,6 +104,8 @@ export default function IconType({ iconName, ...rest }) {
       return <ArrowRightSvg {...rest} />;
     case iconNames.BRAIN_CIRCUIT:
       return <BrainCircuitSvg {...rest} />;
+    case iconNames.BRIEFCASE:
+      return <BriefcaseSvg {...rest} />;
     case iconNames.BUSINESSMAN:
       return <BusinessmanSvg {...rest} />;
     case iconNames.BUSINESSWOMAN:
@@ -134,6 +142,8 @@ export default function IconType({ iconName, ...rest }) {
       return <ContainerSvg {...rest} />;
     case iconNames.CONVERT:
       return <ConvertSvg {...rest} />;
+    case iconNames.CUBES:
+      return <CubesSvg {...rest} />;
     case iconNames.DATABASE_ADMIN:
       return <DatabaseAdminSvg {...rest} />;
     case iconNames.DELIVER_LOVE:
@@ -152,6 +162,8 @@ export default function IconType({ iconName, ...rest }) {
       return <EdbBadgeSvg {...rest} />;
     case iconNames.EDB_BART:
       return <EdbBartSvg {...rest} />;
+    case iconNames.EDB_DASHBOARD:
+      return <EdbDashboardSvg {...rest} />;
     case iconNames.EDB_DOCS_LOGO_DISC_DARK:
       return <EdbDocsLogoDiscDarkSvg {...rest} />;
     case iconNames.EDB_EFM:
@@ -172,6 +184,8 @@ export default function IconType({ iconName, ...rest }) {
       return <EdbReplicationSvg {...rest} />;
     case iconNames.ENERGY:
       return <EnergySvg {...rest} />;
+    case iconNames.ENTERPRISE:
+      return <EnterpriseSvg {...rest} />;
     case iconNames.EXPORT:
       return <ExportSvg {...rest} />;
     case iconNames.FILE:
@@ -240,6 +254,10 @@ export default function IconType({ iconName, ...rest }) {
       return <SearchSvg {...rest} />;
     case iconNames.STACK:
       return <StackSvg {...rest} />;
+    case iconNames.STAR:
+      return <StarSvg {...rest} />;
+    case iconNames.SUPPORT_PORTAL:
+      return <SupportPortalSvg {...rest} />;
     case iconNames.SUPPORT:
       return <SupportSvg {...rest} />;
     case iconNames.TEN_YEARS:
@@ -257,4 +275,4 @@ export default function IconType({ iconName, ...rest }) {
     default:
       return null;
   }
-}
+};

@@ -12,7 +12,7 @@ const icons = readdirSync('static/edb-icons').filter(isSVG).map(removeExtension)
 const IconNamesContent = [
   'export default {',
   icons.map((icon) => `  ${toScreamingSnakeCase(icon)}: '${toSingleLowerCase(icon)}',`).join('\n'),
-  '}\n',
+  '};\n',
 ].join('\n');
 
 writeFileSync(`src/components/icon/iconNames.js`, IconNamesContent);
