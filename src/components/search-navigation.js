@@ -6,7 +6,7 @@ const SearchNavigation = ({ children }) => {
   return (
     <Navbar variant="light" className="flex-md-nowrap p-3 border-bottom">
       <SearchBar />
-      <Button variant="link" className="text-nowrap mr-2">
+      <Button variant="link" className="text-nowrap mr-2 ml-3">
         Support
       </Button>
       <Button variant="link" className="text-nowrap mr-2">

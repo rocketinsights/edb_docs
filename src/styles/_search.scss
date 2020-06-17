@@ -6,10 +6,9 @@
   }
 
   mark {
-    @extend .bg-primary;
-
+    background-color: rgba($orange, 0.05);
+    border-bottom: 1px solid $orange;
     font-weight: bolder;
-    color: white;
   }
 
   .dropdown-item {
@@ -17,7 +16,13 @@
   }
 }
 
-.search-form:focus-within {
+.search-form {
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  background-color: $input-bg;
+}
+
+.search-form.open, .search-form:focus-within {
   border: 1px solid $blue;
   background-color: $white;
 
@@ -30,15 +35,28 @@
   }
 }
 
-.search-form {
-  border: 1px solid transparent;
-  border-radius: $border-radius;
-  background-color: $input-bg;
-}
-
 .slash-indicator {
   width: 27px;
   height: 24px;
   border: 1px solid $gray-500;
   border-radius: $border-radius;
+}
+
+.dropdown-menu {
+  margin: 0;
+  border: 1px solid $blue;
+  top: calc(100% - 2px);
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.search-tabs .nav-link.active {
+  border-top: 2px solid $orange;
+  margin-top: -2px;
+}
+
+.search-tabs {
+  border-top: 1px solid $input-border-color;
 }

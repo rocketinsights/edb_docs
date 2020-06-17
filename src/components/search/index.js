@@ -11,7 +11,7 @@ import {
 import { Link } from 'gatsby';
 import { PageHit } from './hitComps';
 import Icon, { iconNames } from '../icon/';
-import { Button } from 'react-bootstrap';
+import { Button, Tab, Nav } from 'react-bootstrap';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -19,8 +19,8 @@ const searchClient = algoliasearch(
 );
 
 const indexes = [
+  { title: 'Documentation', index: 'edb-products' },
   { title: 'Guides', index: 'advocacy' },
-  { title: 'Documentation', index: 'edb-products' }
 ];
 
 const Results = connectStateResults(
@@ -38,14 +38,6 @@ const NoResults = connectStateResults(
   )
 );
 
-const SearchDivider = connectStateResults(
-  ({ allSearchResults: res, nextIndex }) => (
-    res && nextIndex && res[nextIndex.index] && res[nextIndex.index].nbHits > 0 ? (
-      <div className="dropdown-divider" />
-    ) : null
-  )
-);
-
 const Stats = connectStateResults(
   ({ searchResults: res }) =>
     res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`,
@@ -53,21 +45,16 @@ const Stats = connectStateResults(
 
 const SeeMore = connectStateResults(
   ({ searchResults: res, threshold }) =>
-    res && res.nbHits > threshold && (
+    res && (res.nbHits > threshold) && (
       <Link to='#' className="d-block text-center">See more results</Link>
     )
 );
 
-const ResultGroup = ({ title, index, nextIndex }) => (
+const ResultGroup = ({ title, index }) => (
   <Index key={index} indexName={index}>
     <Results>
-      <h6 className="dropdown-header">
-        {title}
-        <small className="ml-1"><Stats /></small>
-      </h6>
       <Hits hitComponent={PageHit} />
       <SeeMore threshold={5} />
-      <SearchDivider nextIndex={nextIndex} />
     </Results>
   </Index>
 )
@@ -95,8 +82,8 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
   }, [searchKeyboardShortcuts]);
 
   return (
-    <>
-      <form noValidate action="" autoComplete="off" role="search" className='search-form d-flex align-items-center mr-3'>
+    <div className={`${query.length > 0 && focus && 'shadow'}`}>
+      <form noValidate action="" autoComplete="off" role="search" className={`search-form d-flex align-items-center ${query.length > 0 && focus && 'open'}`}>
         <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
           id='search-input'
@@ -121,16 +108,44 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
         >
           /
         </span>
-      <div
-        className={`dropdown-menu overflow-scroll w-100 pb-2 shadow ${query.length > 0 && focus ? 'show' : ''}`}
-      >
-        {indexes.map(({ title, index }, i) => (
-          <ResultGroup key={index} title={title} index={index} nextIndex={indexes[i + 1]} />
-        ))}
-        <NoResults />
-      </div>
       </form>
-    </>
+
+      <div
+        className={`dropdown-menu overflow-scroll w-100 pb-2 ${query.length > 0 && focus ? 'show' : ''}`}
+      >
+        {/*<NoResults />*/}
+
+        <Tab.Container defaultActiveKey="docs">
+          <Tab.Content>
+            <Tab.Pane eventKey="docs">
+              <ResultGroup key={indexes[0].index} title={indexes[0].title} index={indexes[0].index} />
+            </Tab.Pane>
+            <Tab.Pane eventKey="learn">
+              <ResultGroup key={indexes[1].index} title={indexes[1].title} index={indexes[1].index} />
+            </Tab.Pane>
+          </Tab.Content>
+
+          <Nav className="search-tabs">
+            <Nav.Item>
+              <Nav.Link eventKey="docs">
+                <Index indexName={indexes[0].index}>
+                  Documentation
+                  <div><small><Stats /></small></div>
+                </Index>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="learn">
+                <Index indexName={indexes[1].index}>
+                  Guides
+                  <div><small><Stats /></small></div>
+                </Index>
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Tab.Container>
+      </div>
+    </div>
   );
 };
 const Search = connectSearchBox(SearchForm);
@@ -155,7 +170,7 @@ const SearchBar = () => {
   const [focus, setFocus] = useState(false);
   useClickOutside(ref, () => setFocus(false));
   return (
-    <div className="w-100" ref={ref}>
+    <div className="w-100 position-relative" ref={ref}>
       <InstantSearch
         searchClient={searchClient}
         indexName={indexes[0].index}
