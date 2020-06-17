@@ -63,22 +63,27 @@ const ResultGroup = ({ title, index, nextIndex }) => (
   </Index>
 )
 
-const SearchForm = ({currentRefinement, refine, query, focus, onFocus}) => {
+const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) => {
   const inputRef = createRef();
 
-  const focusSearchOnSlash = useCallback((e) => {
-    if (e.key === '/' && inputRef.current.id !== document.activeElement.id) {
+  const searchKeyboardShortcuts = useCallback((e) => {
+    const inputFocused = inputRef.current.id === document.activeElement.id;
+
+    if (e.key === '/' && !inputFocused) {
       inputRef.current.focus();
       e.preventDefault();
+    } else if (e.key === "Escape" && inputFocused) {
+      inputRef.current.blur();
+      close();
     }
-  }, [inputRef]);
+  }, [inputRef, close]);
 
   useEffect(() => {
-    document.addEventListener("keydown", focusSearchOnSlash);
+    document.addEventListener("keydown", searchKeyboardShortcuts);
     return () => {
-      document.removeEventListener("keydown", focusSearchOnSlash);
+      document.removeEventListener("keydown", searchKeyboardShortcuts);
     };
-  }, [focusSearchOnSlash]);
+  }, [searchKeyboardShortcuts]);
 
   return (
     <>
@@ -148,7 +153,12 @@ const SearchBar = () => {
         onSearchStateChange={({ query }) => setQuery(query)}
         className='dropdown'
       >
-        <Search query={query} focus={focus} onFocus={() => setFocus(true)}/>
+        <Search
+          query={query}
+          focus={focus}
+          onFocus={() => setFocus(true)}
+          close={() => setFocus(false)}
+        />
       </InstantSearch>
     </div>
   );
