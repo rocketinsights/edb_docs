@@ -157,10 +157,10 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
       </form>
 
       <div
-        className={`dropdown-menu w-100 pb-0 ${query.length > 0 && focus ? 'show' : ''}`}
+        className={`dropdown-menu w-100 p-0 ${query.length > 0 && focus ? 'show' : ''}`}
       >
         <Tab.Container defaultActiveKey={docsIndex.index}>
-          <Tab.Content className="search-content" ref={searchContentRef}>
+          <Tab.Content className="search-content mb-1 mt-1" ref={searchContentRef}>
             <Tab.Pane eventKey={docsIndex.index} className="h-100">
               <ResultGroup title={docsIndex.title} index={docsIndex.index} arrowIndex={arrowIndex} />
             </Tab.Pane>
