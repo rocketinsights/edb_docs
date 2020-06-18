@@ -33,31 +33,30 @@ const Stats = connectStateResults(
 
 const TryAdvancedSearch = connectStateResults(
   ({ searchResults: res}) =>
-    <div className="flex-grow-1 d-flex align-items-center justify-content-center m-4">
+    <div className="flex-grow-1 d-flex align-items-center justify-content-center p-4">
       { res && res.nbHits > 0 ? 'Not finding what you need?' : 'No results found.' }
       <Link to='#'className="ml-2">Try Advanced Search</Link>
     </div>
 );
 
-const Hits = ({ hits, arrowIndex, arrowIndexRef }) => (
+const Hits = ({ hits, arrowIndex }) => (
   <>
     {hits.map((hit, i) => (
       <PageHit
         key={i}
         hit={hit}
-        className={arrowIndex === i && 'hover'}
-        arrowIndexRef={arrowIndex === i ? arrowIndexRef : null}
+        className={arrowIndex === i && 'arrow-focus'}
       />
     ))}
   </>
 );
 const PageHits = connectHits(Hits);
 
-const ResultGroup = ({ title, index, arrowIndex, arrowIndexRef }) => (
+const ResultGroup = ({ title, index, arrowIndex }) => (
   <div className="h-100 d-flex flex-column">
     <Index key={index} indexName={index} >
       <Results>
-        <PageHits arrowIndex={arrowIndex} arrowIndexRef={arrowIndexRef} />
+        <PageHits arrowIndex={arrowIndex} />
         <TryAdvancedSearch />
       </Results>
     </Index>
@@ -86,39 +85,44 @@ const SlashIndicator = ({ query }) => (
 const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) => {
   const inputRef = createRef();
   const searchContentRef = useRef(null);
-
-  const [docsArrowIndex, setDocsArrowIndex] = useState(0);
-
+  const [arrowIndex, setArrowIndex] = useState(0);
   const searchKeyboardShortcuts = useCallback((e) => {
     const inputFocused = inputRef.current.id === document.activeElement.id;
 
     if (e.key === '/' && !inputFocused) {
       inputRef.current.focus();
       e.preventDefault();
+
     } else if (e.key === "Escape" && inputFocused) {
       inputRef.current.blur();
       close();
       e.preventDefault();
+
     } else if (e.key === "ArrowDown" && inputFocused) {
       const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
-      setDocsArrowIndex(Math.min(docsArrowIndex + 1, dropdownItems.length - 1));
-      if (dropdownItems[0].scrollHeight * (docsArrowIndex + 2) > (searchContentRef.current.clientHeight + searchContentRef.current.scrollTop)) {
-        searchContentRef.current.scrollTop += dropdownItems[0].scrollHeight;
+      const nextIndex = Math.min(arrowIndex + 1, dropdownItems.length - 1);
+      setArrowIndex(nextIndex);
+      if (nextIndex === dropdownItems.length - 1) {
+        searchContentRef.current.scrollTop = searchContentRef.current.scrollHeight;
+      } else {
+        dropdownItems[nextIndex].scrollIntoView({ block: 'nearest' });
       }
       e.preventDefault();
+
     } else if (e.key === "ArrowUp" && inputFocused) {
       const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
-      setDocsArrowIndex(Math.max(docsArrowIndex - 1, 0));
-      if (dropdownItems[0].scrollHeight * (docsArrowIndex + 6) < (searchContentRef.current.clientHeight + searchContentRef.current.scrollTop)) {
-        searchContentRef.current.scrollTop -= dropdownItems[0].scrollHeight;
-      }
+      const nextIndex = Math.max(arrowIndex - 1, 0);
+      setArrowIndex(nextIndex);
+      dropdownItems[nextIndex].scrollIntoView({ block: 'nearest' });
       e.preventDefault();
+
     } else if (e.key === 'Enter' && inputFocused) {
       const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
-      dropdownItems[docsArrowIndex].click();
+      dropdownItems[arrowIndex].click();
       e.preventDefault();
+
     }
-  }, [inputRef, close, searchContentRef, docsArrowIndex, setDocsArrowIndex]);
+  }, [inputRef, close, searchContentRef, arrowIndex, setArrowIndex]);
 
   useEffect(() => {
     document.addEventListener("keydown", searchKeyboardShortcuts);
@@ -152,41 +156,32 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
         <SlashIndicator query={query} />
       </form>
 
-      <SearchContent
-        query={query}
-        focus={focus}
-        docsArrowIndex={docsArrowIndex}
-        searchContentRef={searchContentRef}
-      />
+      <div
+        className={`dropdown-menu w-100 pb-0 ${query.length > 0 && focus ? 'show' : ''}`}
+      >
+        <Tab.Container defaultActiveKey={docsIndex.index}>
+          <Tab.Content className="search-content" ref={searchContentRef}>
+            <Tab.Pane eventKey={docsIndex.index} className="h-100">
+              <ResultGroup title={docsIndex.title} index={docsIndex.index} arrowIndex={arrowIndex} />
+            </Tab.Pane>
+            <Tab.Pane eventKey={learnIndex.index} className="h-100">
+              <ResultGroup title={learnIndex.title} index={learnIndex.index} arrowIndex={arrowIndex} />
+            </Tab.Pane>
+          </Tab.Content>
+
+          <Nav className="search-tabs" onSelect={() => {inputRef.current.focus(); setArrowIndex(0)}}>
+            <SearchTab index={docsIndex.index} title={docsIndex.title} />
+            <SearchTab index={learnIndex.index} title={learnIndex.title} />
+            <div className="flex-grow-1 d-flex align-items-center justify-content-flex-end mr-4">
+              <Link to='#'>Advanced Search</Link>
+            </div>
+          </Nav>
+        </Tab.Container>
+      </div>
     </div>
   );
 };
 const Search = connectSearchBox(SearchForm);
-
-const SearchContent = ({ query, focus, docsArrowIndex, searchContentRef }) => (
-  <div
-    className={`dropdown-menu overflow-scroll w-100 pb-0 ${query.length > 0 && focus ? 'show' : ''}`}
-  >
-    <Tab.Container defaultActiveKey={docsIndex.index}>
-      <Tab.Content className="search-content" ref={searchContentRef}>
-        <Tab.Pane eventKey={docsIndex.index} className="h-100">
-          <ResultGroup title={docsIndex.title} index={docsIndex.index} arrowIndex={docsArrowIndex} />
-        </Tab.Pane>
-        <Tab.Pane eventKey={learnIndex.index} className="h-100">
-          <ResultGroup title={learnIndex.title} index={learnIndex.index} />
-        </Tab.Pane>
-      </Tab.Content>
-
-      <Nav className="search-tabs">
-        <SearchTab index={docsIndex.index} title={docsIndex.title} />
-        <SearchTab index={learnIndex.index} title={learnIndex.title} />
-        <div className="flex-grow-1 d-flex align-items-center justify-content-flex-end mr-4">
-          <Link to='#'>Advanced Search</Link>
-        </div>
-      </Nav>
-    </Tab.Container>
-  </div>
-);
 
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
