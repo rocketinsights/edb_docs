@@ -102,11 +102,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     }
   `);
 
+  const { nodes } = result.data.allMdx;
+
   if (result.errors) {
     reporter.panic('failed to create docs', result.errors);
   }
 
-  for (let node of result.data.allMdx.nodes) {
+  for (let node of nodes) {
     if (!node.frontmatter.title) {
       let file;
       if (node.fileAbsolutePath.includes('index.mdx')) {
@@ -118,12 +120,36 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     }
   }
 
-  const docs = result.data.allMdx.nodes.filter(file => !!file.fields.version);
-  const learn = result.data.allMdx.nodes.filter(file => !file.fields.version);
+  const docs = nodes.filter(file => !!file.fields.version);
+  const learn = nodes.filter(file => !file.fields.version);
+
+  const folderIndex = {};
+
+  nodes.forEach(doc => {
+    const { path } = doc.fields;
+    const splitPath = path.split('/');
+    const subPath = splitPath.slice(0, splitPath.length - 1).join('/');
+    const { fileAbsolutePath } = doc;
+    if (fileAbsolutePath.includes('index.mdx')) {
+      folderIndex[path] = true;
+    } else {
+      if (!folderIndex[subPath]) {
+        folderIndex[subPath] = false;
+      }
+    }
+  });
+
+  for (let key of Object.keys(folderIndex)) {
+    if (!folderIndex[key]) {
+      reporter.warn(key + ' has no index.mdx');
+    }
+  }
 
   const versionIndex = {};
+
   docs.forEach(doc => {
     const { product, version } = doc.fields;
+
     if (!versionIndex[product]) {
       versionIndex[product] = [version];
     } else {
