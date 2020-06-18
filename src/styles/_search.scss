@@ -1,4 +1,4 @@
-.ais-Hits {
+.ais-Snippet {
   ul {
     list-style-type: none;
     padding: 0;
@@ -71,4 +71,8 @@
   overflow: scroll;
   -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
+}
+
+.dropdown-item.hover {
+  @extend .dropdown-item:hover;
 }
