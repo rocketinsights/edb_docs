@@ -18,46 +18,48 @@ const searchClient = algoliasearch(
   '3c95fc5297e90a44b6467f3098a4e6ed',
 );
 
-const indexes = [
-  { title: 'Documentation', index: 'edb-products' },
-  { title: 'Guides', index: 'advocacy' },
-];
+const docsIndex = { title: 'Documentation', index: 'edb-products' };
+const learnIndex = { title: 'Guides', index: 'advocacy' };
 
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
-    res && res.nbHits > 0 ? children : null,
-);
-
-const NoResults = connectStateResults(
-  ({ allSearchResults: res }) => (
-    res && indexes.reduce((total, index) => {
-      return total + (res[index.index] ? res[index.index].nbHits : 0)
-    }, 0) === 0 && (
-      <div className="text-center">No Results</div>
-    )
-  )
+    res ? children : null,
 );
 
 const Stats = connectStateResults(
   ({ searchResults: res }) =>
-    res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`,
+    res && `${res.nbHits} result${res.nbHits === 1 ? `` : `s`}`,
 );
 
-const SeeMore = connectStateResults(
-  ({ searchResults: res, threshold }) =>
-    res && (res.nbHits > threshold) && (
-      <Link to='#' className="d-block text-center">See more results</Link>
-    )
+const TryAdvancedSearch = connectStateResults(
+  ({ searchResults: res}) =>
+    <div className="flex-grow-1 d-flex align-items-center justify-content-center m-4">
+      { res && res.nbHits > 0 ? 'Not finding what you need?' : 'No results found.' }
+      <Link to='#'className="ml-2">Try Advanced Search</Link>
+    </div>
 );
 
 const ResultGroup = ({ title, index }) => (
-  <Index key={index} indexName={index}>
-    <Results>
-      <Hits hitComponent={PageHit} />
-      <SeeMore threshold={5} />
-    </Results>
-  </Index>
-)
+  <div className="h-100 d-flex flex-column">
+    <Index key={index} indexName={index} >
+      <Results>
+        <Hits hitComponent={PageHit} />
+        <TryAdvancedSearch />
+      </Results>
+    </Index>
+  </div>
+);
+
+const SearchTab = ({ index, title }) => (
+  <Nav.Item className="search-tab">
+    <Nav.Link eventKey={index} className="pl-4 pr-4 pb-0">
+      <Index indexName={index}>
+        <span className="h5">{title}</span>
+        <div className="stats"><small className="opacity-7"><Stats /></small></div>
+      </Index>
+    </Nav.Link>
+  </Nav.Item>
+);
 
 const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) => {
   const inputRef = createRef();
@@ -111,37 +113,24 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
       </form>
 
       <div
-        className={`dropdown-menu overflow-scroll w-100 pb-2 ${query.length > 0 && focus ? 'show' : ''}`}
+        className={`dropdown-menu overflow-scroll w-100 pb-0 ${query.length > 0 && focus ? 'show' : ''}`}
       >
-        {/*<NoResults />*/}
-
-        <Tab.Container defaultActiveKey="docs">
-          <Tab.Content>
-            <Tab.Pane eventKey="docs">
-              <ResultGroup key={indexes[0].index} title={indexes[0].title} index={indexes[0].index} />
+        <Tab.Container defaultActiveKey={docsIndex.index}>
+          <Tab.Content className="search-content">
+            <Tab.Pane eventKey={docsIndex.index} className="h-100">
+              <ResultGroup key={docsIndex.index} title={docsIndex.title} index={docsIndex.index}  />
             </Tab.Pane>
-            <Tab.Pane eventKey="learn">
-              <ResultGroup key={indexes[1].index} title={indexes[1].title} index={indexes[1].index} />
+            <Tab.Pane eventKey={learnIndex.index} className="h-100">
+              <ResultGroup key={learnIndex.index} title={learnIndex.title} index={learnIndex.index} />
             </Tab.Pane>
           </Tab.Content>
 
           <Nav className="search-tabs">
-            <Nav.Item>
-              <Nav.Link eventKey="docs">
-                <Index indexName={indexes[0].index}>
-                  Documentation
-                  <div><small><Stats /></small></div>
-                </Index>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="learn">
-                <Index indexName={indexes[1].index}>
-                  Guides
-                  <div><small><Stats /></small></div>
-                </Index>
-              </Nav.Link>
-            </Nav.Item>
+            <SearchTab index={docsIndex.index} title={docsIndex.title} />
+            <SearchTab index={learnIndex.index} title={learnIndex.title} />
+            <div className="flex-grow-1 d-flex align-items-center justify-content-flex-end mr-4">
+              <Link to='#'>Advanced Search</Link>
+            </div>
           </Nav>
         </Tab.Container>
       </div>
@@ -173,12 +162,12 @@ const SearchBar = () => {
     <div className="w-100 position-relative" ref={ref}>
       <InstantSearch
         searchClient={searchClient}
-        indexName={indexes[0].index}
+        indexName={docsIndex.index}
         onSearchStateChange={({ query }) => setQuery(query)}
         className='dropdown'
       >
         <Configure
-          hitsPerPage={5}
+          hitsPerPage={30}
         />
         <Search
           query={query}
