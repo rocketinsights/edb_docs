@@ -24,9 +24,11 @@ export const showFrontmatter = frontmatter => {
   let keys = Object.keys(frontmatter);
   return (
     <>
+      <div>Page frontmatter</div>
+      <br />
       {keys.map(key => (
         <div>
-          {key}: {frontmatter[key]}
+          <strong>{key}</strong>: {frontmatter[key]}
         </div>
       ))}
     </>
