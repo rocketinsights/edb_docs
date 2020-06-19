@@ -49,7 +49,21 @@ const SearchForm = ({currentRefinement, refine, query}) => {
     setArrowIndex(0);
   }, []);
 
-  useClickOutside(searchBarRef, close);
+  const moveArrowIndex = useCallback((key) => {
+    const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
+    let nextIndex = arrowIndex;
+    if (key === "ArrowDown") {
+      nextIndex = Math.min(arrowIndex + 1, dropdownItems.length - 1);
+    } else if (key === 'ArrowUp') {
+      nextIndex = Math.max(arrowIndex - 1, 0);
+    }
+    setArrowIndex(nextIndex);
+    if (nextIndex === dropdownItems.length - 1) {
+      searchContentRef.current.scrollTop = searchContentRef.current.scrollHeight;
+    } else {
+      dropdownItems[nextIndex].scrollIntoView({ block: 'nearest' });
+    }
+  }, [searchContentRef, arrowIndex, setArrowIndex]);
 
   const searchKeyboardShortcuts = useCallback((e) => {
     const inputFocused = inputRef.current.id === document.activeElement.id;
@@ -57,37 +71,22 @@ const SearchForm = ({currentRefinement, refine, query}) => {
     if (e.key === '/' && !inputFocused) {
       inputRef.current.focus();
       e.preventDefault();
-
     } else if (e.key === "Escape" && inputFocused) {
       inputRef.current.blur();
       close();
       e.preventDefault();
-
     } else if (e.key === "ArrowDown" && inputFocused) {
-      const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
-      const nextIndex = Math.min(arrowIndex + 1, dropdownItems.length - 1);
-      setArrowIndex(nextIndex);
-      if (nextIndex === dropdownItems.length - 1) {
-        searchContentRef.current.scrollTop = searchContentRef.current.scrollHeight;
-      } else {
-        dropdownItems[nextIndex].scrollIntoView({ block: 'nearest' });
-      }
+      moveArrowIndex(e.key);
       e.preventDefault();
-
     } else if (e.key === "ArrowUp" && inputFocused) {
-      const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
-      const nextIndex = Math.max(arrowIndex - 1, 0);
-      setArrowIndex(nextIndex);
-      dropdownItems[nextIndex].scrollIntoView({ block: 'nearest' });
+      moveArrowIndex(e.key);
       e.preventDefault();
-
     } else if (e.key === 'Enter' && inputFocused) {
       const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
       dropdownItems[arrowIndex].click();
       e.preventDefault();
-
     }
-  }, [inputRef, searchContentRef, arrowIndex, setArrowIndex, close]);
+  }, [inputRef, searchContentRef, arrowIndex, close, moveArrowIndex]);
 
   useEffect(() => {
     document.addEventListener("keydown", searchKeyboardShortcuts);
@@ -95,6 +94,8 @@ const SearchForm = ({currentRefinement, refine, query}) => {
       document.removeEventListener("keydown", searchKeyboardShortcuts);
     };
   }, [searchKeyboardShortcuts]);
+
+  useClickOutside(searchBarRef, close);
 
   return (
     <div className={`${query.length > 0 && focus && 'shadow'}`} ref={searchBarRef}>
