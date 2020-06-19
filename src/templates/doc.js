@@ -177,7 +177,11 @@ const DocTemplate = ({ data, pageContext }) => {
           </ContentRow>
           {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
-          <DevOnly>{showFrontmatter(frontmatter)}</DevOnly>
+          <DevOnly>
+            <div className="alert alert-primary mt-5" role="alert">
+              {showFrontmatter(frontmatter)}
+            </div>
+          </DevOnly>
           <Footer />
         </MainContent>
       </Container>

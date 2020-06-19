@@ -112,8 +112,11 @@ const LearnDocTemplate = ({ data, pageContext }) => {
             </>
           )}
 
-          <DevOnly>{showFrontmatter(mdx.frontmatter)}</DevOnly>
-
+          <DevOnly>
+            <div className="alert alert-primary mt-5" role="alert">
+              {showFrontmatter(mdx.frontmatter)}
+            </div>
+          </DevOnly>
           <Footer />
         </MainContent>
       </Container>
