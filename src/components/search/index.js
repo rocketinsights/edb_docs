@@ -82,10 +82,34 @@ const SlashIndicator = ({ query }) => (
   </span>
 );
 
-const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) => {
+const useClickOutside = (ref, handler, events) => {
+  if (!events) events = [`mousedown`, `touchstart`]
+  const detectClickOutside = event =>
+    !ref.current.contains(event.target) && handler()
+  useEffect(() => {
+    for (const event of events)
+      document.addEventListener(event, detectClickOutside)
+    return () => {
+      for (const event of events)
+        document.removeEventListener(event, detectClickOutside)
+    }
+  })
+};
+
+const SearchForm = ({currentRefinement, refine, query}) => {
+  const searchBarRef = createRef();
+  const [focus, setFocus] = useState(false);
   const inputRef = createRef();
   const searchContentRef = useRef(null);
   const [arrowIndex, setArrowIndex] = useState(0);
+
+  const close = useCallback(() => {
+    setFocus(false);
+    setArrowIndex(0);
+  });
+
+  useClickOutside(searchBarRef, close);
+
   const searchKeyboardShortcuts = useCallback((e) => {
     const inputFocused = inputRef.current.id === document.activeElement.id;
 
@@ -122,7 +146,7 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
       e.preventDefault();
 
     }
-  }, [inputRef, close, searchContentRef, arrowIndex, setArrowIndex]);
+  }, [inputRef, searchContentRef, arrowIndex, setArrowIndex, close]);
 
   useEffect(() => {
     document.addEventListener("keydown", searchKeyboardShortcuts);
@@ -132,7 +156,7 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
   }, [searchKeyboardShortcuts]);
 
   return (
-    <div className={`${query.length > 0 && focus && 'shadow'}`}>
+    <div className={`${query.length > 0 && focus && 'shadow'}`} ref={searchBarRef}>
       <form noValidate action="" autoComplete="off" role="search" className={`search-form d-flex align-items-center ${query.length > 0 && focus && 'open'}`}>
         <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
@@ -143,7 +167,7 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
           placeholder="Search"
           value={currentRefinement}
           onChange={e => refine(e.currentTarget.value)}
-          onFocus={onFocus}
+          onFocus={() => setFocus(true)}
           ref={inputRef}
         />
         <Button
@@ -183,25 +207,10 @@ const SearchForm = ({currentRefinement, refine, query, focus, onFocus, close}) =
 };
 const Search = connectSearchBox(SearchForm);
 
-const useClickOutside = (ref, handler, events) => {
-  if (!events) events = [`mousedown`, `touchstart`]
-  const detectClickOutside = event =>
-    !ref.current.contains(event.target) && handler()
-  useEffect(() => {
-    for (const event of events)
-      document.addEventListener(event, detectClickOutside)
-    return () => {
-      for (const event of events)
-        document.removeEventListener(event, detectClickOutside)
-    }
-  })
-};
-
 const SearchBar = () => {
   const ref = createRef();
   const [query, setQuery] = useState(``);
-  const [focus, setFocus] = useState(false);
-  useClickOutside(ref, () => setFocus(false));
+
   return (
     <div className="w-100 position-relative" ref={ref}>
       <InstantSearch
@@ -210,15 +219,8 @@ const SearchBar = () => {
         onSearchStateChange={({ query }) => setQuery(query)}
         className='dropdown'
       >
-        <Configure
-          hitsPerPage={30}
-        />
-        <Search
-          query={query}
-          focus={focus}
-          onFocus={() => setFocus(true)}
-          close={() => setFocus(false)}
-        />
+        <Configure hitsPerPage={30} />
+        <Search query={query} />
       </InstantSearch>
     </div>
   );
