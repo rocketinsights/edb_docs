@@ -2,16 +2,18 @@ import React, { useState, useEffect, useCallback, createRef, useRef } from 'reac
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
-  Index,
   Configure,
-  connectHits,
   connectSearchBox,
-  connectStateResults,
 } from 'react-instantsearch-dom';
-import { Link } from 'gatsby';
-import { PageHit } from './hitComps';
+import { Tab, Nav } from 'react-bootstrap';
 import Icon, { iconNames } from '../icon/';
-import { Button, Tab, Nav } from 'react-bootstrap';
+import {
+  AdvancedSearchTabLink,
+  SearchTab,
+  SlashIndicator,
+  ClearButton,
+  SearchPane,
+} from './formComps';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -20,67 +22,6 @@ const searchClient = algoliasearch(
 
 const docsIndex = { title: 'Documentation', index: 'edb-products' };
 const learnIndex = { title: 'Guides', index: 'advocacy' };
-
-const Results = connectStateResults(
-  ({ searchState: state, searchResults: res, children }) =>
-    res ? children : null,
-);
-
-const Stats = connectStateResults(
-  ({ searchResults: res }) =>
-    res && `${res.nbHits} result${res.nbHits === 1 ? `` : `s`}`,
-);
-
-const TryAdvancedSearch = connectStateResults(
-  ({ searchResults: res}) =>
-    <div className="flex-grow-1 d-flex align-items-center justify-content-center p-4">
-      { res && res.nbHits > 0 ? 'Not finding what you need?' : 'No results found.' }
-      <Link to='#'className="ml-2">Try Advanced Search</Link>
-    </div>
-);
-
-const Hits = ({ hits, arrowIndex }) => (
-  <>
-    {hits.map((hit, i) => (
-      <PageHit
-        key={i}
-        hit={hit}
-        className={arrowIndex === i && 'arrow-focus'}
-      />
-    ))}
-  </>
-);
-const PageHits = connectHits(Hits);
-
-const ResultGroup = ({ title, index, arrowIndex }) => (
-  <div className="h-100 d-flex flex-column">
-    <Index key={index} indexName={index} >
-      <Results>
-        <PageHits arrowIndex={arrowIndex} />
-        <TryAdvancedSearch />
-      </Results>
-    </Index>
-  </div>
-);
-
-const SearchTab = ({ index, title }) => (
-  <Nav.Item className="search-tab">
-    <Nav.Link eventKey={index} className="pl-4 pr-4 pb-0">
-      <Index indexName={index}>
-        <span className="h5">{title}</span>
-        <div className="stats"><small className="opacity-7"><Stats /></small></div>
-      </Index>
-    </Nav.Link>
-  </Nav.Item>
-);
-
-const SlashIndicator = ({ query }) => (
-  <span
-    className={`slash-indicator text-orange text-center opacity-5 bg-white mr-3 ${query.length > 0 && 'd-none'}`}
-  >
-    /
-  </span>
-);
 
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
@@ -106,7 +47,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
   const close = useCallback(() => {
     setFocus(false);
     setArrowIndex(0);
-  });
+  }, []);
 
   useClickOutside(searchBarRef, close);
 
@@ -170,13 +111,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
           onFocus={() => setFocus(true)}
           ref={inputRef}
         />
-        <Button
-          variant="link"
-          onClick={(e) => { e.preventDefault(); refine(''); }}
-          className={`${query.length === 0 && 'd-none'}`}
-        >
-          <Icon iconName={iconNames.CLOSE} className="opacity-5" width="20" height="20" />
-        </Button>
+        <ClearButton onClick={() => { refine('') }} className={`${query.length === 0 && 'd-none'}`} />
         <SlashIndicator query={query} />
       </form>
 
@@ -185,20 +120,14 @@ const SearchForm = ({currentRefinement, refine, query}) => {
       >
         <Tab.Container defaultActiveKey={docsIndex.index}>
           <Tab.Content className="search-content mb-1 mt-1" ref={searchContentRef}>
-            <Tab.Pane eventKey={docsIndex.index} className="h-100">
-              <ResultGroup title={docsIndex.title} index={docsIndex.index} arrowIndex={arrowIndex} />
-            </Tab.Pane>
-            <Tab.Pane eventKey={learnIndex.index} className="h-100">
-              <ResultGroup title={learnIndex.title} index={learnIndex.index} arrowIndex={arrowIndex} />
-            </Tab.Pane>
+            <SearchPane searchIndex={docsIndex} arrowIndex={arrowIndex} />
+            <SearchPane searchIndex={learnIndex} arrowIndex={arrowIndex} />
           </Tab.Content>
 
           <Nav className="search-tabs" onSelect={() => {inputRef.current.focus(); setArrowIndex(0)}}>
-            <SearchTab index={docsIndex.index} title={docsIndex.title} />
-            <SearchTab index={learnIndex.index} title={learnIndex.title} />
-            <div className="flex-grow-1 d-flex align-items-center justify-content-flex-end mr-4">
-              <Link to='#'>Advanced Search</Link>
-            </div>
+            <SearchTab searchIndex={docsIndex} />
+            <SearchTab searchIndex={learnIndex} />
+            <AdvancedSearchTabLink />
           </Nav>
         </Tab.Container>
       </div>
