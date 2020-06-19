@@ -54,13 +54,14 @@ const SearchForm = ({currentRefinement, refine, query}) => {
     let nextIndex = arrowIndex;
     if (key === "ArrowDown") {
       nextIndex = Math.min(arrowIndex + 1, dropdownItems.length - 1);
-    } else if (key === 'ArrowUp') {
+    }
+    if (key === 'ArrowUp') {
       nextIndex = Math.max(arrowIndex - 1, 0);
     }
     setArrowIndex(nextIndex);
     if (nextIndex === dropdownItems.length - 1) {
       searchContentRef.current.scrollTop = searchContentRef.current.scrollHeight;
-    } else {
+    } else if (dropdownItems[nextIndex]) {
       dropdownItems[nextIndex].scrollIntoView({ block: 'nearest' });
     }
   }, [searchContentRef, arrowIndex, setArrowIndex]);
@@ -71,20 +72,28 @@ const SearchForm = ({currentRefinement, refine, query}) => {
     if (e.key === '/' && !inputFocused) {
       inputRef.current.focus();
       e.preventDefault();
-    } else if (e.key === "Escape" && inputFocused) {
-      inputRef.current.blur();
-      close();
-      e.preventDefault();
-    } else if (e.key === "ArrowDown" && inputFocused) {
-      moveArrowIndex(e.key);
-      e.preventDefault();
-    } else if (e.key === "ArrowUp" && inputFocused) {
-      moveArrowIndex(e.key);
-      e.preventDefault();
-    } else if (e.key === 'Enter' && inputFocused) {
-      const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
-      dropdownItems[arrowIndex].click();
-      e.preventDefault();
+    }
+
+    if (inputFocused) {
+      switch(e.key) {
+        case 'Escape':
+          inputRef.current.blur();
+          close();
+          e.preventDefault();
+          break;
+        case 'ArrowDown':
+        case 'ArrowUp':
+          moveArrowIndex(e.key);
+          e.preventDefault();
+          break;
+        case 'Enter':
+          const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
+          dropdownItems[arrowIndex].click();
+          e.preventDefault();
+          break;
+        default:
+          // do nothing
+      }
     }
   }, [inputRef, searchContentRef, arrowIndex, close, moveArrowIndex]);
 
@@ -117,7 +126,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
       </form>
 
       <div
-        className={`dropdown-menu w-100 p-0 ${query.length > 0 && focus ? 'show' : ''}`}
+        className={`dropdown-menu w-100 p-0 ${query.length > 0 && focus && 'show'}`}
       >
         <Tab.Container defaultActiveKey={docsIndex.index}>
           <Tab.Content className="search-content mb-1 mt-1" ref={searchContentRef}>
