@@ -1,4 +1,6 @@
 import os
+import re
+
 '''
     For the given path, get the List of all files in the directory tree 
 '''
@@ -34,13 +36,11 @@ def main():
         for elem in listOfFiles:
             g = open(elem, "r")
             for line in g.readlines():
-                fp.write(line) 
+                newLine = re.sub(r'(?is)..\/images\/(\w*\/)*', 'images/', line)
+                fp.write(newLine)
 
             print(elem)
 
-        
-        
-        
         
 if __name__ == '__main__':
     main()
