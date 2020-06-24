@@ -20,8 +20,8 @@ def putIndexFirst2(e):
 def getFilename(file):
     return file.filename   
 
-def filterPng(filename):
-    if '.png' in filename:
+def filterList(filename):
+    if '.png' in filename or 'images' in filename or '.DS_Store' in filename:
         return False
     else:
         return True
@@ -30,10 +30,11 @@ def filterPng(filename):
 def getListOfFiles(dirName, parentChapter):
     # create a list of file and sub directories 
     # names in the given directory 
-    listOfFiles = list(filter(filterPng, os.listdir(dirName)))
+    listOfFiles = list(filter(filterList, os.listdir(dirName)))
     listOfFiles.sort(key=putIndexFirst2)
     allFiles = list()
     chapter = 1
+    print(listOfFiles)
     # Iterate over all the entries
     for entry in listOfFiles:
         # Create full path
@@ -76,16 +77,26 @@ def main():
     with open(dirName + '/combined.mdx', 'w') as fp:
         for elem in listOfFiles:
             g = open(elem.filename, "r")
+            frontmatterCount = 2
             for line in g.readlines():
                 newLine = re.sub(r'(?is)..\/images\/(\w*\/)*', 'images/', line)
                 if line[0:3] == "## ":
                     newLine = "#" + line
+                if "toctree" in line:
+                    frontmatterCount = 3
+                if frontmatterCount == 0:
+                    fp.write(newLine)
                 if "title: " in line:
                     newLine = elem.chapter + " " + line[7:].replace('"', '')
-                fp.write(newLine)
+                    fp.write(newLine)
+                if "---" in line and frontmatterCount > 0:
+                    frontmatterCount -= 1
+                    fp.write(newLine)
             fp.write('\n')
             print(elem)
 
         
 if __name__ == '__main__':
     main()
+
+#  pandoc --toc combined.mdx -f gfm -o output.pdf --pdf-engine=xelatex

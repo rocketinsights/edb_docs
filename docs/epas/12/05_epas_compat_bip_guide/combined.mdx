@@ -1,18 +1,12 @@
 ---
-2 Database Compatibility for Oracle Developers Built-in Packages Guide
-navTitle: Built-in Package Guide
+1 Database Compatibility for Oracle Developers Built-in Packages Guide
 ---
 
 
 
-<div class="toctree" data-maxdepth="6">
-
-introduction packages built-in_packages acknowledgements conclusion
-
-</div>
 
 ---
-3 Introduction
+2 Introduction
 ---
 
 
@@ -23,11 +17,11 @@ For more information about using other compatibility features offered by Advance
 
 <https://www.enterprisedb.com/edb-docs/>
 
-### What’s New
+### What's New
 
 The following database compatibility for Oracle features have been added to Advanced Server 11 to create Advanced Server 12:
 
-  - Advanced Server introduces `COMPOUND TRIGGERS`, which are stored as a PL block that executes in response to a specified triggering event. For information, see the *Database Compatibility for Oracle Developer’s Guide*.
+  - Advanced Server introduces `COMPOUND TRIGGERS`, which are stored as a PL block that executes in response to a specified triggering event. For information, see the *Database Compatibility for Oracle Developer's Guide*.
   - Advanced Server now supports new `DATA DICTIONARY VIEWS` that provide information compatible with the Oracle data dictionary views. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
   - Advanced Server has added the `LISTAGG` function to support string aggregation that concatenates data from multiple rows into a single row in an ordered manner. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
   - Advanced Server now supports `CAST(MULTISET)` function, allowing subquery output to be `CAST` to a nested table type. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
@@ -53,26 +47,21 @@ Database Compatibility for Oracle Developer's Guide, Database Compatibility for 
 </div>
 
 ---
-4.1 Packages
+3.1 Packages
 ---
 
 
 
-This chapter discusses the concept of packages in Advanced Server. A *package* is a named collection of functions, procedures, variables, cursors, user-defined record types, and records that are referenced using a common qualifier – the package identifier. Packages have the following characteristics:
+This chapter discusses the concept of packages in Advanced Server. A *package* is a named collection of functions, procedures, variables, cursors, user-defined record types, and records that are referenced using a common qualifier - the package identifier. Packages have the following characteristics:
 
   - Packages provide a convenient means of organizing the functions and procedures that perform a related purpose. Permission to use the package functions and procedures is dependent upon one privilege granted to the entire package. All of the package programs must be referenced with a common name.
-  - Certain functions, procedures, variables, types, etc. in the package can be declared as *public*. Public entities are visible and can be referenced by other programs that are given `EXECUTE` privilege on the package. For public functions and procedures, only their signatures are visible - the program names, parameters if any, and return types of functions. The SPL code of these functions and procedures is not accessible to others, therefore applications that utilize a package are dependent only upon the information available in the signature – not in the procedural logic itself.
+  - Certain functions, procedures, variables, types, etc. in the package can be declared as *public*. Public entities are visible and can be referenced by other programs that are given `EXECUTE` privilege on the package. For public functions and procedures, only their signatures are visible - the program names, parameters if any, and return types of functions. The SPL code of these functions and procedures is not accessible to others, therefore applications that utilize a package are dependent only upon the information available in the signature - not in the procedural logic itself.
   - Other functions, procedures, variables, types, etc. in the package can be declared as *private*. Private entities can be referenced and used by function and procedures within the package, but not by other external applications. Private entities are for use only by programs within the package.
   - Function and procedure names can be overloaded within a package. One or more functions/procedures can be defined with the same name, but with different signatures. This provides the capability to create identically named programs that perform the same job, but on different types of input.
 
-<div class="toctree" data-maxdepth="5">
-
-package_components creating_packages referencing_a_package using_packages_with_user_defined_types dropping_a_package
-
-</div>
 
 ---
-4.2 Package Components
+3.2 Package Components
 ---
 
 
@@ -90,14 +79,14 @@ The package specification defines the user interface for a package (the API). Th
 
 The syntax used to define the interface for a package is:
 
-``` text
+~~~
 CREATE [ OR REPLACE ] PACKAGE <package_name>
 [ <authorization_clause> ]
 { IS | AS }
 [ <declaration>; ] ...
 [ <procedure_or_function_declaration> ] ...
 END [ <package_name> ] ;
-```
+~~~
 
 Where `<authorization_clause>` :=
 
@@ -461,7 +450,7 @@ Where `<package_initializer>` :=
 
 `<package_initializer>`
 
-> The statements in the `<package_initializer>` are executed once per user’s session when the package is first referenced.
+> The statements in the `<package_initializer>` are executed once per user's session when the package is first referenced.
 > 
 > <div class="note">
 > 
@@ -476,7 +465,7 @@ Where `<package_initializer>` :=
 > </div>
 
 ---
-4.3 Creating Packages
+3.3 Creating Packages
 ---
 
 
@@ -611,7 +600,7 @@ IS
 ```
 
 ---
-4.4 Referencing a Package
+3.4 Referencing a Package
 ---
 
 
@@ -633,7 +622,7 @@ SELECT emp_admin.get_dept_name(10) FROM DUAL;
 Here we are invoking the `get_dept_name` function declared within the package `emp_admin`. We are passing the department number as an argument to the function, which will return the name of the department. Here the value returned should be `ACCOUNTING`, which corresponds to department number `10`.
 
 ---
-4.5 Using Packages With User Defined Types
+3.5 Using Packages With User Defined Types
 ---
 
 
@@ -738,7 +727,7 @@ This package contains an initialization section that loads the private table var
 
 Function, `open_emp_by_dept` returns a `REF CURSOR` variable for a result set of employee numbers and names for a given department. This `REF CURSOR` variable can then be passed to procedure, `fetch_emp`, to retrieve and list the individual rows of the result set. Finally, procedure, `close_refcur`, can be used to close the `REF CURSOR` variable associated with this result set.
 
-The following anonymous block runs the package function and procedures. In the anonymous block's declaration section, note the declaration of cursor variable, `v_emp_cur`, using the package’s public `REF CURSOR` type, `EMP_REFCUR. v_emp_cur` contains the pointer to the result set that is passed between the package function and procedures.
+The following anonymous block runs the package function and procedures. In the anonymous block's declaration section, note the declaration of cursor variable, `v_emp_cur`, using the package's public `REF CURSOR` type, `EMP_REFCUR. v_emp_cur` contains the pointer to the result set that is passed between the package function and procedures.
 
 ``` text
 DECLARE
@@ -772,7 +761,7 @@ EMPNO ENAME
 6 rows were retrieved
 ```
 
-The following anonymous block illustrates another means of achieving the same result. Instead of using the package procedures, `fetch_emp` and `close_refcur`, the logic of these programs is coded directly into the anonymous block. In the anonymous block’s declaration section, note the addition of record variable, `r_emp`, declared using the package’s public record type, `EMPREC_TYP`.
+The following anonymous block illustrates another means of achieving the same result. Instead of using the package procedures, `fetch_emp` and `close_refcur`, the logic of these programs is coded directly into the anonymous block. In the anonymous block's declaration section, note the addition of record variable, `r_emp`, declared using the package's public record type, `EMPREC_TYP`.
 
 ``` text
 DECLARE
@@ -814,7 +803,7 @@ EMPNO ENAME
 ```
 
 ---
-4.6 Dropping a Package
+3.6 Dropping a Package
 ---
 
 
@@ -838,12 +827,12 @@ DROP PACKAGE emp_admin;
 ```
 
 ---
-5.1 Built-In Packages
+4.1 Built-In Packages
 ---
 
 
 
-This chapter describes the built-in packages that are provided with Advanced Server. For certain packages, non-superusers must be explicitly granted the `EXECUTE` privilege on the package before using any of the package’s functions or procedures. For most of the built-in packages, `EXECUTE` privilege has been granted to `PUBLIC` by default.
+This chapter describes the built-in packages that are provided with Advanced Server. For certain packages, non-superusers must be explicitly granted the `EXECUTE` privilege on the package before using any of the package's functions or procedures. For most of the built-in packages, `EXECUTE` privilege has been granted to `PUBLIC` by default.
 
 For information about using the `GRANT` command to provide access to a package, please see the *Database Compatibility for Oracle Developers Reference Guide*, available at:
 
@@ -855,14 +844,9 @@ All built-in packages are owned by the special `sys` user which must be specifie
 GRANT EXECUTE ON PACKAGE SYS.UTL_FILE TO john;
 ```
 
-<div class="toctree" data-maxdepth="5">
-
-dbms_alert dbms_aq dbms_aqadm dbms_crypto dbms_job dbms_lob dbms_lock dbms_mview dbms_output dbms_pipe dbms_profiler dbms_random dbms_redact dbms_rls dbms_scheduler dbms_session dbms_sql dbms_utility utl_encode utl_file utl_http utl_mail utl_raw utl_smtp utl_url
-
-</div>
 
 ---
-5.2 DBMS_ALERT
+4.2 DBMS_ALERT
 ---
 
 
@@ -893,7 +877,7 @@ To set a value for the `dbms_alert.max_alerts` variable, open the `postgresql.co
 
 For the `dbms_alert.max_alerts` GUC to function correctly, the `custom_variable_classes` parameter must contain `dbms_alerts`:
 
-> `custom_variable_classes = 'dbms_alert, …'`
+> `custom_variable_classes = 'dbms_alert, ...'`
 
 After editing the `postgresql.conf` file parameters, you must restart the server for the changes to take effect.
 
@@ -1015,7 +999,7 @@ Variable receiving the message sent by the `SIGNAL` procedure.
 
 `<status>`
 
-Status code returned by the operation. Possible values are: 0 – alert occurred; 1 – timeout occurred.
+Status code returned by the operation. Possible values are: 0 - alert occurred; 1 - timeout occurred.
 
 `<timeout>`
 
@@ -1092,7 +1076,7 @@ Name of the alert.
 
 `<status>`
 
-> Status code returned by the operation. Possible values are: 0 – alert occurred; 1 – timeout occurred.
+> Status code returned by the operation. Possible values are: 0 - alert occurred; 1 - timeout occurred.
 
 `<timeout>`
 
@@ -1268,7 +1252,7 @@ Alert status : 1
 ```
 
 ---
-5.3.1 DBMS_AQ
+4.3.1 DBMS_AQ
 ---
 
 
@@ -1333,17 +1317,12 @@ The DBMS_AQ configuration parameters listed in the following table can be define
 | `dbms_aq.min_work_time`       | The minimum time a worker can run before exiting.                                                |
 | `dbms_aq.launch_delay`        | The minimum time between creating workers.                                                       |
 | `dbms_aq.batch_size`          | The maximum number of messages to process in a single transaction. The default batch size is 10. |
-| `dbms_aq.max_databases`       | The size of DBMS_AQ’s hash table of databases. The default value is 1024.                       |
-| `dbms_aq.max_pending_retries` | The size of DBMS_AQ’s hash table of pending retries. The default value is 1024.                 |
+| `dbms_aq.max_databases`       | The size of DBMS_AQ's hash table of databases. The default value is 1024.                       |
+| `dbms_aq.max_pending_retries` | The size of DBMS_AQ's hash table of pending retries. The default value is 1024.                 |
 
-<div class="toctree" data-maxdepth="5">
-
-enqueue dequeue register unregister
-
-</div>
 
 ---
-5.3.2 'ENQUEUE'
+4.3.2 'ENQUEUE'
 ---
 
 The `ENQUEUE` procedure adds an entry to a queue. The signature is:
@@ -1399,14 +1378,14 @@ message_properties_t IS RECORD(
  priority INTEGER,
  delay INTEGER,
  expiration INTEGER,
- correlation CHARACTER VARYING(128) COLLATE pg_catalog.”C”,
+ correlation CHARACTER VARYING(128) COLLATE pg_catalog."C",
  attempts INTEGER,
- recipient_list “AQ$_RECIPIENT_LIST_T”,
- exception_queue CHARACTER VARYING(61) COLLATE pg_catalog.”C”,
+ recipient_list "AQ$_RECIPIENT_LIST_T",
+ exception_queue CHARACTER VARYING(61) COLLATE pg_catalog."C",
  enqueue_time TIMESTAMP WITHOUT TIME ZONE,
  state INTEGER,
  original_msgid BYTEA,
- transaction_group CHARACTER VARYING(30) COLLATE pg_catalog.”C”,
+ transaction_group CHARACTER VARYING(30) COLLATE pg_catalog."C",
  delivery_mode INTEGER
 DBMS_AQ.PERSISTENT);
 ```
@@ -1499,17 +1478,17 @@ The supported values for `message_properties_t` are:
         <td>
           <p>This parameter is maintained by DBMS_AQ; state can be:</p>
           <p>
-            <code>DBMS_AQ.WAITING</code> – the delay has not been reached.
+            <code>DBMS_AQ.WAITING</code> - the delay has not been reached.
           </p>
           <p>
-            <code>DBMS_AQ.READY</code> – the queue entry is ready for
+            <code>DBMS_AQ.READY</code> - the queue entry is ready for
             processing.
           </p>
           <p>
-            <code>DBMS_AQ.PROCESSED</code> – the queue entry has been processed.
+            <code>DBMS_AQ.PROCESSED</code> - the queue entry has been processed.
           </p>
           <p>
-            <code>DBMS_AQ.EXPIRED</code> – the queue entry has been moved to the
+            <code>DBMS_AQ.EXPIRED</code> - the queue entry has been moved to the
             exception queue.
           </p>
         </td>
@@ -1573,7 +1552,7 @@ END;
 ```
 
 ---
-5.3.3 'DEQUEUE'
+4.3.3 'DEQUEUE'
 ---
 
 The `DEQUEUE` procedure dequeues a message. The signature is:
@@ -1640,19 +1619,19 @@ Currently, the supported parameter values for `dequeue_options_t` are:
         <td>
           <p>The locking behavior of the dequeue operation. Must be either:</p>
           <p>
-            <code>DBMS_AQ.BROWSE</code> – Read the message without obtaining a
+            <code>DBMS_AQ.BROWSE</code> - Read the message without obtaining a
             lock.
           </p>
           <p>
-            <code>DBMS_AQ.LOCKED</code> – Read the message after acquiring a
+            <code>DBMS_AQ.LOCKED</code> - Read the message after acquiring a
             lock.
           </p>
           <p>
-            <code>DBMS_AQ.REMOVE</code> – Read the message before deleting the
+            <code>DBMS_AQ.REMOVE</code> - Read the message before deleting the
             message.
           </p>
           <p>
-            <code>DBMS_AQ.REMOVE_NODATA</code> – Read the message, but do not
+            <code>DBMS_AQ.REMOVE_NODATA</code> - Read the message, but do not
             delete the message.
           </p>
         </td>
@@ -1664,11 +1643,11 @@ Currently, the supported parameter values for `dequeue_options_t` are:
         <td>
           <p>Identifies the message that will be retrieved. Must be either:</p>
           <p>
-            <code>FIRST_MESSAGE</code> – The first message within the queue that
+            <code>FIRST_MESSAGE</code> - The first message within the queue that
             matches the search term.
           </p>
           <p>
-            <code>NEXT_MESSAGE</code> – The next message that is available that
+            <code>NEXT_MESSAGE</code> - The next message that is available that
             matches the first term.
           </p>
         </td>
@@ -1678,7 +1657,7 @@ Currently, the supported parameter values for `dequeue_options_t` are:
           <code>visibility</code>
         </td>
         <td>
-          Must be <code>ON_COMMIT</code> – if you roll back the current
+          Must be <code>ON_COMMIT</code> - if you roll back the current
           transaction the dequeued item will remain in the queue.
         </td>
       </tr>
@@ -1689,10 +1668,10 @@ Currently, the supported parameter values for `dequeue_options_t` are:
         <td>
           <p>Must be a number larger than 0, or:</p>
           <p>
-            <code>DBMS_AQ.FOREVER</code> – Wait indefinitely.
+            <code>DBMS_AQ.FOREVER</code> - Wait indefinitely.
           </p>
           <p>
-            <code>DBMS_AQ.NO_WAIT</code> – Do not wait.
+            <code>DBMS_AQ.NO_WAIT</code> - Do not wait.
           </p>
         </td>
       </tr>
@@ -1746,14 +1725,14 @@ message_properties_t IS RECORD(
   priority INTEGER,
   delay INTEGER,
   expiration INTEGER,
-  correlation CHARACTER VARYING(128) COLLATE pg_catalog.”C”,
+  correlation CHARACTER VARYING(128) COLLATE pg_catalog."C",
   attempts INTEGER,
-  recipient_list “AQ$_RECIPIENT_LIST_T”,
-  exception_queue CHARACTER VARYING(61) COLLATE pg_catalog.”C”,
+  recipient_list "AQ$_RECIPIENT_LIST_T",
+  exception_queue CHARACTER VARYING(61) COLLATE pg_catalog."C",
   enqueue_time TIMESTAMP WITHOUT TIME ZONE,
   state INTEGER,
   original_msgid BYTEA,
-  transaction_group CHARACTER VARYING(30) COLLATE pg_catalog.”C”,
+  transaction_group CHARACTER VARYING(30) COLLATE pg_catalog."C",
   delivery_mode INTEGER
 DBMS_AQ.PERSISTENT);
 ```
@@ -1770,7 +1749,7 @@ The supported values for `message_properties_t` are:
 | `recipient_list`    | This parameter is not supported.                                                                                                                                                                                                                                                                             |
 | `exception_queue`   | Use the `exception_queue` parameter to specify the name of an exception queue to which a message will be moved if it expires or is dequeued by a transaction that rolls back too many times.                                                                                                                 |
 | `enqueue_time`      | `enqueue_time` is the time the record was added to the queue; this value is provided by the system.                                                                                                                                                                                                          |
-| `state`             | This parameter is maintained by `DBMS_AQ`; state can be: `DBMS_AQ.WAITING` – the delay has not been reached. `DBMS_AQ.READY` – the queue entry is ready for processing. `DBMS_AQ.PROCESSED` – the queue entry has been processed. `DBMS_AQ.EXPIRED` – the queue entry has been moved to the exception queue. |
+| `state`             | This parameter is maintained by `DBMS_AQ`; state can be: `DBMS_AQ.WAITING` - the delay has not been reached. `DBMS_AQ.READY` - the queue entry is ready for processing. `DBMS_AQ.PROCESSED` - the queue entry has been processed. `DBMS_AQ.EXPIRED` - the queue entry has been moved to the exception queue. |
 | `original_msgid`    | This parameter is accepted for compatibility and ignored.                                                                                                                                                                                                                                                    |
 | `transaction_group` | This parameter is accepted for compatibility and ignored.                                                                                                                                                                                                                                                    |
 | `delivery_mode`     | This parameter is not supported; specify a value of `DBMS_AQ.PERSISTENT`.                                                                                                                                                                                                                                    |
@@ -1815,7 +1794,7 @@ END;
 The payload is displayed by `DBMS_OUTPUT.PUT_LINE`.
 
 ---
-5.3.4 REGISTER
+4.3.4 REGISTER
 ---
 
 
@@ -1915,7 +1894,7 @@ commit;
 The `subscriptionlist` is of type `sys.aq$_reg_info_list`, and contains the previously described `sys.aq$_reg_info` objects. The list name and an object count are passed to `dbms_aq.register`.
 
 ---
-5.3.5 'UNREGISTER'
+4.3.5 'UNREGISTER'
 ---
 
 Use the `UNREGISTER` procedure to turn off notifications related to enqueueing and dequeueing. The signature is:
@@ -2035,7 +2014,7 @@ BEGIN
 The `subscriptionlist` is of type `sys.aq$_reg_info_list`, and contains the previously described `sys.aq$_reg_info` objects. The list name and an object count are passed to `dbms_aq.unregister`.
 
 ---
-5.4.1 DBMS_AQADM
+4.4.1 DBMS_AQADM
 ---
 
 
@@ -2080,14 +2059,9 @@ Advanced Server supports use of the arguments listed below:
 | `DBMS_AQADM.BUFFERED (1)`               | This constant is defined, but will return an error if used. | `enqueue_options_t.delivery_mode` |
 | `DBMS_AQADM.PERSISTENT_OR_BUFFERED (2)` | This constant is defined, but will return an error if used. | `enqueue_options_t.delivery_mode` |
 
-<div class="toctree" data-maxdepth="5">
-
-alter_queue alter_queue_table create_queue create_queue_table drop_queue drop_queue_table purge_queue_table start_queue stop_queue
-
-</div>
 
 ---
-5.4.2 ALTER_QUEUE
+4.4.2 ALTER_QUEUE
 ---
 
 
@@ -2142,7 +2116,7 @@ EXEC DBMS_AQADM.ALTER_QUEUE(queue_name => 'work_order', retry_delay
 ```
 
 ---
-5.4.3 ALTER_QUEUE_TABLE
+4.4.3 ALTER_QUEUE_TABLE
 ---
 
 
@@ -2192,7 +2166,7 @@ contains work orders for the shipping department.');
 The queue table is named `work_order_table`; the command adds a comment to the definition of the queue table.
 
 ---
-5.4.4 CREATE_QUEUE
+4.4.4 CREATE_QUEUE
 ---
 
 
@@ -2233,9 +2207,9 @@ Use the `CREATE_QUEUE` procedure to create a queue in an existing queue table. T
 
 > The type of the new queue. The valid values for `<queue_type>` are:
 > 
-> `DBMS_AQADM.NORMAL_QUEUE` – This value specifies a normal queue (the default).
+> `DBMS_AQADM.NORMAL_QUEUE` - This value specifies a normal queue (the default).
 > 
-> `DBMS_AQADM.EXCEPTION_QUEUE` – This value specifies that the new queue is an exception queue. An exception queue will support only dequeue operations.
+> `DBMS_AQADM.EXCEPTION_QUEUE` - This value specifies that the new queue is an exception queue. An exception queue will support only dequeue operations.
 
 `<max_retries>`
 
@@ -2274,7 +2248,7 @@ END;
 ```
 
 ---
-5.4.5 CREATE_QUEUE_TABLE
+4.4.5 CREATE_QUEUE_TABLE
 ---
 
 
@@ -2399,7 +2373,7 @@ END;
 The queue table is named `work_order_table`, and contains a payload of a type `work_order`. A comment notes that this is the `Work order message queue table`.
 
 ---
-5.4.6 DROP_QUEUE
+4.4.6 DROP_QUEUE
 ---
 
 
@@ -2433,7 +2407,7 @@ END;
 ```
 
 ---
-5.4.7 DROP_QUEUE_TABLE
+4.4.7 DROP_QUEUE_TABLE
 ---
 
 
@@ -2477,7 +2451,7 @@ END;
 ```
 
 ---
-5.4.8 PURGE_QUEUE_TABLE
+4.4.8 PURGE_QUEUE_TABLE
 ---
 
 
@@ -2485,9 +2459,9 @@ END;
 Use the `PURGE_QUEUE_TABLE` procedure to delete messages from a queue table. The signature is:
 
 > `PURGE_QUEUE_TABLE(`  
->     `<queue_table> IN VARCHAR2`,  
->     `<purge_condition> IN VARCHAR2`,  
->     `<purge_options> IN aq$_purge_options_t)`
+>     `<queue_table> IN VARCHAR2`,  
+>     `<purge_condition> IN VARCHAR2`,  
+>     `<purge_options> IN aq$_purge_options_t)`
 
 **Parameters**
 
@@ -2522,7 +2496,7 @@ purge_options);
 ```
 
 ---
-5.4.9 START_QUEUE
+4.4.9 START_QUEUE
 ---
 
 
@@ -2532,9 +2506,9 @@ Use the `START_QUEUE` procedure to make a queue available for enqueuing and dequ
 The signature is:
 
 > `START_QUEUE(`  
->     `<queue_name> IN VARCHAR2`,  
->     `<enqueue> IN BOOLEAN DEFAULT TRUE`,  
->     `<dequeue> IN BOOLEAN DEFAULT TRUE)`
+>     `<queue_name> IN VARCHAR2`,  
+>     `<enqueue> IN BOOLEAN DEFAULT TRUE`,  
+>     `<dequeue> IN BOOLEAN DEFAULT TRUE)`
 
 **Parameters**
 
@@ -2562,7 +2536,7 @@ END;
 ```
 
 ---
-5.4.10 STOP_QUEUE
+4.4.10 STOP_QUEUE
 ---
 
 
@@ -2572,10 +2546,10 @@ Use the `STOP_QUEUE` procedure to disable enqueuing or dequeueing on a specified
 The signature is:
 
 > `STOP_QUEUE(`  
->    `<queue_name> IN VARCHAR2`,  
->    `<enqueue> IN BOOLEAN DEFAULT TRUE`,  
->    `<dequeue> IN BOOLEAN DEFAULT TRUE`,  
->    `<wait> IN BOOLEAN DEFAULT TRUE)`
+>    `<queue_name> IN VARCHAR2`,  
+>    `<enqueue> IN BOOLEAN DEFAULT TRUE`,  
+>    `<dequeue> IN BOOLEAN DEFAULT TRUE`,  
+>    `<wait> IN BOOLEAN DEFAULT TRUE)`
 
 **Parameters**
 
@@ -2609,7 +2583,7 @@ END;
 Enqueueing and dequeueing will stop after any outstanding transactions complete.
 
 ---
-5.5.1 DBMS_CRYPTO
+4.5.1 DBMS_CRYPTO
 ---
 
 
@@ -2647,14 +2621,9 @@ Unlike Oracle, Advanced Server will not return error `ORA-28233` if you re-encry
 
 Please note that `RAW` and `BLOB` are synonyms for the PostgreSQL `BYTEA` data type, and `CLOB` is a synonym for `TEXT`.
 
-<div class="toctree" data-maxdepth="5">
-
-decrypt encrypt hash mac randombytes randominteger randomnumber
-
-</div>
 
 ---
-5.5.2 DECRYPT
+4.5.2 DECRYPT
 ---
 
 
@@ -2662,20 +2631,20 @@ decrypt encrypt hash mac randombytes randominteger randomnumber
 The `DECRYPT` function or procedure decrypts data using a user-specified cipher algorithm, key and optional initialization vector. The signature of the `DECRYPT` function is:
 
 > `DECRYPT`  
->  `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW, <iv> IN RAW`  
->  `DEFAULT NULL) RETURN RAW`
+>  `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW, <iv> IN RAW`  
+>  `DEFAULT NULL) RETURN RAW`
 
 The signature of the `DECRYPT` procedure is:
 
 > `DECRYPT`  
->  `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW`,  
->  `<iv> IN RAW DEFAULT NULL)`
+>  `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW`,  
+>  `<iv> IN RAW DEFAULT NULL)`
 
 or
 
 > `DECRYPT`  
->  `(<dst> INOUT CLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW`,  
->  `<iv> IN RAW DEFAULT NULL)`
+>  `(<dst> INOUT CLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW`,  
+>  `<iv> IN RAW DEFAULT NULL)`
 
 When invoked as a procedure, `DECRYPT` returns `BLOB` or `CLOB` data to a user-specified `BLOB`.
 
@@ -2744,7 +2713,7 @@ CREATE FUNCTION get_password(username VARCHAR2) RETURN RAW AS
 Note that when calling `DECRYPT`, you must pass the same cipher type, key value and initialization vector that was used when `ENCRYPTING` the target.
 
 ---
-5.5.3 ENCRYPT
+4.5.3 ENCRYPT
 ---
 
 
@@ -2752,20 +2721,20 @@ Note that when calling `DECRYPT`, you must pass the same cipher type, key value 
 The `ENCRYPT` function or procedure uses a user-specified algorithm, key, and optional initialization vector to encrypt `RAW`, `BLOB` or `CLOB` data. The signature of the `ENCRYPT` function is:
 
 > `ENCRYPT`  
->   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW`,  
->   `<iv> IN RAW DEFAULT NULL) RETURN RAW`
+>   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW`,  
+>   `<iv> IN RAW DEFAULT NULL) RETURN RAW`
 
 The signature of the `ENCRYPT` procedure is:
 
 > `ENCRYPT`  
->   `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW`,  
->   `<iv> IN RAW DEFAULT NULL)`
+>   `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW`,  
+>   `<iv> IN RAW DEFAULT NULL)`
 
 or
 
 > `ENCRYPT`  
->   `(<dst> INOUT BLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW`,  
->   `<iv> IN RAW DEFAULT NULL)`
+>   `(<dst> INOUT BLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW`,  
+>   `<iv> IN RAW DEFAULT NULL)`
 
 When invoked as a procedure, `ENCRYPT` returns `BLOB` or `CLOB` data to a user-specified `BLOB`.
 
@@ -2833,7 +2802,7 @@ END;
 `ENCRYPT` uses a key value of `my secret key` and an initialization vector of `my initialization vector` when encrypting the `password`; specify the same key and initialization vector when decrypting the `password`.
 
 ---
-5.5.4 HASH
+4.5.4 HASH
 ---
 
 
@@ -2841,10 +2810,10 @@ END;
 The `HASH` function uses a user-specified algorithm to return the hash value of a `RAW` or `CLOB` value. The `HASH` function is available in three forms:
 
 > `HASH`  
->  (`<src> IN RAW, <typ> IN INTEGER) RETURN RAW`
+>  (`<src> IN RAW, <typ> IN INTEGER) RETURN RAW`
 > 
 > `HASH`  
->  (`<src> IN CLOB, <typ> IN INTEGER) RETURN RAW`
+>  (`<src> IN CLOB, <typ> IN INTEGER) RETURN RAW`
 
 **Parameters**
 
@@ -2878,7 +2847,7 @@ END;
 ```
 
 ---
-5.5.5 MAC
+4.5.5 MAC
 ---
 
 
@@ -2886,10 +2855,10 @@ END;
 The `MAC` function uses a user-specified `MAC` function to return the hashed `MAC` value of a `RAW` or `CLOB` value. The `MAC` function is available in three forms:
 
 > `MAC`  
->   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW) RETURN RAW`
+>   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW) RETURN RAW`
 > 
 > `MAC`  
->   `(<src> IN CLOB, <typ> IN INTEGER, <key> IN RAW) RETURN RAW`
+>   `(<src> IN CLOB, <typ> IN INTEGER, <key> IN RAW) RETURN RAW`
 
 **Parameters**
 
@@ -2929,7 +2898,7 @@ END;
 `DBMS_CRYPTO.MAC` uses a key value of `my secret` key when calculating the `MAC` value of `cleartext source`.
 
 ---
-5.5.6 RANDOMBYTES
+4.5.6 RANDOMBYTES
 ---
 
 
@@ -2937,7 +2906,7 @@ END;
 The `RANDOMBYTES` function returns a `RAW` value of the specified length, containing cryptographically random bytes. The signature is:
 
 > `RANDOMBYTES`  
->   `(<number_bytes> IN INTEGER) RETURNS RAW`
+>   `(<number_bytes> IN INTEGER) RETURNS RAW`
 
 **Parameter**
 
@@ -2958,7 +2927,7 @@ END;
 ```
 
 ---
-5.5.7 RANDOMINTEGER
+4.5.7 RANDOMINTEGER
 ---
 
 
@@ -2981,7 +2950,7 @@ END;
 ```
 
 ---
-5.5.8 RANDOMNUMBER
+4.5.8 RANDOMNUMBER
 ---
 
 
@@ -3004,7 +2973,7 @@ END;
 ```
 
 ---
-5.6.1 DBMS_JOB
+4.6.1 DBMS_JOB
 ---
 
 
@@ -3019,7 +2988,7 @@ The following table lists the supported `DBMS_JOB` procedures:
 | -------------------------------------------------------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Function/Procedure**                                                     | **Return Type** | **Description**                                                                                                                                             |
 | `BROKEN(<job>, <broken> [, <next_date> ])`                                 | n/a             | Specify that a given job is either broken or not broken.                                                                                                    |
-| `CHANGE(<job, <what>, <next_date>, <interval, instance, force>)`           | n/a             | Change the job’s parameters.                                                                                                                                |
+| `CHANGE(<job, <what>, <next_date>, <interval, instance, force>)`           | n/a             | Change the job's parameters.                                                                                                                                |
 | `INTERVAL(<job>, <interval>)`                                              | n/a             | Set the execution frequency by means of a date function that is recalculated each time the job is run. This value becomes the next date/time for execution. |
 | `NEXT_DATE(<job>, <next_date>)`                                            | n/a             | Set the next date/time the job is to be run.                                                                                                                |
 | `REMOVE(<job>)`                                                            | n/a             | Delete the job definition from the database.                                                                                                                |
@@ -3033,7 +3002,7 @@ Before using `DBMS_JOB`, a database superuser must create the `pgAgent` extensio
 
 > `CREATE EXTENSION pgagent`;
 
-When and how often a job is run is dependent upon two interacting parameters – `<next_date>` and `<interval>`. The `<next_date>` parameter is a date/time value that specifies the next date/time when the job is to be executed. The `<interval>` parameter is a string that contains a date function that evaluates to a date/time value.
+When and how often a job is run is dependent upon two interacting parameters - `<next_date>` and `<interval>`. The `<next_date>` parameter is a date/time value that specifies the next date/time when the job is to be executed. The `<interval>` parameter is a string that contains a date function that evaluates to a date/time value.
 
 Just prior to any execution of the job, the expression in the `<interval>` parameter is evaluated. The resulting value replaces the `<next_date>` value stored with the job. The job is then executed. In this manner, the expression in `<interval>` is repeatedly re-evaluated prior to each job execution, supplying the `<next_date>` date/time for the next execution.
 
@@ -3052,14 +3021,9 @@ BEGIN
 END;
 ```
 
-<div class="toctree" data-maxdepth="5">
-
-broken change interval next_date remove run submit what
-
-</div>
 
 ---
-5.6.2 BROKEN
+4.6.2 BROKEN
 ---
 
 
@@ -3076,7 +3040,7 @@ The `BROKEN` procedure sets the state of a job to either broken or not broken. A
 
 `<broken>`
 
-> If set to `TRUE` the job’s state is set to broken. If set to `FALSE` the job’s state is set to not broken. Broken jobs cannot be run except by using the `RUN` procedure.
+> If set to `TRUE` the job's state is set to broken. If set to `FALSE` the job's state is set to not broken. Broken jobs cannot be run except by using the `RUN` procedure.
 
 `<next_date>`
 
@@ -3101,7 +3065,7 @@ END;
 ```
 
 ---
-5.6.3 CHANGE
+4.6.3 CHANGE
 ---
 
 
@@ -3153,7 +3117,7 @@ END;
 ```
 
 ---
-5.6.4 INTERVAL
+4.6.4 INTERVAL
 ---
 
 
@@ -3185,7 +3149,7 @@ END;
 ```
 
 ---
-5.6.5 NEXT_DATE
+4.6.5 NEXT_DATE
 ---
 
 
@@ -3217,7 +3181,7 @@ END;
 ```
 
 ---
-5.6.6 REMOVE
+4.6.6 REMOVE
 ---
 
 
@@ -3245,7 +3209,7 @@ END;
 ```
 
 ---
-5.6.7 RUN
+4.6.7 RUN
 ---
 
 
@@ -3273,7 +3237,7 @@ END;
 ```
 
 ---
-5.6.8 SUBMIT
+4.6.8 SUBMIT
 ---
 
 
@@ -3304,7 +3268,7 @@ The `SUBMIT` procedure creates a job definition and stores it in the database. A
 
 `<no_parse>`
 
-> If set to `TRUE`, do not syntax-check the stored procedure upon job creation – check only when the job first executes. If set to `FALSE`, check the procedure upon job creation. The default is `FALSE`.
+> If set to `TRUE`, do not syntax-check the stored procedure upon job creation - check only when the job first executes. If set to `FALSE`, check the procedure upon job creation. The default is `FALSE`.
 > 
 > <div class="note">
 > 
@@ -3347,7 +3311,7 @@ SELECT * FROM jobrun;
 ```
 
 ---
-5.6.9 WHAT
+4.6.9 WHAT
 ---
 
 
@@ -3379,7 +3343,7 @@ END;
 ```
 
 ---
-5.7.1 DBMS_LOB
+4.7.1 DBMS_LOB
 ---
 
 
@@ -3431,14 +3395,9 @@ The following table lists the public variables available in the package.
 
 In the following sections, lengths and offsets are measured in bytes if the large objects are `BLOBs`. Lengths and offsets are measured in characters if the large objects are `CLOBs`.
 
-<div class="toctree" data-maxdepth="5">
-
-append compare converttoblob converttoclob copy erase get_storage_limit getlength instr read substr trim write writeappend
-
-</div>
 
 ---
-5.7.2 APPEND
+4.7.2 APPEND
 ---
 
 
@@ -3458,7 +3417,7 @@ The `APPEND` procedure provides the capability to append one large object to ano
 > Large object locator for the source object. Must be the same data type as `<dest_lob>`.
 
 ---
-5.7.3 COMPARE
+4.7.3 COMPARE
 ---
 
 
@@ -3498,7 +3457,7 @@ The `COMPARE` procedure performs an exact byte-by-byte comparison of two large o
 > Zero if both large objects are exactly the same for the specified length for the specified offsets. Non-zero, if the objects are not the same. `<NULL>` if `<amount>`, `<offset_1>`, or `<offset_2>` are less than zero.
 
 ---
-5.7.4 CONVERTTOBLOB
+4.7.4 CONVERTTOBLOB
 ---
 
 
@@ -3560,7 +3519,7 @@ The `CONVERTTOBLOB` procedure provides the capability to convert character data 
 > 0 if the conversion was successful, 1 if an inconvertible character was encountered.
 
 ---
-5.7.5 CONVERTTOCLOB
+4.7.5 CONVERTTOCLOB
 ---
 
 
@@ -3622,7 +3581,7 @@ The `CONVERTTOCLOB` procedure provides the capability to convert binary data to 
 > 0 if the conversion was successful, 1 if an inconvertible character was encountered.
 
 ---
-5.7.6 COPY
+4.7.6 COPY
 ---
 
 
@@ -3660,7 +3619,7 @@ The `COPY` procedure provides the capability to copy one large object to another
 > Position in the source large object where copying to the destination large object should begin. The first position is offset 1. The default is 1.
 
 ---
-5.7.7 ERASE
+4.7.7 ERASE
 ---
 
 
@@ -3690,7 +3649,7 @@ The `ERASE` procedure provides the capability to erase a portion of a large obje
 > Position in the large object where erasing is to begin. The first byte/character is position 1. The default is 1.
 
 ---
-5.7.8 GET_STORAGE_LIMIT
+4.7.8 GET_STORAGE_LIMIT
 ---
 
 
@@ -3712,7 +3671,7 @@ The `GET_STORAGE_LIMIT` function returns the limit on the largest allowable larg
 > This parameter is ignored, but is included for compatibility.
 
 ---
-5.7.9 GETLENGTH
+4.7.9 GETLENGTH
 ---
 
 
@@ -3734,7 +3693,7 @@ The `GETLENGTH` function returns the length of a large object.
 > Length of the large object in bytes for `BLOBs` or characters for `CLOBs`.
 
 ---
-5.7.10 INSTR
+4.7.10 INSTR
 ---
 
 
@@ -3768,7 +3727,7 @@ The `INSTR` function returns the location of the nth occurrence of a given patte
 > Position within the large object where \<pattern\< appears the nth time specified by \<nth\< starting from the position given by `<offset>`.
 
 ---
-5.7.11 READ
+4.7.11 READ
 ---
 
 
@@ -3802,7 +3761,7 @@ The `READ` procedure provides the capability to read a portion of a large object
 > Variable to receive the large object. If `<lob_loc>` is a `BLOB`, then `<buffer>` must be `RAW`. If `<lob_loc>` is a `CLOB`, then `<buffer>` must be `VARCHAR2`.
 
 ---
-5.7.12 SUBSTR
+4.7.12 SUBSTR
 ---
 
 
@@ -3832,7 +3791,7 @@ The `SUBSTR` function provides the capability to return a portion of a large obj
 > Returned portion of the large object to be read. If `<lob_loc>` is a `BLOB`, the return data type is `RAW`. If `<lob_loc>` is a `CLOB`, the return data type is `VARCHAR2`.
 
 ---
-5.7.13 TRIM
+4.7.13 TRIM
 ---
 
 
@@ -3852,7 +3811,7 @@ The `TRIM` procedure provides the capability to truncate a large object to the s
 > Number of bytes/characters to which the large object is to be trimmed.
 
 ---
-5.7.14 WRITE
+4.7.14 WRITE
 ---
 
 
@@ -3884,7 +3843,7 @@ The `WRITE` procedure provides the capability to write data into a large object.
 > Contains data to be written to the large object. If `<lob_loc>` is a `BLOB`, then `<buffer>` must be `RAW`. If `<lob_loc>` is a `CLOB`, then `<buffer>` must be `VARCHAR2`.
 
 ---
-5.7.15 WRITEAPPEND
+4.7.15 WRITEAPPEND
 ---
 
 
@@ -3910,7 +3869,7 @@ The `WRITEAPPEND` procedure provides the capability to add data to the end of a 
 > Data to be appended to the large object. If `<lob_loc>` is a `BLOB`, then `<buffer>` must be RAW. If `<lob_loc>` is a `CLOB`, then `<buffer>` must be `VARCHAR2`.
 
 ---
-5.8 DBMS_LOCK
+4.8 DBMS_LOCK
 ---
 
 
@@ -3937,7 +3896,7 @@ The `SLEEP` procedure suspends the current session for the specified number of s
 > `<seconds>` specifies the number of seconds for which you wish to suspend the session. `<seconds>` can be a fractional value; for example, enter `1.75` to specify one and three-fourths of a second.
 
 ---
-5.9.1 DBMS_MVIEW
+4.9.1 DBMS_MVIEW
 ---
 
 
@@ -3956,14 +3915,9 @@ Use procedures in the `DBMS_MVIEW` package to manage and refresh materialized vi
 
 Advanced Server's implementation of `DBMS_MVIEW` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
-<div class="toctree" data-maxdepth="5">
-
-get_mv_dependencies refresh refresh_all_mviews refresh_dependent
-
-</div>
 
 ---
-5.9.2 GET_MV_DEPENDENCIES
+4.9.2 GET_MV_DEPENDENCIES
 ---
 
 
@@ -4002,7 +3956,7 @@ END;
 Displays a list of the dependencies on a materialized view named `public.emp_view`.
 
 ---
-5.9.3 REFRESH
+4.9.3 REFRESH
 ---
 
 
@@ -4110,7 +4064,7 @@ EXEC DBMS_MVIEW.REFRESH(list => 'public.emp_view', method => 'C');
 ```
 
 ---
-5.9.4 REFRESH_ALL_MVIEWS
+4.9.4 REFRESH_ALL_MVIEWS
 ---
 
 
@@ -4166,7 +4120,7 @@ END;
 Upon completion, `errors` contains the number of failures.
 
 ---
-5.9.5 REFRESH_DEPENDENT
+4.9.5 REFRESH_DEPENDENT
 ---
 
 
@@ -4260,7 +4214,7 @@ END;
 Upon completion, `errors` contains the number of failures.
 
 ---
-5.10 DBMS_OUTPUT
+4.10 DBMS_OUTPUT
 ---
 
 
@@ -4383,7 +4337,7 @@ END;
 
 ### GET_LINE
 
-The `GET_LINE` procedure provides the capability to retrieve a line of text from the message buffer. Only text that has been terminated by an end-of-line character sequence is retrieved – that is complete lines generated using `PUT_LINE`, or by a series of `PUT` calls followed by a `NEW_LINE` call.
+The `GET_LINE` procedure provides the capability to retrieve a line of text from the message buffer. Only text that has been terminated by an end-of-line character sequence is retrieved - that is complete lines generated using `PUT_LINE`, or by a series of `PUT` calls followed by a `NEW_LINE` call.
 
 > `GET_LINE(<line> OUT VARCHAR2, <status> OUT INTEGER)`
 
@@ -4461,7 +4415,7 @@ SELECT msg FROM messages;
 
 ### GET_LINES
 
-The `GET_LINES` procedure provides the capability to retrieve one or more lines of text from the message buffer into a collection. Only text that has been terminated by an end-of-line character sequence is retrieved – that is complete lines generated using `PUT_LINE`, or by a series of `PUT` calls followed by a `NEW_LINE` call.
+The `GET_LINES` procedure provides the capability to retrieve one or more lines of text from the message buffer into a collection. Only text that has been terminated by an end-of-line character sequence is retrieved - that is complete lines generated using `PUT_LINE`, or by a series of `PUT` calls followed by a `NEW_LINE` call.
 
 > `GET_LINES(<lines> OUT CHARARR, <numlines> IN OUT INTEGER)`
 
@@ -4698,7 +4652,7 @@ Flush messages from the buffer
 ```
 
 ---
-5.11.1 DBMS_PIPE
+4.11.1 DBMS_PIPE
 ---
 
 
@@ -4710,9 +4664,9 @@ The procedures and functions available in the `DBMS_PIPE` package are listed in 
 |                                                              |                 |                                                                                                                     |
 | ------------------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------- |
 | **Function/Procedure**                                       | **Return Type** | **Description**                                                                                                     |
-| `CREATE_PIPE(<pipename> [, <maxpipesize> ] [, <private> ])`  | `INTEGER`       | Explicitly create a private pipe if `<private>` is “true” (the default) or a public pipe if `<private>` is “false”. |
+| `CREATE_PIPE(<pipename> [, <maxpipesize> ] [, <private> ])`  | `INTEGER`       | Explicitly create a private pipe if `<private>` is "true" (the default) or a public pipe if `<private>` is "false". |
 | `NEXT_ITEM_TYPE`                                             | `INTEGER`       | Determine the data type of the next item in a received message.                                                     |
-| `PACK_MESSAGE(<item>)`                                       | n/a             | Place `<item>` in the session’s local message buffer.                                                               |
+| `PACK_MESSAGE(<item>)`                                       | n/a             | Place `<item>` in the session's local message buffer.                                                               |
 | `PURGE(<pipename>)`                                          | n/a             | Remove unreceived messages from the specified pipe.                                                                 |
 | `RECEIVE_MESSAGE(<pipename> [, <timeout> ])`                 | `INTEGER`       | Get a message from a specified pipe.                                                                                |
 | `REMOVE_PIPE(<pipename>)`                                    | `INTEGER`       | Delete an explicitly created pipe.                                                                                  |
@@ -4727,20 +4681,15 @@ Pipes are also categorized as private or public. A *private pipe* can only be ac
 
 A public pipe can only be created by using the `CREATE_PIPE` function with the third parameter set to `FALSE`. The `CREATE_PIPE` function can be used to create a private pipe by setting the third parameter to `TRUE` or by omitting the third parameter. All implicit pipes are private.
 
-The individual data items or “lines” of a message are first built-in a *local message buffer*, unique to the current session. The `PACK_MESSAGE` procedure builds the message in the session’s local message buffer. The `SEND_MESSAGE` function is then used to send the message through the pipe.
+The individual data items or "lines" of a message are first built-in a *local message buffer*, unique to the current session. The `PACK_MESSAGE` procedure builds the message in the session's local message buffer. The `SEND_MESSAGE` function is then used to send the message through the pipe.
 
-Receipt of a message involves the reverse operation. The `RECEIVE_MESSAGE` function is used to get a message from the specified pipe. The message is written to the session’s local message buffer. The `UNPACK_MESSAGE` procedure is then used to transfer the message data items from the message buffer to program variables. If a pipe contains multiple messages, `RECEIVE_MESSAGE` gets the messages in *FIFO* (first-in-first-out) order.
+Receipt of a message involves the reverse operation. The `RECEIVE_MESSAGE` function is used to get a message from the specified pipe. The message is written to the session's local message buffer. The `UNPACK_MESSAGE` procedure is then used to transfer the message data items from the message buffer to program variables. If a pipe contains multiple messages, `RECEIVE_MESSAGE` gets the messages in *FIFO* (first-in-first-out) order.
 
 Each session maintains separate message buffers for messages created with the `PACK_MESSAGE` procedure and messages retrieved by the `RECEIVE_MESSAGE` function. Thus messages can be both built and received in the same session. However, if consecutive `RECEIVE_MESSAGE` calls are made, only the message from the last `RECEIVE_MESSAGE` call will be preserved in the local message buffer.
 
-<div class="toctree" data-maxdepth="5">
-
-create_pipe next_item_pipe pack_message purge receive_message remove_pipe reset_buffer send_message unique_session_name unpack_message comprehensive_example
-
-</div>
 
 ---
-5.11.2 CREATE_PIPE
+4.11.2 CREATE_PIPE
 ---
 
 
@@ -4796,12 +4745,12 @@ CREATE_PIPE status: 0
 ```
 
 ---
-5.11.3 NEXT_ITEM_TYPE
+4.11.3 NEXT_ITEM_TYPE
 ---
 
 
 
-The `NEXT_ITEM_TYPE` function returns an integer code identifying the data type of the next data item in a message that has been retrieved into the session’s local message buffer. As each item is moved off of the local message buffer with the `UNPACK_MESSAGE` procedure, the `NEXT_ITEM_TYPE` function will return the data type code for the next available item. A code of 0 is returned when there are no more items left in the message.
+The `NEXT_ITEM_TYPE` function returns an integer code identifying the data type of the next data item in a message that has been retrieved into the session's local message buffer. As each item is moved off of the local message buffer with the `UNPACK_MESSAGE` procedure, the `NEXT_ITEM_TYPE` function will return the data type code for the next available item. A code of 0 is returned when there are no more items left in the message.
 
 > `<typecode> INTEGER NEXT_ITEM_TYPE`
 
@@ -4921,12 +4870,12 @@ NEXT_ITEM_TYPE: 0
 ```
 
 ---
-5.11.4 PACK_MESSAGE
+4.11.4 PACK_MESSAGE
 ---
 
 
 
-The `PACK_MESSAGE` procedure places an item of data in the session’s local message buffer. `PACK_MESSAGE` must be executed at least once before issuing a `SEND_MESSAGE` call.
+The `PACK_MESSAGE` procedure places an item of data in the session's local message buffer. `PACK_MESSAGE` must be executed at least once before issuing a `SEND_MESSAGE` call.
 
 > `PACK_MESSAGE(<item> { DATE | NUMBER | VARCHAR2 | RAW })`
 
@@ -4936,10 +4885,10 @@ Use the `UNPACK_MESSAGE` procedure to obtain data items once the message is retr
 
 `<item>`
 
-An expression evaluating to any of the acceptable parameter data types. The value is added to the session’s local message buffer.
+An expression evaluating to any of the acceptable parameter data types. The value is added to the session's local message buffer.
 
 ---
-5.11.5 PURGE
+4.11.5 PURGE
 ---
 
 
@@ -5015,7 +4964,7 @@ RECEIVE_MESSAGE status: 1
 ```
 
 ---
-5.11.6 RECEIVE_MESSAGE
+4.11.6 RECEIVE_MESSAGE
 ---
 
 
@@ -5050,7 +4999,7 @@ The possible status codes are:
 | 2           | Message too large .for the buffer |
 
 ---
-5.11.7 REMOVE_PIPE
+4.11.7 REMOVE_PIPE
 ---
 
 
@@ -5059,7 +5008,7 @@ The `REMOVE_PIPE` function deletes an explicit private or explicit public pipe.
 
 `<status> INTEGER REMOVE_PIPE(<pipename> VARCHAR2)`
 
-Use the `REMOVE_PIPE` function to delete explicitly created pipes – i.e., pipes created with the `CREATE_PIPE` function.
+Use the `REMOVE_PIPE` function to delete explicitly created pipes - i.e., pipes created with the `CREATE_PIPE` function.
 
 **Parameters**
 
@@ -5143,12 +5092,12 @@ RECEIVE_MESSAGE status: 1
 ```
 
 ---
-5.11.8 RESET_BUFFER
+4.11.8 RESET_BUFFER
 ---
 
 
 
-The `RESET_BUFFER` procedure resets a “pointer” to the session’s local message buffer back to the beginning of the buffer. This has the effect of causing subsequent `PACK_MESSAGE` calls to overwrite any data items that existed in the message buffer prior to the `RESET_BUFFER` call.
+The `RESET_BUFFER` procedure resets a "pointer" to the session's local message buffer back to the beginning of the buffer. This has the effect of causing subsequent `PACK_MESSAGE` calls to overwrite any data items that existed in the message buffer prior to the `RESET_BUFFER` call.
 
 > `RESET_BUFFER`
 
@@ -5194,12 +5143,12 @@ Item: Can you attend a meeting at 9:30, tomorrow?
 ```
 
 ---
-5.11.9 SEND_MESSAGE
+4.11.9 SEND_MESSAGE
 ---
 
 
 
-The `SEND_MESSAGE` function sends a message from the session’s local message buffer to the specified pipe.
+The `SEND_MESSAGE` function sends a message from the session's local message buffer to the specified pipe.
 
 > `<status> SEND_MESSAGE(<pipename> VARCHAR2 [, <timeout> INTEGER ]`
 > 
@@ -5233,7 +5182,7 @@ The possible status codes are:
 | 3           | Function interrupted |
 
 ---
-5.11.10 UNIQUE_SESSION_NAME
+4.11.10 UNIQUE_SESSION_NAME
 ---
 
 
@@ -5264,7 +5213,7 @@ Session Name: PG$PIPE$5$2752
 ```
 
 ---
-5.11.11 UNPACK_MESSAGE
+4.11.11 UNPACK_MESSAGE
 ---
 
 
@@ -5280,12 +5229,12 @@ The `UNPACK_MESSAGE` procedure copies the data items of a message from the local
 Type-compatible variable that receives a data item from the local message buffer.
 
 ---
-5.11.12 Comprehensive Example
+4.11.12 Comprehensive Example
 ---
 
 
 
-The following example uses a pipe as a “mailbox”. The procedures to create the mailbox, add a multi-item message to the mailbox (up to three items), and display the full contents of the mailbox are enclosed in a package named, `mailbox`.
+The following example uses a pipe as a "mailbox". The procedures to create the mailbox, add a multi-item message to the mailbox (up to three items), and display the full contents of the mailbox are enclosed in a package named, `mailbox`.
 
 ``` text
 CREATE OR REPLACE PACKAGE mailbox
@@ -5434,7 +5383,7 @@ Deleted mailbox PG$PIPE$13$3940
 ```
 
 ---
-5.12 DBMS_PROFILER
+4.12 DBMS_PROFILER
 ---
 
 
@@ -5853,7 +5802,7 @@ acctg=# SELECT runid, sourcecode, func_oid, line_number, exec_count, tuples_retu
     2 | END;                                                             |    17004 |          22 |          0 |               0 |          0
     2 |                                                                  |    17004 |          23 |          0 |               0 |          0
  (68 rows)
-                                                                                                                   
+
 ```
 
 11. Query the `plsql_profiler_data` view to review a subset of the information found in `plsql_profiler_rawdata` table:
@@ -6148,7 +6097,7 @@ The `PLSQL_PROFILER_RAWDATA` table contains the statistical and wait events info
 | `totalwaittime`                          | `BIGINT`           | The total time spent waiting for an event.                                                                                                                                                                                                                                |
 
 ---
-5.13 DBMS_RANDOM
+4.13 DBMS_RANDOM
 ---
 
 
@@ -6383,7 +6332,7 @@ x := DBMS_RANDOM.VALUE(1, 100);
 ```
 
 ---
-5.14 DBMS_REDACT
+4.14 DBMS_REDACT
 ---
 
 
@@ -6448,15 +6397,15 @@ The following table highlights the format descriptor for partial redaction with 
 |           | `REDACT_PARTIAL_MASKCHAR`      | Specifies the character to be used for redaction.                                                                                                                                                                                 | The value `X` for redacting SSN strings into `XXX-XX-6789`.                                                                                                                                                                                                               |
 |           | `REDACT_PARTIAL_MASKFROM`      | Specifies which `V` within the input format from which to start the redaction.                                                                                                                                                    | The value `1` for redacting SSN strings starting at the first `V` of the input format of `VVVFVVFVVVV` into strings such as `XXX-XX-6789`.                                                                                                                                |
 |           | `REDACT_PARTIAL_MASKTO`        | Specifies which `V` within the input format at which to end the redaction.                                                                                                                                                        | The value 5 for redacting SSN strings up to and including the fifth `V` within the input format of `VVVFVVFVVVV` into strings such as `XXX-XX-6789`.                                                                                                                      |
-| Number    | `REDACT_PARTIAL_MASKCHAR`      | Specifies the character to be displayed in the range between 0 and 9.                                                                                                                                                             | `‘9, 1, 5’` for redacting the first five digits of the Social Security Number `123456789` into `999996789`.                                                                                                                                                               |
+| Number    | `REDACT_PARTIAL_MASKCHAR`      | Specifies the character to be displayed in the range between 0 and 9.                                                                                                                                                             | `9, 1, 5` for redacting the first five digits of the Social Security Number `123456789` into `999996789`.                                                                                                                                                               |
 |           | `REDACT_PARTIAL_MASKFROM`      | Specifies the start digit position for redaction.                                                                                                                                                                                 |                                                                                                                                                                                                                                                                           |
 |           | `REDACT_PARTIAL_MASKTO`        | Specifies the end digit position for redaction.                                                                                                                                                                                   |                                                                                                                                                                                                                                                                           |
-| Datetime  | `REDACT_PARTIAL_DATE_MONTH`    | `‘m’` redacts the month. To mask a specific month, specify `‘m#’` where \# indicates the month specified by its number between `1` and `12`.                                                                                      | `m3` displays as March.                                                                                                                                                                                                                                                   |
-|           | `REDACT_PARTIAL_DATE_DAY`      | `‘d’` redacts the day of the month. To mask with a day of the month, append `1-31` to a lowercase `d`.                                                                                                                            | `d3` displays as `03`.                                                                                                                                                                                                                                                    |
-|           | `REDACT_PARTIAL_DATE_YEAR`     | `‘y’` redacts the year. To mask with a year, append `1-9999` to a lowercase `y`.                                                                                                                                                  | `y1960` displays as `60`.                                                                                                                                                                                                                                                 |
-|           | `REDACT_PARTIAL_DATE_HOUR`     | `‘h’` redacts the hour. To mask with an hour, append `0-23` to a lowercase `h`.                                                                                                                                                   | `h18` displays as `18`.                                                                                                                                                                                                                                                   |
-|           | `REDACT_PARTIAL_DATE_MINUTE`   | `‘m’` redacts the minute. To mask with a minute, append `0-59` to a lowercase `m`.                                                                                                                                                | `m20` displays as `20`.                                                                                                                                                                                                                                                   |
-|           | `REDACT_PARTIAL_DATE_SECOND`   | `‘s’` redacts the second. To mask with a second, append `0-59` to a lowercase `s`.                                                                                                                                                | `s40` displays as `40`.                                                                                                                                                                                                                                                   |
+| Datetime  | `REDACT_PARTIAL_DATE_MONTH`    | `'m'` redacts the month. To mask a specific month, specify `'m#'` where \# indicates the month specified by its number between `1` and `12`.                                                                                      | `m3` displays as March.                                                                                                                                                                                                                                                   |
+|           | `REDACT_PARTIAL_DATE_DAY`      | `'d'` redacts the day of the month. To mask with a day of the month, append `1-31` to a lowercase `d`.                                                                                                                            | `d3` displays as `03`.                                                                                                                                                                                                                                                    |
+|           | `REDACT_PARTIAL_DATE_YEAR`     | `'y'` redacts the year. To mask with a year, append `1-9999` to a lowercase `y`.                                                                                                                                                  | `y1960` displays as `60`.                                                                                                                                                                                                                                                 |
+|           | `REDACT_PARTIAL_DATE_HOUR`     | `'h'` redacts the hour. To mask with an hour, append `0-23` to a lowercase `h`.                                                                                                                                                   | `h18` displays as `18`.                                                                                                                                                                                                                                                   |
+|           | `REDACT_PARTIAL_DATE_MINUTE`   | `'m'` redacts the minute. To mask with a minute, append `0-59` to a lowercase `m`.                                                                                                                                                | `m20` displays as `20`.                                                                                                                                                                                                                                                   |
+|           | `REDACT_PARTIAL_DATE_SECOND`   | `'s'` redacts the second. To mask with a second, append `0-59` to a lowercase `s`.                                                                                                                                                | `s40` displays as `40`.                                                                                                                                                                                                                                                   |
 
 The following table represents `function_parameters` values that can be used in partial redaction.
 
@@ -6602,7 +6551,7 @@ The following table represents `function_parameters` values that can be used in 
 <tr class="even">
 <td><code>REDACT_NA_PHONE_FORMATTED</code></td>
 <td><code>VARCHAR2</code></td>
-<td><code>‘VVVFVVVFVVVV,VVV-VVV-VVVV,X,4,10'</code></td>
+<td><code>'VVVFVVVFVVVV,VVV-VVV-VVVV,X,4,10'</code></td>
 <td><p>Redacts the North American phone number by <code>X</code> leaving the area code.</p>
 <p><strong>Example:</strong> <code>123-456-7890</code> becomes <code>123-XXX-XXXX</code>.</p></td>
 </tr>
@@ -6882,7 +6831,7 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 
 `<regexp_match_parameter>`
 
-> Changes the default matching behavior of a function. The possible regexp_match_parameter constants can be `‘RE_CASE_SENSITIVE’, ‘RE_CASE_INSENSITIVE’, ‘RE_MULTIPLE_LINES’, ‘RE_NEWLINE_WILDCARD’, ‘RE_IGNORE_WHITESPACE’`.
+> Changes the default matching behavior of a function. The possible regexp_match_parameter constants can be `'RE_CASE_SENSITIVE', 'RE_CASE_INSENSITIVE', 'RE_MULTIPLE_LINES', 'RE_NEWLINE_WILDCARD', 'RE_IGNORE_WHITESPACE'`.
 > 
 > <div class="note">
 > 
@@ -6898,7 +6847,7 @@ custom_function_expression    IN VARCHAR2 DEFAULT NULL
 
 `<custom_function_expression>`
 
-> The `custom_function_expression` is applicable only for the `CUSTOM` redaction type. The `custom_function_expression` is a function expression that is, schema-qualified function with a parameter such as `schema_name.function_name (argument1, …`)that allows a user to use their redaction logic to redact the column data.
+> The `custom_function_expression` is applicable only for the `CUSTOM` redaction type. The `custom_function_expression` is a function expression that is, schema-qualified function with a parameter such as `schema_name.function_name (argument1, ...`)that allows a user to use their redaction logic to redact the column data.
 
 **Example**
 
@@ -7028,7 +6977,7 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<regexp_match_parameter>`
 
-> Changes the default matching behavior of a function. The possible regexp_match_parameter constants can be `‘RE_CASE_SENSITIVE’, ‘RE_CASE_INSENSITIVE’, ‘RE_MULTIPLE_LINES’, ‘RE_NEWLINE_WILDCARD’, ‘RE_IGNORE_WHITESPACE’`.
+> Changes the default matching behavior of a function. The possible regexp_match_parameter constants can be `'RE_CASE_SENSITIVE', 'RE_CASE_INSENSITIVE', 'RE_MULTIPLE_LINES', 'RE_NEWLINE_WILDCARD', 'RE_IGNORE_WHITESPACE'`.
 > 
 > > 
 > > 
@@ -7054,7 +7003,7 @@ custom_function_expression  IN VARCHAR2 DEFAULT NULL
 
 `<custom_function_expression>`
 
-> The `custom_function_expression` is applicable only for the `CUSTOM` redaction type. The `custom_function_expression` is a function expression that is, schema-qualified function with a parameter such as `schema_name.function_name (argument1`, …)that allows a user to use their redaction logic to redact the column data.
+> The `custom_function_expression` is applicable only for the `CUSTOM` redaction type. The `custom_function_expression` is a function expression that is, schema-qualified function with a parameter such as `schema_name.function_name (argument1`, ...)that allows a user to use their redaction logic to redact the column data.
 
 **Example**
 
@@ -7385,7 +7334,7 @@ edb=> select * from payment_details_tab order by 1;
 ```
 
 ---
-5.15 DBMS_RLS
+4.15 DBMS_RLS
 ---
 
 
@@ -7703,7 +7652,7 @@ You must be a superuser to execute this procedure.
 
 > Comma-separated list of columns of `<object_name>`. Provides *column-level Virtual Private Database* for the listed columns. The policy is enforced if any of the listed columns are referenced in a SQL command of a type listed in `<statement_types>`. The policy is not enforced if no such columns are referenced.
 > 
-> The default is `NULL`, which has the same effect as if all of the database object’s columns were included in `<sec_relevant_cols>`.
+> The default is `NULL`, which has the same effect as if all of the database object's columns were included in `<sec_relevant_cols>`.
 
 `<sec_relevant_cols_opt>`
 
@@ -8028,7 +7977,7 @@ END;
 ```
 
 ---
-5.16.1 DBMS_SCHEDULER
+4.16.1 DBMS_SCHEDULER
 ---
 
 
@@ -8068,14 +8017,9 @@ By default, the `dbms_scheduler` extension resides in the `contrib/dbms_schedule
 
 Note that after creating the `DBMS_SCHEDULER` tables, only a superuser will be able to perform a dump or reload of the database.
 
-<div class="toctree" data-maxdepth="6">
-
-using_calendar_syntax_to_specify_a_repeating_interval create_job create_program create_schedule define_program_argument dbms_scheduler_disable drop_job drop_program drop_program_argument drop_schedule dbms_scheduler_enable evaluate_calendar_string run_job set_job_argument_value
-
-</div>
 
 ---
-5.16.2 'Using Calendar Syntax to Specify a Repeating Interval'
+4.16.2 'Using Calendar Syntax to Specify a Repeating Interval'
 ---
 
 The `CREATE_JOB` and `CREATE_SCHEDULE` procedures use Oracle-styled calendar syntax to define the interval with which a job or schedule is repeated. You should provide the scheduling information in the `<repeat_interval>` parameter of each procedure.
@@ -8220,7 +8164,7 @@ The token types and syntax described in the table below are supported by Advance
 </div>
 
 ---
-5.16.3 CREATE_JOB
+4.16.3 CREATE_JOB
 ---
 
 
@@ -8329,7 +8273,7 @@ EXEC
 The code fragment creates a job named `update_log` that executes each weeknight at 5:00. The job executes a PL/SQL block that inserts the current timestamp into a logfile (`my_log`). Since no `end_date` is specified, the job will execute until it is disabled by the `DBMS_SCHEDULER.DISABLE` procedure.
 
 ---
-5.16.4 CREATE_PROGRAM
+4.16.4 CREATE_PROGRAM
 ---
 
 
@@ -8396,7 +8340,7 @@ EXEC
 `update_log` is a PL/SQL block that adds a row containing the current date and time to the `my_log` table. The program will be enabled when the `CREATE_PROGRAM` procedure executes.
 
 ---
-5.16.5 CREATE_SCHEDULE
+4.16.5 CREATE_SCHEDULE
 ---
 
 
@@ -8462,7 +8406,7 @@ EXEC
 The schedule executes each weeknight, at 5:00 pm, effective after June 1, 2013. Since no `end_date` is specified, the schedule will execute indefinitely until it is disabled with `DBMS_SCHEDULER.DISABLE`.
 
 ---
-5.16.6 DEFINE_PROGRAM_ARGUMENT
+4.16.6 DEFINE_PROGRAM_ARGUMENT
 ---
 
 
@@ -8535,7 +8479,7 @@ EXEC
 The first argument is an `INTEGER` value named`dept_no` that has a default value of `20`. The second argument is a `VARCHAR2` value named `emp_name`; the second argument does not have a default value.
 
 ---
-5.16.7 DISABLE
+4.16.7 DISABLE
 ---
 
 <div id="dbms_scheduler_disable" class="registered_link"></div>
@@ -8573,7 +8517,7 @@ DBMS_SCHEDULER.DISABLE('update_emp');
 ```
 
 ---
-5.16.8 DROP_JOB
+4.16.8 DROP_JOB
 ---
 
 
@@ -8615,7 +8559,7 @@ DBMS_SCHEDULER.DROP_JOB('update_log');
 ```
 
 ---
-5.16.9 DROP_PROGRAM
+4.16.9 DROP_PROGRAM
 ---
 
 
@@ -8653,7 +8597,7 @@ DBMS_SCHEDULER.DROP_PROGRAM('update_emp');
 ```
 
 ---
-5.16.10 DROP_PROGRAM_ARGUMENT
+4.16.10 DROP_PROGRAM_ARGUMENT
 ---
 
 
@@ -8697,7 +8641,7 @@ DBMS_SCHEDULER.DROP_PROGRAM_ARGUMENT(update_emp', 'emp_name');
 ```
 
 ---
-5.16.11 DROP_SCHEDULE
+4.16.11 DROP_SCHEDULE
 ---
 
 
@@ -8732,7 +8676,7 @@ DBMS_SCHEDULER.DROP_SCHEDULE('weeknights_at_5', TRUE);
 The server will disable any jobs that use the schedule before dropping the schedule.
 
 ---
-5.16.12 ENABLE
+4.16.12 ENABLE
 ---
 
 <div id="dbms_scheduler_enable" class="registered_link"></div>
@@ -8767,7 +8711,7 @@ DBMS_SCHEDULER.ENABLE('update_emp');
 ```
 
 ---
-5.16.13 EVALUATE_CALENDAR_STRING
+4.16.13 EVALUATE_CALENDAR_STRING
 ---
 
 
@@ -8827,7 +8771,7 @@ next_run_date: 17-JUN-13 05.00.00.000000 PM
 June 15, 2013 is a Saturday; the schedule will not execute until Monday, June 17, 2013 at 5:00 pm.
 
 ---
-5.16.14 RUN_JOB
+4.16.14 RUN_JOB
 ---
 
 
@@ -8859,7 +8803,7 @@ DBMS_SCHEDULER.RUN_JOB('update_log', TRUE);
 Passing a value of `TRUE` as the second argument instructs the server to invoke the job in the current session.
 
 ---
-5.16.15 SET_JOB_ARGUMENT_VALUE
+4.16.15 SET_JOB_ARGUMENT_VALUE
 ---
 
 
@@ -8914,7 +8858,7 @@ DBMS_SCHEDULER.SET_JOB_ARGUMENT_VALUE('update_emp', 'emp_name',
 ```
 
 ---
-5.17 DBMS_SESSION
+4.17 DBMS_SESSION
 ---
 
 
@@ -8951,7 +8895,7 @@ edb=# exec DBMS_SESSION.SET_ROLE('manager');
 ```
 
 ---
-5.18.1 DBMS_SQL
+4.18.1 DBMS_SQL
 ---
 
 
@@ -8993,14 +8937,9 @@ The following table lists the public variable available in the `DBMS_SQL` packag
 | V6               | INTEGER   | 2     | Provided for compatibility with Oracle syntax. See DBMS_SQL.PARSE for more information. |
 | V7               | INTEGER   | 3     | Provided for compatibility with Oracle syntax. See DBMS_SQL.PARSE for more information  |
 
-<div class="toctree" data-maxdepth="5">
-
-bind_variable bind_variable_char bind_variable_raw close_cursor column_value column_value_char column_value_raw define_column define_column_char define_column_raw describe_columns execute execute_and_fetch fetch_rows is_open last_row_count open_cursor parse
-
-</div>
 
 ---
-5.18.2 BIND_VARIABLE
+4.18.2 BIND_VARIABLE
 ---
 
 
@@ -9080,7 +9019,7 @@ Number of rows processed: 1
 ```
 
 ---
-5.18.3 BIND_VARIABLE_CHAR
+4.18.3 BIND_VARIABLE_CHAR
 ---
 
 
@@ -9110,7 +9049,7 @@ The `BIND_VARIABLE_CHAR` procedure provides the capability to associate a `CHAR`
 > If `<name>` is an `IN OUT` variable, defines the maximum length of the output value. If not specified, the length of `<value>` is assumed.
 
 ---
-5.18.4 BIND VARIABLE RAW
+4.18.4 BIND VARIABLE RAW
 ---
 
 
@@ -9140,7 +9079,7 @@ The `BIND_VARIABLE_RAW` procedure provides the capability to associate a `RAW` v
 > If `<name>` is an `IN OUT` variable, defines the maximum length of the output value. If not specified, the length of `<value>` is assumed.
 
 ---
-5.18.5 CLOSE_CURSOR
+4.18.5 CLOSE_CURSOR
 ---
 
 
@@ -9172,7 +9111,7 @@ END;
 ```
 
 ---
-5.18.6 COLUMN_VALUE
+4.18.6 COLUMN_VALUE
 ---
 
 
@@ -9245,7 +9184,7 @@ END;
 ```
 
 ---
-5.18.7 COLUMN_VALUE_CHAR
+4.18.7 COLUMN_VALUE_CHAR
 ---
 
 
@@ -9279,7 +9218,7 @@ The `COLUMN_VALUE_CHAR` procedure defines a variable to receive a `CHAR` value f
 > Actual length of the data prior to any truncation.
 
 ---
-5.18.8 COLUMN_VALUE_RAW
+4.18.8 COLUMN_VALUE_RAW
 ---
 
 
@@ -9313,7 +9252,7 @@ The `COLUMN_VALUE_RAW` procedure defines a variable to receive a `RAW` value fro
 > Actual length of the data prior to any truncation.
 
 ---
-5.18.9 DEFINE_COLUMN
+4.18.9 DEFINE_COLUMN
 ---
 
 
@@ -9373,7 +9312,7 @@ BEGIN
 END;
 ```
 
-The following shows an alternative to the prior example that produces the exact same results. Note that the lengths of the data types are irrelevant – the `empno, sal`, and `comm` columns will still return data equivalent to `NUMBER(4)` and `NUMBER(7,2)`, respectively, even though `v_num` is defined as `NUMBER(1)` (assuming the declarations in the `COLUMN_VALUE` procedure are of the appropriate maximum sizes). The `ename` column will return data up to ten characters in length as defined by the `<length>` parameter in the `DEFINE_COLUMN` call, not by the data type declaration, `VARCHAR2(1)` declared for `v_varchar`. The actual size of the returned data is dictated by the `COLUMN_VALUE` procedure.
+The following shows an alternative to the prior example that produces the exact same results. Note that the lengths of the data types are irrelevant - the `empno, sal`, and `comm` columns will still return data equivalent to `NUMBER(4)` and `NUMBER(7,2)`, respectively, even though `v_num` is defined as `NUMBER(1)` (assuming the declarations in the `COLUMN_VALUE` procedure are of the appropriate maximum sizes). The `ename` column will return data up to ten characters in length as defined by the `<length>` parameter in the `DEFINE_COLUMN` call, not by the data type declaration, `VARCHAR2(1)` declared for `v_varchar`. The actual size of the returned data is dictated by the `COLUMN_VALUE` procedure.
 
 ``` text
 DECLARE
@@ -9399,7 +9338,7 @@ END;
 ```
 
 ---
-5.18.10 DEFINE_COLUMN_CHAR
+4.18.10 DEFINE_COLUMN_CHAR
 ---
 
 
@@ -9427,7 +9366,7 @@ The `DEFINE_COLUMN_CHAR` procedure defines a `CHAR` column or expression in the 
 > The maximum length of the returned data. Returned data exceeding `<column_size>` is truncated to `<column_size>` characters.
 
 ---
-5.18.11 DEFINE_COLUMN_RAW
+4.18.11 DEFINE_COLUMN_RAW
 ---
 
 
@@ -9457,7 +9396,7 @@ The `DEFINE_COLUMN_RAW` procedure defines a `RAW` column or expression in the `S
 > The maximum length of the returned data. Returned data exceeding `<column_size>` is truncated to `<column_size>` characters.
 
 ---
-5.18.12 DESCRIBE COLUMNS
+4.18.12 DESCRIBE COLUMNS
 ---
 
 
@@ -9496,7 +9435,7 @@ The `DESCRIBE_COLUMNS` procedure describes the columns returned by a cursor.
 | col_null_ok          | BOOLEAN       |
 
 ---
-5.18.13 EXECUTE
+4.18.13 EXECUTE
 ---
 
 
@@ -9535,7 +9474,7 @@ END;
 ```
 
 ---
-5.18.14 EXECUTE_AND_FETCH
+4.18.14 EXECUTE_AND_FETCH
 ---
 
 
@@ -9562,7 +9501,7 @@ Function `EXECUTE_AND_FETCH` executes a parsed `SELECT` command and fetches one 
 
 **Examples**
 
-The following stored procedure uses the `EXECUTE_AND_FETCH` function to retrieve one employee using the employee’s name. An exception will be thrown if the employee is not found, or there is more than one employee with the same name.
+The following stored procedure uses the `EXECUTE_AND_FETCH` function to retrieve one employee using the employee's name. An exception will be thrown if the employee is not found, or there is more than one employee with the same name.
 
 ``` text
 CREATE OR REPLACE PROCEDURE select_by_name(
@@ -9632,7 +9571,7 @@ Department: SALES
 ```
 
 ---
-5.18.15 FETCH_ROWS
+4.18.15 FETCH_ROWS
 ---
 
 
@@ -9715,7 +9654,7 @@ EMPNO  ENAME       HIREDATE    SAL       COMM
 ```
 
 ---
-5.18.16 IS_OPEN
+4.18.16 IS_OPEN
 ---
 
 
@@ -9735,7 +9674,7 @@ The `IS_OPEN` function provides the capability to test if the given cursor is op
 > Set to `TRUE` if the cursor is open, set to `FALSE` if the cursor is not open.
 
 ---
-5.18.17 LAST_ROW_COUNT
+4.18.17 LAST_ROW_COUNT
 ---
 
 
@@ -9816,7 +9755,7 @@ Number of rows: 14
 ```
 
 ---
-5.18.18 OPEN_CURSOR
+4.18.18 OPEN_CURSOR
 ---
 
 
@@ -9847,7 +9786,7 @@ END;
 ```
 
 ---
-5.18.19 PARSE
+4.18.19 PARSE
 ---
 
 
@@ -9929,7 +9868,7 @@ END;
 ```
 
 ---
-5.19 DBMS_UTILITY
+4.19 DBMS_UTILITY
 ---
 
 
@@ -9942,7 +9881,7 @@ The `DBMS_UTILITY` package provides support for the following various utility pr
 | ANALYZE_DATABASE(method \[, estimate_rows \[, estimate_percent \[, method_opt \]\]\])                                   | Procedure             | n/a               | Analyze database tables.                                     |
 | ANALYZE_PART_OBJECT(schema, object_name \[, object_type \[, command_type \[, command_opt \[, sample_clause \]\]\]\]) | Procedure             | n/a               | Analyze a partitioned table.                                 |
 | ANALYZE_SCHEMA(schema, method \[, estimate_rows \[, estimate_percent \[, method_opt \]\]\])                             | Procedure             | n/a               | Analyze schema tables.                                       |
-| CANONICALIZE(name, canon_name OUT, canon_len)                                                                             | Procedure             | n/a               | Canonicalizes a string – e.g., strips off white space.       |
+| CANONICALIZE(name, canon_name OUT, canon_len)                                                                             | Procedure             | n/a               | Canonicalizes a string - e.g., strips off white space.       |
 | COMMA_TO_TABLE(list, tablen OUT, tab OUT)                                                                                 | Procedure             | n/a               | Convert a comma-delimited list of names to a table of names. |
 | DB_VERSION(version OUT, compatibility OUT)                                                                                 | Procedure             | n/a               | Get the database version.                                    |
 | EXEC_DDL_STATEMENT(parse_string)                                                                                         | Procedure             | n/a               | Execute a DDL statement.                                     |
@@ -10056,13 +9995,13 @@ The syntax for the `ANALYZE` commands are:
 
 `<object_type>`
 
-> Type of object to be analyzed. Valid values are: `T` – table, `I` – index.
+> Type of object to be analyzed. Valid values are: `T` - table, `I` - index.
 > 
 > This argument is ignored, but is included for compatibility.
 
 `<command_type>`
 
-> Type of analyze functionality to perform. Valid values are: `E` - gather estimated statistics based upon on a specified number of rows or a percentage of rows in the `<sample_clause>` clause; `C` - compute exact statistics; or `V` – validate the structure and integrity of the partitions.
+> Type of analyze functionality to perform. Valid values are: `E` - gather estimated statistics based upon on a specified number of rows or a percentage of rows in the `<sample_clause>` clause; `C` - compute exact statistics; or `V` - validate the structure and integrity of the partitions.
 > 
 > This argument is ignored, but is included for compatibility.
 
@@ -10288,8 +10227,8 @@ END;
 If the `<parse_string>` does not include a valid DDL statement, Advanced Server returns the following error:
 
 ``` text
-edb=#  exec dbms_utility.exec_ddl_statement('select rownum from dual');
-ERROR:  EDB-20001: 'parse_string' must be a valid DDL statement
+edb=#  exec dbms_utility.exec_ddl_statement('select rownum from dual');
+ERROR:  EDB-20001: 'parse_string' must be a valid DDL statement
 ```
 
 In this case, Advanced Server's behavior differs from Oracle's; Oracle accepts the invalid `<parse_string>` without complaint.
@@ -10727,7 +10666,7 @@ Comma-Delimited List: edb.dept, edb.emp, edb.jobhist
 ```
 
 ---
-5.20.1 UTL_ENCODE
+4.20.1 UTL_ENCODE
 ---
 
 
@@ -10749,14 +10688,9 @@ The `UTL_ENCODE` package provides a way to encode and decode data. Advanced Serv
 | UUDECODE(r)                                        | RAW         | Use the UUDECODE function to translate a uuencode encoded string to a RAW value.                                   |
 | UUENCODE(r, type, filename, permission)            | RAW         | Use the UUENCODE function to translate a RAW string to an encoded uuencode value.                                  |
 
-<div class="toctree" data-maxdepth="6">
-
-base64_decode base64_encode mimeheader_decode mimeheader_encode quoted_printable_decode quoted_printable_encode text_decode text_encode uudecode uuencode
-
-</div>
 
 ---
-5.20.2 BASE64_DECODE
+4.20.2 BASE64_DECODE
 ---
 
 
@@ -10800,7 +10734,7 @@ edb=# SELECT UTL_ENCODE.BASE64_DECODE(CAST ('YWJj' AS RAW));
 ```
 
 ---
-5.20.3 BASE64_ENCODE
+4.20.3 BASE64_ENCODE
 ---
 
 
@@ -10852,7 +10786,7 @@ edb=# SELECT UTL_ENCODE.BASE64_DECODE(CAST ('YWJj' AS RAW));
 ```
 
 ---
-5.20.4 MIMEHEADER_DECODE
+4.20.4 MIMEHEADER_DECODE
 ---
 
 
@@ -10888,7 +10822,7 @@ edb=# SELECT UTL_ENCODE.MIMEHEADER_DECODE('=?UTF8?Q?What is the date??=') FROM D
 ```
 
 ---
-5.20.5 MIMEHEADER_ENCODE
+4.20.5 MIMEHEADER_ENCODE
 ---
 
 
@@ -10935,7 +10869,7 @@ edb=# SELECT UTL_ENCODE.MIMEHEADER_DECODE('=?UTF8?Q?What is the date??=') FROM D
 ```
 
 ---
-5.20.6 QUOTED_PRINTABLE_DECODE
+4.20.6 QUOTED_PRINTABLE_DECODE
 ---
 
 
@@ -10980,7 +10914,7 @@ edb=# SELECT UTL_ENCODE.QUOTED_PRINTABLE_DECODE('E=3Dmc2') FROM DUAL;
 ```
 
 ---
-5.20.7 QUOTED_PRINTABLE_ENCODE
+4.20.7 QUOTED_PRINTABLE_ENCODE
 ---
 
 
@@ -11023,7 +10957,7 @@ edb=# SELECT UTL_ENCODE.QUOTED_PRINTABLE_DECODE('E=3Dmc2') FROM DUAL;
 ```
 
 ---
-5.20.8 TEXT_DECODE
+4.20.8 TEXT_DECODE
 ---
 
 
@@ -11071,7 +11005,7 @@ What is the date?
 ```
 
 ---
-5.20.9 TEXT_ENCODE
+4.20.9 TEXT_ENCODE
 ---
 
 
@@ -11119,7 +11053,7 @@ What is the date?
 ```
 
 ---
-5.20.10 UUDECODE
+4.20.10 UUDECODE
 ---
 
 
@@ -11172,7 +11106,7 @@ What is the date?
 ```
 
 ---
-5.20.11 UUENCODE
+4.20.11 UUENCODE
 ---
 
 
@@ -11239,12 +11173,12 @@ edb-# FROM DUAL;
 ```
 
 ---
-5.21 UTL_FILE
+4.21 UTL_FILE
 ---
 
 
 
-The `UTL_FILE` package provides the capability to read from, and write to files on the operating system’s file system. Non-superusers must be granted `EXECUTE` privilege on the `UTL_FILE` package by a superuser before using any of the functions or procedures in the package. For example the following command grants the privilege to user `mary`:
+The `UTL_FILE` package provides the capability to read from, and write to files on the operating system's file system. Non-superusers must be granted `EXECUTE` privilege on the `UTL_FILE` package by a superuser before using any of the functions or procedures in the package. For example the following command grants the privilege to user `mary`:
 
 ``` text
 GRANT EXECUTE ON PACKAGE SYS.UTL_FILE TO mary;
@@ -12074,7 +12008,7 @@ Salary: $1300.00 Commission: $0
 ```
 
 ---
-5.22 UTL_HTTP
+4.22 UTL_HTTP
 ---
 
 
@@ -12982,7 +12916,7 @@ Reason Phrase: OK
 ```
 
 ---
-5.23 UTL_MAIL
+4.23 UTL_MAIL
 ---
 
 
@@ -13185,7 +13119,7 @@ The `SEND_ATTACH_VARCHAR2` procedure provides the capability to send an e-mail t
 > The file name containing the attachment. The default is `null`.
 
 ---
-5.24 UTL_RAW
+4.24 UTL_RAW
 ---
 
 
@@ -13209,7 +13143,7 @@ An administrator must grant execute privileges to each user or group before they
 | Function/Procedure                                                   | Function or Procedure | Return Type | Description                                                                                |
 | CAST_TO_RAW(c IN VARCHAR2)                                         | Function              | RAW         | Converts a VARCHAR2 string to a RAW value.                                                 |
 | CAST_TO_VARCHAR2(r IN RAW)                                         | Function              | VARCHAR2    | Converts a RAW value to a VARCHAR2 string.                                                 |
-| CONCAT(r1 IN RAW, r2 IN RAW, r3 IN RAW,…)                            | Function              | RAW         | Concatenate multiple RAW values into a single RAW value.                                   |
+| CONCAT(r1 IN RAW, r2 IN RAW, r3 IN RAW,...)                            | Function              | RAW         | Concatenate multiple RAW values into a single RAW value.                                   |
 | CONVERT(r IN RAW, to_charset IN VARCHAR2, from_charset IN VARCHAR2 | Function              | RAW         | Converts encoded data from one encoding to another, and returns the result as a RAW value. |
 | LENGTH(r IN RAW)                                                     | Function              | NUMBER      | Returns the length of a RAW value.                                                         |
 | SUBSTR(r IN RAW, pos IN INTEGER, len IN INTEGER)                     | Function              | RAW         | Returns a portion of a RAW value.                                                          |
@@ -13294,13 +13228,13 @@ Accounts
 
 The `CONCAT` function concatenates multiple `RAW` values into a single `RAW` value. The signature is:
 
-> `CONCAT(<r1> RAW, <r2> RAW, <r3> RAW,…)`
+> `CONCAT(<r1> RAW, <r2> RAW, <r3> RAW,...)`
 
 The function returns a `RAW` value. Unlike the Oracle implementation, the Advanced Server implementation is a variadic function, and does not place a restriction on the number of values that can be concatenated.
 
 **Parameters**
 
-`<r1, r2, r3,…>`
+`<r1, r2, r3,...>`
 
 > The `RAW` values that `CONCAT` will concatenate.
 
@@ -13461,7 +13395,7 @@ oun
 ```
 
 ---
-5.25 UTL_SMTP
+4.25 UTL_SMTP
 ---
 
 
@@ -13624,7 +13558,7 @@ The `DATA` procedure provides the capability to specify the body of the e-mail m
 
 ### EHLO
 
-The `EHLO` procedure performs initial handshaking with the SMTP server after establishing the connection. The `EHLO` procedure allows the client to identify itself to the SMTP server according to RFC 821. RFC 1869 specifies the format of the information returned in the server’s reply. The *HELO* procedure performs the equivalent functionality, but returns less information about the server.
+The `EHLO` procedure performs initial handshaking with the SMTP server after establishing the connection. The `EHLO` procedure allows the client to identify itself to the SMTP server according to RFC 821. RFC 1869 specifies the format of the information returned in the server's reply. The *HELO* procedure performs the equivalent functionality, but returns less information about the server.
 
 > `EHLO(<c> IN OUT CONNECTION, <domain> VARCHAR2)`
 
@@ -13690,7 +13624,7 @@ The `MAIL` procedure initiates a mail transaction.
 
 `<sender>`
 
-> The sender’s e-mail address.
+> The sender's e-mail address.
 
 `<parameters>`
 
@@ -13779,7 +13713,7 @@ The `RCPT` procedure provides the e-mail address of the recipient. To schedule m
 
 `<recipient>`
 
-> The recipient’s e-mail address.
+> The recipient's e-mail address.
 
 `<parameters>`
 
@@ -13799,7 +13733,7 @@ The `RSET` procedure provides the capability to terminate the current mail trans
 
 ### VRFY
 
-The `VRFY` function provides the capability to validate and verify the recipient’s e-mail address. If valid, the recipient’s full name and fully qualified mailbox is returned.
+The `VRFY` function provides the capability to validate and verify the recipient's e-mail address. If valid, the recipient's full name and fully qualified mailbox is returned.
 
 > `<reply> REPLY VRFY(<c> IN OUT CONNECTION, <recipient> VARCHAR2)`
 
@@ -13811,7 +13745,7 @@ The `VRFY` function provides the capability to validate and verify the recipient
 
 `<recipient>`
 
-> The recipient’s e-mail address to be verified.
+> The recipient's e-mail address to be verified.
 
 `<reply>`
 
@@ -13906,7 +13840,7 @@ EXEC send_mail_2('asmith@enterprisedb.com','pjones@enterprisedb.com','Holiday Pa
 ```
 
 ---
-5.26 UTL_URL
+4.26 UTL_URL
 ---
 
 
@@ -13926,7 +13860,7 @@ The `UTL_URL` package will return the `BAD_URL` exception if the call to a funct
 Use the `ESCAPE` function to escape illegal and reserved characters within an URL. The signature is:
 
 > `ESCAPE(<url> VARCHAR2, <escape_reserved_chars> BOOLEAN`,  
->  `<url_charset> VARCHAR2)`
+>  `<url_charset> VARCHAR2)`
 
 Reserved characters are replaced with a percent sign, followed by the two-digit hex code of the ascii value for the escaped character.
 
@@ -14053,7 +13987,7 @@ http://www.example.com/Using the UNESCAPE function.htm
 ```
 
 ---
-6 Acknowledgements
+5 Acknowledgements
 ---
 
 
@@ -14075,7 +14009,7 @@ Permission to use, copy, modify, and distribute this software and its documentat
 **THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS-IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.**
 
 ---
-7 Conclusion
+6 Conclusion
 ---
 
 <div id="conclusion" class="registered_link"></div>
