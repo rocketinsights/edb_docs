@@ -36,6 +36,7 @@ import CubesSvg from '../../../static/edb-icons/cubes.svg';
 import CycleSvg from '../../../static/edb-icons/cycle.svg';
 import DataTransferSvg from '../../../static/edb-icons/data-transfer.svg';
 import DatabaseAdminSvg from '../../../static/edb-icons/database-admin.svg';
+import DatabaseBackupSvg from '../../../static/edb-icons/database-backup.svg';
 import DatabaseSvg from '../../../static/edb-icons/database.svg';
 import DeliverLoveSvg from '../../../static/edb-icons/deliver-love.svg';
 import DesignSvg from '../../../static/edb-icons/design.svg';
@@ -47,6 +48,7 @@ import DrivesSvg from '../../../static/edb-icons/drives.svg';
 import DuplicateSvg from '../../../static/edb-icons/duplicate.svg';
 import EarthSvg from '../../../static/edb-icons/earth.svg';
 import EasySvg from '../../../static/edb-icons/easy.svg';
+import EdbArkSvg from '../../../static/edb-icons/edb-ark.svg';
 import EdbBadgeSvg from '../../../static/edb-icons/edb-badge.svg';
 import EdbBartSvg from '../../../static/edb-icons/edb-bart.svg';
 import EdbDashboardSvg from '../../../static/edb-icons/edb-dashboard.svg';
@@ -85,6 +87,8 @@ import ManagedOperationsSvg from '../../../static/edb-icons/managed-operations.s
 import MigrateSvg from '../../../static/edb-icons/migrate.svg';
 import MissionSvg from '../../../static/edb-icons/mission.svg';
 import ModuleSvg from '../../../static/edb-icons/module.svg';
+import MoonSvg from '../../../static/edb-icons/moon.svg';
+import MoreTeamSvg from '../../../static/edb-icons/more-team.svg';
 import NameTagSvg from '../../../static/edb-icons/name-tag.svg';
 import NetworkSvg from '../../../static/edb-icons/network.svg';
 import Network2Svg from '../../../static/edb-icons/network2.svg';
@@ -117,6 +121,7 @@ import StackSvg from '../../../static/edb-icons/stack.svg';
 import StarSvg from '../../../static/edb-icons/star.svg';
 import StoreSvg from '../../../static/edb-icons/store.svg';
 import SubsetSvg from '../../../static/edb-icons/subset.svg';
+import SunSvg from '../../../static/edb-icons/sun.svg';
 import SupportPortalSvg from '../../../static/edb-icons/support-portal.svg';
 import SupportSvg from '../../../static/edb-icons/support.svg';
 import TenYearsSvg from '../../../static/edb-icons/ten-years.svg';
@@ -205,6 +210,8 @@ export default function IconType({ iconName, ...rest }) {
       return <DataTransferSvg {...rest} />;
     case iconNames.DATABASE_ADMIN:
       return <DatabaseAdminSvg {...rest} />;
+    case iconNames.DATABASE_BACKUP:
+      return <DatabaseBackupSvg {...rest} />;
     case iconNames.DATABASE:
       return <DatabaseSvg {...rest} />;
     case iconNames.DELIVER_LOVE:
@@ -227,6 +234,8 @@ export default function IconType({ iconName, ...rest }) {
       return <EarthSvg {...rest} />;
     case iconNames.EASY:
       return <EasySvg {...rest} />;
+    case iconNames.EDB_ARK:
+      return <EdbArkSvg {...rest} />;
     case iconNames.EDB_BADGE:
       return <EdbBadgeSvg {...rest} />;
     case iconNames.EDB_BART:
@@ -303,6 +312,10 @@ export default function IconType({ iconName, ...rest }) {
       return <MissionSvg {...rest} />;
     case iconNames.MODULE:
       return <ModuleSvg {...rest} />;
+    case iconNames.MOON:
+      return <MoonSvg {...rest} />;
+    case iconNames.MORE_TEAM:
+      return <MoreTeamSvg {...rest} />;
     case iconNames.NAME_TAG:
       return <NameTagSvg {...rest} />;
     case iconNames.NETWORK:
@@ -367,6 +380,8 @@ export default function IconType({ iconName, ...rest }) {
       return <StoreSvg {...rest} />;
     case iconNames.SUBSET:
       return <SubsetSvg {...rest} />;
+    case iconNames.SUN:
+      return <SunSvg {...rest} />;
     case iconNames.SUPPORT_PORTAL:
       return <SupportPortalSvg {...rest} />;
     case iconNames.SUPPORT:
