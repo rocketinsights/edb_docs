@@ -89,7 +89,7 @@ const splitNodeContent = nodes => {
       }
       const cleanedSection = cleanSection(section);
       if (!hitTocTree && cleanedSection !== '') {
-        contentAggregator += section + ' ';
+        contentAggregator += cleanedSection + ' ';
       }
       if (
         contentAggregator.length > 1000 ||
@@ -128,7 +128,7 @@ const cleanSection = section => {
   ) {
     return '';
   }
-  return removeTheseCharacters(section, [' | ', '`']);
+  return removeLeadingBrackets(removeTheseCharacters(section, [' | ', '`']));
 };
 
 const notStartWith = (section, list) => {
@@ -143,9 +143,22 @@ const notStartWith = (section, list) => {
 const removeTheseCharacters = (section, list) => {
   let newSection = section;
   for (let item of list) {
-    newSection = newSection.replace(item, '');
+    newSection = newSection.replaceAll(item, '');
   }
   return newSection;
+};
+
+const removeLeadingBrackets = section => {
+  if (section.startsWith('> > > ')) {
+    return section.substring(6);
+  }
+  if (section.startsWith('> > ')) {
+    return section.substring(4);
+  }
+  if (section.startsWith('> ')) {
+    return section.substring(2);
+  }
+  return section;
 };
 
 const queries = [
