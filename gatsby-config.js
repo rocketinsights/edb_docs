@@ -128,7 +128,9 @@ const cleanSection = section => {
   ) {
     return '';
   }
-  return removeLeadingBrackets(removeTheseCharacters(section, [' | ', '`']));
+  return removeLeadingBrackets(
+    removeTheseCharacters(section, [/\s\|\s/g, /`/g]),
+  );
 };
 
 const notStartWith = (section, list) => {
@@ -143,7 +145,7 @@ const notStartWith = (section, list) => {
 const removeTheseCharacters = (section, list) => {
   let newSection = section;
   for (let item of list) {
-    newSection = newSection.replaceAll(item, '');
+    newSection = newSection.replace(item, '');
   }
   return newSection;
 };
