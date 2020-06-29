@@ -78,12 +78,17 @@ const splitNodeContent = nodes => {
   let result = [];
   for (let node of nodes) {
     let order = 1;
-    let content = node.rawBody.replace('\n\n', '\n').replace('\n\n', '\n');
+    let content = node.rawBody.replace(/(\n)+/g, '\n');
     const contentArray = content.split('\n');
     let contentAggregator = '';
+    let hitTocTree = false;
     for (let i = 0; i < contentArray.length; i++) {
       const section = contentArray[i];
-      if (sectionCheck(section)) {
+      if (section.startsWith('<div class="toctree"')) {
+        hitTocTree = true;
+      }
+      const cleanedSection = cleanSection(section);
+      if (!hitTocTree && cleanedSection !== '') {
         contentAggregator += section + ' ';
       }
       if (
@@ -103,17 +108,44 @@ const splitNodeContent = nodes => {
   return result;
 };
 
-const sectionCheck = section => {
+const cleanSection = section => {
   if (
     section.length < 6 ||
-    RegExp('</?table>').test(section) ||
     RegExp('<div class=.*>').test(section) ||
-    RegExp('</div>').test(section) ||
-    section === '```text'
+    section.includes('</div>') ||
+    notStartWith(section, [
+      '```',
+      'title:',
+      'navTitle:',
+      'description:',
+      '![',
+      '<table',
+      '</table',
+      '---',
+      '| ---',
+      'import ',
+    ])
   ) {
-    return false;
+    return '';
   }
-  return true;
+  return removeTheseCharacters(section, [' | ', '`']);
+};
+
+const notStartWith = (section, list) => {
+  for (let item of list) {
+    if (section.startsWith(item)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const removeTheseCharacters = (section, list) => {
+  let newSection = section;
+  for (let item of list) {
+    newSection = newSection.replace(item, '');
+  }
+  return newSection;
 };
 
 const queries = [
