@@ -9,8 +9,8 @@ import {
   Index,
   Hits,
   Pagination,
-  HitsPerPage,
-  HierarchicalMenu,
+  RefinementList,
+  ClearRefinements,
 } from 'react-instantsearch-dom';
 import {
   Footer,
@@ -52,26 +52,23 @@ export default data => {
   const advocacyLinks =
     data.data.file.childAdvocacyDocsJson.advocacyLinks || [];
   return (
-    <Layout>
+    <Layout background='white'>
       <TopBar />
       <Container className="p-0 d-flex bg-white fixed-container">
-        <SideNavigation>
-          <IndexLinks indexLinkList={advocacyLinks.concat(indexLinkList)} />
-        </SideNavigation>
-        <MainContent>
-          <h1 className="balance-text">Advanced Search</h1>
-
-          <InstantSearch
-            searchClient={searchClient}
-            indexName={docsIndex.index}
-          >
+        <InstantSearch
+          searchClient={searchClient}
+          indexName={docsIndex.index}
+        >
+          <SideNavigation background='white' footer={false}>
+            <div>Content Area</div>
+            <div>Product</div>
+            <RefinementList attribute='product' />
+            <div>Version</div>
+            <RefinementList attribute='version' />
+            <ClearRefinements />
+          </SideNavigation>
+          <MainContent search={false}>
             <SearchBox />
-
-            <HierarchicalMenu
-              attributes={['product', 'productVersion']}
-            />
-
-            <hr/>
             <Index key={learnIndex.index} indexName={learnIndex.index} >
               <Hits hitComponent={PageHit} />
             </Index>
@@ -81,20 +78,9 @@ export default data => {
             </Index>
 
             <Pagination/>
-            <HitsPerPage
-              defaultRefinement={50}
-              items={[
-                { value: 10, label: 'Show 10 hits' },
-                { value: 25, label: 'Show 25 hits' },
-                { value: 50, label: 'Show 50 hits' },
-                { value: 100, label: 'Show 100 hits' },
-                { value: 200, label: 'Show 200 hits' },
-              ]}
-            />
-          </InstantSearch>
-
-          <Footer />
-        </MainContent>
+            <Footer />
+          </MainContent>
+        </InstantSearch>
       </Container>
     </Layout>
   );

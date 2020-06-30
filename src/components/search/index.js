@@ -106,9 +106,11 @@ const SearchForm = ({currentRefinement, refine, query}) => {
 
   useClickOutside(searchBarRef, close);
 
+  const queryLength = (query || '').length;
+
   return (
-    <div className={`${query.length > 0 && focus && 'shadow'}`} ref={searchBarRef}>
-      <form noValidate action="" autoComplete="off" role="search" className={`search-form d-flex align-items-center ${query.length > 0 && focus && 'open'}`}>
+    <div className={`${queryLength > 0 && focus && 'shadow'}`} ref={searchBarRef}>
+      <form noValidate action="" autoComplete="off" role="search" className={`search-form d-flex align-items-center ${queryLength > 0 && focus && 'open'}`}>
         <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
           id='search-input'
@@ -121,12 +123,12 @@ const SearchForm = ({currentRefinement, refine, query}) => {
           onFocus={() => setFocus(true)}
           ref={inputRef}
         />
-        <ClearButton onClick={() => { refine('') }} className={`${query.length === 0 && 'd-none'}`} />
+        <ClearButton onClick={() => { refine('') }} className={`${queryLength === 0 && 'd-none'}`} />
         <SlashIndicator query={query} />
       </form>
 
       <div
-        className={`dropdown-menu w-100 p-0 ${query.length > 0 && focus && 'show'}`}
+        className={`dropdown-menu w-100 p-0 ${queryLength > 0 && focus && 'show'}`}
       >
         <Tab.Container defaultActiveKey={docsIndex.index}>
           <Tab.Content className="search-content mb-1 mt-1" ref={searchContentRef}>

@@ -76,7 +76,7 @@ export const SearchTab = ({ searchIndex }) => (
 
 export const SlashIndicator = ({ query }) => (
   <span
-    className={`slash-indicator text-orange text-center opacity-5 bg-white mr-3 ${query.length > 0 && 'd-none'}`}
+    className={`slash-indicator text-orange text-center opacity-5 bg-white mr-3 ${(query || '').length > 0 && 'd-none'}`}
   >
     /
   </span>

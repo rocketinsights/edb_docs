@@ -23,19 +23,20 @@ const FooterItem = ({ url, children }) => (
 const SideNavigationFooter = () => (
   <ul className="list-unstyled mt-0">
     <hr />
+    <FooterItem url="/search">Advanced Search</FooterItem>
     <FooterItem url="/postgresql-docs/postgresql/">PostgreSQL Docs</FooterItem>
     <FooterItem url="/community/contribute/">Contribute</FooterItem>
     <FooterItem url="/community/feedback/">Feedback?</FooterItem>
   </ul>
 );
 
-const SideNavigation = ({ children }) => {
+const SideNavigation = ({ children, background = 'light', footer = true }) => {
   return (
-    <nav className="sidebar d-block bg-light border-right">
+    <nav className={`sidebar d-block bg-${background} border-right`}>
       <div className="sidebar-sticky ml-1 pl-0 pr-4 pb-4">
         <LogoLink />
         {children}
-        <SideNavigationFooter />
+        { footer && <SideNavigationFooter /> }
       </div>
     </nav>
   );
