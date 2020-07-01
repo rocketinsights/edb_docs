@@ -129,7 +129,7 @@ const cleanSection = section => {
     return '';
   }
   return removeLeadingBrackets(
-    removeTheseCharacters(section, [/\s\|\s/g, /`/g]),
+    removeTheseCharacters(section, [/\s\|/g, /\|\s/g, /`/g]),
   );
 };
 
