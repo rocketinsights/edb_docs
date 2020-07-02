@@ -8,12 +8,12 @@ import {
   SearchBox,
   Index,
   Hits,
-  Pagination,
   RefinementList,
   ClearRefinements,
   connectSearchBox,
   Configure,
   connectStateResults,
+  connectPagination,
 } from 'react-instantsearch-dom';
 import {
   Footer,
@@ -143,7 +143,7 @@ const ResultsSummary = connectStateResults(
     const query = res && res.query;
 
     return (
-      <p>
+      <p className="search-text-summary">
         {resultCount} result{resultCount !== 1 && 's'} for "{query}"
       </p>
     );
@@ -164,12 +164,53 @@ class ResultTabulatorUnconnected extends React.Component {
 }
 const ResultTabulator = connectStateResults(ResultTabulatorUnconnected);
 
+const PaginationUnconnected = ({ currentRefinement, nbPages, refine }) => {
+  const showPrevious = currentRefinement > 1;
+  const showNext = currentRefinement < nbPages;
+  const goPrevious = (e) => {
+    refine(currentRefinement - 1);
+    e.preventDefault();
+  };
+  const goNext = (e) => {
+    refine(currentRefinement + 1);
+    e.preventDefault();
+  };
+
+  return (
+    <div className="d-flex justify-content-between mt-3">
+      <div className="max-w-40">
+        {showPrevious && (
+          <a
+            href="#"
+            className="p-3 d-inline-block btn btn-outline-primary text-left"
+            onClick={goPrevious}
+          >
+            <h5 className="m-0">&larr; Previous Page</h5>
+          </a>
+        )}
+      </div>
+      <div className="max-w-40">
+        {showNext && (
+          <a
+            href="#"
+            className="p-3 d-inline-block btn btn-outline-primary text-right"
+            onClick={goNext}
+          >
+            <h5 className="m-0">Next Page &rarr;</h5>
+          </a>
+        )}
+      </div>
+    </div>
+  );
+};
+const Pagination = connectPagination(PaginationUnconnected);
+
 const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
   const queryLength = (query || '').length;
 
   if (queryLength === 0) {
     return (
-      <p>Please enter a search query to begin.</p>
+      <p className="search-text-summary">Please enter a search query to begin.</p>
     );
   }
 
