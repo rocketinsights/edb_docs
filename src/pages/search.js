@@ -177,33 +177,45 @@ const PaginationUnconnected = ({ currentRefinement, nbPages, refine }) => {
   };
 
   return (
-    <div className="d-flex justify-content-between mt-3">
-      <div className="max-w-40">
-        {showPrevious && (
-          <a
-            href="#"
-            className="p-3 d-inline-block btn btn-outline-primary text-left"
-            onClick={goPrevious}
-          >
-            <h5 className="m-0">&larr; Previous Page</h5>
-          </a>
-        )}
+    <>
+      { (showPrevious || showNext) && <hr/> }
+      <div className="d-flex justify-content-between mt-3">
+        <div className="max-w-40">
+          {showPrevious && (
+            <a
+              href="#"
+              className="p-3 d-inline-block btn btn-outline-primary text-left"
+              onClick={goPrevious}
+            >
+              <h5 className="m-0">&larr; Previous Page</h5>
+            </a>
+          )}
+        </div>
+        <div className="max-w-40">
+          {showNext && (
+            <a
+              href="#"
+              className="p-3 d-inline-block btn btn-outline-primary text-right"
+              onClick={goNext}
+            >
+              <h5 className="m-0">Next Page &rarr;</h5>
+            </a>
+          )}
+        </div>
       </div>
-      <div className="max-w-40">
-        {showNext && (
-          <a
-            href="#"
-            className="p-3 d-inline-block btn btn-outline-primary text-right"
-            onClick={goNext}
-          >
-            <h5 className="m-0">Next Page &rarr;</h5>
-          </a>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 const Pagination = connectPagination(PaginationUnconnected);
+
+const ResultsContent = ({ children }) => (
+  <>
+    <div className="search-content mb-5">
+      {children}
+    </div>
+    <Pagination/>
+  </>
+);
 
 const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
   const queryLength = (query || '').length;
@@ -216,7 +228,7 @@ const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, 
 
   if (!filterIndex) { // All results
     return (
-      <div className="search-content">
+      <ResultsContent>
         <ResultsSummary resultTotal={docsTotal + learnTotal}/>
         <Index key={learnIndex.index} indexName={learnIndex.index} >
           <ResultTabulator setResultTotal={setLearnTotal} />
@@ -226,21 +238,17 @@ const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, 
           <ResultTabulator setResultTotal={setDocsTotal} />
           <Hits hitComponent={AdvancedPageHit} />
         </Index>
-        <hr/>
-        <Pagination/>
-      </div>
+      </ResultsContent>
     );
   }
 
   return ( // Filtered to specific index
-    <div className="search-content">
+    <ResultsContent>
       <Index key={filterIndex.index} indexName={filterIndex.index} >
         <ResultsSummary filterIndex={filterIndex} />
         <Hits hitComponent={AdvancedPageHit} />
       </Index>
-      <hr/>
-      <Pagination/>
-    </div>
+    </ResultsContent>
   );
 };
 
