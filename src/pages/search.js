@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Navbar, Button } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback, createRef, useRef } from 'react';
+import { Container, Navbar, Button, Form, Badge } from 'react-bootstrap';
 import { indexLinkList } from '../constants/index-link-list';
 import Icon, { iconNames } from '../components/icon/';
 import algoliasearch from 'algoliasearch/lite';
@@ -13,6 +13,7 @@ import {
   ClearRefinements,
   connectSearchBox,
   Configure,
+  connectStateResults,
 } from 'react-instantsearch-dom';
 import {
   Footer,
@@ -29,7 +30,7 @@ import {
   ClearButton,
   SearchPane,
 } from '../components/search/formComps';
-import { PageHit } from '../components/search/hitComps'
+import { AdvancedPageHit } from '../components/search/hitComps'
 
 import { graphql } from 'gatsby';
 
@@ -57,32 +58,175 @@ export const query = graphql`
   }
 `;
 
-const AdvancedSearchFiltering = () => (
+const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, checked }) => (
+  <div className="form-check">
+    <input
+      type='radio'
+      className='form-check-input'
+      id={id}
+      name={name}
+      onChange={onChange}
+      checked={checked}
+    />
+    <label
+      htmlFor={id}
+      className="form-check-label"
+    >
+      {labelText}
+      <Badge
+        variant="secondary"
+        className="ml-2 align-middle"
+      >
+        {showBadge ? badgeNumber : null}
+      </Badge>
+    </label>
+  </div>
+)
+
+const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
+  const allTotal = learnTotal + docsTotal;
+
+  return (
+    <div className="mb-4">
+      <RadioInput
+        id="index-selector-all"
+        name="index-selector"
+        labelText='All'
+        badgeNumber={allTotal}
+        showBadge={queryActive}
+        onChange={() => { setFilterIndex(null) }}
+        checked={!filterIndex} 
+      />
+      <RadioInput
+        id={`index-selector-${docsIndex.index}`}
+        name="index-selector"
+        labelText={docsIndex.title}
+        badgeNumber={docsTotal}
+        showBadge={queryActive}
+        onChange={() => { setFilterIndex(docsIndex) }}
+        checked={filterIndex === docsIndex}
+      />
+      <RadioInput
+        id={`index-selector-${learnIndex.index}`}
+        name="index-selector"
+        labelText={learnIndex.title}
+        badgeNumber={learnTotal}
+        showBadge={queryActive}
+        onChange={() => { setFilterIndex(learnIndex) }}
+        checked={filterIndex === learnIndex}
+      />
+    </div>
+  );
+};
+
+const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => (
   <>
-    <div>Content Area</div>
-    <div>Product</div>
+    <div className='h5'>Content Area</div>
+    <IndexSelector
+      filterIndex={filterIndex}
+      setFilterIndex={setFilterIndex}
+      learnTotal={learnTotal}
+      docsTotal={docsTotal}
+      queryActive={queryActive}
+    />
+    <div className='h5'>Product</div>
     <RefinementList attribute='product' />
-    <div>Version</div>
+    <div className='h5'>Version</div>
     <RefinementList attribute='version' />
     <ClearRefinements />
   </>
 );
 
-const AdvancedSearchResults = () => (
-  <>
-    <Index key={learnIndex.index} indexName={learnIndex.index} >
-      <Hits hitComponent={PageHit} />
-    </Index>
-    <Index key={docsIndex.index} indexName={docsIndex.index} >
-      <Hits hitComponent={PageHit} />
-    </Index>
-    <hr/>
-    <Pagination/>
-  </>
+const ResultsSummary = connectStateResults(
+  ({ searchResults: res, resultTotal }) => {
+    const resultCount = resultTotal || (res && res.nbHits);
+    const query = res && res.query;
+
+    return (
+      <p>
+        {resultCount} result{resultCount !== 1 && 's'} for "{query}"
+      </p>
+    );
+  }
 );
+
+// I don't like this, maybe there is a better solution?
+class ResultTabulatorUnconnected extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.searchResults && this.props.searchResults != prevProps.searchResults) {
+      this.props.setResultTotal(this.props.searchResults.nbHits);
+    }
+  };
+
+  render() {
+    return null;
+  };
+}
+const ResultTabulator = connectStateResults(ResultTabulatorUnconnected);
+
+const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
+  const queryLength = (query || '').length;
+
+  if (queryLength === 0) {
+    return (
+      <p>Please enter a search query to begin.</p>
+    );
+  }
+
+  if (!filterIndex) { // All results
+    return (
+      <div className="search-content">
+        <ResultsSummary resultTotal={docsTotal + learnTotal}/>
+        <Index key={learnIndex.index} indexName={learnIndex.index} >
+          <ResultTabulator setResultTotal={setLearnTotal} />
+          <Hits hitComponent={AdvancedPageHit} />
+        </Index>
+        <Index key={docsIndex.index} indexName={docsIndex.index} >
+          <ResultTabulator setResultTotal={setDocsTotal} />
+          <Hits hitComponent={AdvancedPageHit} />
+        </Index>
+        <hr/>
+        <Pagination/>
+      </div>
+    );
+  }
+
+  return ( // Filtered to specific index
+    <div className="search-content">
+      <Index key={filterIndex.index} indexName={filterIndex.index} >
+        <ResultsSummary filterIndex={filterIndex} />
+        <Hits hitComponent={AdvancedPageHit} />
+      </Index>
+      <hr/>
+      <Pagination/>
+    </div>
+  );
+};
 
 const AdvancedSearchInput = ({currentRefinement, refine, query}) => {
   const queryLength = (query || '').length;
+
+  const inputRef = createRef();
+  const searchKeyboardShortcuts = useCallback((e) => {
+    const inputFocused = inputRef.current.id === document.activeElement.id;
+
+    if (e.key === '/' && !inputFocused) {
+      inputRef.current.focus();
+      e.preventDefault();
+    }
+    if (e.key === 'Escape' && inputFocused) {
+      inputRef.current.blur();
+      e.preventDefault();
+    }
+  }, [inputRef]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", searchKeyboardShortcuts);
+    return () => {
+      document.removeEventListener("keydown", searchKeyboardShortcuts);
+    };
+  }, [searchKeyboardShortcuts]);
+
 
   return (
     <form noValidate action="" autoComplete="off" role="search" className={`w-100 search-form d-flex align-items-center`}>
@@ -95,8 +239,10 @@ const AdvancedSearchInput = ({currentRefinement, refine, query}) => {
         placeholder="Search"
         value={currentRefinement}
         onChange={e => refine(e.currentTarget.value)}
+        ref={inputRef}
       />
       <ClearButton onClick={() => { refine('') }} className={`${queryLength === 0 && 'd-none'}`} />
+      <SlashIndicator query={query} />
     </form>
   );
 };
@@ -106,6 +252,9 @@ export default data => {
   const advocacyLinks =
     data.data.file.childAdvocacyDocsJson.advocacyLinks || [];
   const [query, setQuery] = useState(``);
+  const [filterIndex, setFilterIndex] = useState(null);
+  const [learnTotal, setLearnTotal] = useState(0);
+  const [docsTotal, setDocsTotal] = useState(0);
 
   return (
     <Layout background='white'>
@@ -119,7 +268,13 @@ export default data => {
           <Configure hitsPerPage={30} />
 
           <SideNavigation background='white' footer={false}>
-            <AdvancedSearchFiltering />
+            <AdvancedSearchFiltering
+              filterIndex={filterIndex}
+              setFilterIndex={setFilterIndex}
+              learnTotal={learnTotal}
+              docsTotal={docsTotal}
+              queryActive={query && query.length > 0}
+            />
           </SideNavigation>
 
           <div className="flex-grow-1 border-right min-w-50">
@@ -134,7 +289,14 @@ export default data => {
             </Navbar>
 
             <main role="main" className="mt-0 p-3">
-              <AdvancedSearchResults />
+              <AdvancedSearchResults
+                query={query}
+                filterIndex={filterIndex}
+                learnTotal={learnTotal}
+                setLearnTotal={setLearnTotal}
+                docsTotal={docsTotal}
+                setDocsTotal={setDocsTotal}
+              />
               <Footer />
             </main>
           </div>

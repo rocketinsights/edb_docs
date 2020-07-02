@@ -131,7 +131,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
         className={`dropdown-menu w-100 p-0 ${queryLength > 0 && focus && 'show'}`}
       >
         <Tab.Container defaultActiveKey={docsIndex.index}>
-          <Tab.Content className="search-content mb-1 mt-1" ref={searchContentRef}>
+          <Tab.Content className="search-content quick-search-content mb-1 mt-1" ref={searchContentRef}>
             <SearchPane searchIndex={docsIndex} arrowIndex={arrowIndex} />
             <SearchPane searchIndex={learnIndex} arrowIndex={arrowIndex} />
           </Tab.Content>

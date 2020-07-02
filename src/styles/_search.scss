@@ -5,6 +5,10 @@
     margin: 0;
   }
 
+  li {
+    margin-bottom: map-get($spacers, 3);
+  }
+
   mark {
     background-color: rgba($orange, 0.05);
     border-bottom: 1px solid $orange;
@@ -14,6 +18,12 @@
   .dropdown-item {
     white-space: normal;
   }
+}
+
+.quick-search-content {
+  height: 410px;
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 
 .search-form {
@@ -64,12 +74,6 @@
 .search-tab .stats { 
   position: relative;
   top: -6px;
-}
-
-.search-content {
-  height: 410px;
-  overflow-x: auto;
-  overflow-y: scroll;
 }
 
 .dropdown-item.arrow-focus {

@@ -31,3 +31,22 @@ export const PageHit = ({ hit, className }) => (
     </Link>
   </>
 );
+
+export const AdvancedPageHit = ({ hit }) => {
+  return (
+    <>
+      <Link to={hit.path}>
+        <Highlight attribute="title" hit={hit} tagName="mark" />
+        <div className="mb-n1 small text-green">
+          {hit.path}
+        </div>
+        <Snippet
+          attribute="excerpt"
+          hit={hit}
+          tagName="mark"
+          className="lh-1 small text-muted"
+        />
+      </Link>
+    </>
+  );
+};
