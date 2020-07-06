@@ -91,7 +91,7 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
   const radioName = "index-selector";
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 pl-1">
       <div className='h5'>Content Area</div>
       <RadioInput
         id="index-selector-all"
@@ -131,7 +131,7 @@ const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refin
   }
 
   return (
-    <div className={`mb-4 ${!show && 'd-none'}`}>
+    <div className={`mb-4 pl-1 ${!show && 'd-none'}`}>
       <div className='h5'>{capitalize(attribute)}</div>
       <RadioInput
         id={`radio-refinement-${attribute}-all`}
