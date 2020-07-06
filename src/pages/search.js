@@ -33,6 +33,7 @@ import {
   SearchPane,
 } from '../components/search/formComps';
 import { AdvancedPageHit } from '../components/search/hitComps'
+import { products } from '../constants/products'
 
 import { graphql } from 'gatsby';
 
@@ -125,11 +126,13 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
 
 const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refine, queryActive, setNextActive, show = true }) => {
   const radioName = `radio-refinement-${attribute}`;
-  const header = `${attribute[0].toUpperCase()}${attribute.slice(1)}`;
+  const capitalize = (s) => {
+    return `${s[0].toUpperCase()}${s.slice(1)}`;
+  }
 
   return (
     <div className={`mb-4 ${!show && 'd-none'}`}>
-      <div className='h5'>{header}</div>
+      <div className='h5'>{capitalize(attribute)}</div>
       <RadioInput
         id={`radio-refinement-${attribute}-all`}
         name={radioName}
@@ -147,7 +150,7 @@ const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refin
           key={item.label}
           id={`radio-refinement-${attribute}-${item.label}`}
           name={radioName}
-          labelText={item.label}
+          labelText={products[item.label] ? products[item.label].name : capitalize(item.label)}
           badgeNumber={item.count}
           showBadge={queryActive}
           onChange={() => {
