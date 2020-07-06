@@ -9,11 +9,13 @@ import {
   Index,
   Hits,
   RefinementList,
-  ClearRefinements,
   connectSearchBox,
   Configure,
   connectStateResults,
   connectPagination,
+  connectCurrentRefinements,
+  connectRefinementList,
+  connectMenu,
 } from 'react-instantsearch-dom';
 import {
   Footer,
@@ -75,9 +77,9 @@ const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, che
       {labelText}
       <Badge
         variant="secondary"
-        className="ml-2 align-middle"
+        className="ml-2 align-middle search-filter-badge"
       >
-        {showBadge ? badgeNumber : null}
+        {showBadge && badgeNumber}
       </Badge>
     </label>
   </div>
@@ -85,12 +87,14 @@ const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, che
 
 const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
   const allTotal = learnTotal + docsTotal;
+  const radioName = "index-selector";
 
   return (
     <div className="mb-4">
+      <div className='h5'>Content Area</div>
       <RadioInput
         id="index-selector-all"
-        name="index-selector"
+        name={radioName}
         labelText='All'
         badgeNumber={allTotal}
         showBadge={queryActive}
@@ -99,7 +103,7 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
       />
       <RadioInput
         id={`index-selector-${docsIndex.index}`}
-        name="index-selector"
+        name={radioName}
         labelText={docsIndex.title}
         badgeNumber={docsTotal}
         showBadge={queryActive}
@@ -108,7 +112,7 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
       />
       <RadioInput
         id={`index-selector-${learnIndex.index}`}
-        name="index-selector"
+        name={radioName}
         labelText={learnIndex.title}
         badgeNumber={learnTotal}
         showBadge={queryActive}
@@ -119,23 +123,75 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
   );
 };
 
-const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => (
-  <>
-    <div className='h5'>Content Area</div>
-    <IndexSelector
-      filterIndex={filterIndex}
-      setFilterIndex={setFilterIndex}
-      learnTotal={learnTotal}
-      docsTotal={docsTotal}
-      queryActive={queryActive}
-    />
-    <div className='h5'>Product</div>
-    <RefinementList attribute='product' />
-    <div className='h5'>Version</div>
-    <RefinementList attribute='version' />
-    <ClearRefinements />
-  </>
-);
+const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refine, queryActive, setNextActive, show = true }) => {
+  const radioName = `radio-refinement-${attribute}`;
+  const header = `${attribute[0].toUpperCase()}${attribute.slice(1)}`;
+
+  return (
+    <div className={`mb-4 ${!show && 'd-none'}`}>
+      <div className='h5'>{header}</div>
+      <RadioInput
+        id={`radio-refinement-${attribute}-all`}
+        name={radioName}
+        labelText='All'
+        badgeNumber={items.reduce((total, item) => total + item.count, 0)}
+        showBadge={queryActive}
+        onChange={() => {
+          refine('');
+          setNextActive && setNextActive(false);
+        }}
+        checked={!currentRefinement}
+      />
+      {items.map(item => (
+        <RadioInput
+          key={item.label}
+          id={`radio-refinement-${attribute}-${item.label}`}
+          name={radioName}
+          labelText={item.label}
+          badgeNumber={item.count}
+          showBadge={queryActive}
+          onChange={() => {
+            refine(item.value);
+            setNextActive && setNextActive(true);
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+const RadioRefinement = connectMenu(RadioRefinementUnconnected);
+
+const ClearRefinementsUnconnected = ({ items, refine, setFilterIndex, show }) => {
+  const clear = () => {
+    setFilterIndex(null);
+    refine(items);
+  };
+
+  return (
+    <a href='#' className={`${!show && 'd-none'}`} onClick={clear}>Clear Filters</a>
+  );
+};
+const ClearRefinements = connectCurrentRefinements(ClearRefinementsUnconnected);
+
+const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
+  const [showVersion, setShowVersion] = useState(false);
+  const showProductVersionFilters = !filterIndex || filterIndex === docsIndex
+
+  return (
+    <>
+      <IndexSelector
+        filterIndex={filterIndex}
+        setFilterIndex={setFilterIndex}
+        learnTotal={learnTotal}
+        docsTotal={docsTotal}
+        queryActive={queryActive}
+      />
+      <RadioRefinement attribute='product' queryActive={queryActive} setNextActive={setShowVersion} show={showProductVersionFilters} />
+      <RadioRefinement attribute='version' queryActive={queryActive} show={showProductVersionFilters && showVersion} />
+      <ClearRefinements setFilterIndex={setFilterIndex} show={filterIndex || showVersion} />
+    </>
+  );
+};
 
 const ResultsSummary = connectStateResults(
   ({ searchResults: res, resultTotal }) => {
@@ -245,6 +301,7 @@ const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, 
   return ( // Filtered to specific index
     <ResultsContent>
       <Index key={filterIndex.index} indexName={filterIndex.index} >
+        <ResultTabulator setResultTotal={filterIndex === docsIndex ? setDocsTotal : setLearnTotal} />
         <ResultsSummary filterIndex={filterIndex} />
         <Hits hitComponent={AdvancedPageHit} />
       </Index>
