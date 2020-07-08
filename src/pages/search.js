@@ -1,36 +1,28 @@
-import React, { useState, useEffect, useCallback, createRef, useRef } from 'react';
+import React, { useState, useEffect, useCallback, createRef } from 'react';
 import { Container, Navbar, Button, Form, Badge } from 'react-bootstrap';
-import { indexLinkList } from '../constants/index-link-list';
 import Icon, { iconNames } from '../components/icon/';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
-  SearchBox,
   Index,
   Hits,
-  RefinementList,
   connectSearchBox,
   Configure,
+  connectHierarchicalMenu,
   connectStateResults,
   connectPagination,
   connectCurrentRefinements,
-  connectRefinementList,
-  connectMenu,
 } from 'react-instantsearch-dom';
 import {
   Footer,
-  IndexLinks,
   Layout,
   MainContent,
   SideNavigation,
   TopBar,
 } from '../components';
 import {
-  AdvancedSearchTabLink,
-  SearchTab,
   SlashIndicator,
   ClearButton,
-  SearchPane,
 } from '../components/search/formComps';
 import { AdvancedPageHit } from '../components/search/hitComps'
 import { products } from '../constants/products'
@@ -70,6 +62,7 @@ const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, che
       name={name}
       onChange={onChange}
       checked={checked}
+      aria-label={id}
     />
     <label
       htmlFor={id}
@@ -124,8 +117,12 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
   );
 };
 
-const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refine, queryActive, setNextActive, show = true }) => {
+
+
+const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
   const radioName = `radio-refinement-${attribute}`;
+  const refinedItem = items.find((item) => item.isRefined);
+
   const capitalize = (s) => {
     return `${s[0].toUpperCase()}${s.slice(1)}`;
   }
@@ -139,11 +136,8 @@ const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refin
         labelText='All'
         badgeNumber={items.reduce((total, item) => total + item.count, 0)}
         showBadge={queryActive}
-        onChange={() => {
-          refine('');
-          setNextActive && setNextActive(false);
-        }}
-        checked={!currentRefinement}
+        onChange={() => { refine(refinedItem.value) }}
+        checked={!refinedItem}
       />
       {items.map(item => (
         <RadioInput
@@ -153,31 +147,60 @@ const RadioRefinementUnconnected = ({ attribute, items, currentRefinement, refin
           labelText={products[item.label] ? products[item.label].name : capitalize(item.label)}
           badgeNumber={item.count}
           showBadge={queryActive}
-          onChange={() => {
-            refine(item.value);
-            setNextActive && setNextActive(true);
-          }}
+          onChange={() => { refine(item.value) }}
+          checked={refinedItem === item}
         />
       ))}
     </div>
   );
 };
-const RadioRefinement = connectMenu(RadioRefinementUnconnected);
 
-const ClearRefinementsUnconnected = ({ items, refine, setFilterIndex, show }) => {
-  const clear = () => {
+const ProductVersionRefinementUnconnected = ({ items, currentRefinement, refine, queryActive, show }) => {
+  const refinedProduct = items.find((item) => item.isRefined);
+
+  return (
+    <>
+      <RadioRefinement
+        attribute='product'
+        items={items}
+        queryActive={queryActive}
+        refine={refine}
+        show={show}
+      />
+      {refinedProduct &&
+        <RadioRefinement
+          attribute='version'
+          items={refinedProduct.items}
+          queryActive={queryActive}
+          refine={refine}
+          show={show}
+        />
+      }
+    </>
+  );
+}
+const ProductVersionRefinement = connectHierarchicalMenu(ProductVersionRefinementUnconnected);
+
+const ClearRefinementsUnconnected = ({ items, refine, filterIndex, setFilterIndex }) => {
+  const clear = (e) => {
     setFilterIndex(null);
     refine(items);
+    e.preventDefault();
   };
 
   return (
-    <a href='#' className={`${!show && 'd-none'}`} onClick={clear}>Clear Filters</a>
+    <a
+      href='/'
+      className={`${(items.length === 0 && !filterIndex) && 'd-none'}`}
+      onClick={clear}
+    >
+      Clear Filters
+    </a>
   );
 };
 const ClearRefinements = connectCurrentRefinements(ClearRefinementsUnconnected);
 
 const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
-  const [showVersion, setShowVersion] = useState(false);
   const showProductVersionFilters = !filterIndex || filterIndex === docsIndex
 
   return (
@@ -189,9 +212,12 @@ const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docs
         docsTotal={docsTotal}
         queryActive={queryActive}
       />
-      <RadioRefinement attribute='product' queryActive={queryActive} setNextActive={setShowVersion} show={showProductVersionFilters} />
-      <RadioRefinement attribute='version' queryActive={queryActive} show={showProductVersionFilters && showVersion} />
-      <ClearRefinements setFilterIndex={setFilterIndex} show={filterIndex || showVersion} />
+      <ProductVersionRefinement
+        attributes={['product', 'productVersion']}
+        show={showProductVersionFilters}
+        queryActive={queryActive}
+      />
+      <ClearRefinements filterIndex={filterIndex} setFilterIndex={setFilterIndex} />
     </>
   );
 };
@@ -212,7 +238,7 @@ const ResultsSummary = connectStateResults(
 // I don't like this, maybe there is a better solution?
 class ResultTabulatorUnconnected extends React.Component {
   componentDidUpdate(prevProps) {
-    if (this.props.searchResults && this.props.searchResults != prevProps.searchResults) {
+    if (this.props.searchResults && this.props.searchResults !== prevProps.searchResults) {
       this.props.setResultTotal(this.props.searchResults.nbHits);
     }
   };
@@ -242,7 +268,7 @@ const PaginationUnconnected = ({ currentRefinement, nbPages, refine }) => {
         <div className="max-w-40">
           {showPrevious && (
             <a
-              href="#"
+              href="/"
               className="p-3 d-inline-block btn btn-outline-primary text-left"
               onClick={goPrevious}
             >
@@ -253,7 +279,7 @@ const PaginationUnconnected = ({ currentRefinement, nbPages, refine }) => {
         <div className="max-w-40">
           {showNext && (
             <a
-              href="#"
+              href="/"
               className="p-3 d-inline-block btn btn-outline-primary text-right"
               onClick={goNext}
             >
@@ -358,8 +384,6 @@ const AdvancedSearchInput = ({currentRefinement, refine, query}) => {
 const AdvancedSearchBox = connectSearchBox(AdvancedSearchInput);
 
 export default data => {
-  const advocacyLinks =
-    data.data.file.childAdvocacyDocsJson.advocacyLinks || [];
   const [query, setQuery] = useState(``);
   const [filterIndex, setFilterIndex] = useState(null);
   const [learnTotal, setLearnTotal] = useState(0);
