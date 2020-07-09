@@ -35,5 +35,7 @@ export const writeStateToQueryParams = (searchState, filterIndex) => {
     params.set('content', filterIndex.queryParam);
   }
 
-  window.history.replaceState('', searchState.query, `?${params.toString()}`)
+  if (window && window.history) {
+    window.history.replaceState('', searchState.query, `?${params.toString()}`)
+  }
 };
