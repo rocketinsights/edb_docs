@@ -21,6 +21,7 @@ export const filterAndSort = (nodes, url) => {
 };
 
 export const showFrontmatter = frontmatter => {
+  console.log(frontmatter);
   let keys = Object.keys(frontmatter);
   return (
     <>
@@ -28,7 +29,19 @@ export const showFrontmatter = frontmatter => {
       <br />
       {keys.map(key => (
         <div>
-          <strong>{key}</strong>: {frontmatter[key]}
+          {key !== 'redirects' && (
+            <>
+              <strong>{key}</strong>: {frontmatter[key]}
+            </>
+          )}
+          {key === 'redirects' && (
+            <>
+              <strong>Redirects</strong>:
+              {frontmatter[key].map(url => (
+                <div> - {url}</div>
+              ))}
+            </>
+          )}
         </div>
       ))}
     </>

@@ -23,6 +23,7 @@ export const query = graphql`
         title
         navTitle
         description
+        redirects
       }
       fields {
         path
