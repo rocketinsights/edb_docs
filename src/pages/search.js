@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback, createRef } from 'react';
-import { Container, Navbar, Button, Form, Badge } from 'react-bootstrap';
-import Icon, { iconNames } from '../components/icon/';
+import { graphql, Link } from 'gatsby';
+import { Container, Navbar, Button, Badge } from 'react-bootstrap';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
   Index,
   Hits,
+  Highlight,
+  Snippet,
   connectSearchBox,
   Configure,
   connectHierarchicalMenu,
@@ -16,7 +18,6 @@ import {
 import {
   Footer,
   Layout,
-  MainContent,
   SideNavigation,
   TopBar,
 } from '../components';
@@ -24,10 +25,8 @@ import {
   SlashIndicator,
   ClearButton,
 } from '../components/search/formComps';
-import { AdvancedPageHit } from '../components/search/hitComps'
+import Icon, { iconNames } from '../components/icon/';
 import { products } from '../constants/products'
-
-import { graphql } from 'gatsby';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -36,6 +35,10 @@ const searchClient = algoliasearch(
 
 const docsIndex = { title: 'Documentation', index: 'edb-products' };
 const learnIndex = { title: 'Guides', index: 'advocacy' };
+
+const capitalize = (s) => {
+  return `${s[0].toUpperCase()}${s.slice(1)}`;
+}
 
 export const query = graphql`
   query {
@@ -52,6 +55,25 @@ export const query = graphql`
     }
   }
 `;
+
+const AdvancedPageHit = ({ hit }) => {
+  return (
+    <>
+      <Link to={hit.path}>
+        <Highlight attribute="title" hit={hit} tagName="mark" />
+        <div className="mb-n1 small text-green">
+          {hit.path}
+        </div>
+        <Snippet
+          attribute="excerpt"
+          hit={hit}
+          tagName="mark"
+          className="lh-1 small text-muted"
+        />
+      </Link>
+    </>
+  );
+};
 
 const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, checked }) => (
   <div className="form-check">
@@ -117,15 +139,9 @@ const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, que
   );
 };
 
-
-
 const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
   const radioName = `radio-refinement-${attribute}`;
   const refinedItem = items.find((item) => item.isRefined);
-
-  const capitalize = (s) => {
-    return `${s[0].toUpperCase()}${s.slice(1)}`;
-  }
 
   return (
     <div className={`mb-4 pl-1 ${!show && 'd-none'}`}>
@@ -155,50 +171,52 @@ const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
   );
 };
 
-const ProductVersionRefinementUnconnected = ({ items, currentRefinement, refine, queryActive, show }) => {
-  const refinedProduct = items.find((item) => item.isRefined);
+const ProductVersionRefinement = connectHierarchicalMenu(
+  ({ items, currentRefinement, refine, queryActive, show }) => {
+    const refinedProduct = items.find((item) => item.isRefined);
 
-  return (
-    <>
-      <RadioRefinement
-        attribute='product'
-        items={items}
-        queryActive={queryActive}
-        refine={refine}
-        show={show}
-      />
-      {refinedProduct &&
+    return (
+      <>
         <RadioRefinement
-          attribute='version'
-          items={refinedProduct.items}
+          attribute='product'
+          items={items}
           queryActive={queryActive}
           refine={refine}
           show={show}
         />
-      }
-    </>
-  );
-}
-const ProductVersionRefinement = connectHierarchicalMenu(ProductVersionRefinementUnconnected);
+        {refinedProduct &&
+          <RadioRefinement
+            attribute='version'
+            items={refinedProduct.items}
+            queryActive={queryActive}
+            refine={refine}
+            show={show}
+          />
+        }
+      </>
+    );
+  }
+);
 
-const ClearRefinementsUnconnected = ({ items, refine, filterIndex, setFilterIndex }) => {
-  const clear = (e) => {
-    setFilterIndex(null);
-    refine(items);
-    e.preventDefault();
-  };
+const ClearRefinements = connectCurrentRefinements(
+  ({ items, refine, filterIndex, setFilterIndex }) => {
+    const clear = (e) => {
+      setFilterIndex(null);
+      refine(items);
+      e.preventDefault();
+    };
 
-  return (
-    <a
-      href='/'
-      className={`${(items.length === 0 && !filterIndex) && 'd-none'}`}
-      onClick={clear}
-    >
-      Clear Filters
-    </a>
-  );
-};
-const ClearRefinements = connectCurrentRefinements(ClearRefinementsUnconnected);
+    return (
+      <a
+        href='/'
+        className={`${(items.length === 0 && !filterIndex) && 'd-none'}`}
+        onClick={clear}
+      >
+        Clear Filters
+      </a>
+    );
+  }
+);
 
 const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
   const showProductVersionFilters = !filterIndex || filterIndex === docsIndex
@@ -222,18 +240,24 @@ const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docs
   );
 };
 
-const ResultsSummary = connectStateResults(
-  ({ searchResults: res, resultTotal }) => {
+const ResultsSummary = connectCurrentRefinements(connectStateResults(
+  ({ searchResults: res, resultTotal, items}) => {
     const resultCount = resultTotal || (res && res.nbHits);
     const query = res && res.query;
+    const [product, version] = items.length > 0 && items[0].currentRefinement.split(' > ');
+    const productName = products[product] ? products[product].name : product;
 
     return (
       <p className="search-text-summary">
         {resultCount} result{resultCount !== 1 && 's'} for "{query}"
+        { productName && ' in ' }
+        { productName && <span className='font-weight-400'>{productName}</span> }
+        { version && ' and ' }
+        { version && <span className='font-weight-400'>Version {version}</span> }
       </p>
     );
   }
-);
+));
 
 // I don't like this, maybe there is a better solution?
 class ResultTabulatorUnconnected extends React.Component {
@@ -249,49 +273,50 @@ class ResultTabulatorUnconnected extends React.Component {
 }
 const ResultTabulator = connectStateResults(ResultTabulatorUnconnected);
 
-const PaginationUnconnected = ({ currentRefinement, nbPages, refine }) => {
-  const showPrevious = currentRefinement > 1;
-  const showNext = currentRefinement < nbPages;
-  const goPrevious = (e) => {
-    refine(currentRefinement - 1);
-    e.preventDefault();
-  };
-  const goNext = (e) => {
-    refine(currentRefinement + 1);
-    e.preventDefault();
-  };
+const Pagination = connectPagination(
+  ({ currentRefinement, nbPages, refine }) => {
+    const showPrevious = currentRefinement > 1;
+    const showNext = currentRefinement < nbPages;
+    const goPrevious = (e) => {
+      refine(currentRefinement - 1);
+      e.preventDefault();
+    };
+    const goNext = (e) => {
+      refine(currentRefinement + 1);
+      e.preventDefault();
+    };
 
-  return (
-    <>
-      { (showPrevious || showNext) && <hr/> }
-      <div className="d-flex justify-content-between mt-3">
-        <div className="max-w-40">
-          {showPrevious && (
-            <a
-              href="/"
-              className="p-3 d-inline-block btn btn-outline-primary text-left"
-              onClick={goPrevious}
-            >
-              <h5 className="m-0">&larr; Previous Page</h5>
-            </a>
-          )}
+    return (
+      <>
+        { (showPrevious || showNext) && <hr/> }
+        <div className="d-flex justify-content-between mt-3">
+          <div className="max-w-40">
+            {showPrevious && (
+              <a
+                href="/"
+                className="p-3 d-inline-block btn btn-outline-primary text-left"
+                onClick={goPrevious}
+              >
+                <h5 className="m-0">&larr; Previous Page</h5>
+              </a>
+            )}
+          </div>
+          <div className="max-w-40">
+            {showNext && (
+              <a
+                href="/"
+                className="p-3 d-inline-block btn btn-outline-primary text-right"
+                onClick={goNext}
+              >
+                <h5 className="m-0">Next Page &rarr;</h5>
+              </a>
+            )}
+          </div>
         </div>
-        <div className="max-w-40">
-          {showNext && (
-            <a
-              href="/"
-              className="p-3 d-inline-block btn btn-outline-primary text-right"
-              onClick={goNext}
-            >
-              <h5 className="m-0">Next Page &rarr;</h5>
-            </a>
-          )}
-        </div>
-      </div>
-    </>
-  );
-};
-const Pagination = connectPagination(PaginationUnconnected);
+      </>
+    );
+  }
+);
 
 const ResultsContent = ({ children }) => (
   <>
@@ -338,50 +363,50 @@ const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, 
   );
 };
 
-const AdvancedSearchInput = ({currentRefinement, refine, query}) => {
-  const queryLength = (query || '').length;
+const AdvancedSearchBox = connectSearchBox(
+  ({currentRefinement, refine, query}) => {
+    const queryLength = (query || '').length;
 
-  const inputRef = createRef();
-  const searchKeyboardShortcuts = useCallback((e) => {
-    const inputFocused = inputRef.current.id === document.activeElement.id;
+    const inputRef = createRef();
+    const searchKeyboardShortcuts = useCallback((e) => {
+      const inputFocused = inputRef.current.id === document.activeElement.id;
 
-    if (e.key === '/' && !inputFocused) {
-      inputRef.current.focus();
-      e.preventDefault();
-    }
-    if (e.key === 'Escape' && inputFocused) {
-      inputRef.current.blur();
-      e.preventDefault();
-    }
-  }, [inputRef]);
+      if (e.key === '/' && !inputFocused) {
+        inputRef.current.focus();
+        e.preventDefault();
+      }
+      if (e.key === 'Escape' && inputFocused) {
+        inputRef.current.blur();
+        e.preventDefault();
+      }
+    }, [inputRef]);
 
-  useEffect(() => {
-    document.addEventListener("keydown", searchKeyboardShortcuts);
-    return () => {
-      document.removeEventListener("keydown", searchKeyboardShortcuts);
-    };
-  }, [searchKeyboardShortcuts]);
+    useEffect(() => {
+      document.addEventListener("keydown", searchKeyboardShortcuts);
+      return () => {
+        document.removeEventListener("keydown", searchKeyboardShortcuts);
+      };
+    }, [searchKeyboardShortcuts]);
 
-
-  return (
-    <form noValidate action="" autoComplete="off" role="search" className={`w-100 search-form d-flex align-items-center`}>
-      <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
-      <input
-        id='search-input'
-        className="form-control form-control-lg border-0 pl-3"
-        type="text"
-        aria-label="search"
-        placeholder="Search"
-        value={currentRefinement}
-        onChange={e => refine(e.currentTarget.value)}
-        ref={inputRef}
-      />
-      <ClearButton onClick={() => { refine('') }} className={`${queryLength === 0 && 'd-none'}`} />
-      <SlashIndicator query={query} />
-    </form>
-  );
-};
-const AdvancedSearchBox = connectSearchBox(AdvancedSearchInput);
+    return (
+      <form noValidate action="" autoComplete="off" role="search" className={`w-100 search-form d-flex align-items-center`}>
+        <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
+        <input
+          id='search-input'
+          className="form-control form-control-lg border-0 pl-3"
+          type="text"
+          aria-label="search"
+          placeholder="Search"
+          value={currentRefinement}
+          onChange={e => refine(e.currentTarget.value)}
+          ref={inputRef}
+        />
+        <ClearButton onClick={() => { refine('') }} className={`${queryLength === 0 && 'd-none'}`} />
+        <SlashIndicator query={query} />
+      </form>
+    );
+  }
+);
 
 export default data => {
   const [query, setQuery] = useState(``);
