@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Navbar, Button } from 'react-bootstrap';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
   Configure,
 } from 'react-instantsearch-dom';
-import queryString from 'query-string';
 import {
   Footer,
   Layout,
@@ -16,39 +15,29 @@ import {
   AdvancedSearchFiltering,
   AdvancedSearchResults,
   AdvancedSearchForm,
+  queryParamsToState,
+  writeStateToQueryParams,
 } from '../components/advanced-search';
-import { docsIndex, learnIndex } from '../components/search/indices';
+import { docsIndex } from '../components/search/indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
   '3c95fc5297e90a44b6467f3098a4e6ed',
 );
 
-const queryParamsToState = (query) => {
-  const contentToIndex = { docs: docsIndex, guides: learnIndex };
-  const params = new URLSearchParams(query);
-
-  // const queryParams = queryString.parse(query);
-
-  // return {
-  //   query: queryParams.query,
-  //   filterIndex: contentToIndex[queryParams.content],
-  // };
-
-  return {
-    query: params.get('query'),
-    filterIndex: contentToIndex[params.get('content')],
-  };
-};
-
 export default data => {
-  const queryState = queryParamsToState(data.location.search);
+  const [paramSearchState, paramFilterIndex] = queryParamsToState(data.location.search);
 
-  const [query, setQuery] = useState(queryState.query || '');
-  const [filterIndex, setFilterIndex] = useState(queryState.filterIndex || null);
+  const [query, setQuery] = useState(paramSearchState.query || '');
+  const [filterIndex, setFilterIndex] = useState(paramFilterIndex || null);
+  const [searchState, setSearchState] = useState(paramSearchState || {});
 
   const [learnTotal, setLearnTotal] = useState(0);
   const [docsTotal, setDocsTotal] = useState(0);
+
+  useEffect(() => {
+    writeStateToQueryParams(searchState, filterIndex);
+  });
 
   return (
     <Layout background='white'>
@@ -57,8 +46,11 @@ export default data => {
         <InstantSearch
           searchClient={searchClient}
           indexName={docsIndex.index}
-          onSearchStateChange={({ query }) => setQuery(query)}
-          searchState={{ query: query }}
+          onSearchStateChange={(searchState) => {
+            setQuery(searchState.query);
+            setSearchState(searchState);
+          }}
+          searchState={searchState}
         >
           <Configure hitsPerPage={30} />
 

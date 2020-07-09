@@ -5,6 +5,10 @@ import {
   AdvancedSearchFiltering,
   ResultTabulator,
 } from './filtering';
+import {
+  queryParamsToState,
+  writeStateToQueryParams,
+} from './queryParams';
 
 export {
   AdvancedPageHit,
@@ -12,4 +16,6 @@ export {
   AdvancedSearchResults,
   AdvancedSearchForm,
   ResultTabulator,
+  queryParamsToState,
+  writeStateToQueryParams,
 };

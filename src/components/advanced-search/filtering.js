@@ -86,7 +86,7 @@ const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
         labelText='All'
         badgeNumber={items.reduce((total, item) => total + item.count, 0)}
         showBadge={queryActive}
-        onChange={() => { refine(refinedItem.value) }}
+        onChange={() => refine(refinedItem.value)}
         checked={!refinedItem}
       />
       {items.map(item => (
@@ -97,7 +97,7 @@ const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
           labelText={products[item.label] ? products[item.label].name : capitalize(item.label)}
           badgeNumber={item.count}
           showBadge={queryActive}
-          onChange={() => { refine(item.value) }}
+          onChange={() => refine(item.value)}
           checked={refinedItem === item}
         />
       ))}
