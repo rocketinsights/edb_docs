@@ -21,7 +21,6 @@ export const filterAndSort = (nodes, url) => {
 };
 
 export const showFrontmatter = frontmatter => {
-  console.log(frontmatter);
   let keys = Object.keys(frontmatter);
   return (
     <>
