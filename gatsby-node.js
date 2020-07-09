@@ -88,6 +88,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             title
             navTitle
             description
+            redirects
           }
           excerpt(pruneLength: 100)
           fields {
@@ -127,6 +128,19 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   nodes.forEach(doc => {
     const { path } = doc.fields;
+    const { redirects } = doc.frontmatter;
+
+    if (redirects) {
+      redirects.forEach(fromPath => {
+        actions.createRedirect({
+          fromPath,
+          toPath: path,
+          redirectInBrowser: true,
+          isPermanent: true,
+        });
+      });
+    }
+
     const splitPath = path.split('/');
     const subPath = splitPath.slice(0, splitPath.length - 1).join('/');
     const { fileAbsolutePath } = doc;
