@@ -34,7 +34,7 @@ export const showFrontmatter = frontmatter => {
               <strong>{key}</strong>: {frontmatter[key]}
             </>
           )}
-          {key === 'redirects' && (
+          {key === 'redirects' && frontmatter[key] && (
             <>
               <strong>Redirects</strong>:
               {frontmatter[key].map(url => (
