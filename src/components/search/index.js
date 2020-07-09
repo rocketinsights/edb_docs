@@ -14,14 +14,12 @@ import {
   ClearButton,
   SearchPane,
 } from './formComps';
+import { docsIndex, learnIndex } from './indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
   '3c95fc5297e90a44b6467f3098a4e6ed',
 );
-
-const docsIndex = { title: 'Documentation', index: 'edb-products' };
-const learnIndex = { title: 'Guides', index: 'advocacy' };
 
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
