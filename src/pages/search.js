@@ -5,6 +5,7 @@ import {
   InstantSearch,
   Configure,
 } from 'react-instantsearch-dom';
+import queryString from 'query-string';
 import {
   Footer,
   Layout,
@@ -16,16 +17,36 @@ import {
   AdvancedSearchResults,
   AdvancedSearchForm,
 } from '../components/advanced-search';
-import { docsIndex } from '../components/search/indices';
+import { docsIndex, learnIndex } from '../components/search/indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
   '3c95fc5297e90a44b6467f3098a4e6ed',
 );
 
+const queryParamsToState = (query) => {
+  const contentToIndex = { docs: docsIndex, guides: learnIndex };
+  const params = new URLSearchParams(query);
+
+  // const queryParams = queryString.parse(query);
+
+  // return {
+  //   query: queryParams.query,
+  //   filterIndex: contentToIndex[queryParams.content],
+  // };
+
+  return {
+    query: params.get('query'),
+    filterIndex: contentToIndex[params.get('content')],
+  };
+};
+
 export default data => {
-  const [query, setQuery] = useState(``);
-  const [filterIndex, setFilterIndex] = useState(null);
+  const queryState = queryParamsToState(data.location.search);
+
+  const [query, setQuery] = useState(queryState.query || '');
+  const [filterIndex, setFilterIndex] = useState(queryState.filterIndex || null);
+
   const [learnTotal, setLearnTotal] = useState(0);
   const [docsTotal, setDocsTotal] = useState(0);
 
@@ -37,6 +58,7 @@ export default data => {
           searchClient={searchClient}
           indexName={docsIndex.index}
           onSearchStateChange={({ query }) => setQuery(query)}
+          searchState={{ query: query }}
         >
           <Configure hitsPerPage={30} />
 

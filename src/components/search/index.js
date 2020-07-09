@@ -137,7 +137,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
           <Nav className="search-tabs" onSelect={() => {inputRef.current.focus(); setArrowIndex(0)}}>
             <SearchTab searchIndex={docsIndex} />
             <SearchTab searchIndex={learnIndex} />
-            <AdvancedSearchTabLink />
+            <AdvancedSearchTabLink query={query} />
           </Nav>
         </Tab.Container>
       </div>
