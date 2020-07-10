@@ -82,19 +82,15 @@ const Pagination = connectPagination(
 );
 
 const ResultsContent = ({ children }) => (
-  <>
-    <div className="search-content mb-5">
-      {children}
-    </div>
-  </>
+  <div className="search-content mb-5">
+    {children}
+  </div>
 );
 
 const IndexContent = ({ children }) => (
-  <>
-    <div className="mb-5">
-      {children}
-    </div>
-  </>
+  <div className="mb-5">
+    {children}
+  </div>
 );
 
 export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
