@@ -99,6 +99,14 @@ const IndexContent = ({ children }) => (
 
 export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
   const queryLength = (query || '').length;
+  const resultTotal = () => {
+    if (filterIndex === docsIndex) {
+      return docsTotal;
+    } else if (filterIndex === learnIndex) {
+      return learnTotal;
+    }
+    return docsTotal + learnTotal;
+  }
 
   if (queryLength === 0) {
     return (
@@ -106,35 +114,20 @@ export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearn
     );
   }
 
-  if (!filterIndex) { // All results
-    return (
-      <ResultsContent>
-        <ResultsSummary resultTotal={docsTotal + learnTotal}/>
-        <IndexContent>
-          <Index key={learnIndex.index} indexName={learnIndex.index} >
-            <ResultTabulator setResultTotal={setLearnTotal} />
-            <Hits hitComponent={AdvancedPageHit} />
-          </Index>
-          <Index key={docsIndex.index} indexName={docsIndex.index} className="mb-5">
-            <ResultTabulator setResultTotal={setDocsTotal} />
-            <Hits hitComponent={AdvancedPageHit} />
-          </Index>
-        </IndexContent>
-        <Pagination/>
-      </ResultsContent>
-    );
-  }
-
-  return ( // Filtered to specific index
+  return (
     <ResultsContent>
-      <Index key={filterIndex.index} indexName={filterIndex.index}>
-        <IndexContent>
-          <ResultTabulator setResultTotal={filterIndex === docsIndex ? setDocsTotal : setLearnTotal} />
-          <ResultsSummary filterIndex={filterIndex} />
-          <Hits hitComponent={AdvancedPageHit} />
-        </IndexContent>
-        <Pagination/>
-      </Index>
+      <ResultsSummary resultTotal={resultTotal()} />
+      <IndexContent>
+        <Index key={learnIndex.index} indexName={learnIndex.index} >
+          <ResultTabulator setResultTotal={setLearnTotal} />
+          { (!filterIndex || filterIndex === learnIndex) && <Hits hitComponent={AdvancedPageHit} /> }
+        </Index>
+        <Index key={docsIndex.index} indexName={docsIndex.index} className="mb-5">
+          <ResultTabulator setResultTotal={setDocsTotal} />
+          { (!filterIndex || filterIndex === docsIndex) && <Hits hitComponent={AdvancedPageHit} /> }
+        </Index>
+      </IndexContent>
+      <Pagination/>
     </ResultsContent>
   );
 };
