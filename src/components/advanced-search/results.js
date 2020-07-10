@@ -34,8 +34,8 @@ const ResultsSummary = connectCurrentRefinements(connectStateResults(
 
 const Pagination = connectPagination(
   ({ currentRefinement, nbPages, refine }) => {
-    const showPrevious = currentRefinement > 1;
-    const showNext = currentRefinement < nbPages;
+    const previousEnabled = currentRefinement > 1;
+    const nextEnabled = currentRefinement < nbPages;
     const goPrevious = (e) => {
       refine(currentRefinement - 1);
       e.preventDefault();
@@ -45,35 +45,39 @@ const Pagination = connectPagination(
       e.preventDefault();
     };
 
-    return (
-      <>
-        { (showPrevious || showNext) && <hr/> }
-        <div className="d-flex justify-content-between mt-3">
-          <div className="max-w-40">
-            {showPrevious && (
+    if (previousEnabled || nextEnabled) {
+      return (
+        <>
+          <hr/>
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <div className="max-w-40">
               <a
                 href="/"
-                className="p-3 d-inline-block btn btn-outline-primary text-left"
+                className={`p-3 d-inline-block btn btn-outline-primary text-left ${!previousEnabled && 'disabled'}`}
                 onClick={goPrevious}
+                disabled={!previousEnabled}
               >
                 <h5 className="m-0">&larr; Previous Page</h5>
               </a>
-            )}
-          </div>
-          <div className="max-w-40">
-            {showNext && (
+            </div>
+            <div>
+              {currentRefinement} / {nbPages}
+            </div>
+            <div className="max-w-40">
               <a
                 href="/"
-                className="p-3 d-inline-block btn btn-outline-primary text-right"
+                className={`p-3 d-inline-block btn btn-outline-primary text-right ${!nextEnabled && 'disabled'}`}
                 onClick={goNext}
+                disabled={!nextEnabled}
               >
                 <h5 className="m-0">Next Page &rarr;</h5>
               </a>
-            )}
+            </div>
           </div>
-        </div>
-      </>
-    );
+        </>
+      );
+    }
+    return null;
   }
 );
 
@@ -82,7 +86,14 @@ const ResultsContent = ({ children }) => (
     <div className="search-content mb-5">
       {children}
     </div>
-    <Pagination/>
+  </>
+);
+
+const IndexContent = ({ children }) => (
+  <>
+    <div className="mb-5">
+      {children}
+    </div>
   </>
 );
 
@@ -99,24 +110,30 @@ export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearn
     return (
       <ResultsContent>
         <ResultsSummary resultTotal={docsTotal + learnTotal}/>
-        <Index key={learnIndex.index} indexName={learnIndex.index} >
-          <ResultTabulator setResultTotal={setLearnTotal} />
-          <Hits hitComponent={AdvancedPageHit} />
-        </Index>
-        <Index key={docsIndex.index} indexName={docsIndex.index} >
-          <ResultTabulator setResultTotal={setDocsTotal} />
-          <Hits hitComponent={AdvancedPageHit} />
-        </Index>
+        <IndexContent>
+          <Index key={learnIndex.index} indexName={learnIndex.index} >
+            <ResultTabulator setResultTotal={setLearnTotal} />
+            <Hits hitComponent={AdvancedPageHit} />
+          </Index>
+          <Index key={docsIndex.index} indexName={docsIndex.index} className="mb-5">
+            <ResultTabulator setResultTotal={setDocsTotal} />
+            <Hits hitComponent={AdvancedPageHit} />
+          </Index>
+        </IndexContent>
+        <Pagination/>
       </ResultsContent>
     );
   }
 
   return ( // Filtered to specific index
     <ResultsContent>
-      <Index key={filterIndex.index} indexName={filterIndex.index} >
-        <ResultTabulator setResultTotal={filterIndex === docsIndex ? setDocsTotal : setLearnTotal} />
-        <ResultsSummary filterIndex={filterIndex} />
-        <Hits hitComponent={AdvancedPageHit} />
+      <Index key={filterIndex.index} indexName={filterIndex.index}>
+        <IndexContent>
+          <ResultTabulator setResultTotal={filterIndex === docsIndex ? setDocsTotal : setLearnTotal} />
+          <ResultsSummary filterIndex={filterIndex} />
+          <Hits hitComponent={AdvancedPageHit} />
+        </IndexContent>
+        <Pagination/>
       </Index>
     </ResultsContent>
   );
