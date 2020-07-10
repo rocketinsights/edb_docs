@@ -140,15 +140,10 @@ const ClearRefinements = connectCurrentRefinements(
       e.preventDefault();
     };
 
-    return (
-      <a
-        href='/'
-        className={`${(items.length === 0 && !filterIndex) && 'd-none'}`}
-        onClick={clear}
-      >
-        Clear Filters
-      </a>
-    );
+    if (items.length > 0 || filterIndex) {
+      return <a href='/' onClick={clear}>Clear Filters</a>;
+    }
+    return null;
   }
 );
 
