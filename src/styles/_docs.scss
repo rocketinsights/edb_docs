@@ -38,3 +38,9 @@ main {
 .font-weight-400 {
   font-weight: 400;
 }
+
+.disabled-grey {
+  color: $gray-300;
+  border-color: $gray-300;
+  pointer-events: none;
+}

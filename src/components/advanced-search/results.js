@@ -53,7 +53,7 @@ const Pagination = connectPagination(
             <div className="max-w-40">
               <a
                 href="/"
-                className={`p-3 d-inline-block btn btn-outline-primary text-left ${!previousEnabled && 'disabled'}`}
+                className={`p-3 d-inline-block btn btn-outline-primary text-left ${!previousEnabled && 'disabled-grey'}`}
                 onClick={goPrevious}
                 disabled={!previousEnabled}
               >
@@ -66,7 +66,7 @@ const Pagination = connectPagination(
             <div className="max-w-40">
               <a
                 href="/"
-                className={`p-3 d-inline-block btn btn-outline-primary text-right ${!nextEnabled && 'disabled'}`}
+                className={`p-3 d-inline-block btn btn-outline-primary text-right ${!nextEnabled && 'disabled-grey'}`}
                 onClick={goNext}
                 disabled={!nextEnabled}
               >
