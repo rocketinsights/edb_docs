@@ -47,7 +47,7 @@ const Pagination = connectPagination(
 
     if (previousEnabled || nextEnabled) {
       return (
-        <>
+        <div className="mt-5">
           <hr/>
           <div className="d-flex justify-content-between align-items-center mt-3">
             <div className="max-w-40">
@@ -74,7 +74,7 @@ const Pagination = connectPagination(
               </a>
             </div>
           </div>
-        </>
+        </div>
       );
     }
     return null;
@@ -87,10 +87,12 @@ const ResultsContent = ({ children }) => (
   </div>
 );
 
-const IndexContent = ({ children }) => (
-  <div className="mb-5">
-    {children}
-  </div>
+const ResultsIndex = ({ index, setTotal, filterIndex }) => (
+  <Index key={index.index} indexName={index.index} >
+    <ResultTabulator setResultTotal={setTotal} />
+    { (!filterIndex || filterIndex === index) && <Hits hitComponent={AdvancedPageHit} /> }
+    { filterIndex === index && <Pagination /> }
+  </Index>
 );
 
 export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
@@ -113,17 +115,9 @@ export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearn
   return (
     <ResultsContent>
       <ResultsSummary resultTotal={resultTotal()} />
-      <IndexContent>
-        <Index key={learnIndex.index} indexName={learnIndex.index} >
-          <ResultTabulator setResultTotal={setLearnTotal} />
-          { (!filterIndex || filterIndex === learnIndex) && <Hits hitComponent={AdvancedPageHit} /> }
-        </Index>
-        <Index key={docsIndex.index} indexName={docsIndex.index} className="mb-5">
-          <ResultTabulator setResultTotal={setDocsTotal} />
-          { (!filterIndex || filterIndex === docsIndex) && <Hits hitComponent={AdvancedPageHit} /> }
-        </Index>
-      </IndexContent>
-      <Pagination/>
+      <ResultsIndex index={learnIndex} setTotal={setLearnTotal} filterIndex={filterIndex} />
+      <ResultsIndex index={docsIndex} setTotal={setDocsTotal} filterIndex={filterIndex} />
+      { !filterIndex && <Pagination /> }
     </ResultsContent>
   );
 };
