@@ -14,14 +14,12 @@ import {
   ClearButton,
   SearchPane,
 } from './formComps';
+import { docsIndex, learnIndex } from './indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
   '3c95fc5297e90a44b6467f3098a4e6ed',
 );
-
-const docsIndex = { title: 'Documentation', index: 'edb-products' };
-const learnIndex = { title: 'Guides', index: 'advocacy' };
 
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
@@ -106,9 +104,11 @@ const SearchForm = ({currentRefinement, refine, query}) => {
 
   useClickOutside(searchBarRef, close);
 
+  const queryLength = (query || '').length;
+
   return (
-    <div className={`${query.length > 0 && focus && 'shadow'}`} ref={searchBarRef}>
-      <form noValidate action="" autoComplete="off" role="search" className={`search-form d-flex align-items-center ${query.length > 0 && focus && 'open'}`}>
+    <div className={`${queryLength > 0 && focus && 'shadow'}`} ref={searchBarRef}>
+      <form noValidate action="" autoComplete="off" role="search" className={`search-form d-flex align-items-center ${queryLength > 0 && focus && 'open'}`}>
         <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
           id='search-input'
@@ -121,15 +121,15 @@ const SearchForm = ({currentRefinement, refine, query}) => {
           onFocus={() => setFocus(true)}
           ref={inputRef}
         />
-        <ClearButton onClick={() => { refine('') }} className={`${query.length === 0 && 'd-none'}`} />
+        <ClearButton onClick={() => { refine('') }} className={`${queryLength === 0 && 'd-none'}`} />
         <SlashIndicator query={query} />
       </form>
 
       <div
-        className={`dropdown-menu w-100 p-0 ${query.length > 0 && focus && 'show'}`}
+        className={`dropdown-menu w-100 p-0 ${queryLength > 0 && focus && 'show'}`}
       >
         <Tab.Container defaultActiveKey={docsIndex.index}>
-          <Tab.Content className="search-content mb-1 mt-1" ref={searchContentRef}>
+          <Tab.Content className="search-content quick-search-content mb-1 mt-1" ref={searchContentRef}>
             <SearchPane searchIndex={docsIndex} arrowIndex={arrowIndex} />
             <SearchPane searchIndex={learnIndex} arrowIndex={arrowIndex} />
           </Tab.Content>
@@ -137,7 +137,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
           <Nav className="search-tabs" onSelect={() => {inputRef.current.focus(); setArrowIndex(0)}}>
             <SearchTab searchIndex={docsIndex} />
             <SearchTab searchIndex={learnIndex} />
-            <AdvancedSearchTabLink />
+            <AdvancedSearchTabLink query={query} />
           </Nav>
         </Tab.Container>
       </div>
