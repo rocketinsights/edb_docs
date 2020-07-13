@@ -32,7 +32,14 @@ export const AdvancedSearchForm = connectSearchBox(
     }, [searchKeyboardShortcuts]);
 
     return (
-      <form noValidate action="" autoComplete="off" role="search" className={`w-100 search-form d-flex align-items-center`}>
+      <form
+        noValidate
+        action=""
+        autoComplete="off"
+        role="search"
+        className={`w-100 search-form d-flex align-items-center`}
+        onSubmit={(e) => e.preventDefault()}
+      >
         <Icon iconName={iconNames.SEARCH} className="fill-black ml-3 opacity-5 flex-shrink-0" width="22" height="22" />
         <input
           id='search-input'
