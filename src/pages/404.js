@@ -9,6 +9,7 @@ import {
   SideNavigation,
   TopBar,
 } from '../components';
+import Icon, { iconNames } from '../components/icon';
 import { graphql } from 'gatsby';
 
 export const query = graphql`
@@ -27,6 +28,19 @@ export const query = graphql`
   }
 `;
 
+const PageNotFound = ({ path }) => {
+  return (
+    <div>
+      <div className="mb-3">
+        The requested page could not be found:
+      </div>
+      <blockquote className="blockquote blockquote-bordered">
+        {path}
+      </blockquote>
+    </div>
+  );
+};
+
 export default data => {
   const advocacyLinks =
     data.data.file.childAdvocacyDocsJson.advocacyLinks || [];
@@ -38,7 +52,8 @@ export default data => {
           <IndexLinks indexLinkList={advocacyLinks.concat(indexLinkList)} />
         </SideNavigation>
         <MainContent>
-          404
+          <Icon iconName={iconNames.NOT_FOUND} width={400} height={145} className="fill-green mb-5"/>
+          <PageNotFound path={data.location.href} />
           <Footer />
         </MainContent>
       </Container>
