@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { Badge } from 'react-bootstrap';
 import {
   connectHierarchicalMenu,
@@ -8,6 +9,7 @@ import {
 import { products } from '../../constants/products';
 import { capitalize } from '../../constants/utils';
 import { docsIndex, learnIndex } from '../search/indices';
+import Icon, { iconNames } from '../../components/icon';
 
 const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, checked }) => (
   <div className="form-check">
@@ -147,11 +149,26 @@ const ClearRefinements = connectCurrentRefinements(
   }
 );
 
+const Back = () => (
+  <div className="ml-0 mb-3">
+    <Link to="/" className="d-block py-1 align-middle small text-dark">
+      <Icon
+        iconName={iconNames.ARROW_LEFT}
+        className="fill-black mt-n1 mr-1"
+        width="12"
+        height="12"
+      />
+      Back
+    </Link>
+  </div>
+);
+
 export const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
   const showProductVersionFilters = !filterIndex || filterIndex === docsIndex
 
   return (
     <>
+      <Back />
       <IndexSelector
         filterIndex={filterIndex}
         setFilterIndex={setFilterIndex}
