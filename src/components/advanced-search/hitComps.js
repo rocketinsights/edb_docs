@@ -6,7 +6,7 @@ export const AdvancedPageHit = ({ hit }) => {
   return (
     <>
       <Link to={hit.path}>
-        { hit.title }
+        <Highlight attribute="title" hit={hit} tagName="mark" />
         <div className="mb-n1 small text-green">
           {hit.path}
         </div>
