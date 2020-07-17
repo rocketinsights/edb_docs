@@ -4,6 +4,7 @@ import { graphql, Link } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
   DevOnly,
+  DevFrontmatter,
   Footer,
   Layout,
   LeftNav,
@@ -14,7 +15,6 @@ import {
   TopBar,
 } from '../components';
 import { leftNavs } from '../constants/left-navs';
-import { showFrontmatter } from '../constants/utils';
 
 export const query = graphql`
   query($path: String!) {
@@ -178,11 +178,7 @@ const DocTemplate = ({ data, pageContext }) => {
           </ContentRow>
           {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
-          <DevOnly>
-            <div className="alert alert-primary mt-5" role="alert">
-              {showFrontmatter(frontmatter)}
-            </div>
-          </DevOnly>
+          <DevFrontmatter frontmatter={frontmatter} />
           <Footer />
         </MainContent>
       </Container>
