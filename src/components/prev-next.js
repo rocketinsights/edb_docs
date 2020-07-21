@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { filterAndSort } from '../constants/utils';
+import { filterAndSortLinks, getBaseUrl } from '../constants/utils';
 
 const getPrevAndNextLinks = (links, path) => {
   let result = { prevLink: null, nextLink: null };
@@ -17,11 +17,8 @@ const getPrevAndNextLinks = (links, path) => {
 };
 
 const PrevNext = ({ navLinks, path }) => {
-  const baseUrl = path
-    .split('/')
-    .slice(0, 4)
-    .join('/');
-  const sortedLinks = filterAndSort(navLinks, baseUrl);
+  const baseUrl = getBaseUrl(path, 4);
+  const sortedLinks = filterAndSortLinks(navLinks, baseUrl);
   const { prevLink, nextLink } = getPrevAndNextLinks(sortedLinks, path);
 
   return (
