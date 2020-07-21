@@ -98,16 +98,20 @@ const SuggestedLinksSearch = ({ query }) => (
 
 const SuggestedLinks = connectStateResults(
   ({ searchResults }) => {
-    return searchResults && searchResults.nbHits > 0 && (
+    return (
       <>
-        <div>Suggested links based on the requested URL:</div>
-        <div className="search-content mb-5 mt-3">
-          <HiddenSearchBox />
-          <Configure hitsPerPage={5} />
-          <Hits hitComponent={SuggestedHit} />
-        </div>
+        <HiddenSearchBox />
+        {searchResults && searchResults.nbHits > 0 && (
+          <>
+            <div>Suggested links based on the requested URL:</div>
+            <div className="search-content mb-5 mt-3">
+              <Configure hitsPerPage={5} />
+              <Hits hitComponent={SuggestedHit} />
+            </div>
+          </>
+        )}
       </>
-    )
+    );
   }
 );
 
