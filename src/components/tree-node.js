@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 
 const Title = ({ node }) =>
   node.navTitle ? node.navTitle : node.title ? node.title : 'TITLE NEEDED';
@@ -13,7 +14,7 @@ const SubList = ({ children, collapsed }) => {
   }
 };
 
-export const TreeNode = ({ node, path }) => {
+const TreeNode = ({ node, path }) => {
   if (!node.path) {
     return (
       <li
@@ -47,3 +48,5 @@ export const TreeNode = ({ node, path }) => {
     </li>
   );
 };
+
+export default TreeNode;
