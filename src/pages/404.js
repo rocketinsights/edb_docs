@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { graphql, Link } from 'gatsby';
 import { Container } from 'react-bootstrap';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
   Configure,
-  Index,
   Hits,
   connectSearchBox,
+  connectStateResults,
 } from 'react-instantsearch-dom';
 import { indexLinkList } from '../constants/index-link-list';
 import {
@@ -18,9 +18,8 @@ import {
   SideNavigation,
   TopBar,
 } from '../components';
-import { AdvancedPageHit } from '../components/advanced-search';
 import Icon, { iconNames } from '../components/icon';
-import { docsIndex, learnIndex } from '../components/search/indices';
+import { allIndex } from '../components/search/indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -83,19 +82,33 @@ const Ascii404 = () => (
   <Icon iconName={iconNames.NOT_FOUND} height={null} width='60%' className="fill-green mb-5"/>
 );
 
-const SuggestedLinks = ({ query }) => (
+const SuggestedLinksSearch = ({ query }) => (
   <InstantSearch
     searchClient={searchClient}
-    indexName={docsIndex.index}
+    indexName={allIndex.index}
     searchState={{ query: query }}
   >
-    <div>Suggested links based on the requested URL:</div>
-    <SuggestedLinkResults />
+    <SuggestedLinks />
     <div>
       Not finding what you need?
       <Link to={`/search?query=${query}`} className="ml-2">Try Advanced Search</Link>
     </div>
   </InstantSearch>
+);
+
+const SuggestedLinks = connectStateResults(
+  ({ searchResults }) => {
+    return searchResults && searchResults.nbHits > 0 && (
+      <>
+        <div>Suggested links based on the requested URL:</div>
+        <div className="search-content mb-5 mt-3">
+          <HiddenSearchBox />
+          <Configure hitsPerPage={5} />
+          <Hits hitComponent={SuggestedHit} />
+        </div>
+      </>
+    )
+  }
 );
 
 const HiddenSearchBox = connectSearchBox(({ currentRefinement }) => (
@@ -107,14 +120,6 @@ const HiddenSearchBox = connectSearchBox(({ currentRefinement }) => (
   />
 ));
 
-const SuggestedLinkResults = () => (
-  <div className="search-content mb-5 mt-3">
-    <HiddenSearchBox />
-    <SuggestedLinkIndexHits index={learnIndex.index} />
-    <SuggestedLinkIndexHits index={docsIndex.index} />
-  </div>
-);
-
 const SuggestedHit = ({ hit }) => (
   <Link to={hit.path}>
     {hit.title}
@@ -123,13 +128,6 @@ const SuggestedHit = ({ hit }) => (
     </div>
   </Link>
 );
-
-const SuggestedLinkIndexHits = ({ index }) => (
-  <Index indexName={index}>
-    <Configure hitsPerPage={3} />
-    <Hits hitComponent={SuggestedHit} />
-  </Index>
-)
 
 export default data => {
   const advocacyLinks =
@@ -146,7 +144,7 @@ export default data => {
         <MainContent>
           <Ascii404 />
           <PageNotFound path={data.location.href} />
-          <SuggestedLinks query={query} />
+          <SuggestedLinksSearch query={query} />
           <Footer />
         </MainContent>
       </Container>
