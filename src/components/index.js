@@ -8,6 +8,7 @@ import LeftNav from './left-nav';
 import Logo from './logo';
 import MainContent from './main-content';
 import PrevNext from './prev-next';
+import SearchNavigationLinks from './search-navigation-links';
 import SearchNavigation from './search-navigation';
 import SideNavigation from './side-navigation';
 import TableOfContents from './table-of-contents';
@@ -26,6 +27,7 @@ export {
   Logo,
   MainContent,
   PrevNext,
+  SearchNavigationLinks,
   SearchNavigation,
   SideNavigation,
   TableOfContents,
