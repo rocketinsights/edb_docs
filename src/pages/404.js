@@ -55,7 +55,7 @@ const PageNotFound = ({ path }) => (
 );
 
 const Ascii404 = () => (
-  <Icon iconName={iconNames.NOT_FOUND} width={400} height={145} className="fill-green mb-5"/>
+  <Icon iconName={iconNames.NOT_FOUND} height={null} width='60%' className="fill-green mb-5"/>
 );
 
 const SuggestedLinks = ({ query }) => (
@@ -90,10 +90,20 @@ const SuggestedLinkResults = () => (
   </div>
 );
 
+const SuggestedHit = ({ hit }) => (
+  <Link to={hit.path}>
+    {hit.title}
+    <div className="mb-n1 small text-green">
+      {hit.path}
+    </div>
+  </Link>
+);
+
+
 const SuggestedLinkIndexHits = ({ index }) => (
   <Index indexName={index}>
     <Configure hitsPerPage={3} />
-    <Hits hitComponent={AdvancedPageHit} />
+    <Hits hitComponent={SuggestedHit} />
   </Index>
 )
 
