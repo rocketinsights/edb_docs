@@ -43,6 +43,31 @@ export const query = graphql`
   }
 `;
 
+const buildQuery = (pathname) => {
+  const tokens = pathname.replace('/edb-docs', '').replace(/-/g, ' ').split('/');
+
+  const productIndex = tokens.findIndex(token => token.match(/edb\s/g));
+
+  let product = null;
+  let title = null;
+  let version = null;
+
+  if (productIndex >= 0) {
+    product = tokens[productIndex];
+  }
+  if (productIndex + 2 < tokens.length - 1) {
+    title = tokens[productIndex + 2];
+  }
+  if (productIndex + 3 < tokens.length - 1) {
+    version = tokens[productIndex + 3].match(/\d+/g)[0];
+  }
+
+  if (product) {
+    return `${product} ${title ? title : ''} ${version ? version : ''}`;
+  }
+  return pathname.replace(/-|\//g, ' ');
+}
+
 const PageNotFound = ({ path }) => (
   <div className="mb-5">
     <div className="mb-3">
@@ -83,7 +108,7 @@ const HiddenSearchBox = connectSearchBox(({ currentRefinement }) => (
 ));
 
 const SuggestedLinkResults = () => (
-  <div className="search-content mb-4 mt-4">
+  <div className="search-content mb-5 mt-3">
     <HiddenSearchBox />
     <SuggestedLinkIndexHits index={learnIndex.index} />
     <SuggestedLinkIndexHits index={docsIndex.index} />
@@ -99,38 +124,12 @@ const SuggestedHit = ({ hit }) => (
   </Link>
 );
 
-
 const SuggestedLinkIndexHits = ({ index }) => (
   <Index indexName={index}>
     <Configure hitsPerPage={3} />
     <Hits hitComponent={SuggestedHit} />
   </Index>
 )
-
-const buildQuery = (pathname) => {
-  const tokens = pathname.replace('/edb-docs', '').replace(/-/g, ' ').split('/');
-
-  const productIndex = tokens.findIndex(token => token.match(/edb\s/g));
-
-  let product = null;
-  let title = null;
-  let version = null;
-
-  if (productIndex >= 0) {
-    product = tokens[productIndex];
-  }
-  if (productIndex + 2 < tokens.length - 1) {
-    title = tokens[productIndex + 2];
-  }
-  if (productIndex + 3 < tokens.length - 1) {
-    version = tokens[productIndex + 3].match(/\d+/g)[0];
-  }
-
-  if (product) {
-    return `${product} ${title ? title : ''} ${version ? version : ''}`;
-  }
-  return pathname.replace(/-|\//g, ' ');
-}
 
 export default data => {
   const advocacyLinks =
