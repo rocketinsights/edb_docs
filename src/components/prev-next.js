@@ -10,7 +10,7 @@ const getPrevAndNextLinks = (links, path) => {
   if (idx > 0) {
     result.prevLink = links[idx - 1];
   }
-  if (idx < links.length - 2) {
+  if (idx < links.length - 1) {
     result.nextLink = links[idx + 1];
   }
   return result;

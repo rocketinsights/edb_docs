@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Navbar, Button } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
@@ -10,6 +10,7 @@ import {
   Layout,
   SideNavigation,
   TopBar,
+  SearchNavigationLinks,
 } from '../components';
 import {
   AdvancedSearchFiltering,
@@ -67,12 +68,7 @@ export default data => {
           <div className="flex-grow-1 border-right min-w-50">
             <Navbar variant="light" className="flex-md-nowrap p-3">
               <AdvancedSearchForm query={query} />
-              <Button variant="link" className="text-nowrap mr-2 ml-3">
-                Support
-              </Button>
-              <Button variant="link" className="text-nowrap mr-2">
-                Sign In
-              </Button>
+              <SearchNavigationLinks />
             </Navbar>
 
             <main role="main" className="mt-0 p-3">
