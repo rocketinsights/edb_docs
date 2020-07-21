@@ -1,4 +1,4 @@
-export const filterAndSort = (nodes, url) => {
+export const filterAndSortLinks = (nodes, url) => {
   return nodes
     .map(node => ({
       ...node.frontmatter,
@@ -20,4 +20,11 @@ export const filterAndSort = (nodes, url) => {
 
 export const capitalize = s => {
   return `${s[0].toUpperCase()}${s.slice(1)}`;
+};
+
+export const getBaseUrl = (path, depth) => {
+  return path
+    .split('/')
+    .slice(0, depth)
+    .join('/');
 };

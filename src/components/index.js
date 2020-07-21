@@ -1,3 +1,4 @@
+import BackButton from './back-button';
 import CardDecks from './card-decks';
 import DevOnly from './dev-only';
 import DevFrontmatter from './dev-frontmatter';
@@ -14,9 +15,11 @@ import SideNavigation from './side-navigation';
 import TableOfContents from './table-of-contents';
 import TextBalancer from './text-balancer';
 import TopBar from './top-bar';
+import TreeNode from './tree-node';
 import VersionDropdown from './version-dropdown';
 
 export {
+  BackButton,
   CardDecks,
   DevOnly,
   DevFrontmatter,
@@ -33,5 +36,6 @@ export {
   TableOfContents,
   TextBalancer,
   TopBar,
+  TreeNode,
   VersionDropdown,
 };
