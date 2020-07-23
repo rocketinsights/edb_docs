@@ -1,10 +1,6 @@
-import { docsIndex, learnIndex } from '../search/indices';
-
 export const queryParamsToState = (query) => {
-  const contentToIndex = { docs: docsIndex, guides: learnIndex };
   const params = new URLSearchParams(query);
 
-  const filterIndex = contentToIndex[params.get('content')];
   const searchState = {};
   if (params.get('query')) {
     searchState.query = params.get('query');
@@ -15,27 +11,38 @@ export const queryParamsToState = (query) => {
   if (params.get('page')) {
     searchState.page = params.get('page');
   }
+  if (params.get('content')) {
+    searchState.menu = { type: params.get('content') };
+  }
 
-  return [searchState, filterIndex];
+  return searchState;
 };
 
-export const writeStateToQueryParams = (searchState, filterIndex) => {
+export const writeStateToQueryParams = (searchState) => {
   const params = new URLSearchParams();
 
   if (searchState.query && searchState.query.length > 0) {
-    params.set('query', searchState.query);
+    setOrRemove(params, 'query', searchState.query);
   }
   if (searchState.hierarchicalMenu) {
-    params.set('product', searchState.hierarchicalMenu.product);
+    setOrRemove(params, 'product', searchState.hierarchicalMenu.product);
   }
   if (searchState.page > 1) {
-    params.set('page', searchState.page);
+    setOrRemove(params, 'page', searchState.page);
   }
-  if (filterIndex) {
-    params.set('content', filterIndex.queryParam);
+  if (searchState.menu) {
+    setOrRemove(params, 'content', searchState.menu.type);
   }
 
   if (window && window.history) {
     window.history.replaceState('', searchState.query, `?${params.toString()}`)
+  }
+};
+
+const setOrRemove = (params, key, value) => {
+  if (value && value.length > 0) {
+    params.set(key, value);
+  } else {
+    params.delete(key);
   }
 };

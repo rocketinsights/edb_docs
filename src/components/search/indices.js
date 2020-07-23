@@ -1,3 +1,3 @@
-export const allIndex = { title: 'All', index: 'edb', queryParam: 'all' }
-export const docsIndex = { title: 'Documentation', index: 'edb-products', queryParam: 'docs' };
-export const learnIndex = { title: 'Guides', index: 'advocacy', queryParam: 'guides' };
+export const allIndex = { title: 'All', index: 'edb' }
+export const docsIndex = { title: 'Documentation', index: 'edb-products' };
+export const learnIndex = { title: 'Guides', index: 'advocacy' };

@@ -116,6 +116,7 @@ const SuggestedLinks = connectStateResults(
 );
 
 const HiddenSearchBox = connectSearchBox(({ currentRefinement }) => (
+  // eslint-disable-next-line jsx-a11y/control-has-associated-label
   <input
     type="search"
     value={currentRefinement}
