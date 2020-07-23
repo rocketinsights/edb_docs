@@ -22,22 +22,20 @@ const docQuery = `
  }
 `;
 
-const transformNodeDocs = node => {
+const transformNodeForAlgolia = node => {
   let newNode = node;
   newNode['title'] = node.frontmatter.title;
   newNode['path'] = node.fields.path;
-  newNode['product'] = node.fields.product;
-  newNode['version'] = node.fields.version;
-  newNode['productVersion'] = node.fields.product + ' > ' + node.fields.version;
-  delete newNode['frontmatter'];
-  delete newNode['fields'];
-  return newNode;
-};
+  newNode['type'] = 'guide';
 
-const transformNodeLearn = node => {
-  let newNode = node;
-  newNode['title'] = node.frontmatter.title;
-  newNode['path'] = node.fields.path;
+  if (!!node.fields.product) {
+    newNode['product'] = node.fields.product;
+    newNode['version'] = node.fields.version;
+    newNode['productVersion'] =
+      node.fields.product + ' > ' + node.fields.version;
+    newNode['type'] = 'doc';
+  }
+
   delete newNode['frontmatter'];
   delete newNode['fields'];
   return newNode;
@@ -63,11 +61,12 @@ const makeBreadcrumbs = (node, dictionary, advocacy = false) => {
   return trail;
 };
 
-const addBreadcrumbsToNodes = (nodes, advocacy = false) => {
+const addBreadcrumbsToNodes = nodes => {
   const pathDictionary = makePathDictionary(nodes);
   let newNodes = [];
   for (let node of nodes) {
     let newNode = node;
+    const advocacy = !node.fields.product;
     newNode['breadcrumb'] = makeBreadcrumbs(node, pathDictionary, advocacy);
     newNodes.push(newNode);
   }
@@ -170,9 +169,9 @@ const queries = [
       splitNodeContent(
         addBreadcrumbsToNodes(
           data.allMdx.nodes.filter(node => !!node.fields.product),
-        ).map(node => transformNodeDocs(node)),
+        ).map(node => transformNodeForAlgolia(node)),
       ),
-    indexName: 'edb-products', // overrides main index name, optional
+    indexName: 'edb-products',
   },
   {
     query: docQuery,
@@ -180,10 +179,19 @@ const queries = [
       splitNodeContent(
         addBreadcrumbsToNodes(
           data.allMdx.nodes.filter(node => !node.fields.product),
-          true,
-        ).map(node => transformNodeLearn(node)),
+        ).map(node => transformNodeForAlgolia(node)),
       ),
-    indexName: 'advocacy', // overrides main index name, optional
+    indexName: 'advocacy',
+  },
+  {
+    query: docQuery,
+    transformer: ({ data }) =>
+      splitNodeContent(
+        addBreadcrumbsToNodes(data.allMdx.nodes).map(node =>
+          transformNodeForAlgolia(node),
+        ),
+      ),
+    indexName: 'edb',
   },
 ];
 
