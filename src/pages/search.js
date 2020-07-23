@@ -19,7 +19,7 @@ import {
   queryParamsToState,
   writeStateToQueryParams,
 } from '../components/advanced-search';
-import { docsIndex } from '../components/search/indices';
+import { allIndex } from '../components/search/indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -27,17 +27,13 @@ const searchClient = algoliasearch(
 );
 
 export default data => {
-  const [paramSearchState, paramFilterIndex] = queryParamsToState(data.location.search);
+  const paramSearchState = queryParamsToState(data.location.search);
 
   const [query, setQuery] = useState(paramSearchState.query || '');
-  const [filterIndex, setFilterIndex] = useState(paramFilterIndex || null);
   const [searchState, setSearchState] = useState(paramSearchState || {});
 
-  const [learnTotal, setLearnTotal] = useState(0);
-  const [docsTotal, setDocsTotal] = useState(0);
-
   useEffect(() => {
-    writeStateToQueryParams(searchState, filterIndex);
+    writeStateToQueryParams(searchState);
   });
 
   return (
@@ -46,23 +42,20 @@ export default data => {
       <Container className="p-0 d-flex bg-white fixed-container">
         <InstantSearch
           searchClient={searchClient}
-          indexName={docsIndex.index}
+          indexName={allIndex.index}
           onSearchStateChange={(searchState) => {
             setQuery(searchState.query);
             setSearchState(searchState);
           }}
           searchState={searchState}
         >
-          <Configure hitsPerPage={30} />
+          <Configure
+            hitsPerPage={30}
+            facetingAfterDistinct={true}
+          />
 
           <SideNavigation background='white' footer={false}>
-            <AdvancedSearchFiltering
-              filterIndex={filterIndex}
-              setFilterIndex={setFilterIndex}
-              learnTotal={learnTotal}
-              docsTotal={docsTotal}
-              queryActive={query && query.length > 0}
-            />
+            <AdvancedSearchFiltering queryActive={query && query.length > 0} />
           </SideNavigation>
 
           <div className="flex-grow-1 border-right min-w-50">
@@ -72,14 +65,7 @@ export default data => {
             </Navbar>
 
             <main role="main" className="mt-0 p-3">
-              <AdvancedSearchResults
-                query={query}
-                filterIndex={filterIndex}
-                learnTotal={learnTotal}
-                setLearnTotal={setLearnTotal}
-                docsTotal={docsTotal}
-                setDocsTotal={setDocsTotal}
-              />
+              <AdvancedSearchResults query={query} />
               <Footer />
             </main>
           </div>

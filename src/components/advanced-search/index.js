@@ -1,10 +1,7 @@
 import { AdvancedPageHit } from './hitComps';
 import { AdvancedSearchResults } from './results';
 import { AdvancedSearchForm } from './form';
-import {
-  AdvancedSearchFiltering,
-  ResultTabulator,
-} from './filtering';
+import { AdvancedSearchFiltering } from './filtering';
 import {
   queryParamsToState,
   writeStateToQueryParams,
@@ -15,7 +12,6 @@ export {
   AdvancedSearchFiltering,
   AdvancedSearchResults,
   AdvancedSearchForm,
-  ResultTabulator,
   queryParamsToState,
   writeStateToQueryParams,
 };

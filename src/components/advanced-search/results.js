@@ -1,24 +1,22 @@
 import React from 'react';
 import {
-  Index,
   Hits,
   connectStateResults,
   connectPagination,
   connectCurrentRefinements,
 } from 'react-instantsearch-dom';
-import {
-  AdvancedPageHit,
-  ResultTabulator,
-} from './index';
+import { AdvancedPageHit } from './index';
 import { products } from '../../constants/products';
-import { docsIndex, learnIndex } from '../search/indices';
+import { capitalize } from '../../constants/utils';
 
 const ResultsSummary = connectCurrentRefinements(connectStateResults(
-  ({ searchResults: res, resultTotal, items}) => {
-    const resultCount = resultTotal || (res && res.nbHits);
+  ({ searchResults: res, items }) => {
+    const resultCount = res && res.nbHits;
     const query = res && res.query;
-    const [product, version] = items.length > 0 && items[0].currentRefinement.split(' > ');
-    const productName = products[product] ? products[product].name : product;
+
+    const productVersionFacet = items.find(item => item.attribute === 'product');
+    const [product, version] = productVersionFacet ? productVersionFacet.currentRefinement.split(' > ') : [null, null];
+    const productName = products[product] ? products[product].name : capitalize(product);
 
     return (
       <p className="search-text-summary">
@@ -87,37 +85,23 @@ const ResultsContent = ({ children }) => (
   </div>
 );
 
-const ResultsIndex = ({ index, setTotal, filterIndex }) => (
-  <Index key={index.index} indexName={index.index} >
-    <ResultTabulator setResultTotal={setTotal} />
-    { (!filterIndex || filterIndex === index) && <Hits hitComponent={AdvancedPageHit} /> }
-    { filterIndex === index && <Pagination /> }
-  </Index>
-);
+export const AdvancedSearchResults = connectStateResults(
+  ({ searchResults, query }) => {
+    const queryLength = (query || '').length;
+    const showPagination = searchResults && searchResults.nbPages > 1;
 
-export const AdvancedSearchResults = ({ query, filterIndex, learnTotal, setLearnTotal, docsTotal, setDocsTotal }) => {
-  const queryLength = (query || '').length;
-  const resultTotal = () => {
-    if (filterIndex === docsIndex) {
-      return docsTotal;
-    } else if (filterIndex === learnIndex) {
-      return learnTotal;
+    if (queryLength === 0) {
+      return (
+        <p className="search-text-summary">Please enter a search query to begin.</p>
+      );
     }
-    return docsTotal + learnTotal;
-  }
 
-  if (queryLength === 0) {
     return (
-      <p className="search-text-summary">Please enter a search query to begin.</p>
+      <ResultsContent>
+        <ResultsSummary />
+        <Hits hitComponent={AdvancedPageHit} />
+        { showPagination && <Pagination /> }
+      </ResultsContent>
     );
   }
-
-  return (
-    <ResultsContent>
-      <ResultsSummary resultTotal={resultTotal()} />
-      <ResultsIndex index={learnIndex} setTotal={setLearnTotal} filterIndex={filterIndex} />
-      <ResultsIndex index={docsIndex} setTotal={setDocsTotal} filterIndex={filterIndex} />
-      { !filterIndex && <Pagination /> }
-    </ResultsContent>
-  );
-};
+);

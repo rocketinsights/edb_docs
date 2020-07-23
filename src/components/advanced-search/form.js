@@ -7,7 +7,7 @@ import {
 } from '../search/formComps';
 
 export const AdvancedSearchForm = connectSearchBox(
-  ({currentRefinement, refine, query}) => {
+  ({ currentRefinement, refine, query }) => {
     const queryLength = (query || '').length;
 
     const inputRef = createRef();

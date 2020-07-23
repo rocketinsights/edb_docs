@@ -2,14 +2,18 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { Badge } from 'react-bootstrap';
 import {
+  connectMenu,
   connectHierarchicalMenu,
   connectCurrentRefinements,
-  connectStateResults,
 } from 'react-instantsearch-dom';
 import { products } from '../../constants/products';
 import { capitalize } from '../../constants/utils';
-import { docsIndex, learnIndex } from '../search/indices';
 import Icon, { iconNames } from '../../components/icon';
+
+const typeToContentType = {
+  doc: { name: 'Documentation' },
+  guide: { name: 'Guides' },
+};
 
 const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, checked }) => (
   <div className="form-check">
@@ -37,51 +41,13 @@ const RadioInput = ({ labelText, badgeNumber, showBadge, id, name, onChange, che
   </div>
 )
 
-const IndexSelector = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
-  const allTotal = learnTotal + docsTotal;
-  const radioName = "index-selector";
-
-  return (
-    <div className="mb-4 pl-1">
-      <div className='h5'>Content Area</div>
-      <RadioInput
-        id="index-selector-all"
-        name={radioName}
-        labelText='All'
-        badgeNumber={allTotal}
-        showBadge={queryActive}
-        onChange={() => { setFilterIndex(null) }}
-        checked={!filterIndex} 
-      />
-      <RadioInput
-        id={`index-selector-${docsIndex.index}`}
-        name={radioName}
-        labelText={docsIndex.title}
-        badgeNumber={docsTotal}
-        showBadge={queryActive}
-        onChange={() => { setFilterIndex(docsIndex) }}
-        checked={filterIndex === docsIndex}
-      />
-      <RadioInput
-        id={`index-selector-${learnIndex.index}`}
-        name={radioName}
-        labelText={learnIndex.title}
-        badgeNumber={learnTotal}
-        showBadge={queryActive}
-        onChange={() => { setFilterIndex(learnIndex) }}
-        checked={filterIndex === learnIndex}
-      />
-    </div>
-  );
-};
-
-const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
+const RadioRefinement = ({ attribute, heading, items, queryActive, refine, show, translation = {} }) => {
   const radioName = `radio-refinement-${attribute}`;
   const refinedItem = items.find((item) => item.isRefined);
 
   return (
     <div className={`mb-4 pl-1 ${!show && 'd-none'}`}>
-      <div className='h5'>{capitalize(attribute)}</div>
+      <div className='h5'>{heading || capitalize(attribute)}</div>
       <RadioInput
         id={`radio-refinement-${attribute}-all`}
         name={radioName}
@@ -96,7 +62,7 @@ const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
           key={item.label}
           id={`radio-refinement-${attribute}-${item.label}`}
           name={radioName}
-          labelText={products[item.label] ? products[item.label].name : capitalize(item.label)}
+          labelText={translation[item.label] ? translation[item.label].name : capitalize(item.label)}
           badgeNumber={item.count}
           showBadge={queryActive}
           onChange={() => refine(item.value)}
@@ -106,6 +72,19 @@ const RadioRefinement = ({ attribute, items, queryActive, refine, show }) => {
     </div>
   );
 };
+
+const ContentTypeRefinement = connectMenu(
+  ({ items, currentRefinement, refine, queryActive }) => (
+    <RadioRefinement
+      attribute='type'
+      items={items}
+      queryActive={queryActive}
+      refine={refine}
+      show={true}
+      translation={typeToContentType}
+    />
+  )
+);
 
 const ProductVersionRefinement = connectHierarchicalMenu(
   ({ items, currentRefinement, refine, queryActive, show }) => {
@@ -119,6 +98,7 @@ const ProductVersionRefinement = connectHierarchicalMenu(
           queryActive={queryActive}
           refine={refine}
           show={show}
+          translation={products}
         />
         {refinedProduct &&
           <RadioRefinement
@@ -135,14 +115,13 @@ const ProductVersionRefinement = connectHierarchicalMenu(
 );
 
 const ClearRefinements = connectCurrentRefinements(
-  ({ items, refine, filterIndex, setFilterIndex }) => {
+  ({ items, refine }) => {
     const clear = (e) => {
-      setFilterIndex(null);
       refine(items);
       e.preventDefault();
     };
 
-    if (items.length > 0 || filterIndex) {
+    if (items.length > 0) {
       return <a href='/' onClick={clear}>Clear Filters</a>;
     }
     return null;
@@ -163,38 +142,27 @@ const Back = () => (
   </div>
 );
 
-export const AdvancedSearchFiltering = ({ filterIndex, setFilterIndex, learnTotal, docsTotal, queryActive }) => {
-  const showProductVersionFilters = !filterIndex || filterIndex === docsIndex
+export const AdvancedSearchFiltering = connectCurrentRefinements(
+  ({ items, queryActive }) => {
+    const showProductVersionFilters = !items.find((item) => {
+      return item.attribute === 'type' && item.currentRefinement === 'guide';
+    });
 
-  return (
-    <>
-      <Back />
-      <IndexSelector
-        filterIndex={filterIndex}
-        setFilterIndex={setFilterIndex}
-        learnTotal={learnTotal}
-        docsTotal={docsTotal}
-        queryActive={queryActive}
-      />
-      <ProductVersionRefinement
-        attributes={['product', 'productVersion']}
-        show={showProductVersionFilters}
-        queryActive={queryActive}
-      />
-      <ClearRefinements filterIndex={filterIndex} setFilterIndex={setFilterIndex} />
-    </>
-  );
-};
-
-class ResultTabulatorUnconnected extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.searchResults && this.props.searchResults !== prevProps.searchResults) {
-      this.props.setResultTotal(this.props.searchResults.nbHits);
-    }
-  };
-
-  render() {
-    return null;
-  };
-}
-export const ResultTabulator = connectStateResults(ResultTabulatorUnconnected);
+    return (
+      <>
+        <Back />
+        <ContentTypeRefinement
+          attribute='type'
+          queryActive={queryActive}
+          heading='Content Type'
+        />
+        <ProductVersionRefinement
+          attributes={['product', 'productVersion']}
+          show={showProductVersionFilters}
+          queryActive={queryActive}
+        />
+        <ClearRefinements />
+      </>
+    );
+  }
+);

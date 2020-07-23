@@ -49,3 +49,7 @@ main {
   border-left: 5px solid $gray-200;
   padding-left: 1rem;
 }
+
+.break-word {
+  word-wrap: break-word;
+}
