@@ -76,7 +76,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
   return (
     <Layout pageMeta={pageMeta}>
       <TopBar />
-      <Container className="p-0 d-flex bg-white fixed-container">
+      <Container fluid className="p-0 d-flex bg-white">
         <SideNavigation>
           <LeftNav navLinks={navLinks} path={mdx.fields.path} />
         </SideNavigation>

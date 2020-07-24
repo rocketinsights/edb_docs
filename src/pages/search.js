@@ -39,7 +39,7 @@ export default data => {
   return (
     <Layout background='white'>
       <TopBar />
-      <Container className="p-0 d-flex bg-white fixed-container">
+      <Container fluid className="p-0 d-flex bg-white">
         <InstantSearch
           searchClient={searchClient}
           indexName={allIndex.index}
@@ -64,7 +64,7 @@ export default data => {
               <SearchNavigationLinks />
             </Navbar>
 
-            <main role="main" className="mt-0 p-3">
+            <main role="main" className="content-container mt-0 p-3">
               <AdvancedSearchResults query={query} />
               <Footer />
             </main>

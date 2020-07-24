@@ -33,7 +33,7 @@ const SideNavigationFooter = () => (
 const SideNavigation = ({ children, background = 'light', footer = true }) => {
   return (
     <nav className={`sidebar d-block bg-${background} border-right`}>
-      <div className="sidebar-sticky ml-1 pl-0 pr-4 pb-4">
+      <div className="sidebar-sticky pl-4 pr-4 pb-4">
         <LogoLink />
         {children}
         { footer && <SideNavigationFooter /> }
