@@ -1,22 +1,16 @@
 import React from 'react';
 import {
-  Index,
   connectHits,
   connectStateResults,
 } from 'react-instantsearch-dom';
 import { Link } from 'gatsby';
-import { Button, Nav, Tab } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Icon, { iconNames } from '../icon/';
 import { PageHit } from './hitComps';
 
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
     res ? children : null,
-);
-
-const Stats = connectStateResults(
-  ({ searchResults: res }) =>
-    res && `${res.nbHits} result${res.nbHits === 1 ? `` : `s`}`,
 );
 
 const TryAdvancedSearch = connectStateResults(
@@ -40,38 +34,21 @@ const Hits = ({ hits, arrowIndex }) => (
 );
 const PageHits = connectHits(Hits);
 
-const ResultGroup = ({ title, index, arrowIndex }) => (
-  <div className="h-100 d-flex flex-column">
-    <Index key={index} indexName={index} >
+export const SearchPane = ({ arrowIndex }) => (
+  <div className="h-100 search-pane">
+    <div className="h-100 d-flex flex-column">
       <Results>
         <PageHits arrowIndex={arrowIndex} />
         <TryAdvancedSearch />
       </Results>
-    </Index>
+    </div>
   </div>
-);
-
-export const SearchPane = ({ searchIndex, arrowIndex }) => (
-  <Tab.Pane eventKey={searchIndex.index} className="h-100">
-    <ResultGroup title={searchIndex.title} index={searchIndex.index} arrowIndex={arrowIndex} />
-  </Tab.Pane>
 );
 
 export const AdvancedSearchTabLink = ({ query }) => (
   <div className="flex-grow-1 d-flex align-items-center justify-content-flex-end mr-4">
     <Link to={`/search?query=${query}`}>Advanced Search</Link>
   </div>
-);
-
-export const SearchTab = ({ searchIndex }) => (
-  <Nav.Item className="search-tab">
-    <Nav.Link eventKey={searchIndex.index} className="pl-4 pr-4 pb-0">
-      <Index indexName={searchIndex.index}>
-        <span className="h5">{searchIndex.title}</span>
-        <div className="stats"><small className="opacity-7"><Stats /></small></div>
-      </Index>
-    </Nav.Link>
-  </Nav.Item>
 );
 
 export const SlashIndicator = ({ query }) => (

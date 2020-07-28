@@ -21,7 +21,7 @@
 }
 
 .quick-search-content {
-  height: 410px;
+  height: 400px;
   overflow-x: auto;
   overflow-y: scroll;
 }
@@ -60,20 +60,6 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.15);
-}
-
-.search-tabs .nav-link.active {
-  border-top: 2px solid $orange;
-  margin-top: -2px;
-}
-
-.search-tabs {
-  border-top: 1px solid $input-border-color;
-}
-
-.search-tab .stats { 
-  position: relative;
-  top: -6px;
 }
 
 .dropdown-item.arrow-focus {

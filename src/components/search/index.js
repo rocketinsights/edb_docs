@@ -5,16 +5,13 @@ import {
   Configure,
   connectSearchBox,
 } from 'react-instantsearch-dom';
-import { Tab, Nav } from 'react-bootstrap';
 import Icon, { iconNames } from '../icon/';
 import {
-  AdvancedSearchTabLink,
-  SearchTab,
   SlashIndicator,
   ClearButton,
   SearchPane,
 } from './formComps';
-import { docsIndex, learnIndex } from './indices';
+import { allIndex } from './indices';
 
 const searchClient = algoliasearch(
   'NQVJGNW933',
@@ -48,7 +45,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
   }, []);
 
   const moveArrowIndex = useCallback((key) => {
-    const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
+    const dropdownItems = searchContentRef.current.querySelector('.search-pane').querySelectorAll('.dropdown-item');
     let nextIndex = arrowIndex;
     if (key === "ArrowDown") {
       nextIndex = Math.min(arrowIndex + 1, dropdownItems.length - 1);
@@ -85,7 +82,7 @@ const SearchForm = ({currentRefinement, refine, query}) => {
           e.preventDefault();
           break;
         case 'Enter':
-          const dropdownItems = searchContentRef.current.querySelector('.tab-pane.active').querySelectorAll('.dropdown-item');
+          const dropdownItems = searchContentRef.current.querySelector('.search-pane').querySelectorAll('.dropdown-item');
           dropdownItems[arrowIndex].click();
           e.preventDefault();
           break;
@@ -128,18 +125,9 @@ const SearchForm = ({currentRefinement, refine, query}) => {
       <div
         className={`dropdown-menu w-100 p-0 ${queryLength > 0 && focus && 'show'}`}
       >
-        <Tab.Container defaultActiveKey={docsIndex.index}>
-          <Tab.Content className="search-content quick-search-content mb-1 mt-1" ref={searchContentRef}>
-            <SearchPane searchIndex={docsIndex} arrowIndex={arrowIndex} />
-            <SearchPane searchIndex={learnIndex} arrowIndex={arrowIndex} />
-          </Tab.Content>
-
-          <Nav className="search-tabs" onSelect={() => {inputRef.current.focus(); setArrowIndex(0)}}>
-            <SearchTab searchIndex={docsIndex} />
-            <SearchTab searchIndex={learnIndex} />
-            <AdvancedSearchTabLink query={query} />
-          </Nav>
-        </Tab.Container>
+        <div className="search-content quick-search-content mb-1 mt-1" ref={searchContentRef}>
+          <SearchPane arrowIndex={arrowIndex} />
+        </div>
       </div>
     </div>
   );
@@ -154,7 +142,7 @@ const SearchBar = () => {
     <div className="w-100 position-relative" ref={ref}>
       <InstantSearch
         searchClient={searchClient}
-        indexName={docsIndex.index}
+        indexName={allIndex.index}
         onSearchStateChange={({ query }) => setQuery(query)}
         className='dropdown'
       >
