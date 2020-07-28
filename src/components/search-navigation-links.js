@@ -1,13 +1,9 @@
 import React from 'react';
+import { Link } from 'gatsby';
 
 const SearchNavigationLinks = () => (
   <>
-    <a href="https://enterprisedb.com/contact" className="btn btn-link text-nowrap mr-2 ml-3">
-      Contact Us
-    </a>
-    <a href="https://support.enterprisedb.com" className="btn btn-link text-nowrap mr-2">
-      Support
-    </a>
+    <Link to="/search" className="btn btn-link text-nowrap ml-2">Advanced Search</Link>
   </>
 );
 
