@@ -7,6 +7,13 @@ import Icon from '../components/icon/';
 
 import '../styles/index.scss';
 
+const darkModeActive = () => {
+  if (window) {
+    return window.localStorage.getItem('dark-theme') === 'true';
+  }
+  return false;
+}
+
 const Layout = ({ children, pageMeta, background = 'light' }) => {
   const { baseUrl, imageUrl, title, description } = useSiteMetadata();
   const meta = pageMeta || {};
@@ -28,7 +35,9 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
           content={meta.path ? baseUrl + meta.path : baseUrl}
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <body className={`bg-${background} fixed-container`} />
+        <body
+          className={`bg-${background} fixed-container ${darkModeActive() && 'dark'}`}
+        />
       </Helmet>
       <MDXProvider
         components={{

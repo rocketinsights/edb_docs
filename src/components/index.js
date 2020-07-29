@@ -1,5 +1,6 @@
 import BackButton from './back-button';
 import CardDecks from './card-decks';
+import DarkModeToggle from './dark-mode-toggle';
 import DevOnly from './dev-only';
 import DevFrontmatter from './dev-frontmatter';
 import Footer from './footer';
@@ -21,6 +22,7 @@ import VersionDropdown from './version-dropdown';
 export {
   BackButton,
   CardDecks,
+  DarkModeToggle,
   DevOnly,
   DevFrontmatter,
   Footer,
