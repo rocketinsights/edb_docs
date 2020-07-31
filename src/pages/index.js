@@ -9,6 +9,7 @@ import {
   MainContent,
   SideNavigation,
   TopBar,
+  SafeA,
 } from '../components';
 
 import { graphql } from 'gatsby';
@@ -43,6 +44,8 @@ export default data => {
           {/* the following content is pasted from the EDB wireframe w/ minor modifications */}
 
           <h2 className="balance-text">Getting Started</h2>
+
+          <SafeA href="/asdsadasdkhgasdkj">Example.com</SafeA>
 
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">

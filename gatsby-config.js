@@ -271,6 +271,9 @@ module.exports = {
               noInlineHighlight: true,
             },
           },
+          {
+            resolve: 'gatsby-remark-check-links',
+          }
         ],
       },
     },

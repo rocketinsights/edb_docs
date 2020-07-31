@@ -9,6 +9,7 @@ import LeftNav from './left-nav';
 import Logo from './logo';
 import MainContent from './main-content';
 import PrevNext from './prev-next';
+import SafeA from './safe-a';
 import SearchNavigationLinks from './search-navigation-links';
 import SearchNavigation from './search-navigation';
 import SideNavigation from './side-navigation';
@@ -30,6 +31,7 @@ export {
   Logo,
   MainContent,
   PrevNext,
+  SafeA,
   SearchNavigationLinks,
   SearchNavigation,
   SideNavigation,

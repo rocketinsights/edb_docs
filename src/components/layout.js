@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import useSiteMetadata from '../hooks/use-sitemetadata';
-import TextBalancer from '../components/text-balancer';
+import { SafeA, TextBalancer } from '../components';
 import { MDXProvider } from '@mdx-js/react';
 import Icon from '../components/icon/';
 
@@ -38,6 +38,7 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
               <pre {...props} />
             </figure>
           ),
+          a: SafeA,
           Icon,
         }}
       >
