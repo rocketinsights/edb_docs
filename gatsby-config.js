@@ -27,6 +27,8 @@ const transformNodeForAlgolia = node => {
   newNode['title'] = node.frontmatter.title;
   newNode['path'] = node.fields.path;
   newNode['type'] = 'guide';
+  if (node.frontmatter.product) { newNode['product'] = node.frontmatter.product; }
+  if (node.frontmatter.platform) { newNode['platform'] = node.frontmatter.platform; }
 
   if (!!node.fields.product) {
     newNode['product'] = node.fields.product;
