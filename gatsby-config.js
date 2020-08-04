@@ -22,22 +22,20 @@ const docQuery = `
  }
 `;
 
-const transformNodeDocs = node => {
+const transformNodeForAlgolia = node => {
   let newNode = node;
   newNode['title'] = node.frontmatter.title;
   newNode['path'] = node.fields.path;
-  newNode['product'] = node.fields.product;
-  newNode['version'] = node.fields.version;
-  newNode['productVersion'] = node.fields.product + ' > ' + node.fields.version;
-  delete newNode['frontmatter'];
-  delete newNode['fields'];
-  return newNode;
-};
+  newNode['type'] = 'guide';
 
-const transformNodeLearn = node => {
-  let newNode = node;
-  newNode['title'] = node.frontmatter.title;
-  newNode['path'] = node.fields.path;
+  if (!!node.fields.product) {
+    newNode['product'] = node.fields.product;
+    newNode['version'] = node.fields.version;
+    newNode['productVersion'] =
+      node.fields.product + ' > ' + node.fields.version;
+    newNode['type'] = 'doc';
+  }
+
   delete newNode['frontmatter'];
   delete newNode['fields'];
   return newNode;
@@ -63,11 +61,12 @@ const makeBreadcrumbs = (node, dictionary, advocacy = false) => {
   return trail;
 };
 
-const addBreadcrumbsToNodes = (nodes, advocacy = false) => {
+const addBreadcrumbsToNodes = nodes => {
   const pathDictionary = makePathDictionary(nodes);
   let newNodes = [];
   for (let node of nodes) {
     let newNode = node;
+    const advocacy = !node.fields.product;
     newNode['breadcrumb'] = makeBreadcrumbs(node, pathDictionary, advocacy);
     newNodes.push(newNode);
   }
@@ -78,13 +77,18 @@ const splitNodeContent = nodes => {
   let result = [];
   for (let node of nodes) {
     let order = 1;
-    let content = node.rawBody.replace('\n\n', '\n').replace('\n\n', '\n');
+    let content = node.rawBody.replace(/(\n)+/g, '\n');
     const contentArray = content.split('\n');
     let contentAggregator = '';
+    let hitTocTree = false;
     for (let i = 0; i < contentArray.length; i++) {
       const section = contentArray[i];
-      if (sectionCheck(section)) {
-        contentAggregator += section + ' ';
+      if (section.startsWith('<div class="toctree"')) {
+        hitTocTree = true;
+      }
+      const cleanedSection = cleanSection(section);
+      if (!hitTocTree && cleanedSection !== '') {
+        contentAggregator += cleanedSection + ' ';
       }
       if (
         contentAggregator.length > 1000 ||
@@ -103,17 +107,59 @@ const splitNodeContent = nodes => {
   return result;
 };
 
-const sectionCheck = section => {
+const cleanSection = section => {
   if (
     section.length < 6 ||
-    RegExp('</?table>').test(section) ||
     RegExp('<div class=.*>').test(section) ||
-    RegExp('</div>').test(section) ||
-    section === '```text'
+    section.includes('</div>') ||
+    notStartWith(section, [
+      '```',
+      'title:',
+      'navTitle:',
+      'description:',
+      '![',
+      '<table',
+      '</table',
+      '---',
+      '| ---',
+      'import ',
+    ])
   ) {
-    return false;
+    return '';
   }
-  return true;
+  return removeLeadingBrackets(
+    removeTheseCharacters(section, [/\s\|/g, /\|\s/g, /`/g]),
+  );
+};
+
+const notStartWith = (section, list) => {
+  for (let item of list) {
+    if (section.startsWith(item)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const removeTheseCharacters = (section, list) => {
+  let newSection = section;
+  for (let item of list) {
+    newSection = newSection.replace(item, '');
+  }
+  return newSection;
+};
+
+const removeLeadingBrackets = section => {
+  if (section.startsWith('> > > ')) {
+    return section.substring(6);
+  }
+  if (section.startsWith('> > ')) {
+    return section.substring(4);
+  }
+  if (section.startsWith('> ')) {
+    return section.substring(2);
+  }
+  return section;
 };
 
 const queries = [
@@ -123,9 +169,9 @@ const queries = [
       splitNodeContent(
         addBreadcrumbsToNodes(
           data.allMdx.nodes.filter(node => !!node.fields.product),
-        ).map(node => transformNodeDocs(node)),
+        ).map(node => transformNodeForAlgolia(node)),
       ),
-    indexName: 'edb-products', // overrides main index name, optional
+    indexName: 'edb-products',
   },
   {
     query: docQuery,
@@ -133,10 +179,19 @@ const queries = [
       splitNodeContent(
         addBreadcrumbsToNodes(
           data.allMdx.nodes.filter(node => !node.fields.product),
-          true,
-        ).map(node => transformNodeLearn(node)),
+        ).map(node => transformNodeForAlgolia(node)),
       ),
-    indexName: 'advocacy', // overrides main index name, optional
+    indexName: 'advocacy',
+  },
+  {
+    query: docQuery,
+    transformer: ({ data }) =>
+      splitNodeContent(
+        addBreadcrumbsToNodes(data.allMdx.nodes).map(node =>
+          transformNodeForAlgolia(node),
+        ),
+      ),
+    indexName: 'edb',
   },
 ];
 
@@ -242,6 +297,7 @@ module.exports = {
         ],
       },
     },
+    'gatsby-plugin-meta-redirect',
     {
       // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
       resolve: `gatsby-plugin-algolia`,

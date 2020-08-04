@@ -48,7 +48,7 @@ export const linkGroups = [
     ],
   },
   {
-    name: 'EDB Postgres Ark Platform',
+    name: 'Postgres Ark Platform',
     links: [
       { name: 'Installation Guide for Linux', link: '/epas/epas_inst_linux' },
       {
@@ -59,7 +59,7 @@ export const linkGroups = [
     ],
   },
   {
-    name: 'EDB Postgres Backup and Recovery Tool',
+    name: 'Postgres Backup and Recovery Tool',
     links: [
       { name: 'Installation Guide for Linux', link: '/epas/epas_inst_linux' },
       {
@@ -70,7 +70,7 @@ export const linkGroups = [
     ],
   },
   {
-    name: 'EDB Postgres Cloud Database Service',
+    name: 'Postgres Cloud Database Service',
     links: [
       { name: 'Installation Guide for Linux', link: '/epas/epas_inst_linux' },
       {
@@ -81,7 +81,7 @@ export const linkGroups = [
     ],
   },
   {
-    name: 'EDB Postgres Enterprise Manager',
+    name: 'Postgres Enterprise Manager',
     links: [
       { name: 'Installation Guide for Linux', link: '/epas/epas_inst_linux' },
       {
@@ -92,7 +92,7 @@ export const linkGroups = [
     ],
   },
   {
-    name: 'EDB Postgres Failover Manager',
+    name: 'Postgres Failover Manager',
     links: [
       { name: 'Installation Guide for Linux', link: '/epas/epas_inst_linux' },
       {

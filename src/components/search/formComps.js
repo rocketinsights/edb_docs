@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-  Index,
   connectHits,
   connectStateResults,
 } from 'react-instantsearch-dom';
 import { Link } from 'gatsby';
-import { Button, Nav, Tab } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Icon, { iconNames } from '../icon/';
 import { PageHit } from './hitComps';
 
@@ -14,16 +13,11 @@ const Results = connectStateResults(
     res ? children : null,
 );
 
-const Stats = connectStateResults(
-  ({ searchResults: res }) =>
-    res && `${res.nbHits} result${res.nbHits === 1 ? `` : `s`}`,
-);
-
 const TryAdvancedSearch = connectStateResults(
-  ({ searchResults: res}) =>
+  ({ searchResults: res }) =>
     <div className="flex-grow-1 d-flex align-items-center justify-content-center p-4">
       { res && res.nbHits > 0 ? 'Not finding what you need?' : 'No results found.' }
-      <Link to='#'className="ml-2">Try Advanced Search</Link>
+      <Link to={`/search?query=${res.query}`} className="ml-2">Try Advanced Search</Link>
     </div>
 );
 
@@ -40,43 +34,26 @@ const Hits = ({ hits, arrowIndex }) => (
 );
 const PageHits = connectHits(Hits);
 
-const ResultGroup = ({ title, index, arrowIndex }) => (
-  <div className="h-100 d-flex flex-column">
-    <Index key={index} indexName={index} >
+export const SearchPane = ({ arrowIndex }) => (
+  <div className="h-100 search-pane">
+    <div className="h-100 d-flex flex-column">
       <Results>
         <PageHits arrowIndex={arrowIndex} />
         <TryAdvancedSearch />
       </Results>
-    </Index>
+    </div>
   </div>
 );
 
-export const SearchPane = ({ searchIndex, arrowIndex }) => (
-  <Tab.Pane eventKey={searchIndex.index} className="h-100">
-    <ResultGroup title={searchIndex.title} index={searchIndex.index} arrowIndex={arrowIndex} />
-  </Tab.Pane>
-);
-
-export const AdvancedSearchTabLink = () => (
+export const AdvancedSearchTabLink = ({ query }) => (
   <div className="flex-grow-1 d-flex align-items-center justify-content-flex-end mr-4">
-    <Link to='#'>Advanced Search</Link>
+    <Link to={`/search?query=${query}`}>Advanced Search</Link>
   </div>
-);
-
-export const SearchTab = ({ searchIndex }) => (
-  <Nav.Item className="search-tab">
-    <Nav.Link eventKey={searchIndex.index} className="pl-4 pr-4 pb-0">
-      <Index indexName={searchIndex.index}>
-        <span className="h5">{searchIndex.title}</span>
-        <div className="stats"><small className="opacity-7"><Stats /></small></div>
-      </Index>
-    </Nav.Link>
-  </Nav.Item>
 );
 
 export const SlashIndicator = ({ query }) => (
   <span
-    className={`slash-indicator text-orange text-center opacity-5 bg-white mr-3 ${query.length > 0 && 'd-none'}`}
+    className={`slash-indicator text-orange text-center opacity-5 bg-white mr-3 ${(query || '').length > 0 && 'd-none'}`}
   >
     /
   </span>
