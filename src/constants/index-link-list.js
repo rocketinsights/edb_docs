@@ -14,7 +14,10 @@ export const indexLinkList = [
         url: '/cds/1',
         iconName: IconNames.CLOUD_DB,
       },
-      { title: 'Ark Platform', url: '/ark/1' },
+      { title: 'Ark Platform',
+        url: '/ark/1',
+        iconName: IconNames.EDB_ARK
+      },
     ],
   },
   {
