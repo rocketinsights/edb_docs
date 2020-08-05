@@ -69,9 +69,12 @@ const SectionHeadingWithVersions = ({ newList, path, versionArray }) => {
     <li className="ml-0 mb-4 d-flex align-items-center">
       <Icon
         iconName={productIcon(path) || iconNames.DOTTED_BOX}
-        className="opacity-2 mr-2"
-        width="90"
-        height="90"
+        className="fill-orange mr-3"
+        width="50"
+        height="50"
+        //circle={true}
+        //circleClassName="bg-blue-10 mt-4 mb-2"
+        //circleDiameter={80}
       />
       <div className="rightsidenoclass">
         <Link
