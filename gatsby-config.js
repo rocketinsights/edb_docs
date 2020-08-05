@@ -27,6 +27,9 @@ const transformNodeForAlgolia = node => {
   newNode['title'] = node.frontmatter.title;
   newNode['path'] = node.fields.path;
   newNode['type'] = 'guide';
+  // if (node.frontmatter.product) { newNode['product'] = node.frontmatter.product; }
+  // if (node.frontmatter.platform) { newNode['platform'] = node.frontmatter.platform; }
+  newNode['platform'] = node.frontmatter.platform || 'unknown';
 
   if (!!node.fields.product) {
     newNode['product'] = node.fields.product;
@@ -168,7 +171,7 @@ const queries = [
     transformer: ({ data }) =>
       splitNodeContent(
         addBreadcrumbsToNodes(
-          data.allMdx.nodes.filter(node => !!node.fields.product),
+          data.allMdx.nodes.filter(node => node.type === 'doc'),
         ).map(node => transformNodeForAlgolia(node)),
       ),
     indexName: 'edb-products',
@@ -178,7 +181,7 @@ const queries = [
     transformer: ({ data }) =>
       splitNodeContent(
         addBreadcrumbsToNodes(
-          data.allMdx.nodes.filter(node => !node.fields.product),
+          data.allMdx.nodes.filter(node => node.type === 'guide'),
         ).map(node => transformNodeForAlgolia(node)),
       ),
     indexName: 'advocacy',
