@@ -114,10 +114,11 @@ for path in Path('content').rglob('index.rst'):
       print ("Successfully created the directory %s " % dest_path)
 
     # copy images folder to destination folder
-    if os.path.exists(root_path + "images"):
-      shutil.copytree(root_path + "images", dest_path + "/images")
-    else:
-      shutil.copytree(str(path.parents[1]) + "/_images", dest_path + "/images")
+    # if os.path.exists(root_path + "images"):
+    shutil.copytree(root_path + "images", dest_path + "/images")
+    # else:
+    #   print(path.parents[0])
+    #   shutil.copytree(str(path.parents[0]) + "/_images", dest_path + "/images")
 
     # copy index over
     shutil.copyfile(root_path + "index.mdx", dest_path + "/index.mdx") 
