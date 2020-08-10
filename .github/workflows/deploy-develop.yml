@@ -4,7 +4,7 @@ on:
     branches:
       - eb-netlify
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -12,6 +12,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - run: git submodule update --init --remote
     - run: npm install
     - run: npm run build
     # Deploy the gatsby build to Netlify
