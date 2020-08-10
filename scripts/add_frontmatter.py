@@ -7,10 +7,15 @@ from pathlib import Path
 # The rest is removing lots of extra characters from conversion
 print('adding frontmatter')
 
+def fix_escaped_html(line):
+  return line.replace("&lt;","<").replace("&gt;",">")
+
 for path in Path('content').rglob('*.mdx'):
   copying = False
   top_url_line = ""
   for line in fileinput.input(files=[str(path)], inplace=1):
+    line = fix_escaped_html(line)
+
     if line.startswith('# ') and not copying:
       title = line.replace("# ", "").replace("\n", "").replace("`", "").replace("\*", "*")
       print("---")
