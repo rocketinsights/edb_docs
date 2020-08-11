@@ -1,8 +1,9 @@
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
-const sortVersions = (a, b) => {
-  return parseFloat(a) - parseFloat(b);
-};
+const sortVersionArray = (versions) => {
+  return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
+                 .map(version => version.replace(/\d+/g, n => +n-100000));
+}
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
@@ -174,7 +175,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   for (const product in versionIndex) {
-    versionIndex[product] = versionIndex[product].sort(sortVersions).reverse();
+    versionIndex[product] = sortVersionArray(versionIndex[product]).reverse();
   }
 
   docs.forEach(doc => {
