@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 
 '''
     For the given path, get the List of all files in the directory tree 
@@ -33,8 +34,8 @@ def getListOfFiles(dirName, parentChapter):
     listOfFiles = list(filter(filterList, os.listdir(dirName)))
     listOfFiles.sort(key=putIndexFirst2)
     allFiles = list()
-    chapter = 1
-    print(listOfFiles)
+    chapter = 0
+    # print(listOfFiles)
     # Iterate over all the entries
     for entry in listOfFiles:
         # Create full path
@@ -49,8 +50,23 @@ def getListOfFiles(dirName, parentChapter):
     return allFiles
     
 def main():
+    dirName = '' # docs/epas/12/05_epas_compat_bip_guide
+    try:
+        dirName = sys.argv[1]
+    except:
+        print('directory not passed in')
+        print('if running from yarn use `yarn build-pdf directory/path/here`')
+        sys.exit(1)
+
+    openPdf = False
+    try:
+        openPdf = (sys.argv[2] == '--open')
+    except:
+        pass
     
-    dirName = 'docs/epas/12/05_epas_compat_bip_guide'
+    if not os.path.exists(dirName):
+        raise Exception('directory does not exist')
+
     if os.path.exists(dirName + '/combined.mdx'):
         os.remove(dirName + '/combined.mdx')
 
@@ -68,9 +84,9 @@ def main():
             if tag and len(elem.anchor) == 0:
                 elem.anchor = tag.group(1)
             
-        print(elem.filename)
-        print(elem.title)
-        print(elem.chapter)
+        # print(elem.filename)
+        # print(elem.title)
+        # print(elem.chapter)
 
     
     # Print the files
@@ -93,10 +109,30 @@ def main():
                     frontmatterCount -= 1
                     fp.write(newLine)
             fp.write('\n')
-            print(elem)
+            # print(elem)
+
+    os.system(
+    "pandoc {0}/combined.mdx " \
+    "--toc " \
+    "-f gfm " \
+    "-H scripts/pdf-head.tex "\
+    "-V linkcolor:blue " \
+    "-V geometry:a4paper " \
+    "-V geometry:margin=2cm " \
+    '-V mainfont="Helvetica" ' \
+    '-V monofont="Monaco" ' \
+    '-V fontsize=8pt ' \
+    '--highlight-style tango ' \
+    "--pdf-engine=xelatex " \
+    "-o {0}/complete.pdf ".format(dirName)
+    )
+    # https://learnbyexample.github.io/tutorial/ebook-generation/customizing-pandoc/
+
+    if openPdf:
+        os.system("open {0}/complete.pdf".format(dirName))
+
+    os.remove(dirName + '/combined.mdx')
 
         
 if __name__ == '__main__':
     main()
-
-#  pandoc --toc combined.mdx -f gfm -o output.pdf --pdf-engine=xelatex

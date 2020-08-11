@@ -28,9 +28,6 @@
       "url": "https://github.com/dmathieu/heroku-buildpack-submodules"
     },
     {
-      "url": "https://github.com/illustrativemathematics/pandoc-buildpack.git"
-    },
-    {
       "url": "heroku/nodejs"
     },
     {
