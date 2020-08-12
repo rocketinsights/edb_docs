@@ -50,9 +50,9 @@ const SectionHeading = ({ newList, path }) => {
     <li className="ml-0 mb-4 d-flex align-items-center">
       <Icon
         iconName={productIcon(path) || iconNames.DOTTED_BOX}
-        className="opacity-2 mr-2"
-        width="48"
-        height="48"
+        className="fill-orange mr-3"
+        width="50"
+        height="50"
       />
       <Link
         to={newList[0].path}
@@ -69,9 +69,9 @@ const SectionHeadingWithVersions = ({ newList, path, versionArray }) => {
     <li className="ml-0 mb-4 d-flex align-items-center">
       <Icon
         iconName={productIcon(path) || iconNames.DOTTED_BOX}
-        className="opacity-2 mr-2"
-        width="90"
-        height="90"
+        className="fill-orange mr-3"
+        width="50"
+        height="50"
       />
       <div className="rightsidenoclass">
         <Link
