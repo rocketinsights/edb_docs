@@ -79,7 +79,7 @@ export default data => {
                   height="50"
                   circle={true}
                   circleClassName="bg-blue-10"
-                  circleDiameter={90}
+                  circleDiameter={80}
                 />
               </div>
               <div className="card-body">
