@@ -33,6 +33,7 @@ export const query = graphql`
         advocacyLinks {
           links {
             title
+            url
             iconName
           }
         }
@@ -85,7 +86,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
   };
 
   const iconName = (data.file.childAdvocacyDocsJson.advocacyLinks[0].links.find(
-    link => link.title === mdx.frontmatter.title
+    link => mdx.fields.path.includes(link.url)
   ) || { iconName: null }).iconName;
 
   return (
