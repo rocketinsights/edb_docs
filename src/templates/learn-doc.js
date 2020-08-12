@@ -84,9 +84,9 @@ const LearnDocTemplate = ({ data, pageContext }) => {
     path: mdx.fields.path,
   };
 
-  const iconName = data.file.childAdvocacyDocsJson.advocacyLinks[0].links.find(
+  const iconName = (data.file.childAdvocacyDocsJson.advocacyLinks[0].links.find(
     link => link.title === mdx.frontmatter.title
-  ).iconName;
+  ) || { iconName: null }).iconName;
 
   return (
     <Layout pageMeta={pageMeta}>
