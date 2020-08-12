@@ -5,11 +5,7 @@ title: "Error Handling"
 <div id="error_handling" class="registered_link"></div>
 
 
-<div class="index">
 
-Error Handling
-
-</div>
 
 ECPGPlus provides two methods to detect and handle errors in embedded SQL code:
 
@@ -18,11 +14,7 @@ ECPGPlus provides two methods to detect and handle errors in embedded SQL code:
 
 ## Error Handling with sqlca
 
-<div class="index">
 
-Error Handling with sqlca
-
-</div>
 
 `sqlca` (SQL communications area) is a global variable used by `ecpglib` to communicate information from the server to the client application. After executing a SQL statement (for example, an `INSERT` or `SELECT` statement) you can inspect the contents of `sqlca` to determine if the statement has completed successfully or if the statement has failed.
 
@@ -350,11 +342,7 @@ The following table lists the `sqlstate` and `sqlcode` values, as well as the sy
 
 ## EXEC SQL WHENEVER
 
-<div class="index">
 
-EXEC SQL WHENEVER
-
-</div>
 
 Use the `EXEC SQL WHENEVER` directive to implement simple error handling for client applications compiled with ECPGPlus. The syntax of the directive is:
 

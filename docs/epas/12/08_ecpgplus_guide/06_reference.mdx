@@ -5,11 +5,7 @@ title: "Reference"
 <div id="reference" class="registered_link"></div>
 
 
-<div class="index">
 
-Reference
-
-</div>
 
 The sections that follow describe ecpgPlus language elements:
 
@@ -19,30 +15,18 @@ The sections that follow describe ecpgPlus language elements:
   - The SQLDA Structure
   - ECPGPlus Statements
 
-<div class="index">
 
-C-preprocessor Directives
-
-</div>
 
 ## C-preprocessor Directives
 
-<div class="index">
 
-C-preprocessor Directives
-
-</div>
 
 The ECPGPlus C-preprocessor enforces two behaviors that are dependent on the mode in which you invoke ECPGPlus:
 
   - `PROC` mode
   - non-`PROC` mode
 
-<div class="index">
 
-Compiling in PROC mode
-
-</div>
 
 ### Compiling in PROC Mode
 
@@ -159,11 +143,7 @@ the EXEC ORACLE pre-processor directives only work if you specify -C PROC on the
 
 </div>
 
-<div class="index">
 
-Using the SELECT_ERROR Precompiler Option
-
-</div>
 
 ### Using the SELECT_ERROR Precompiler Option
 
@@ -175,11 +155,7 @@ The default value is `YES`; a `SELECT` statement will return an error message if
 
 Use `SELECT_ERROR` with the `EXEC ORACLE OPTION` directive.
 
-<div class="index">
 
-Compiling in non-PROC mode
-
-</div>
 
 ### Compiling in non-PROC Mode
 
@@ -194,11 +170,7 @@ When invoked in non-`PROC` mode, ECPG implements the behavior described in the P
 
 ## Supported C Data Types
 
-<div class="index">
 
-Supported C Data Types
-
-</div>
 
 An ECPGPlus application must deal with two sets of data types: SQL data types (such as `SMALLINT`, `DOUBLE PRECISION` and `CHARACTER VARYING`) and C data types (like `short`, `double` and `varchar[n]`). When an application fetches data from the server, ECPGPlus will map each SQL data type to the type of the C variable into which the data is returned.
 
@@ -231,11 +203,7 @@ To use a data type supplied by `pgtypeslib`, you must `#include` the proper head
 
 ## Type Codes
 
-<div class="index">
 
-Type Codes
-
-</div>
 
 The following table contains the type codes for *external* data types. An external data type is used to indicate the type of a C host variable. When an application binds a value to a parameter or binds a buffer to a SELECT-list item, the type code in the corresponding SQLDA descriptor `(descriptor->T[column])` should be set to one of the following values:
 
@@ -274,11 +242,7 @@ The following table contains the type codes for *internal* data types. An intern
 
 ## The SQLDA Structure
 
-<div class="index">
 
-SQLDA Structure
-
-</div>
 
 Oracle Dynamic SQL method 4 uses the SQLDA data structure to hold the data and metadata for a dynamic SQL statement. A SQLDA structure can describe a set of input parameters corresponding to the parameter markers found in the text of a dynamic statement or the result set of a dynamic statement. The layout of the SQLDA structure is:
 
@@ -402,11 +366,7 @@ This array is not used by ECPGPlus, but is provided for compatibility with Pro*C
 
 ## ECPGPlus Statements
 
-<div class="index">
 
-ECPGPlus Statements
-
-</div>
 
 An embedded SQL statement allows your client application to interact with the server, while an embedded directive is an instruction to the ECPGPlus compiler.
 
@@ -422,11 +382,7 @@ ECPGPlus extends the PostgreSQL server-side syntax for some statements; for thos
 
 ### ALLOCATE DESCRIPTOR
 
-<div class="index">
 
-ALLOCATE DESCRIPTOR
-
-</div>
 
 Use the `ALLOCATE DESCRIPTOR` statement to allocate an SQL descriptor area:
 
@@ -450,11 +406,7 @@ EXEC SQL FOR :emp_array ALLOCATE DESCRIPTOR emp_query;
 
 ### CALL
 
-<div class="index">
 
-CALL
-
-</div>
 
 Use the `CALL` statement to invoke a procedure or function on the server. The `CALL` statement works only on Advanced Server. The `CALL` statement comes in two forms; the first form is used to call a *function*:
 
@@ -488,11 +440,7 @@ EXEC SQL CALL get_job_desc(:ename)
 
 ### CLOSE
 
-<div class="index">
 
-CLOSE
-
-</div>
 
 Use the `CLOSE` statement to close a cursor, and free any resources scurrently in use by the cursor. A client application cannot fetch rows from a closed cursor. The syntax of the CLOSE statement is:
 
@@ -516,11 +464,7 @@ A cursor is automatically closed when an application terminates.
 
 ### COMMIT
 
-<div class="index">
 
-COMMIT
-
-</div>
 
 Use the `COMMIT` statement to complete the current transaction, making all changes permanent and visible to other users. The syntax is:
 
@@ -557,11 +501,7 @@ EXEC SQL SET AUTOCOMMIT TO OFF
 
 ### CONNECT
 
-<div class="index">
 
-CONNECT
-
-</div>
 
 Use the `CONNECT` statement to establish a connection to a database. The `CONNECT` statement is available in two forms - one form is compatible with Oracle databases, the other is not.
 
@@ -653,11 +593,7 @@ The name of the connection is `acctg_conn`; you can use the connection name when
 
 ### DEALLOCATE DESCRIPTOR
 
-<div class="index">
 
-DEALLOCATE DESCRIPTOR
-
-</div>
 
 Use the `DEALLOCATE DESCRIPTOR` statement to free memory in use by an allocated descriptor. The syntax of the statement is:
 
@@ -677,11 +613,7 @@ EXEC SQL DEALLOCATE DESCRIPTOR emp_query;
 
 ### DECLARE CURSOR
 
-<div class="index">
 
-DECLARE CURSOR
-
-</div>
 
 Use the `DECLARE CURSOR` statement to define a cursor. The syntax of the statement is:
 
@@ -714,11 +646,7 @@ The cursor generates a result set that contains the employee number, employee na
 
 ### DECLARE DATABASE
 
-<div class="index">
 
-DECLARE DATABASE
-
-</div>
 
 Use the `DECLARE DATABASE` statement to declare a database identifier for use in subsequent SQL statements (for example, in a `CONNECT` statement). The syntax is:
 
@@ -742,11 +670,7 @@ This statement has no effect and is provided for Pro*C compatibility only.
 
 ### DECLARE STATEMENT
 
-<div class="index">
 
-DECLARE STATEMENT
-
-</div>
 
 Use the `DECLARE STATEMENT` directive to declare an identifier for an SQL statement. Advanced Server supports two versions of the `DECLARE STATEMENT` directive:
 
@@ -779,11 +703,7 @@ This statement has no effect and is provided for Pro*C compatibility only.
 
 ### DELETE
 
-<div class="index">
 
-DELETE
-
-</div>
 
 Use the `DELETE` statement to delete one or more rows from a table. The syntax for the ECPGPlus `DELETE` statement is the same as the syntax for the SQL statement, but you can use parameter markers and host variables any place that an expression is allowed. The syntax is:
 
@@ -829,11 +749,7 @@ For more information about using the `DELETE` statement, please see the PostgreS
 
 ### DESCRIBE
 
-<div class="index">
 
-DESCRIBE
-
-</div>
 
 Use the `DESCRIBE` statement to find the number of input values required by a prepared statement or the number of output values returned by a prepared statement. The `DESCRIBE` statement is used to analyze a SQL statement whose shape is unknown at the time you write your application.
 
@@ -894,11 +810,7 @@ This is alternate Pro*C compatible syntax for the `DESCRIBE DESCRIPTOR` statemen
 
 ### DESCRIBE DESCRIPTOR
 
-<div class="index">
 
-DESCRIBE DESCRIPTOR
-
-</div>
 
 Use the `DESCRIBE DESCRIPTOR` statement to retrieve information about a SQL statement, and store that information in a SQL descriptor. Before using `DESCRIBE DESCRIPTOR`, you must allocate the descriptor with the `ALLOCATE DESCRIPTOR` statement. The syntax is:
 
@@ -958,11 +870,7 @@ type of each value.
 
 ### DISCONNECT
 
-<div class="index">
 
-DISCONNECT
-
-</div>
 
 Use the `DISCONNECT` statement to close the connection to the server. The syntax is:
 
@@ -995,11 +903,7 @@ return(0);
 
 ### EXECUTE
 
-<div class="index">
 
-EXECUTE
-
-</div>
 
 Use the `EXECUTE` statement to execute a statement previously prepared using an `EXEC SQL PREPARE` statement. The syntax is:
 
@@ -1038,11 +942,7 @@ EXEC SQL EXECUTE add_emp USING 8001, 'EDWARDS', 'ANALYST', 7698;
 
 ### EXECUTE DESCRIPTOR
 
-<div class="index">
 
-EXECUTE DESCRIPTOR
-
-</div>
 
 Use the `EXECUTE` statement to execute a statement previously prepared by an `EXEC SQL PREPARE` statement, using an SQL descriptor. The syntax is:
 
@@ -1069,11 +969,7 @@ EXEC SQL EXECUTE give_raise USING DESCRIPTOR :stmtText;
 
 ### EXECUTE...END EXEC
 
-<div class="index">
 
-EXECUTE...END EXEC
-
-</div>
 
 Use the `EXECUTE…END-EXEC` statement to embed an anonymous block into a client application. The syntax is:
 
@@ -1112,11 +1008,7 @@ The `EXECUTE…END EXEC` statement is supported only by Advanced Server.
 
 ### EXECUTE IMMEDIATE
 
-<div class="index">
 
-EXECUTE IMMEDIATE
-
-</div>
 
 Use the `EXECUTE IMMEDIATE` statement to execute a string that contains a SQL command. The syntax is:
 
@@ -1143,11 +1035,7 @@ EXEC SQL EXECUTE IMMEDIATE :command_text;
 
 ### FETCH
 
-<div class="index">
 
-FETCH
-
-</div>
 
 Use the `FETCH` statement to return rows from a cursor into an SQLDA descriptor or a target list of host variables. Before using a `FETCH` statement to retrieve information from a cursor, you must prepare the cursor using DECLARE and OPEN statements. The statement syntax is:
 
@@ -1177,11 +1065,7 @@ EXEC SQL FETCH emp_cursor INTO :emp_no, :emp_name, :emp_sal;
 
 ### FETCH DESCRIPTOR
 
-<div class="index">
 
-FETCH DESCRIPTOR
-
-</div>
 
 Use the `FETCH DESCRIPTOR` statement to retrieve rows from a cursor into an SQL descriptor. The syntax is:
 
@@ -1214,11 +1098,7 @@ EXEC SQL FETCH my_cursor INTO SQL DESCRIPTOR 'row_desc';
 
 ### GET DESCRIPTOR
 
-<div class="index">
 
-GET DESCRIPTOR
-
-</div>
 
 Use the `GET DESCRIPTOR` statement to retrieve information from a descriptor. The `GET DESCRIPTOR` statement comes in two forms. The first form returns the number of values (or columns) in the descriptor.
 
@@ -1277,11 +1157,7 @@ The example allocates an SQL descriptor (named `parse_desc`), before using a `PR
 
 ### INSERT
 
-<div class="index">
 
-INSERT
-
-</div>
 
 Use the `INSERT` statement to add one or more rows to a table. The syntax for the ECPGPlus INSERT statement is the same as the syntax for the SQL statement, but you can use parameter markers and host variables any place that a value is allowed. The syntax is:
 
@@ -1327,11 +1203,7 @@ For more information about using the `INSERT` statement, please see the PostgreS
 
 ### OPEN
 
-<div class="index">
 
-OPEN
-
-</div>
 
 Use the `OPEN` statement to open a cursor. The syntax is:
 
@@ -1370,11 +1242,7 @@ After declaring the cursor, the example uses an `OPEN` statement to make the con
 
 ### OPEN DESCRIPTOR
 
-<div class="index">
 
-OPEN DESCRIPTOR
-
-</div>
 
 Use the `OPEN DESCRIPTOR` statement to open a cursor with a SQL descriptor. The syntax is:
 
@@ -1400,11 +1268,7 @@ EXEC SQL OPEN emp_cursor USING DESCRIPTOR :employees;
 
 ### PREPARE
 
-<div class="index">
 
-PREPARE
-
-</div>
 
 Prepared statements are useful when a client application must perform a task multiple times; the statement is parsed, written and planned only once, rather than each time the statement is executed, saving repetitive processing time.
 
@@ -1462,11 +1326,7 @@ A client application must issue a `PREPARE` statement within each session in whi
 
 ### ROLLBACK
 
-<div class="index">
 
-ROLLBACK
-
-</div>
 
 Use the ROLLBACK statement to abort the current transaction, and discard any updates made by the transaction. The syntax is:
 
@@ -1501,11 +1361,7 @@ Rolling back to a specified savepoint releases all locks acquired after the save
 
 ### SAVEPOINT
 
-<div class="index">
 
-SAVEPOINT
-
-</div>
 
 Use the `SAVEPOINT` statement to define a `savepoint`; a savepoint is a marker within a transaction. You can use a `ROLLBACK` statement to abort the current transaction, returning the state of the server to its condition prior to the specified savepoint. The syntax of a `SAVEPOINT` statement is:
 
@@ -1529,11 +1385,7 @@ EXEC SQL SAVEPOINT my_savepoint;
 
 ### SELECT
 
-<div class="index">
 
-SET CONNECTION
-
-</div>
 
 ECPGPlus extends support of the `SQL SELECT` statement by providing the `INTO host_variables` clause. The clause allows you to select specified information from an Advanced Server database into a host variable. The syntax for the `SELECT` statement is:
 
@@ -1585,11 +1437,7 @@ This `SELECT` statement allows you to provide a value at run-time for the `dept_
 
 ### SET CONNECTION
 
-<div class="index">
 
-SET CONNECTION
-
-</div>
 
 There are (at least) three reasons you may need more than one connection in a given client application:
 
@@ -1651,11 +1499,7 @@ The server will use the privileges associated with the connection when determini
 
 ### SET DESCRIPTOR
 
-<div class="index">
 
-SET DESCRIPTOR
-
-</div>
 
 Use the `SET DESCRIPTOR` statement to assign a value to a descriptor area using information provided by the client application in the form of a host variable or an integer value. The statement comes in two forms; the first form is:
 
@@ -1766,11 +1610,7 @@ Now, you can use the `EXEC SQL EXECUTE DESCRIPTOR` statement to execute the prep
 
 ### UPDATE
 
-<div class="index">
 
-UPDATE
-
-</div>
 
 Use an `UPDATE` statement to modify the data stored in a table. The syntax is:
 
@@ -1816,11 +1656,7 @@ This `UPDATE` statement could allow you to prompt the user for a new value for t
 
 ### WHENEVER
 
-<div class="index">
 
-WHENEVER
-
-</div>
 
 Use the `WHENEVER` statement to specify the action taken by a client application when it encounters an SQL error or warning. The syntax is:
 

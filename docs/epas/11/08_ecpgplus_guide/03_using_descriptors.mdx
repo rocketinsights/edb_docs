@@ -5,11 +5,7 @@ title: "Using Descriptors"
 <div id="using_descriptors" class="registered_link"></div>
 
 
-<div class="index">
 
-Using Descriptors
-
-</div>
 
 Dynamic SQL allows a client application to execute SQL statements that are composed at runtime. This is useful when you don't know the content or form a statement will take when you are writing a client application. ECPGPlus does *not* allow you to use a host variable in place of an identifier (such as a table name, column name or index name); instead, you should use dynamic SQL statements to build a string that includes the information, and then execute that string. The string is passed between the client and the server in the form of a *descriptor*. A descriptor is a data structure that contains both the data and the information about the shape of the data.
 
@@ -145,11 +141,7 @@ A descriptor may contain the attributes listed in the table below:
 
 ## Example - Using a Descriptor to Return Data
 
-<div class="index">
 
-Using a Descriptor to Return Data
-
-</div>
 
 The following simple application executes an SQL statement entered by an end user. The code sample demonstrates:
 

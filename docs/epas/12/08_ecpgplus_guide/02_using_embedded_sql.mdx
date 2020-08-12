@@ -5,11 +5,7 @@ title: "Using Embedded SQL"
 <div id="using_embedded_sql" class="registered_link"></div>
 
 
-<div class="index">
 
-Using Embedded SQL
-
-</div>
 
 Each of the following sections leads with a code sample, followed by an explanation of each section within the code sample.
 
@@ -135,11 +131,7 @@ The final statement in the code sample closes the connection to the server:
 
 ### Using Indicator Variables
 
-<div class="index">
 
-Using Indicator Variables
-
-</div>
 
 The previous example included an *indicator* *variable* that identifies any row in which the value of the `comm` column (when returned by the server) was `NULL`. An indicator variable is an extra host variable that denotes if the content of the preceding variable is `NULL` or truncated. The indicator variable is populated when the contents of a row are stored. An indicator variable may contain the following values:
 
@@ -157,11 +149,7 @@ You may omit an indicator variable if you are certain that a query will never re
 
 ### Declaring Host Variables
 
-<div class="index">
 
-Declaring Host Variables
-
-</div>
 
 You can use a *host variable* in a SQL statement at any point that a value may appear within that statement. A host variable is a C variable that you can use to pass data values from the client application to the server, and return data from the server to the client application. A host variable can be:
 
@@ -208,11 +196,7 @@ Each column returned by the `SELECT` statement must have a type-compatible targe
 
 ## Example - Using a Cursor to Process a Result Set
 
-<div class="index">
 
-Using a Cursor to Process a Result Set
-
-</div>
 
 The code sample that follows demonstrates using a cursor to process a result set. There are four basic steps involved in creating and using a cursor:
 

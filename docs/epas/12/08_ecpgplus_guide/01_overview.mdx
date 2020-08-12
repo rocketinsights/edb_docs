@@ -5,11 +5,7 @@ title: "ECPGPlus - Overview"
 <div id="overview" class="registered_link"></div>
 
 
-<div class="index">
 
-Overview
-
-</div>
 
 EnterpriseDB has enhanced ECPG (the PostgreSQL pre-compiler) to create ECPGPlus. ECPGPlus is a Pro*C-compatible version of the PostgreSQL C pre-compiler. ECPGPlus translates a program that combines C code and embedded SQL statements into an equivalent C program. As it performs the translation, ECPGPlus verifies that the syntax of each SQL construct is correct.
 
@@ -111,11 +107,7 @@ printf(“Employee salaries updated\n”);
 
 ## Installation and Configuration
 
-<div class="index">
 
-Installation and Configuration
-
-</div>
 
 On Windows, ECPGPlus is installed by the Advanced Server installation wizard as part of the `Database Server` component. On Linux, install with the `edb-as<xx>-server-devel` RPM package where *xx* is the Advanced Server version number. By default, the executable is located in:
 
@@ -139,11 +131,7 @@ On Linux:
 
 ## Constructing a Makefile
 
-<div class="index">
 
-Constructing a Makefile
-
-</div>
 
 A `makefile` contains a set of instructions that tell the `make` utility how to transform a program written in C (that contains embedded SQL) into a C program. To try the examples in this guide, you will need:
 
@@ -211,11 +199,7 @@ The `make` utility consults the `makefile` (located in the current directory), d
 
 ## ECPGPlus Command Line Options
 
-<div class="index">
 
-ECPGPlus Command Line Options
-
-</div>
 
 In the sample `makefile` shown above, `make` includes the `-C` option when invoking ECPGPlus to specify that ECPGPlus should be invoked in Pro*C compatible mode.
 
