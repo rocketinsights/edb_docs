@@ -40,11 +40,7 @@ The following table describes the `RESTORE` options:
 | `-g` or `--target-timestamp <target_timestamp>`           | `<target_timestamp>` is the timestamp that determines the point in time up to and including, which point-in-time recovery encompasses.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `-c` or `--copy-wals`                                     | | Specify this option to copy archived WAL files from the BART backup catalog to `<restore_path>/archived_wals` directory. | The `restore_command` retrieves the WAL files from `<restore_path>/archived_wals` for the database server archive recovery. | If the `-c` option is omitted and the `copy_wals_during_restore` parameter in the BART configuration file is not enabled in a manner applicable to this database server, then the `restore_command` in the `postgresql.conf` retrieves the archived WAL files directly from the BART backup catalog. | For information about the `copy_wals_during_restore` parameter, see the [EDB Postgres Backup and Recovery Installation and Upgrade Guide](https://www.enterprisedb.com/edb-docs/). |
 
-<div class="index">
 
-RESTORE Subcommand Examples
-
-</div>
 
 **Examples**
 

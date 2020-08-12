@@ -46,11 +46,7 @@ The following table describes the `VERIFY-CHKSUM` options.
 | `RELOAD`                                                      | | Reloads the BART configuration file. The keyword `RELOAD` is case-insensitive. The `RELOAD` option is useful if you make changes to the configuration file after the WAL scanner has been started. It will reload the configuration file and adjust the WAL scanners accordingly. | For example, if a server section allowing incremental backups is removed from the BART configuration file, then the process attached to that server will stop. Similarly, if a server allowing incremental backups is added, a new WAL scanner process will be launched to scan the WAL files of that server. |
 | `STOP`                                                        | Stops the WAL scanner. The keyword `STOP` is not case-sensitive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
-<div class="index">
 
-Running the BART WAL Scanner Examples
-
-</div>
 
 **Example**
 

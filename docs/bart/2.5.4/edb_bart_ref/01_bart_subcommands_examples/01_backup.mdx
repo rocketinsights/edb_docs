@@ -49,11 +49,7 @@ The following table describes the `BACKUP` options:
 | `--parent { <backup_id> \| <backup_name> }`                                                     | Use this option to take an incremental backup. The parent backup is a backup taken prior to the incremental backup; it can be either a full backup or an incremental backup. `<backup_id>` is the backup identifier of a parent backup and `<backup_name>` is the user-defined alphanumeric name of a parent backup.                                                                                                                                                                                                                                              |
 | `--check` (applicable only for incremental backup)                                              | | Use this option to verify if the required MBM files are present in the BART backup catalog before taking an incremental backup. However, an actual incremental backup is not taken when the `--check` option is specified. | The `--parent` option must be used along with the `--check` option.                                                                                                                                                                                                                                                                |
 
-<div class="index">
 
-BACKUP Subcommand Examples
-
-</div>
 
 **Examples**
 
