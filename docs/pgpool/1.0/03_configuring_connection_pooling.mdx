@@ -1,24 +1,28 @@
-# `Configuring pgpool-II`
+---
+title: "Configuring pgpool-II"
+---
+
+
 
 Please note that the configuration options for pgpool-II are extensive; the options listed below should be considered a starting point only. For more information about configuring and using pgpool-II, please consult the [project website](http://www.pgpool.net/mediawiki/index.php/Main_Page).
 
-\<div id="commonly\_used\_parameters" class="registered\_link"\>\</div\>
+<div id="commonly_used_parameters" class="registered_link"></div>
 
-## `Commonly Used pgpool-II Parameters`
+## Commonly Used pgpool-II Parameters
 
 The following table lists `pgpool.conf` parameters that are used when implementing connection pooling:
 
 | Parameter Name            | Description                                                                                                                                                                                         |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `pool_conn_dbname`        | Database name to which pgpool-II will connect. By default, pgpool-II will connect with Postgres.                                                                                                    |
-| `listen_addresses`        | Host name or IP address used by pgpool-II to listen for connections. Default is localhost. Change to '\*' for all addresses.                                                                        |
+| `listen_addresses`        | Host name or IP address used by pgpool-II to listen for connections. Default is localhost. Change to '*' for all addresses.                                                                        |
 | `port`                    | Port for pgpool-II connections. Default is 9999.                                                                                                                                                    |
 | `pcp_port`                | Port for PCP connections. Default is 9898.                                                                                                                                                          |
 | `backend_hostname0`       | Host name or IP address for backend 0. You can specify '' if the backend and pgpool-II are running on the same host.                                                                                |
 | `backend_port0`           | Port number for backend 0.                                                                                                                                                                          |
 | `backend_weight0`         | Weight for backend 0 (only in load balancing mode). Specify 1 for each backend if you want the load equally balanced, or decimal values (.9, .1, etc.) to weight the load towards certain backends. |
 | `backend_data_directory0` | Data directory for backend 0.                                                                                                                                                                       |
-| `enable_pool_hba`         | Set to on to use pool\_hba.conf for client authentication.                                                                                                                                          |
+| `enable_pool_hba`         | Set to on to use pool_hba.conf for client authentication.                                                                                                                                          |
 | `num_init_children`       | Number of pools. Default is 32.                                                                                                                                                                     |
 | `max_pool`                | Number of connections per pool. Default is 4.                                                                                                                                                       |
 | `connection_cache`        | Set to on to enable connection pooling.                                                                                                                                                             |
@@ -28,12 +32,12 @@ The following table lists `pgpool.conf` parameters that are used when implementi
 | Parameter Name               | Description                                                                                                                                                                                                                                                 |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Allow_sql_comments`         | If on, ignore SQL comments; modifications to this parameter require a reload of the pgpool.conf file.                                                                                                                                                       |
-| `load_balance_mode`          | Set to on to activate load balancing mode. If load\_balance\_mode is on and replicate\_select is off, SELECT statements are sent to one backend. The proportion of SELECT statements each backend receives is determined by parameter backend\_weight\<N\>. |
+| `load_balance_mode`          | Set to on to activate load balancing mode. If load_balance_mode is on and replicate_select is off, SELECT statements are sent to one backend. The proportion of SELECT statements each backend receives is determined by parameter backend_weight\<N\>. |
 | `ignore_leading_white_space` | Ignore leading white spaces of each query. Certain APIs such as DBI/DBD::Pg for Perl add white space that the user cannot control. Default is on.                                                                                                           |
 
-\<div id="configuring\_connection\_pooling" class="registered\_link"\>\</div\>
+<div id="configuring_connection_pooling" class="registered_link"></div>
 
-## `Configuring Connection Pooling`
+## Configuring Connection Pooling
 
 pgpool-II provides a set of child processes that maintain cached connections to one or more database servers. When a client connects, pgpool-II attempts to reuse a connection from its pool, thus avoiding the overhead of opening and closing client connections.
 
@@ -67,9 +71,9 @@ To configure connection pooling with one database server:
 
 > where \<x.y\> is the pgpool release version.
 
-\<div id="configuring\_pgpool-II\_load\_balancing" class="registered\_link"\>\</div\>
+<div id="configuring_pgpool-II_load_balancing" class="registered_link"></div>
 
-## `Configuring pgpool-II Load Balancing`
+## Configuring pgpool-II Load Balancing
 
 EnterpriseDB supports replication scenarios that use pgpool-II load balancing with PostgreSQL streaming replication or Slony replication. The supported replication methods ensure that database updates made by client applications are applied to multiple backend servers. For detailed information about the benefits of each replication method and detailed configuration instructions, please review project documentation for each utility.
 
@@ -241,9 +245,9 @@ where \<x.y\> is the pgpool release version.
 
 For detailed information about controlling the pgpool-II service, see `Managing an Advanced Server Installation` in the [EDB Postgres Advanced Server Installation Guide for Linux](http://www.enterprisedb.com/edb-docs/p/edb-postgres-advanced-server).
 
-\<div id="pgpool-II\_client\_authentication\_configuration" class="registered\_link"\>\</div\>
+<div id="pgpool-II_client_authentication_configuration" class="registered_link"></div>
 
-### `pgpool-II Client Authentication`
+### pgpool-II Client Authentication
 
 When pgpool-II is enabled, client applications connect to pgpool-II, which acts as a middleman for a Postgres server. A connecting client application is first authenticated with the pgpool-II server, and then authenticated with the Postgres server.
 
@@ -276,9 +280,9 @@ When authenticating with the database server, use the user names and passwords s
 
 </div>
 
-\<div id="pcp\_configuration" class="registered\_link"\>\</div\>
+<div id="pcp_configuration" class="registered_link"></div>
 
-## `Configuring PCP`
+## Configuring PCP
 
 PCP is an administrative interface for pgpool-II that allows you to retrieve information about database nodes, pgpool-II child processes, and other information. You should issue PCP commands from the Linux command line.
 
@@ -344,5 +348,5 @@ PCP recognizes the following commands:
 | `pcp_node_info timeout host port username password nodeid`        | Displays information on the node given by \<nodeid\>                                                                                                                                                |
 | `pcp_proc_count timeout host port username password`              | Displays the pgpool-II child process IDs                                                                                                                                                            |
 | `pcp_proc_info timeout host port username password processid`     | Displays information on the pgpool-II child process given by \<processid\>                                                                                                                          |
-| `pcp_detach_node [-g] timeout host port username password nodeid` | Detaches the node specified by \<nodeid\> from pgpool-II. If -g is given, wait until all clients are disconnected (unless client\_idle\_limit\_in\_recovery is -1 or recovery\_timeout is expired). |
+| `pcp_detach_node [-g] timeout host port username password nodeid` | Detaches the node specified by \<nodeid\> from pgpool-II. If -g is given, wait until all clients are disconnected (unless client_idle_limit_in_recovery is -1 or recovery_timeout is expired). |
 | `pcp_attach_node timeout host port username password nodeid`      | Attaches the node specified by \<nodeid\> to pgpool-II.                                                                                                                                             |

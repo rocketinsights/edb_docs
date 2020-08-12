@@ -1,10 +1,13 @@
-\<div id="using\_efm\_utility" class="registered\_link"\>\</div\>
+---
+title: "Using the efm Utility"
+---
 
-# `Using the efm Utility`
+<div id="using_efm_utility" class="registered_link"></div>
+
 
 provides the efm utility to assist with cluster management. The RPM installer adds the utility to the `/usr/edb/efm-3.10/bin` directory when you install .
 
-\<div id="efm\_allow\_node" class="registered\_link"\>\</div\>
+<div id="efm_allow_node" class="registered_link"></div>
 
 <div class="index">
 
@@ -18,7 +21,7 @@ efm allow-node
 > 
 > This command must be invoked by efm, a member of the efm group, or root.
 
-\<div id="efm\_cluster\_status" class="registered\_link"\>\</div\>
+<div id="efm_cluster_status" class="registered_link"></div>
 
 <div class="index">
 
@@ -30,7 +33,7 @@ efm cluster-status
 
 > Invoke the `efm cluster-status` command to display the status of a cluster. For more information about the3.10 status report, see `Monitoring a Failover Manager Cluster <monitoring_efm_cluster>`.
 
-\<div id="efm\_cluster\_status-json" class="registered\_link"\>\</div\>
+<div id="efm_cluster_status-json" class="registered_link"></div>
 
 <div class="index">
 
@@ -91,7 +94,7 @@ efm cluster-status
 }
 ```
 
-\<div id="efm\_disallow\_node" class="registered\_link"\>\</div\>
+<div id="efm_disallow_node" class="registered_link"></div>
 
 <div class="index">
 
@@ -103,7 +106,7 @@ efm disallow-node
 
 > Invoke the `efm disallow-node` command to remove the specified node from the allowed hosts list, and prevent the node from joining a cluster. Provide the name of the cluster and the IP address of the node when calling the `efm disallow-node` command. This command must be invoked by efm, a member of the efm group, or root.
 
-\<div id="efm\_encrypt" class="registered\_link"\>\</div\>
+<div id="efm_encrypt" class="registered_link"></div>
 
 <div class="index">
 
@@ -115,7 +118,7 @@ efm encrypt
 
 > Invoke the `efm encrypt` command to encrypt the database password before include the password in the cluster properties file. Include the `--from-env` option to instruct to use the value specified in the `EFMPASS` environment variable, and execute without user input. For more information, see `Encrypting Your Database Password <encrypting_database_password>`.
 
-\<div id="efm\_promote" class="registered\_link"\>\</div\>
+<div id="efm_promote" class="registered_link"></div>
 
 <div class="index">
 
@@ -135,7 +138,7 @@ efm promote
 > 
 > **Please note:** This command instructs the service to ignore the value specified in the auto.failover parameter in the cluster properties file.
 
-\<div id="efm\_resume" class="registered\_link"\>\</div\>
+<div id="efm_resume" class="registered_link"></div>
 
 <div class="index">
 
@@ -147,7 +150,7 @@ efm resume
 
 > Invoke the `efm resume` command to resume monitoring a previously stopped database. This command must be invoked by efm, a member of the efm group, or root.
 
-\<div id="efm\_set\_priority" class="registered\_link"\>\</div\>
+<div id="efm_set_priority" class="registered_link"></div>
 
 <div class="index">
 
@@ -161,7 +164,7 @@ efm set-priority
 > 
 > *priority* is an integer value of 1 to *n*, where *n* is the number of standby nodes in the list. Specify a value of 1 to indicate that the new node is the primary standby, and will be the first node promoted in the event of a failover. A priority value of 0 instructs to not promote the standby.
 
-\<div id="efm\_stop\_cluster" class="registered\_link"\>\</div\>
+<div id="efm_stop_cluster" class="registered_link"></div>
 
 <div class="index">
 
@@ -177,7 +180,7 @@ efm stop-cluster
 > 
 > This command must be invoked by efm, a member of the efm group, or root.
 
-\<div id="efm\_upgrade\_conf" class="registered\_link"\>\</div\>
+<div id="efm_upgrade_conf" class="registered_link"></div>
 
 <div class="index">
 
@@ -191,7 +194,7 @@ efm upgrade-conf
 > 
 > If you are upgrading from a configuration that does not use sudo, include the `-source` flag and specify the name of the *directory* in which the configuration files reside when invoking upgrade-conf.
 
-\<div id="efm\_node\_status\_json" class="registered\_link"\>\</div\>
+<div id="efm_node_status_json" class="registered_link"></div>
 
 <div class="index">
 
@@ -216,7 +219,7 @@ efm node-status-json
 > }
 > ```
 
-\<div id="efm\_help" class="registered\_link"\>\</div\>
+<div id="efm_help" class="registered_link"></div>
 
 <div class="index">
 

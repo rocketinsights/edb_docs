@@ -1,10 +1,13 @@
-\<div id="wal\_scanning\_preparation\_for\_an\_incremental\_backup" class="registered\_link"\>\</div\>
+---
+title: "WAL Scanning – Preparation for an Incremental Backup"
+---
 
-# `WAL Scanning – Preparation for an Incremental Backup`
+<div id="wal_scanning_preparation_for_an_incremental_backup" class="registered_link"></div>
+
 
 The WAL scanner program (`bart-scanner`) scans the WAL files created from the time of the parent backup up to the start of the incremental backup to determine which blocks have modified since the parent backup, and records the information in a file called the *modified block map (MBM) file*. One MBM file is created for each WAL file.
 
-The MBM file is stored in the directory where archived\_wals will be stored, as specified in the `archive_path` parameter in the `bart.cfg` file. If the `archive_path` is not specified, the default `archived_wals` directory is:
+The MBM file is stored in the directory where archived_wals will be stored, as specified in the `archive_path` parameter in the `bart.cfg` file. If the `archive_path` is not specified, the default `archived_wals` directory is:
 
 > `<backup_path>/<server_name>/<archived_wals>`
 
@@ -47,4 +50,4 @@ If the `archive_path` contains WAL files that have not yet been scanned, startin
 
 Under certain conditions (such as when the `rsync` utility is used to copy WAL files to the `archive_path`), the WAL files may have been missed by the WAL scanner program for scanning and creation of MBM files. Use the `scan_interval` parameter in the BART configuration file to initiate force scanning of WAL files in the `archive_path` to ensure MBM files are generated. See the *EDB Postgres Backup and Recovery Installation and Upgrade Guide* for more information about the `scan_interval` parameter.
 
-See [Running the BART WAL Scanner](#running_the_bart_wal_scanner) for information about using the WAL scanner.
+See [Running the BART WAL Scanner](../../03_using_bart/#running_the_bart_wal_scanner) for information about using the WAL scanner.

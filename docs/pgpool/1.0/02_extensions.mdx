@@ -1,15 +1,18 @@
-\<div id="extensions" class="registered\_link"\>\</div\>
+---
+title: "Installing and Managing Extensions"
+---
 
-# `Installing and Managing Extensions`
+<div id="extensions" class="registered_link"></div>
+
 
 Modules in the extensions directory are additional features to Advanced Server, which are generally not included in the core database. Once loaded in a database, they can function just like built-in features. They allow you to use simple `SELECT` commands to use PCP remotely.
 
 Before installing pgpool extensions, ensure that Advanced Server is installed on your host system. You can install the following pgpool-specific extensions using the following command:
 
->   - <span class="title-ref">pgpool\_adm \<pgpool\_adm\></span>
->   - <span class="title-ref">pgpool\_recovery \<pgpool\_recovery\></span>
+>   - <span class="title-ref">pgpool_adm \<pgpool_adm\></span>
+>   - <span class="title-ref">pgpool_recovery \<pgpool_recovery\></span>
 
-## `Installing pgpool-II Extensions`
+## Installing pgpool-II Extensions
 
 The following section walks you through the steps of installing pgpool-II extensions.
 
@@ -82,9 +85,9 @@ The installer notifies you when the setup wizard has completed the pgpool-II ins
 
 The extensions will be available in the `/opt/edb/as<xx>/share/extension/pgpool*` directory.
 
-\<div id="installing\_extensions\_using\_the\_SLES\_host" class="registered\_link"\>\</div\>
+<div id="installing_extensions_using_the_SLES_host" class="registered_link"></div>
 
-### `Installing pgpool-II Extension Using an SLES 12 Host`
+### Installing pgpool-II Extension Using an SLES 12 Host
 
 You can use the zypper package manager to install pgpool-II extension on an SLES 12 host. zypper will attempt to satisfy package dependencies as it installs a package, but requires access to specific repositories that are not hosted at EnterpriseDB.
 
@@ -128,9 +131,9 @@ Where \<xx\> is the advanced server version and \<yy\> is the pgpool version you
 
 You must install and create the extensions in each database in which you will be using pgpool-II functionality. To ensure all extensions are available for future databases, you can add the extension to the `template1` database; any extensions installed in the `template1` database will be created in each of the database that uses `template1` as a template during creation.
 
-**pgpool\_adm Extension**
+**pgpool_adm Extension**
 
-\<div id="pgpool\_adm" class="registered\_link"\>\</div\>
+<div id="pgpool_adm" class="registered_link"></div>
 
 The `pgpool_adm` extension is available for the following pgpool-II versions.
 
@@ -146,9 +149,9 @@ CREATE EXTENSION pgpool_adm;
 
 To view more information about `pgpool_adm`, see <https://www.pgpool.net/docs/41/en/html/pgpool-adm.html>.
 
-**pgpool\_recovery Extension**
+**pgpool_recovery Extension**
 
-\<div id="pgpool\_recovery" class="registered\_link"\>\</div\>
+<div id="pgpool_recovery" class="registered_link"></div>
 
 The `pgpool_recovery` extension is required for online recovery and future fail-back mechanism.
 

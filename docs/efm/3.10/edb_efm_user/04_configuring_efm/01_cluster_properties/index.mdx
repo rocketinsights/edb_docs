@@ -1,6 +1,9 @@
-\<div id="cluster\_properties" class="registered\_link"\>\</div\>
+---
+title: "The Cluster Properties File"
+---
 
-# `The Cluster Properties File`
+<div id="cluster_properties" class="registered_link"></div>
+
 
 Each node in a cluster has a properties file (by default, named `efm.properties`) that contains the properties of the individual node on which it resides. The installer creates a file template for the properties file named `efm.properties.in` in the `/etc/edb/efm-3.10` directory.
 
@@ -18,13 +21,13 @@ After copying the template file, change the owner of the file to `efm`:
 
 **Please note:** : By default, expects the cluster properties file to be named `efm.properties`. If you name the properties file something other than `efm.properties`, you must modify the service script or unit file to instruct to use a different name.
 
-After creating the cluster properties file, add (or modify) configuration parameter values as required. For detailed information about each property, see [Specifying Cluster Properties](#specifying_cluster_properties).
+After creating the cluster properties file, add (or modify) configuration parameter values as required. For detailed information about each property, see [Specifying Cluster Properties](../04_configuring_efm/01_cluster_properties/#specifying_cluster_properties).
 
 The property files are owned by `root`. The service script expects to find the files in the `/etc/edb/efm-3.10 directory`. If you move the property file to another location, you must create a symbolic link that specifies the new location.
 
 **Please note:** : All user scripts referenced in the properties file will be invoked as the user.
 
-\<div id="specifying\_cluster\_properties" class="registered\_link"\>\</div\>
+<div id="specifying_cluster_properties" class="registered_link"></div>
 
 ## Specifying Cluster Properties
 
@@ -106,7 +109,7 @@ Specify the name of the database service in the `db.service.name` property if yo
 db.service.name=
 ```
 
-\<div id="db\_bin" class="registered\_link"\>\</div\>
+<div id="db_bin" class="registered_link"></div>
 
 <div class="index">
 
@@ -114,7 +117,7 @@ db.bin
 
 </div>
 
-You should use the same service control mechanism (pg\_ctl, service, or systemctl) each time you start or stop the database service. If you use the `pg_ctl` program to control the service, specify the location of the `pg_ctl` program in the `db.bin` property.
+You should use the same service control mechanism (pg_ctl, service, or systemctl) each time you start or stop the database service. If you use the `pg_ctl` program to control the service, specify the location of the `pg_ctl` program in the `db.bin` property.
 
 ``` text
 # Specify the directory containing the pg_controldata/pg_ctl commands,
@@ -172,7 +175,7 @@ db.config.dir=
 
 For more information about database configuration files, visit the [PostgreSQL website](https://www.postgresql.org/docs/12/runtime-config-file-locations.html).
 
-\<div id="jdbc\_sslmode" class="registered\_link"\>\</div\>
+<div id="jdbc_sslmode" class="registered_link"></div>
 
 <div class="index">
 
@@ -235,7 +238,7 @@ Use the `user.email` property to specify an email address (or multiple email add
 user.email=
 ```
 
-\<div id="from\_email" class="registered\_link"\>\</div\>
+<div id="from_email" class="registered_link"></div>
 
 <div class="index">
 
@@ -261,7 +264,7 @@ For more information about notifications, see `Notifications <notifications>`.
 from.email=
 ```
 
-\<div id="notification\_level" class="registered\_link"\>\</div\>
+<div id="notification_level" class="registered_link"></div>
 
 <div class="index">
 
@@ -472,7 +475,7 @@ Use the `stop.failed.master` property to instruct to attempt to shut down a mast
 stop.failed.master=true
 ```
 
-\<div id="master\_shutdown\_as\_failure" class="registered\_link"\>\</div\>
+<div id="master_shutdown_as_failure" class="registered_link"></div>
 
 <div class="index">
 
@@ -561,7 +564,7 @@ Use the `ping.server.command` property to specify the command used to test netwo
 ping.server.command=/bin/ping -q -c3 -w5
 ```
 
-\<div id="auto\_allow\_hosts" class="registered\_link"\>\</div\>
+<div id="auto_allow_hosts" class="registered_link"></div>
 
 <div class="index">
 
@@ -579,7 +582,7 @@ Use the `auto.allow.hosts` property to instruct the server to use the addresses 
 auto.allow.hosts=false
 ```
 
-\<div id="stable\_nodes\_file" class="registered\_link"\>\</div\>
+<div id="stable_nodes_file" class="registered_link"></div>
 
 <div class="index">
 
@@ -614,7 +617,7 @@ The `db.reuse.connection.count` property allows the administrator to specify the
 db.reuse.connection.count=0
 ```
 
-\<div id="auto\_failover" class="registered\_link"\>\</div\>
+<div id="auto_failover" class="registered_link"></div>
 
 <div class="index">
 
@@ -676,7 +679,7 @@ Use the `promotable` property to indicate that a node should not be promoted. Th
 promotable=true
 ```
 
-\<div id="use\_replay\_tiebreaker" class="registered\_link"\>\</div\>
+<div id="use_replay_tiebreaker" class="registered_link"></div>
 
 <div class="index">
 
@@ -695,7 +698,7 @@ If the same amount of data has been written to more than one standby node, and a
 use.replay.tiebreaker=true
 ```
 
-\<div id="application\_name" class="registered\_link"\>\</div\>
+<div id="application_name" class="registered_link"></div>
 
 <div class="index">
 
@@ -718,7 +721,7 @@ application.name=
 
 **Please note:** You should set the `application.name` property on the master and any promotable standby; in the event of a failover/switchover, the master node could potentially become a standby node again.
 
-\<div id="restore\_command" class="registered\_link"\>\</div\>
+<div id="restore_command" class="registered_link"></div>
 
 <div class="index">
 
@@ -728,7 +731,7 @@ restore.command
 
 Use the `restore.command` property to instruct to update the `restore_command` when a new master is promoted. `%h` represents the address of the new master; will replace `%h` with the address of the new master. `%f` and `%p` are placeholders used by the server. If the property is left blank, will not update the `restore_command` values on the standbys after a promotion.
 
-See the PostgreSQL documentation for more information about using a [restore\_command](https://www.postgresql.org/docs/12/runtime-config-wal.html#RUNTIME-CONFIG-WAL-ARCHIVE-RECOVERY).
+See the PostgreSQL documentation for more information about using a [restore_command](https://www.postgresql.org/docs/12/runtime-config-wal.html#RUNTIME-CONFIG-WAL-ARCHIVE-RECOVERY).
 
 ``` text
 # If the restore_command on a standby restores directly from the
@@ -747,7 +750,7 @@ See the PostgreSQL documentation for more information about using a [restore\_co
 restore.command=
 ```
 
-\<div id="reconfigure\_num\_sync" class="registered\_link"\>\</div\>
+<div id="reconfigure_num_sync" class="registered_link"></div>
 
 <div class="index">
 
@@ -769,7 +772,7 @@ The database parameter `synchronous_standby_names` on the master node specifies 
 reconfigure.num.sync=false
 ```
 
-\<div id="reconfigure\_sync\_master" class="registered\_link"\>\</div\>
+<div id="reconfigure_sync_master" class="registered_link"></div>
 
 <div class="index">
 
@@ -827,7 +830,7 @@ Use the `recovery.check.period` property to specify the number of seconds that w
 recovery.check.period=2
 ```
 
-\<div id="restart\_connection\_timeout" class="registered\_link"\>\</div\>
+<div id="restart_connection_timeout" class="registered_link"></div>
 
 <div class="index">
 
@@ -866,7 +869,7 @@ Use the `auto.resume.period` property to specify the number of seconds (after a 
 auto.resume.period=0
 ```
 
-\<div id="virtual\_ip" class="registered\_link"\>\</div\>
+<div id="virtual_ip" class="registered_link"></div>
 
 <div class="index">
 
@@ -912,7 +915,7 @@ virtual.ip.single=true
 
 **Please note:** : If a master agent is started and the node does not currently have the VIP, the EFM agent will acquire it. Stopping a master agent does not drop the VIP from the node.
 
-\<div id="check\_vip\_before\_promotion" class="registered\_link"\>\</div\>
+<div id="check_vip_before_promotion" class="registered_link"></div>
 
 <div class="index">
 
@@ -932,7 +935,7 @@ Set the `check.vip.before.promotion` property to false to indicate that will not
 check.vip.before.promotion=true
 ```
 
-\<div id="script\_load\_balancer" class="registered\_link"\>\</div\>
+<div id="script_load_balancer" class="registered_link"></div>
 
 <div class="index">
 
@@ -961,7 +964,7 @@ script.load.balancer.attach=
 script.load.balancer.detach=
 ```
 
-\<div id="script\_fence" class="registered\_link"\>\</div\>
+<div id="script_fence" class="registered_link"></div>
 
 <div class="index">
 
@@ -1144,7 +1147,7 @@ Set `custom.monitor.safe.mode` to `true` to instruct to report non-zero exit cod
 # cause a promotion. On a standby node script failure will
 # generate a notification and the agent will become IDLE.
 #
-# The custom.monitor.\* properties are required if a custom
+# The custom.monitor.* properties are required if a custom
 # monitoring script is specified:
 #
 # custom.monitor.interval is the time in seconds between executions
@@ -1211,7 +1214,7 @@ Use the `lock.dir` property to specify an alternate location for the lock file; 
 lock.dir=
 ```
 
-\<div id="log\_dir" class="registered\_link"\>\</div\>
+<div id="log_dir" class="registered_link"></div>
 
 <div class="index">
 
@@ -1233,7 +1236,7 @@ Use the `log.dir` property to specify the location to which agent log files will
 log.dir=
 ```
 
-\<div id="syslog\_logging" class="registered\_link"\>\</div\>
+<div id="syslog_logging" class="registered_link"></div>
 
 <div class="index">
 
@@ -1253,7 +1256,7 @@ syslog.protocol=UDP
 syslog.facility=LOCAL1
 ```
 
-\<div id="logtype\_enabled" class="registered\_link"\>\</div\>
+<div id="logtype_enabled" class="registered_link"></div>
 
 <div class="index">
 
@@ -1269,9 +1272,9 @@ file.log.enabled=true
 syslog.enabled=false
 ```
 
-For more information about configuring syslog logging, see [Enabling syslog Log File Entries](#enabling_syslog) .
+For more information about configuring syslog logging, see [Enabling syslog Log File Entries](../#enabling_syslog) .
 
-\<div id="loglevel" class="registered\_link"\>\</div\>
+<div id="loglevel" class="registered_link"></div>
 
 <div class="index">
 
@@ -1310,6 +1313,6 @@ jvm.options=-Xmx128m
 
 <div class="toctree" data-maxdepth="3">
 
-encrypting\_database\_password
+encrypting_database_password
 
 </div>

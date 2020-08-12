@@ -1,6 +1,9 @@
-\<div id="monitoring\_efm\_cluster" class="registered\_link"\>\</div\>
+---
+title: "Monitoring a Failover Manager Cluster"
+---
 
-# `Monitoring a Failover Manager Cluster`
+<div id="monitoring_efm_cluster" class="registered_link"></div>
+
 
 You can use either the `efm cluster-status` command or the PEM Client graphical interface to check the current status of a monitored node of a cluster.
 
@@ -52,7 +55,7 @@ Standby     172.19.12.163        UP     UP
 Master      172.19.14.9          UP     UP
 ```
 
-The asterisk (\*) after the VIP address indicates that the address is available for connections. If a VIP address is not followed by an asterisk, the address has been associated with the node (in the properties file), but the address is not currently in use.
+The asterisk (*) after the VIP address indicates that the address is available for connections. If a VIP address is not followed by an asterisk, the address has been associated with the node (in the properties file), but the address is not currently in use.
 
 agents provide the information displayed in the Cluster Status section.
 
@@ -106,9 +109,9 @@ The cluster status process returns an exit code that is based on the state of th
     
     One or more Standby nodes are not in sync with the Master.
 
-\<div id="monitoring\_streaming\_replication" class="registered\_link"\>\</div\>
+<div id="monitoring_streaming_replication" class="registered_link"></div>
 
-## `Monitoring Streaming Replication with Postgres Enterprise Manager`
+## Monitoring Streaming Replication with Postgres Enterprise Manager
 
 If you use Postgres Enterprise Manager (PEM) to monitor your servers, you can configure the Streaming Replication Analysis dashboard (part of the PEM graphical interface) to display the state of a Master or Standby node that is part of a Streaming Replication scenario.
 

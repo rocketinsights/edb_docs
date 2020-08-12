@@ -1,12 +1,9 @@
-\<div id="a\_sample\_bart\_system\_with\_local\_and\_remote\_database\_servers" class="registered\_link"\>\</div\>
+---
+title: "Sample BART System with Local and Remote Database Servers"
+---
 
-<div class="index">
+<div id="a_sample_bart_system_with_local_and_remote_database_servers" class="registered_link"></div>
 
-A Sample BART System
-
-</div>
-
-# Sample BART System with Local and Remote Database Servers
 
 This section describes a sample BART managed backup and recovery system consisting of both local and remote database servers. The complete steps to configure and operate the system are provided.
 
@@ -28,7 +25,7 @@ Passwordless SSH/SCP connections are required between the following:
 The following sections demonstrate configuring and taking full backups only. To support incremental backups as well, enable the `allow_incremental_backups` parameter for the desired database servers and use the `WAL scanner` program.
 
   - [The BART Configuration File](#bart_configuration_file) shows the settings used in the BART configuration file.
-  - <span class="title-ref">Establishing SSH/SCP Passwordless Connections \<establishing\_ssh/scp\_passwordless\_connections\></span> provides an example of how to establish an SSH/SCP passwordless connection.
+  - <span class="title-ref">Establishing SSH/SCP Passwordless Connections \<establishing_ssh/scp_passwordless_connections\></span> provides an example of how to establish an SSH/SCP passwordless connection.
   - [Configuring a Replication Database User](#configuring_a_replication_database_user) provides an example of how to configure the replication database user.
   - [WAL Archiving Configuration Parameters](#wal_archiving_configuration_parameters) provides an example of how to configure WAL archiving.
   - [Creating the BART Backup Catalog](#creating_the_bart_backup_catalog_backup_path) provides information about creating a BART Backup Catalog.
@@ -36,9 +33,9 @@ The following sections demonstrate configuring and taking full backups only. To 
   - [Taking a Full Backup](#taking_a_full_backup) illustrates taking the first full backup of the database servers.
   - [Using Point-In-Time Recovery](#using_point-in-time_recovery) demonstrates the point-in-time recovery operation on the remote PostgreSQL database server.
 
-\<div id="bart\_configuration\_file" class="registered\_link"\>\</div\>
+<div id="bart_configuration_file" class="registered_link"></div>
 
-## `The BART Configuration File`
+## The BART Configuration File
 
 The following code snippet shows the settings used in the BART configuration file for the examples that follow:
 
@@ -82,7 +79,7 @@ copy_wals_during_restore = enabled
 description = "Human Resources"
 ```
 
-\<div id="establishing\_ssh\_scp\_passwordless\_connections" class="registered\_link"\>\</div\>
+<div id="establishing_ssh_scp_passwordless_connections" class="registered_link"></div>
 
 <div class="index">
 
@@ -94,7 +91,7 @@ SSH/SCP Connection
 
 This section demonstrates how passwordless SSH/SCP connections are established with the authorized public keys files.
 
-\<div id="generating\_a\_public\_key\_file\_for\_the\_bart\_user\_account" class="registered\_link"\>\</div\>
+<div id="generating_a_public_key_file_for_the_bart_user_account" class="registered_link"></div>
 
 <div class="index">
 
@@ -589,7 +586,7 @@ Replication database user
 
 </div>
 
-\<div id="configuring\_a\_replication\_database\_user" class="registered\_link"\>\</div\>
+<div id="configuring_a_replication_database_user" class="registered_link"></div>
 
 ## Configuring a Replication Database User
 
@@ -700,7 +697,7 @@ q# replication privilege.
 host       replication       postgres    192.168.2.22/32         md5
 ```
 
-\<div id="wal\_archiving\_configuration\_parameters" class="registered\_link"\>\</div\>
+<div id="wal_archiving_configuration_parameters" class="registered_link"></div>
 
 <div class="index">
 
@@ -734,7 +731,7 @@ Note
 
 </div>
 
-If the Postgres `archive_command` is already set, invoke the `INIT` subcommand with the `-- no-configure` option to prevent the `archive_command` from being reset. For details, see [INIT](#init).
+If the Postgres `archive_command` is already set, invoke the `INIT` subcommand with the `-- no-configure` option to prevent the `archive_command` from being reset. For details, see [INIT](01_bart_subcommands_examples/#init).
 
 </div>
 
@@ -879,9 +876,9 @@ enterprisedb@192.168.2.22:/opt/backup/hr/archived_wals/%f'
 
 The `archive_command` uses the `scp` command since the BART backup catalog is remote relative to this database cluster. The BART user account, `enterprisedb`, is specified on the `scp` command since this is the user account owning the BART backup catalog where the archived WAL files are to be copied. The result is that there is no directory permission conflict during the archive operation.
 
-\<div id="creating\_the\_bart\_backup\_catalog\_backup\_path" class="registered\_link"\>\</div\>
+<div id="creating_the_bart_backup_catalog_backup_path" class="registered_link"></div>
 
-## Creating the BART Backup Catalog (backup\_path)
+## Creating the BART Backup Catalog (backup_path)
 
 Create the directory specified by the `backup_path` configuration parameter.
 
@@ -1000,7 +997,7 @@ drwxrwxr-x 2 enterprisedb enterprisedb 4096 Mar 29 13:16 archived_wals
 
 The `ARCHIVE PATH` field displays the full directory path to where the WAL files are copied. This directory path must match the directory path specified in the Postgres `archive_command` parameter of the `postgresql.conf` file or the `postgresql.auto.conf` file of each database server.
 
-\<div id="starting\_the\_database\_servers\_with\_wal\_archiving" class="registered\_link"\>\</div\>
+<div id="starting_the_database_servers_with_wal_archiving" class="registered_link"></div>
 
 <div class="index">
 
@@ -1030,7 +1027,7 @@ Archived WAL files may not appear very frequently depending upon how often WAL a
 
 Verify that there are no archiving-related errors in the database server log files.
 
-## `Taking a Full Backup`
+## Taking a Full Backup
 
 The following code snippet shows the first full backup of the database servers.
 
@@ -1149,9 +1146,9 @@ drwx------ 2 enterprisedb enterprisedb 4096 Mar 29 13:49 1490809751193
 drwxrwxr-x 2 enterprisedb enterprisedb 4096 Mar 29 13:49 archived_wals
 ```
 
-\<div id="using\_point-in-time\_recovery" class="registered\_link"\>\</div\>
+<div id="using_point-in-time_recovery" class="registered_link"></div>
 
-## `Using Point-In-Time Recovery`
+## Using Point-In-Time Recovery
 
 This section demonstrates using the point-in-time recovery operation on the remote PostgreSQL database server.
 
@@ -1194,7 +1191,7 @@ total 49156
 000000010000000000000003
 ```
 
-The following snippet lists the current PostgreSQL server WAL files. The unarchived WAL files are marked with two stars (\*\*).
+The following snippet lists the current PostgreSQL server WAL files. The unarchived WAL files are marked with two stars (**).
 
 ``` text
 -bash-4.1$ cd /opt/PostgreSQL/9.5/data/pg_xlog
