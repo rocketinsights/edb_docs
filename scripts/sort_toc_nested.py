@@ -126,3 +126,9 @@ for path in Path('content').rglob('index.rst'):
     for node in toc:
       process_node(node, root_path, dest_path + "/", idx)
       idx += 1
+
+    # remove conclusion
+    conclusion_path = '{0}/{1}conclusion.mdx'.format(dest_path, number_prefix(idx-1))
+    if os.path.exists(conclusion_path):
+      print("removed conclusion.mdx")
+      os.remove(conclusion_path)
