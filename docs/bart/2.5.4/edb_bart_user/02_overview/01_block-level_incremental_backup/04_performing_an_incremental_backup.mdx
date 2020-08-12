@@ -1,6 +1,9 @@
-\<div id="performing\_an\_incremental\_backup" class="registered\_link"\>\</div\>
+---
+title: "Performing an Incremental Backup"
+---
 
-# `Performing an Incremental Backup`
+<div id="performing_an_incremental_backup" class="registered_link"></div>
+
 
 The WAL files produced at the time of the parent backup up to the start of the incremental backup contain information about which blocks were modified during that time interval. That information is consolidated into an MBM file for each WAL file by the WAL scanner.
 
@@ -81,4 +84,4 @@ You must specify the following before taking an incremental backup:
   - `-Fp` option for plain text format as incremental backup can only be taken in the plain text format.
   - `--check` option to verify if the required MBM files are present in the `archived_wals` directory. The `--parent` option must be specified when the `--check` option is used.
 
-See [BACKUP](#backup) for more information about using the `BACKUP` subcommand.
+See [BACKUP](../../03_using_bart/03_basic_bart_subcommand_usage/#backup) for more information about using the `BACKUP` subcommand.

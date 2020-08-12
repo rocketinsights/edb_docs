@@ -1,6 +1,9 @@
-\<div id="cluster\_properties" class="registered\_link"\>\</div\>
+---
+title: "The Cluster Properties File"
+---
 
-# `The Cluster Properties File`
+<div id="cluster_properties" class="registered_link"></div>
+
 
 Each node in a cluster has a properties file (by default, named `efm.properties`) that contains the properties of the individual node on which it resides. The installer creates a file template for the properties file named `efm.properties.in` in the `/etc/edb/efm-3.10` directory.
 
@@ -18,13 +21,13 @@ After copying the template file, change the owner of the file to `efm`:
 
 **Please note:** : By default, expects the cluster properties file to be named `efm.properties`. If you name the properties file something other than `efm.properties`, you must modify the service script or unit file to instruct to use a different name.
 
-After creating the cluster properties file, add (or modify) configuration parameter values as required. For detailed information about each property, see [Specifying Cluster Properties](#specifying_cluster_properties).
+After creating the cluster properties file, add (or modify) configuration parameter values as required. For detailed information about each property, see [Specifying Cluster Properties](../04_configuring_efm/01_cluster_properties/#specifying_cluster_properties).
 
 The property files are owned by `root`. The service script expects to find the files in the `/etc/edb/efm-3.10 directory`. If you move the property file to another location, you must create a symbolic link that specifies the new location.
 
 **Please note:** : All user scripts referenced in the properties file will be invoked as the user.
 
-\<div id="specifying\_cluster\_properties" class="registered\_link"\>\</div\>
+<div id="specifying_cluster_properties" class="registered_link"></div>
 
 ## Specifying Cluster Properties
 
@@ -40,11 +43,7 @@ requires that the value *not* be enclosed in quotes:
 
 Use the properties in the `efm.properties` file to specify connection, administrative, and operational details for .
 
-<div class="index">
 
-db.user db.password.encrypted db.port db.database
-
-</div>
 
 Use the following properties to specify connection details for the cluster:
 
@@ -66,11 +65,7 @@ The `db.user` specified must have sufficient privileges to invoke selected Postg
 
 For information about encrypting the password for the database user, see `Encrypting Your Database Password <encrypting_database_password>`.
 
-<div class="index">
 
-db.service.owner
-
-</div>
 
 Use the `db.service.owner` property to specify the name of the operating system user that owns the cluster that is being managed by Failover Manager. This property is not required on a dedicated witness node.
 
@@ -87,11 +82,7 @@ Use the `db.service.owner` property to specify the name of the operating system 
 db.service.owner=
 ```
 
-<div class="index">
 
-db.service.name
-
-</div>
 
 Specify the name of the database service in the `db.service.name` property if you use the service or systemctl command when starting or stopping the service.
 
@@ -106,15 +97,11 @@ Specify the name of the database service in the `db.service.name` property if yo
 db.service.name=
 ```
 
-\<div id="db\_bin" class="registered\_link"\>\</div\>
+<div id="db_bin" class="registered_link"></div>
 
-<div class="index">
 
-db.bin
 
-</div>
-
-You should use the same service control mechanism (pg\_ctl, service, or systemctl) each time you start or stop the database service. If you use the `pg_ctl` program to control the service, specify the location of the `pg_ctl` program in the `db.bin` property.
+You should use the same service control mechanism (pg_ctl, service, or systemctl) each time you start or stop the database service. If you use the `pg_ctl` program to control the service, specify the location of the `pg_ctl` program in the `db.bin` property.
 
 ``` text
 # Specify the directory containing the pg_controldata/pg_ctl commands,
@@ -125,11 +112,7 @@ You should use the same service control mechanism (pg\_ctl, service, or systemct
 db.bin=
 ```
 
-<div class="index">
 
-db.data.dir
-
-</div>
 
 Use the `db.data.dir` property to specify the location to which a recovery file will be written on the Master node of the cluster during promotion. This property is required on master and standby nodes; it is not required on a dedicated witness node.
 
@@ -149,11 +132,7 @@ Use the `db.data.dir` property to specify the location to which a recovery file 
 db.data.dir=
 ```
 
-<div class="index">
 
-db.config.dir
-
-</div>
 
 Use the `db.config.dir` property to specify the location of database configuration files if they are not stored in the same directory as the `recovery.conf` or `standby.signal` file. This should be the value specified by the `config_file` parameter directory of your Advanced Server or PostgreSQL installation. This value will be used as the location of the Postgres `data` directory when stopping, starting, or restarting the database.
 
@@ -172,13 +151,9 @@ db.config.dir=
 
 For more information about database configuration files, visit the [PostgreSQL website](https://www.postgresql.org/docs/12/runtime-config-file-locations.html).
 
-\<div id="jdbc\_sslmode" class="registered\_link"\>\</div\>
+<div id="jdbc_sslmode" class="registered_link"></div>
 
-<div class="index">
 
-jdbc.sslmode
-
-</div>
 
 Use the `jdbc.sslmode` property to instruct to use SSL connections; by default, SSL is disabled.
 
@@ -219,11 +194,7 @@ and
 
 > <https://jdbc.postgresql.org/documentation/head/ssl.html>
 
-<div class="index">
 
-user.email
-
-</div>
 
 Use the `user.email` property to specify an email address (or multiple email addresses) that will receive any notifications sent by Failover Manager.
 
@@ -235,13 +206,9 @@ Use the `user.email` property to specify an email address (or multiple email add
 user.email=
 ```
 
-\<div id="from\_email" class="registered\_link"\>\</div\>
+<div id="from_email" class="registered_link"></div>
 
-<div class="index">
 
-from.email
-
-</div>
 
 The `from.email` property specifies the value that will be used as the sender's address on any email notifications from . You can:
 
@@ -261,13 +228,9 @@ For more information about notifications, see `Notifications <notifications>`.
 from.email=
 ```
 
-\<div id="notification\_level" class="registered\_link"\>\</div\>
+<div id="notification_level" class="registered_link"></div>
 
-<div class="index">
 
-notification.level
-
-</div>
 
 Use the `notification.level` property to specify the minimum severity level at which will send user notifications or when a notification script is called. For a complete list of notifications, please see `Notifications <notifications>`.
 
@@ -280,11 +243,7 @@ Use the `notification.level` property to specify the minimum severity level at w
 notification.level=INFO
 ```
 
-<div class="index">
 
-script.notification.property
-
-</div>
 
 Use the `script.notification` property to specify the path to a user-supplied script that acts as a notification service; the script will be passed a message subject and a message body. The script will be invoked each time generates a user notification.
 
@@ -299,11 +258,7 @@ Use the `script.notification` property to specify the path to a user-supplied sc
 script.notification=
 ```
 
-<div class="index">
 
-bind.address
-
-</div>
 
 The `bind.address` property specifies the IP address and port number of the agent on the current node of the cluster.
 
@@ -331,11 +286,7 @@ Use the `external.address` property to specify the IP address or hostname that s
 external.address=
 ```
 
-<div class="index">
 
-admin.port
-
-</div>
 
 Use the `admin.port` property to specify a port on which listens for administrative commands.
 
@@ -347,11 +298,7 @@ Use the `admin.port` property to specify a port on which listens for administrat
 admin.port=7809
 ```
 
-<div class="index">
 
-is.witness
-
-</div>
 
 Set the `is.witness` property to true to indicate that the current node is a witness node. If is.witness is true, the local agent will not check to see if a local database is running.
 
@@ -375,11 +322,7 @@ If `is.witness` is `true`, will not check the recovery state.
 
 </div>
 
-<div class="index">
 
-local.period local.timeout local.timeout.final
-
-</div>
 
 The following properties specify properties that apply to the local server:
 
@@ -407,11 +350,7 @@ local.timeout.final=10
 
 If necessary, you should modify these values to suit your business model.
 
-<div class="index">
 
-remote.timeout
-
-</div>
 
 Use the `remote.timeout` property to specify how many seconds an agent waits for a response from a remote database server (i.e., how long a standby agent waits to verify that the master database is actually down before performing failover).
 
@@ -423,11 +362,7 @@ Use the `remote.timeout` property to specify how many seconds an agent waits for
 remote.timeout=10
 ```
 
-<div class="index">
 
-node.timeout
-
-</div>
 
 Use the `node.timeout` property to specify the number of seconds that an agent will wait for a response from a node when determining if a node has failed. The node.timeout property value specifies a timeout value for agent-to-agent communication; other timeout properties in the cluster properties file specify values for agent-to-database communication.
 
@@ -439,11 +374,7 @@ Use the `node.timeout` property to specify the number of seconds that an agent w
 node.timeout=50
 ```
 
-<div class="index">
 
-stop.isolated.master
-
-</div>
 
 Use the `stop.isolated.master` property to instruct to shut down the database if a master agent detects that it is isolated. When true (the default), will stop the database before invoking the script specified in the `script.master.isolated` property.
 
@@ -455,11 +386,7 @@ Use the `stop.isolated.master` property to instruct to shut down the database if
 stop.isolated.master=true
 ```
 
-<div class="index">
 
-stop.failed.master
-
-</div>
 
 Use the `stop.failed.master` property to instruct to attempt to shut down a master database if it can not reach the database. If `true`, will run the script specified in the `script.db.failure` property after attempting to shut down the database.
 
@@ -472,13 +399,9 @@ Use the `stop.failed.master` property to instruct to attempt to shut down a mast
 stop.failed.master=true
 ```
 
-\<div id="master\_shutdown\_as\_failure" class="registered\_link"\>\</div\>
+<div id="master_shutdown_as_failure" class="registered_link"></div>
 
-<div class="index">
 
-master.shutdown.as.failure
-
-</div>
 
 Use the `master.shutdown.as.failure` parameter to indicate that any shutdown of the agent on the master node should be treated as a failure. If this parameter is set to `true` and the master agent stops (for any reason), the cluster will attempt to confirm if the database on the master node is running:
 
@@ -512,11 +435,7 @@ Use the `update.physical.slots.period` property to define the slot advance frequ
 update.physical.slots.period=0
 ```
 
-<div class="index">
 
-ping.server.ip
-
-</div>
 
 Use the `ping.server.ip` property to specify the IP address of a server that can use to confirm that network connectivity is not a problem.
 
@@ -540,11 +459,7 @@ Use the `ping.server.ip` property to specify the IP address of a server that can
 ping.server.ip=8.8.8.8
 ```
 
-<div class="index">
 
-ping.server.command
-
-</div>
 
 Use the `ping.server.command` property to specify the command used to test network connectivity.
 
@@ -561,13 +476,9 @@ Use the `ping.server.command` property to specify the command used to test netwo
 ping.server.command=/bin/ping -q -c3 -w5
 ```
 
-\<div id="auto\_allow\_hosts" class="registered\_link"\>\</div\>
+<div id="auto_allow_hosts" class="registered_link"></div>
 
-<div class="index">
 
-auto.allow.hosts
-
-</div>
 
 Use the `auto.allow.hosts` property to instruct the server to use the addresses specified in the .nodes file of the first node started to update the allowed host list. Enabling this property (setting auto.allow.hosts to true) can simplify cluster start-up.
 
@@ -579,13 +490,9 @@ Use the `auto.allow.hosts` property to instruct the server to use the addresses 
 auto.allow.hosts=false
 ```
 
-\<div id="stable\_nodes\_file" class="registered\_link"\>\</div\>
+<div id="stable_nodes_file" class="registered_link"></div>
 
-<div class="index">
 
-stable.nodes.file
-
-</div>
 
 Use the `stable.nodes.file` property to instruct the server to not rewrite the nodes file when a node joins or leaves the cluster. This property is most useful in clusters with unchanging IP addresses.
 
@@ -598,11 +505,7 @@ Use the `stable.nodes.file` property to instruct the server to not rewrite the n
 stable.nodes.file=false
 ```
 
-<div class="index">
 
-db.reuse.connection.count
-
-</div>
 
 The `db.reuse.connection.count` property allows the administrator to specify the number of times reuses the same database connection to check the database health. The default value is 0, indicating that will create a fresh connection each time. This property is not required on a dedicated witness node.
 
@@ -614,13 +517,9 @@ The `db.reuse.connection.count` property allows the administrator to specify the
 db.reuse.connection.count=0
 ```
 
-\<div id="auto\_failover" class="registered\_link"\>\</div\>
+<div id="auto_failover" class="registered_link"></div>
 
-<div class="index">
 
-auto.failover
-
-</div>
 
 The `auto.failover` property enables automatic failover. By default, auto.failover is set to true.
 
@@ -632,11 +531,7 @@ The `auto.failover` property enables automatic failover. By default, auto.failov
 auto.failover=true
 ```
 
-<div class="index">
 
-auto.reconfigure
-
-</div>
 
 Use the `auto.reconfigure` property to instruct to enable or disable automatic reconfiguration of remaining Standby servers after the primary standby is promoted to Master. Set the property to `true` to enable automatic reconfiguration (the default) or `false` to disable automatic reconfiguration. This property is not required on a dedicated witness node. If you are using Advanced Server or PostgreSQL version 11 or earlier, the `recovery.conf` file will be backed up during the reconfiguration process.
 
@@ -657,11 +552,7 @@ auto.reconfigure=true
 
 **Please note:** : `primary_conninfo` is a space-delimited list of keyword=value pairs.
 
-<div class="index">
 
-promotable
-
-</div>
 
 Use the `promotable` property to indicate that a node should not be promoted. The `promotable` property is ignored when a master agent is started. This simplifies switching back to the original master after a switchover or failover. To override the setting, use the efm set-priority command at runtime; for more information about the efm set-priority command, see `Using the efm Utility <using_efm_utility>`.
 
@@ -676,13 +567,9 @@ Use the `promotable` property to indicate that a node should not be promoted. Th
 promotable=true
 ```
 
-\<div id="use\_replay\_tiebreaker" class="registered\_link"\>\</div\>
+<div id="use_replay_tiebreaker" class="registered_link"></div>
 
-<div class="index">
 
-use.replay.tiebreaker
-
-</div>
 
 If the same amount of data has been written to more than one standby node, and a failover occurs, the `use.replay.tiebreaker` value will determine how selects a replacement master. Set the `use.replay.tiebreaker` property to `true` to instruct to failover to the node that will come out of recovery faster, as determined by the log sequence number. To ignore the log sequence number and promote a node based on user preference, set `use.replay.tiebreaker` to `false`.
 
@@ -695,13 +582,9 @@ If the same amount of data has been written to more than one standby node, and a
 use.replay.tiebreaker=true
 ```
 
-\<div id="application\_name" class="registered\_link"\>\</div\>
+<div id="application_name" class="registered_link"></div>
 
-<div class="index">
 
-application.name
-
-</div>
 
 You can use the `application.name` property to provide the name of an application that will be copied to the `primary_conninfo` parameter before restarting an old master node as a standby.
 
@@ -718,17 +601,13 @@ application.name=
 
 **Please note:** You should set the `application.name` property on the master and any promotable standby; in the event of a failover/switchover, the master node could potentially become a standby node again.
 
-\<div id="restore\_command" class="registered\_link"\>\</div\>
+<div id="restore_command" class="registered_link"></div>
 
-<div class="index">
 
-restore.command
-
-</div>
 
 Use the `restore.command` property to instruct to update the `restore_command` when a new master is promoted. `%h` represents the address of the new master; will replace `%h` with the address of the new master. `%f` and `%p` are placeholders used by the server. If the property is left blank, will not update the `restore_command` values on the standbys after a promotion.
 
-See the PostgreSQL documentation for more information about using a [restore\_command](https://www.postgresql.org/docs/12/runtime-config-wal.html#RUNTIME-CONFIG-WAL-ARCHIVE-RECOVERY).
+See the PostgreSQL documentation for more information about using a [restore_command](https://www.postgresql.org/docs/12/runtime-config-wal.html#RUNTIME-CONFIG-WAL-ARCHIVE-RECOVERY).
 
 ``` text
 # If the restore_command on a standby restores directly from the
@@ -747,13 +626,9 @@ See the PostgreSQL documentation for more information about using a [restore\_co
 restore.command=
 ```
 
-\<div id="reconfigure\_num\_sync" class="registered\_link"\>\</div\>
+<div id="reconfigure_num_sync" class="registered_link"></div>
 
-<div class="index">
 
-reconfigure.num.sync
-
-</div>
 
 The database parameter `synchronous_standby_names` on the master node specifies the names and count of the synchronous standby servers that will confirm receipt of data, to ensure that the master nodes can accept write transactions. When `reconfigure.num.sync` property is set to true, will reduce the number of synchronous standby servers and reload the configuration of the master node to reflect the current value.
 
@@ -769,13 +644,9 @@ The database parameter `synchronous_standby_names` on the master node specifies 
 reconfigure.num.sync=false
 ```
 
-\<div id="reconfigure\_sync\_master" class="registered\_link"\>\</div\>
+<div id="reconfigure_sync_master" class="registered_link"></div>
 
-<div class="index">
 
-reconfigure.sync.master
-
-</div>
 
 Set the `reconfigure.sync.master` property to `true` to take the master database out of synchronous replication mode if the number of standby nodes drops below the level required. Set `reconfigure.sync.master` to `false` to send a notification if the standby count drops, but not interrupt synchronous replication.
 
@@ -795,11 +666,7 @@ Set the `reconfigure.sync.master` property to `true` to take the master database
 reconfigure.sync.master=false
 ```
 
-<div class="index">
 
-minimum.standbys
-
-</div>
 
 Use the `minimum.standbys` property to specify the minimum number of standby nodes that will be retained on a cluster; if the standby count drops to the specified minimum, a replica node will not be promoted in the event of a failure of the master node.
 
@@ -813,11 +680,7 @@ Use the `minimum.standbys` property to specify the minimum number of standby nod
 minimum.standbys=0
 ```
 
-<div class="index">
 
-recovery.check.period
-
-</div>
 
 Use the `recovery.check.period` property to specify the number of seconds that will wait before checks to see if a database is out of recovery.
 
@@ -827,13 +690,9 @@ Use the `recovery.check.period` property to specify the number of seconds that w
 recovery.check.period=2
 ```
 
-\<div id="restart\_connection\_timeout" class="registered\_link"\>\</div\>
+<div id="restart_connection_timeout" class="registered_link"></div>
 
-<div class="index">
 
-restart.connection.timeout
-
-</div>
 
 Use the `restart.connection.timeout` property to specify the number of seconds that will attempt to connect to a newly reconfigured master or standby node while the database on that node prepares to accept connections.
 
@@ -849,11 +708,7 @@ Use the `restart.connection.timeout` property to specify the number of seconds t
 restart.connection.timeout=60
 ```
 
-<div class="index">
 
-auto.resume.period
-
-</div>
 
 Use the `auto.resume.period` property to specify the number of seconds (after a monitored database fails, and an agent has assumed an idle state, or when starting in IDLE mode) during which an agent will attempt to resume monitoring that database.
 
@@ -866,13 +721,9 @@ Use the `auto.resume.period` property to specify the number of seconds (after a 
 auto.resume.period=0
 ```
 
-\<div id="virtual\_ip" class="registered\_link"\>\</div\>
+<div id="virtual_ip" class="registered_link"></div>
 
-<div class="index">
 
-virtual.ip virtual.ip.interface virtual.ip.prefix virtual.ip.single
-
-</div>
 
 provides support for clusters that use a virtual IP. If your cluster uses a virtual IP, provide the host name or IP address in the `virtual.ip` property; specify the corresponding prefix in the `virtual.ip.prefix` property. If `virtual.ip` is left blank, virtual IP support is disabled.
 
@@ -912,13 +763,9 @@ virtual.ip.single=true
 
 **Please note:** : If a master agent is started and the node does not currently have the VIP, the EFM agent will acquire it. Stopping a master agent does not drop the VIP from the node.
 
-\<div id="check\_vip\_before\_promotion" class="registered\_link"\>\</div\>
+<div id="check_vip_before_promotion" class="registered_link"></div>
 
-<div class="index">
 
-check.vip.before.promotion
-
-</div>
 
 Set the `check.vip.before.promotion` property to false to indicate that will not check to see if a VIP is in use before assigning it to a a new master in the event of a failure. Please note that this could result in multiple nodes broadcasting on the same VIP address; unless the master node is isolated or can be shut down via another process, you should set this property to true.
 
@@ -932,13 +779,9 @@ Set the `check.vip.before.promotion` property to false to indicate that will not
 check.vip.before.promotion=true
 ```
 
-\<div id="script\_load\_balancer" class="registered\_link"\>\</div\>
+<div id="script_load_balancer" class="registered_link"></div>
 
-<div class="index">
 
-script.load.balancer.attach script.load.balancer.detach
-
-</div>
 
 Use the following properties to provide paths to scripts that reconfigure your load balancer in the event of a switchover or master failure scenario. The scripts will also be invoked in the event of a standby failure. If you are using these properties, they should be provided on every node of the cluster (master, standby, and witness) to ensure that if a database node fails, another node will call the detach script with the failed node's address.
 
@@ -961,13 +804,9 @@ script.load.balancer.attach=
 script.load.balancer.detach=
 ```
 
-\<div id="script\_fence" class="registered\_link"\>\</div\>
+<div id="script_fence" class="registered_link"></div>
 
-<div class="index">
 
-script.fence
-
-</div>
 
 `script.fence` specifies the path to an optional user-supplied script that will be invoked during the promotion of a standby node to master node.
 
@@ -992,11 +831,7 @@ script.fence
 script.fence=
 ```
 
-<div class="index">
 
-script.post.promotion
-
-</div>
 
 Use the `script.post.promotion` property to specify the path to an optional user-supplied script that will be invoked after a standby node has been promoted to master.
 
@@ -1019,11 +854,7 @@ Use the `script.post.promotion` property to specify the path to an optional user
 script.post.promotion=
 ```
 
-<div class="index">
 
-script.resumed
-
-</div>
 
 Use the `script.resumed property` to specify an optional path to a user-supplied script that will be invoked when an agent resumes monitoring of a database.
 
@@ -1035,11 +866,7 @@ Use the `script.resumed property` to specify an optional path to a user-supplied
 script.resumed=
 ```
 
-<div class="index">
 
-script.db.failure
-
-</div>
 
 Use the `script.db.failure` property to specify the complete path to an optional user-supplied script that will invoke if an agent detects that the database that it monitors has failed.
 
@@ -1050,11 +877,7 @@ Use the `script.db.failure` property to specify the complete path to an optional
 script.db.failure=
 ```
 
-<div class="index">
 
-script.master.isolated
-
-</div>
 
 Use the `script.master.isolated` property to specify the complete path to an optional user-supplied script that will invoke if the agent monitoring the master database detects that the master is isolated from the majority of the cluster. This script is called immediately after the VIP is released (if a VIP is in use).
 
@@ -1066,11 +889,7 @@ Use the `script.master.isolated` property to specify the complete path to an opt
 script.master.isolated=
 ```
 
-<div class="index">
 
-script.remote.pre.promotion
-
-</div>
 
 Use the `script.remote.pre.promotion` property to specify the path and name of a script that will be invoked on any agent nodes not involved in the promotion when a node is about to promote its database to master.
 
@@ -1094,11 +913,7 @@ Include the %p placeholder to identify the address of the new primary node.
 script.remote.pre.promotion=
 ```
 
-<div class="index">
 
-script.remote.post.promotion
-
-</div>
 
 Use the `script.remote.post.promotion` property to specify the path and name of a script that will be invoked on any non-master nodes after a promotion occurs.
 
@@ -1121,11 +936,7 @@ Include the %p placeholder to identify the address of the new primary node.
 script.remote.post.promotion=
 ```
 
-<div class="index">
 
-script.custom.monitor custom.monitor.interval custom.monitor.timeout custom.monitor.safe.mode
-
-</div>
 
 Use the `script.custom.monitor` property to provide the name and location of an optional script that will be invoked on regular intervals (specified in seconds by the `custom.monitor.interval` property).
 
@@ -1144,7 +955,7 @@ Set `custom.monitor.safe.mode` to `true` to instruct to report non-zero exit cod
 # cause a promotion. On a standby node script failure will
 # generate a notification and the agent will become IDLE.
 #
-# The custom.monitor.\* properties are required if a custom
+# The custom.monitor.* properties are required if a custom
 # monitoring script is specified:
 #
 # custom.monitor.interval is the time in seconds between executions
@@ -1166,11 +977,7 @@ custom.monitor.timeout=
 custom.monitor.safe.mode=
 ```
 
-<div class="index">
 
-sudo.command sudo.user.command
-
-</div>
 
 Use the `sudo.command` property to specify a command that will be invoked by when performing tasks that require extended permissions. Use this option to include command options that might be specific to your system authentication.
 
@@ -1194,11 +1001,7 @@ sudo.command=sudo
 sudo.user.command=sudo -u %u
 ```
 
-<div class="index">
 
-lock.dir
-
-</div>
 
 Use the `lock.dir` property to specify an alternate location for the lock file; the file prevents from starting multiple (potentially orphaned) agents for a single cluster on the node.
 
@@ -1211,13 +1014,9 @@ Use the `lock.dir` property to specify an alternate location for the lock file; 
 lock.dir=
 ```
 
-\<div id="log\_dir" class="registered\_link"\>\</div\>
+<div id="log_dir" class="registered_link"></div>
 
-<div class="index">
 
-log.dir
-
-</div>
 
 Use the `log.dir` property to specify the location to which agent log files will be written; will attempt to create the directory if the directory does not exist.
 
@@ -1233,13 +1032,9 @@ Use the `log.dir` property to specify the location to which agent log files will
 log.dir=
 ```
 
-\<div id="syslog\_logging" class="registered\_link"\>\</div\>
+<div id="syslog_logging" class="registered_link"></div>
 
-<div class="index">
 
-syslog.host syslog.port syslog.protocol syslog.facility
-
-</div>
 
 After enabling the UDP or TCP protocol on a host, you can enable logging to syslog. Use the `syslog.protocol` parameter to specify the protocol type (UDP or TCP) and the `syslog.port` parameter to specify the listener port of the syslog host. The `syslog.facility` value may be used as an identifier for the process that created the entry; the value must be between LOCAL0 and LOCAL7.
 
@@ -1253,13 +1048,9 @@ syslog.protocol=UDP
 syslog.facility=LOCAL1
 ```
 
-\<div id="logtype\_enabled" class="registered\_link"\>\</div\>
+<div id="logtype_enabled" class="registered_link"></div>
 
-<div class="index">
 
-file.log.enabled syslog.enabled
-
-</div>
 
 Use the `file.log.enabled` and `syslog.enabled` properties to specify the type of logging that you wish to implement. Set `file.log.enabled` to `true` to enable logging to a file; enable the UDP protocol or TCP protocol and set `syslog.enabled` to `true` to enable logging to syslog. You can enable logging to both a file and syslog.
 
@@ -1269,15 +1060,11 @@ file.log.enabled=true
 syslog.enabled=false
 ```
 
-For more information about configuring syslog logging, see [Enabling syslog Log File Entries](#enabling_syslog) .
+For more information about configuring syslog logging, see [Enabling syslog Log File Entries](../#enabling_syslog) .
 
-\<div id="loglevel" class="registered\_link"\>\</div\>
+<div id="loglevel" class="registered_link"></div>
 
-<div class="index">
 
-jgroups.loglevel efm.loglevel
-
-</div>
 
 Use the `jgroups.loglevel` and `efm.loglevel` parameters to specify the level of detail logged by . The default value is INFO. For more information about logging, see `Controlling Logging <controlling_logging>` .
 
@@ -1294,11 +1081,7 @@ jgroups.loglevel=INFO
 efm.loglevel=INFO
 ```
 
-<div class="index">
 
-jvm.options
-
-</div>
 
 Use the `jvm.options` property to pass JVM-related configuration information. The default setting specifies the amount of memory that the agent will be allowed to use.
 
@@ -1310,6 +1093,6 @@ jvm.options=-Xmx128m
 
 <div class="toctree" data-maxdepth="3">
 
-encrypting\_database\_password
+encrypting_database_password
 
 </div>

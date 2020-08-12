@@ -1,24 +1,23 @@
-\<div id="managing\_the\_backups\_based\_on\_the\_retention\_policy" class="registered\_link"\>\</div\>
+---
+title: "Managing the Backups Based on the Retention Policy"
+---
 
-# `Managing the Backups Based on the Retention Policy`
+<div id="managing_the_backups_based_on_the_retention_policy" class="registered_link"></div>
 
-The [MANAGE](#manage) subcommand is used to evaluate and categorize backups according to the retention policy set in the BART configuration file. When a backup is first created with the `BACKUP` subcommand, it is `active`. You can use the `MANAGE` subcommand to change the status of an active backup to `obsolete`. Obsolete backups can then be deleted.
+
+The [MANAGE](../../03_using_bart/03_basic_bart_subcommand_usage/#manage) subcommand is used to evaluate and categorize backups according to the retention policy set in the BART configuration file. When a backup is first created with the `BACKUP` subcommand, it is `active`. You can use the `MANAGE` subcommand to change the status of an active backup to `obsolete`. Obsolete backups can then be deleted.
 
 This section covers following aspects of backup management:
 
-  - The rules for [deleting backups](#deletions_permitted_under_retention_policy) depending upon the backup status and the subcommand used.
-  - The process to retain a backup indefinitely by [marking it as keep](#marking_backups_for_indefinite_keep_status). This section also provides information about resetting backups status (that are marked as `obsolete` and `keep`) back to active status.
-  - The general process for <span class="title-ref">evaluating, marking, and then deleting obsolete backups \<evaluating\_marking\_and\_deleting\_obsolete\_backups\></span>.
+  - The rules for [deleting backups](../../03_using_bart/02_managing_backups_using_a_retention_policy/#deletions_permitted_under_retention_policy) depending upon the backup status and the subcommand used.
+  - The process to retain a backup indefinitely by [marking it as keep](../../03_using_bart/02_managing_backups_using_a_retention_policy/#marking_backups_for_indefinite_keep_status). This section also provides information about resetting backups status (that are marked as `obsolete` and `keep`) back to active status.
+  - The general process for <span class="title-ref">evaluating, marking, and then deleting obsolete backups \<evaluating_marking_and_deleting_obsolete_backups\></span>.
 
-\<div id="deletions\_permitted\_under\_retention\_policy" class="registered\_link"\>\</div\>
+<div id="deletions_permitted_under_retention_policy" class="registered_link"></div>
 
 ## Deletions Permitted Under a Retention Policy
 
-<div class="index">
 
-Deletions permitted under retention policy
-
-</div>
 
 This section describes how and under what conditions backups may be deleted under a retention policy.
 
@@ -43,7 +42,8 @@ The specific deletion rules for the `MANAGE` and `DELETE` subcommands are as fol
 
 The following table summarizes the deletion rules of backups according to their marked status. An entry of `Yes` indicates the backup may be deleted under the specified circumstances. An entry of `No` indicates that the backup may not be deleted.
 
-<table>
+<div class="table-with-scroll">
+<table class="table">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 15%" />
@@ -115,8 +115,9 @@ _) | (see <a href="###note2">Note2</a>_)</td>
 </tr>
 </tbody>
 </table>
+</div>
 
-\<div id="note1" class="registered\_link"\>\</div\>
+<div id="note1" class="registered_link"></div>
 
 <div class="note">
 
@@ -130,7 +131,7 @@ Redundancy Retention Policy (Note1) : Deletion occurs only if the total number o
 
 </div>
 
-\<div id="note2" class="registered\_link"\>\</div\>
+<div id="note2" class="registered_link"></div>
 
 <div class="note">
 
@@ -144,39 +145,23 @@ Recovery Window Retention Policy (Note2): Deletion occurs only if the backup is 
 
 </div>
 
-\<div id="marking\_backups\_for\_indefinite\_keep\_status" class="registered\_link"\>\</div\>
+<div id="marking_backups_for_indefinite_keep_status" class="registered_link"></div>
 
 ## Marking Backups for Indefinite Keep Status
 
-<div class="index">
 
-Marking backups for indefinite keep status
-
-</div>
 
 There may be certain backups that you wish to keep for an indefinite period of time and do not wish to delete based upon the retention policy applied to the database server. Such backups can be marked as `keep` to exclude them from being marked as obsolete. Use the `MANAGE` subcommand with the `-c` keep option to retain such backups indefinitely.
 
-\<div id="evaluating\_marking\_and\_deleting\_obsolete\_backups" class="registered\_link"\>\</div\>
+<div id="evaluating_marking_and_deleting_obsolete_backups" class="registered_link"></div>
 
 ## Evaluating, Marking, and Deleting Obsolete Backups
 
-<div class="index">
 
-Evaluating obsolete backups
 
-</div>
 
-<div class="index">
 
-Marking obsolete backups
 
-</div>
-
-<div class="index">
-
-Deleting obsolete backups
-
-</div>
 
 When the `MANAGE` subcommand is invoked, BART evaluates active backups:
 
@@ -192,7 +177,7 @@ Note
 
 </div>
 
-The status of backups currently marked as `obsolete` or `keep` is not changed. To re-evaluate such backups and then classify them, their status must first be reset to `active` with the `MANAGE -c nokeep` option. See [Marking the Backup Status](#marking_the_backup_status) for more information.
+The status of backups currently marked as `obsolete` or `keep` is not changed. To re-evaluate such backups and then classify them, their status must first be reset to `active` with the `MANAGE -c nokeep` option. See [Marking the Backup Status](../../03_using_bart/02_managing_backups_using_a_retention_policy/#marking_the_backup_status) for more information.
 
 </div>
 

@@ -1,6 +1,9 @@
-\<div id="components\_ha\_pgpool" class="registered\_link"\>\</div\>
+---
+title: "Implementing High Availability with PgPool"
+---
 
-# `Implementing High Availability with PgPool`
+<div id="components_ha_pgpool" class="registered_link"></div>
+
 
 Failover Manager monitors the health of Postgres nodes; in the event of a master node failure, Failover Manager performs an automatic failover to a standby node. Note that Pgpool does not monitor the health of backend nodes and will not perform failover to any standby nodes.
 
@@ -8,11 +11,7 @@ Beginning with version 3.2, a Failover Manager agent can be configured to use Pg
 
 ## Configuring Failover Manager
 
-<div class="index">
 
-Failover Manager configuration file
-
-</div>
 
 Failover Manager provides functionality that will remove failed database nodes from Pgpool load balancing; Failover Manager can also re-attach nodes to Pgpool when returned to the Failover Manager cluster. To configure this behavior, you must identify the load balancer *attach* and *detach* scripts in the `efm.properties` file in the following parameters:
 
@@ -25,11 +24,7 @@ The script referenced by `load.balancer.attach` is called when a `resume` comman
 
 ## Configuring Pgpool
 
-<div class="index">
 
-Pgpool configuration file
-
-</div>
 
 You must provide values for the following configuration parameters in the `pgpool.conf` file on the Pgpool host:
 
@@ -54,12 +49,8 @@ Note also that the health checking and error-triggered backend failover have bee
 
 Finally, `search_primary_node_timeout` has been set to a low value to ensure prompt recovery of Pgpool services upon an Failover Manager-triggered failover.
 
-## pgpool\_backend.sh
+## pgpool_backend.sh
 
-<div class="index">
 
-pgpool\_backend.sh
-
-</div>
 
 In order for the attach and detach scripts to be successfully called, a `pgpool_backend.sh` script must be provided. `pgpool_backend.sh` is a helper script for issuing the actual PCP interface commands on Pgpool. Nodes in Failover Manager are identified by IP addresses, while PCP commands refer to a node ID. `pgpool_backend.sh` provides a layer of abstraction to perform the IP address to node ID mapping transparently.

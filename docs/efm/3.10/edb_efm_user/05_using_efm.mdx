@@ -1,6 +1,9 @@
-\<div id="using\_efm" class="registered\_link"\>\</div\>
+---
+title: "Using Failover Manager"
+---
 
-# `Using Failover Manager`
+<div id="using_efm" class="registered_link"></div>
+
 
 offers support for monitoring and failover of clusters with one or more Standby servers. You can add or remove nodes from the cluster as your demand for resources grows or shrinks.
 
@@ -20,13 +23,9 @@ By default, `some of the efm commands <using_efm_utility>` must be invoked by `e
   - [efm stop-cluster](#efm_stop_cluster)
   - [efm upgrade-conf](#efm_upgrade_conf)
 
-\<div id="starting\_efm\_cluster" class="registered\_link"\>\</div\>
+<div id="starting_efm_cluster" class="registered_link"></div>
 
-<div class="index">
 
-Starting the EFM Cluster
-
-</div>
 
 ### Starting the Failover Manager Cluster
 
@@ -56,13 +55,9 @@ After joining the cluster, the agent checks the supplied database credentials to
 
 If a new master or standby node joins a cluster, all of the existing nodes will also confirm that they can connect to the database on the new node.
 
-\<div id="add\_node\_to\_cluster" class="registered\_link"\>\</div\>
+<div id="add_node_to_cluster" class="registered_link"></div>
 
-<div class="index">
 
-Adding a Node to a Cluster
-
-</div>
 
 ### Adding Nodes to a Cluster
 
@@ -98,13 +93,9 @@ When the new node joins the cluster, will send a notification to the administrat
 
 **Please note:** : To be a useful Standby for the current node, the node must be a standby in the PostgreSQL Streaming Replication scenario.
 
-\<div id="change\_priority\_standby" class="registered\_link"\>\</div\>
+<div id="change_priority_standby" class="registered_link"></div>
 
-<div class="index">
 
-Changing the priority of a Standby
-
-</div>
 
 ### Changing the Priority of a Standby
 
@@ -120,19 +111,15 @@ For example, if the properties file on node `10.0.1.10` includes a setting of `p
 
 > `efm set-priority acctg 10.0.1.10 1`
 
-In the event of a failover, will first retrieve information from Postgres streaming replication to confirm which Standby node has the most recent data, and promote the node with the least chance of data loss. If two Standby nodes contain equally up-to-date data, the node with a higher user-specified priority value will be promoted to Master unless [use.replay.tiebreaker](#use.replay.tiebreaker) is set to `false` . To check the priority value of your Standby nodes, use the command:
+In the event of a failover, will first retrieve information from Postgres streaming replication to confirm which Standby node has the most recent data, and promote the node with the least chance of data loss. If two Standby nodes contain equally up-to-date data, the node with a higher user-specified priority value will be promoted to Master unless [use.replay.tiebreaker](04_configuring_efm/01_cluster_properties/#use_replay_tiebreaker) is set to `false` . To check the priority value of your Standby nodes, use the command:
 
 > `efm cluster-status <cluster_name>`
 
 **Please note:** : The promotion priority may change if a node becomes isolated from the cluster, and later re-joins the cluster.
 
-\<div id="promote\_node" class="registered\_link"\>\</div\>
+<div id="promote_node" class="registered_link"></div>
 
-<div class="index">
 
-Promoting a node
-
-</div>
 
 ### Promoting a Failover Manager Node
 
@@ -161,7 +148,7 @@ During switchover:
   - If you are using a VIP, the address is released from the master node.
   - A standby is promoted to replace the master node, and acquires the VIP.
   - The address of the new master node is added to the `recovery.conf` file or the `primary_conninfo` details are stored in memory.
-  - If the `application.name` property is set for this node, the application\_name property will be added to the `recovery.conf` file or the `primary_conninfo` information will be stored in memory.
+  - If the `application.name` property is set for this node, the application_name property will be added to the `recovery.conf` file or the `primary_conninfo` information will be stored in memory.
   - If you are using server version 12 or later, the recovery settings that have been stored in memory are written to the `postgresql.auto.conf` file.
   - The old master is started; the agent will resume monitoring it as a standby.
 
@@ -183,13 +170,9 @@ Then, perform a manual promotion:
 
 For more information about the efm utility, see `Using the EFM Utility <using_efm_utility>`.
 
-\<div id="stop\_efm\_agent" class="registered\_link"\>\</div\>
+<div id="stop_efm_agent" class="registered_link"></div>
 
-<div class="index">
 
-Stopping an agent
-
-</div>
 
 ### Stopping a Failover Manager Agent
 
@@ -213,15 +196,11 @@ systemctl stop edb-efm-
 
 Until you invoke the efm disallow-node command (removing the node's address of the node from the Allowed node host list), you can use the `service edb-efm-3.10 start` command to restart the node at a later date without first running the `efm allow-node` command again.
 
-Please note that stopping an agent does not signal the cluster that the agent has failed unless the [master.shutdown.as.failure](#master_shutdown_as_failure) property is set to `true`.
+Please note that stopping an agent does not signal the cluster that the agent has failed unless the [master.shutdown.as.failure](04_configuring_efm/01_cluster_properties/#master_shutdown_as_failure) property is set to `true`.
 
-\<div id="stopping\_efm\_cluster" class="registered\_link"\>\</div\>
+<div id="stopping_efm_cluster" class="registered_link"></div>
 
-<div class="index">
 
-Stopping a Cluster
-
-</div>
 
 ### Stopping a Failover Manager Cluster
 
@@ -233,7 +212,7 @@ The command will cause *all* agents to exit. Terminating the agents completely d
 
 **Please note:** : When you invoke the `efm stop-cluster` command, all authorized node information is lost from the Allowed node host list.
 
-\<div id="remove\_node\_from\_cluster" class="registered\_link"\>\</div\>
+<div id="remove_node_from_cluster" class="registered_link"></div>
 
 ### Removing a Node from a Cluster
 
@@ -243,15 +222,11 @@ The `efm disallow-node` command removes the IP address of a node from the Allowe
 
 The `efm disallow-node` command will not stop a running agent; the service will continue to run on the node until you [stop the agent](#stop_efm_agent). If the agent or cluster is subsequently stopped, the node will not be allowed to rejoin the cluster, and will be removed from the failover priority list (and will be ineligible for promotion).
 
-After invoking the `efm disallow-node` command, you must use the <span class="title-ref">efm allow-node \<efm\_allow\_node\></span> command to add the node to the cluster again.
+After invoking the `efm disallow-node` command, you must use the <span class="title-ref">efm allow-node \<efm_allow_node\></span> command to add the node to the cluster again.
 
-\<div id="multiple\_agents\_single\_node" class="registered\_link"\>\</div\>
+<div id="multiple_agents_single_node" class="registered_link"></div>
 
-<div class="index">
 
-Multiple agents on a single node
-
-</div>
 
 ## Running Multiple Agents on a Single Node
 
@@ -317,11 +292,11 @@ The following parameters are used when assigning the virtual IP address to a nod
 
 This parameter value is determined by the virtual IP addresses being used and may or may not be the same for both `acctg.properties` and `sales.properties`.
 
-After creating the `acctg.properties` and `sales.properties` files, create a service script or unit file for each cluster that points to the respective property files; this step is platform specific. If you are using RHEL 6.x or CentOS 6.x, see [RHEL 6.x or CentOS 6.x](#rhel_or_centos_6); if you are using RHEL/CentOS 7.x or RHEL/CentOS 8.x, see <span class="title-ref">RHEL/CentOS 7.x or RHEL/CentOS 8.x \<rhel\_or\_centos\_7\></span>.
+After creating the `acctg.properties` and `sales.properties` files, create a service script or unit file for each cluster that points to the respective property files; this step is platform specific. If you are using RHEL 6.x or CentOS 6.x, see [RHEL 6.x or CentOS 6.x](#rhel_or_centos_6); if you are using RHEL/CentOS 7.x or RHEL/CentOS 8.x, see <span class="title-ref">RHEL/CentOS 7.x or RHEL/CentOS 8.x \<rhel_or_centos_7\></span>.
 
 **Please note:** : If you are using a custom service script or unit file, you must manually update the file to reflect the new service name when you upgrade .
 
-\<div id="rhel\_or\_centos\_6" class="registered\_link"\>\</div\>
+<div id="rhel_or_centos_6" class="registered_link"></div>
 
 ### RHEL 6.x or CentOS 6.x
 
@@ -347,7 +322,7 @@ Then, use the new service scripts to start the agents. For example, you can star
 
 > `# service efm-acctg start`
 
-\<div id="rhel\_or\_centos\_7" class="registered\_link"\>\</div\>
+<div id="rhel_or_centos_7" class="registered_link"></div>
 
 ### RHEL/CentOS 7.x or RHEL/CentOS 8.x
 

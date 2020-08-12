@@ -1,6 +1,9 @@
-\<div id="supported\_scenarios" class="registered\_link"\>\</div\>
+---
+title: "Supported Failover and Failure Scenarios"
+---
 
-# `Supported Failover and Failure Scenarios`
+<div id="supported_scenarios" class="registered_link"></div>
+
 
 monitors a cluster for failures that may or may not result in failover.
 
@@ -11,17 +14,13 @@ supports a very specific and limited set of failover scenarios. Failover can occ
 
 makes every attempt to verify the accuracy of these conditions. If agents cannot confirm that the Master database or node has failed, will not perform any failover actions on the cluster.
 
-also supports a *no* *auto*-*failover* mode for situations where you want to monitor and detect failover conditions, but not perform an automatic failover to a Standby. In this mode, a notification is sent to the administrator when failover conditions are met. To disable automatic failover, modify the cluster properties file, setting the [auto.failover](#auto.failover) parameter to false.
+also supports a *no* *auto*-*failover* mode for situations where you want to monitor and detect failover conditions, but not perform an automatic failover to a Standby. In this mode, a notification is sent to the administrator when failover conditions are met. To disable automatic failover, modify the cluster properties file, setting the [auto.failover](04_configuring_efm/01_cluster_properties/#auto_failover) parameter to false.
 
 will alert an administrator to situations that require administrator intervention, but that do not merit promoting a Standby database to Master.
 
-\<div id="master\_db\_down" class="registered\_link"\>\</div\>
+<div id="master_db_down" class="registered_link"></div>
 
-<div class="index">
 
-Master Database is Down
-
-</div>
 
 ## Master Database is Down
 
@@ -47,13 +46,9 @@ After returning the node to the cluster as a Standby, you can easily return the 
 1.  If the cluster has more than one Standby node, use the `efm set-priority` command to set the node's failover priority to 1.
 2.  Invoke the [efm promote -switchover](#efm_promote) command to promote the node to its original role of Master node.
 
-\<div id="standby\_down" class="registered\_link"\>\</div\>
+<div id="standby_down" class="registered_link"></div>
 
-<div class="index">
 
-Standby Database is Down
-
-</div>
 
 ## Standby Database is Down
 
@@ -63,13 +58,9 @@ If a Standby agent detects a failure of its database, the agent notifies the oth
 
 After returning the Standby database to a healthy state, invoke the `efm resume` command to return the Standby to the cluster.
 
-\<div id="master\_agent\_exits" class="registered\_link"\>\</div\>
+<div id="master_agent_exits" class="registered_link"></div>
 
-<div class="index">
 
-Master Agent Exits Master Node Fails
-
-</div>
 
 ## Master Agent Exits or Node Fails
 
@@ -91,13 +82,9 @@ To recover from this scenario without restarting the entire cluster, you should:
 
 Please note that stopping an agent does not signal the cluster that the agent has failed.
 
-\<div id="standby\_exits" class="registered\_link"\>\</div\>
+<div id="standby_exits" class="registered_link"></div>
 
-<div class="index">
 
-Standby Agent Exits Standby Node Fails
-
-</div>
 
 ## Standby Agent Exits or Node Fails
 
@@ -109,13 +96,9 @@ When the failure is detected, the agents attempt to contact the database that re
 
 If there is only one Master and one Standby remaining, there is no failover protection in the case of a Master node failure. In the case of a Master database failure, the Master and Standby agents can agree that the database failed and proceed with failover.
 
-\<div id="dedicated\_witness\_agent" class="registered\_link"\>\</div\>
+<div id="dedicated_witness_agent" class="registered_link"></div>
 
-<div class="index">
 
-Witness Agent Exits Witness Node Fails
-
-</div>
 
 ## Dedicated Witness Agent Exits / Node Fails
 
@@ -127,13 +110,9 @@ When an agent detects that the Witness node cannot be reached, Failover Manager 
 
 **Note**: If the witness fails and the cluster only has two nodes, then there is no failover protection because the standby node has no way to know if the master failed or was disconnected. In a two node cluster, if the master database fails but the nodes are still connected, failover will still occur since the standby can confirm the condition of the master database.
 
-\<div id="node\_isolated" class="registered\_link"\>\</div\>
+<div id="node_isolated" class="registered_link"></div>
 
-<div class="index">
 
-Node Becomes Isolated
-
-</div>
 
 ## Nodes Become Isolated from the Cluster
 

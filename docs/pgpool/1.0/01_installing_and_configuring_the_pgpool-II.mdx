@@ -1,26 +1,29 @@
-\<div id="installing\_and\_configuring\_the\_pgpool-II" class="registered\_link"\>\</div\>
+---
+title: "Installing pgpool-II"
+---
 
-# `Installing pgpool-II`
+<div id="installing_and_configuring_the_pgpool-II" class="registered_link"></div>
+
 
 pgpool-II runs as a service on Linux systems. It is not supported on Windows systems.
 
 The pgpool version required by your Advanced Server installation is version-specific, but the documented and supported functionality of each version is the same. The following table lists the pgpool version and their corresponding Advanced Server versions. The information in this guide applies to each version listed in the table below.
 
-\<div id="supported platforms table" class="registered\_link"\>\</div\>
+<div id="supported platforms table" class="registered_link"></div>
 
 **Supported pgpool-II and Advanced Server Versions**
 
 | **pgpool Version** | **Advanced Server Version** | **Supported Platforms**                                                                                        |
 | ------------------ | --------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| pgpool 4.1.2       | Advanced Server 11 and 12   | RHEL 6, RHEL 7, and RHEL 8 - x86\_64, RHEL 7 - ppc64le, Debian 9x Stretch, Ubuntu 18.04 Bionic Beaver, SLES 12 |
-| pgpool 4.0.9       | Advanced Server 11 and 12   | RHEL 6, RHEL 7, and RHEL 8 - x86\_64, RHEL 7 - ppc64le, Debian 9x Stretch, Ubuntu 18.04 Bionic Beaver, SLES 12 |
-| pgpool 3.7.14      | Advanced Server 10 and 11   | RHEL 6 and RHEL 7 - x86\_64, RHEL 7 - ppc64le, Debian 9x Stretch, Ubuntu 18.04 Bionic Beaver                   |
-| pgpool 3.6.21      | Advanced Server 9.6 and 10  | RHEL 6 and RHEL 7 - x86\_64, RHEL 7 - ppc64le, Linux graphical installer                                       |
-| pgpool 3.5.25      | Advanced Server 9.6         | RHEL 6 and RHEL 7 - x86\_64, RHEL 7 - ppc64le, Linux graphical installer                                       |
+| pgpool 4.1.2       | Advanced Server 11 and 12   | RHEL 6, RHEL 7, and RHEL 8 - x86_64, RHEL 7 - ppc64le, Debian 9x Stretch, Ubuntu 18.04 Bionic Beaver, SLES 12 |
+| pgpool 4.0.9       | Advanced Server 11 and 12   | RHEL 6, RHEL 7, and RHEL 8 - x86_64, RHEL 7 - ppc64le, Debian 9x Stretch, Ubuntu 18.04 Bionic Beaver, SLES 12 |
+| pgpool 3.7.14      | Advanced Server 10 and 11   | RHEL 6 and RHEL 7 - x86_64, RHEL 7 - ppc64le, Debian 9x Stretch, Ubuntu 18.04 Bionic Beaver                   |
+| pgpool 3.6.21      | Advanced Server 9.6 and 10  | RHEL 6 and RHEL 7 - x86_64, RHEL 7 - ppc64le, Linux graphical installer                                       |
+| pgpool 3.5.25      | Advanced Server 9.6         | RHEL 6 and RHEL 7 - x86_64, RHEL 7 - ppc64le, Linux graphical installer                                       |
 
 This guide assumes that the user has some knowledge of installation and system administration procedures, and has administrative privileges on the host.
 
-## `Installing pgpool-II on a RHEL/CentOS Host`
+## Installing pgpool-II on a RHEL/CentOS Host
 
 You can install pgpool-II using the `yum` command on a RHEL/CentOS 6 and 7 host, or using the `dnf` command on a CentOS/RHEL 8 host (see [supported platforms table](#supported%20platforms%20table) for details about supported platforms).
 
@@ -155,7 +158,7 @@ When you install an RPM package that is signed by a source that is not recognize
 
 pgpool-II will be installed in the `/usr/edb/pgpool<x.x>/share` directory, where \<x.x\> is the installed pgpool-II version number. The configuration files are created in the `/etc/sysconfig/edb/pgpool<x.x>` directory, where *\<x.x\>* is the pgpool release version. By default, `.sample` is appended to the configuration file name; remove the `.sample` from the configuration file after copying the file to create your custom configuration.
 
-\<div id="troubleshooting" class="registered\_link"\>\</div\>
+<div id="troubleshooting" class="registered_link"></div>
 
 **Installation Troubleshooting**
 
@@ -169,7 +172,7 @@ To fix this issue, execute the following command:
 rm -f /var/run/yum.pid
 ```
 
-\<div id="installing\_a\_deb\_package\_on\_a\_debian\_or\_ubuntu\_host" class="registered\_link"\>\</div\>
+<div id="installing_a_deb_package_on_a_debian_or_ubuntu_host" class="registered_link"></div>
 
 ## Installing pgpool-II on a Debian/Ubuntu Host
 
@@ -231,9 +234,9 @@ Where \<xx\> is the pgpool release version.
 
 After installing pgpool-II on a Debian host, the configuration files are located in the `/etc/edb/edb-pgpool<x.x>` directory, where \<x.x\> is the pgpool release version. By default, `.sample` is appended to the configuration file name; `.sample` should be removed after copying the file to create your custom configuration.
 
-\<div id="using\_the\_graphical\_installer" class="registered\_link"\>\</div\>
+<div id="using_the_graphical_installer" class="registered_link"></div>
 
-## `Installing pgpool-II Using Linux Graphical Installer`
+## Installing pgpool-II Using Linux Graphical Installer
 
 Graphical installers for pgpool-II are available via StackBuilder Plus (for Advanced Server hosts) or Stack Builder (on PostgreSQL hosts). You can access StackBuilder Plus through your Linux start menu.
 
@@ -281,9 +284,9 @@ Perform the following steps to install pgpool-II:
 
 ![*The installation is complete*](images/pgpool6.png)
 
-\<div id="using\_the\_SLES\_host" class="registered\_link"\>\</div\>
+<div id="using_the_SLES_host" class="registered_link"></div>
 
-## `Installing pgpool-II Using an SLES 12 Host`
+## Installing pgpool-II Using an SLES 12 Host
 
 You can use the zypper package manager to install pgpool-II on an SLES 12 host. zypper will attempt to satisfy package dependencies as it installs a package, but requires access to specific repositories that are not hosted at EDB.
 
