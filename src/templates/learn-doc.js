@@ -28,6 +28,16 @@ export const query = graphql`
       body
       tableOfContents
     }
+    file(name: { eq: "advocacy-index-nav" }) {
+      childAdvocacyDocsJson {
+        advocacyLinks {
+          links {
+            title
+            iconName
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -73,12 +83,17 @@ const LearnDocTemplate = ({ data, pageContext }) => {
     description: mdx.frontmatter.description,
     path: mdx.fields.path,
   };
+
+  const iconName = data.file.childAdvocacyDocsJson.advocacyLinks[0].links.find(
+    link => link.title === mdx.frontmatter.title
+  ).iconName;
+
   return (
     <Layout pageMeta={pageMeta}>
       <TopBar />
       <Container fluid className="p-0 d-flex bg-white">
         <SideNavigation>
-          <LeftNav navLinks={navLinks} path={mdx.fields.path} />
+          <LeftNav navLinks={navLinks} path={mdx.fields.path} iconName={iconName} />
         </SideNavigation>
         <MainContent>
           <div className="d-flex justify-content-between align-items-center">
