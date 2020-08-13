@@ -48,43 +48,49 @@ export default data => {
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
               <div className="ml-3">
-                <Icon
-                  iconName={iconNames.DOTTED_BOX}
-                  className="opacity-1"
-                  width="64"
-                  height="64"
+              <Icon
+                  iconName={iconNames.INSTALL}
+                  className="fill-orange"
+                  width="38"
+                  height="38"
+                  circle={true}
+                  circleClassName="bg-blue-10"
+                  circleDiameter={80}
                 />
               </div>
               <div className="card-body">
                 <a
-                  href="docs-learn.php"
+                  href="getting-started/installing_postgres"
                   className="h3 card-title stretched-link"
                 >
                   Installing Postgres
                 </a>
                 <p className="card-text">
-                  Morbi leo risus, porta ac consectetur ac, vestibulum.
+                  Learn how to quickly install PostgreSQL on Docker, Linux, MacOS and Windows
                 </p>
               </div>
             </div>
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
               <div className="ml-3">
-                <Icon
-                  iconName={iconNames.DOTTED_BOX}
-                  className="opacity-1"
-                  width="64"
-                  height="64"
+              <Icon
+                  iconName={iconNames.CONNECT}
+                  className="fill-orange"
+                  width="50"
+                  height="50"
+                  circle={true}
+                  circleClassName="bg-blue-10"
+                  circleDiameter={80}
                 />
               </div>
               <div className="card-body">
                 <a
-                  href="docs-learn.php"
+                  href="getting-started/connecting_to_postgres"
                   className="h3 card-title stretched-link"
                 >
                   Connecting to Postgres
                 </a>
                 <p className="card-text">
-                  Aenean lacinia bibendum nulla sed consectetur.
+                  Using common libraries to abstract away low-level connection details. Available in Java and Python.
                 </p>
               </div>
             </div>
@@ -95,28 +101,24 @@ export default data => {
           <div className="card rounded shadow-sm p-2 mt-4">
             <div className="card-body">
               <div className="card-title d-flex justify-content-start align-items-start">
-                <a href="docs-product.php">
-                  <Icon
-                    iconName={iconNames.DOTTED_BOX}
-                    className="opacity-1"
-                    width="150"
-                    height="150"
-                  />
+                <a href="epas/12">
+                <Icon
+                  iconName={iconNames.EDB_EPAS}
+                  className="fill-orange"
+                  width="50"
+                  height="50"
+                  circle={true}
+                  circleClassName="bg-blue-10"
+                  circleDiameter={90}
+                />
                 </a>
                 <div className="ml-4">
                   <h3 className="balance-text">
-                    <a href="docs-product.php">EDB Postgres Advanced Server</a>
+                    <a href="epas/12">EDB Postgres Advanced Server</a>
                   </h3>
                   <p className="card-text">
-                    Duis mollis, est non commodo luctus, nisi erat porttitor
-                    ligula, eget lacinia odio sem nec elit. Praesent commodo
-                    cursus magna, vel scelerisque nisl consectetur et. Sed
-                    posuere consectetur est at lobortis. Fusce dapibus, tellus
-                    ac cursus commodo, tortor mauris condimentum nibh, ut
-                    fermentum massa justo sit amet risus. Donec ullamcorper
-                    nulla non metus auctor fringilla. Nullam quis risus eget
-                    urna mollis ornare vel eu leo. Aenean lacinia bibendum nulla
-                    sed consectetur.
+                  EDB Postgres Advanced Server gives you the best of both worlds—all the advantages of PostgreSQL,
+enhanced with mission-critical features that help you maintain greater consistency across your PostgreSQL deployments.
                   </p>
                 </div>
               </div>
@@ -126,42 +128,42 @@ export default data => {
               <div className="row">
                 <div className="col-md">
                   <h5 className="mt-4">Getting Started</h5>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/01_epas_inst_linux" className="btn btn-link btn-block text-left p-0">
                     Installation Guide for Linux
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/02_epas_inst_windows" className="btn btn-link btn-block text-left p-0">
                     Installation Guide for Windows
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/03_epas_upgrade_guide" className="btn btn-link btn-block text-left p-0">
                     Upgrade Guide
                   </a>
                 </div>
 
                 <div className="col-md">
                   <h5 className="mt-4">For Oracle Developers</h5>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
-                    User Guide
+                  <a href="epas/12/06_epas_compat_ora_dev_guide" className="btn btn-link btn-block text-left p-0">
+                    Database Compatibility for Oracle Developers
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/04_epas_compat_reference" className="btn btn-link btn-block text-left p-0">
                     SQL Reference
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/05_epas_compat_bip_guide" className="btn btn-link btn-block text-left p-0">
                     Built-in Package Guide
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/07_epas_compat_tools_guide" className="btn btn-link btn-block text-left p-0">
                     Tools and Utilities
                   </a>
                 </div>
 
                 <div className="col-md">
                   <h5 className="mt-4">User Guides</h5>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/10_epas_guide" className="btn btn-link btn-block text-left p-0">
                     EDB Postgres Advanced Server
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/08_ecpgplus_guide" className="btn btn-link btn-block text-left p-0">
                     ECPGPlus
                   </a>
-                  <a href="/" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/12/09_language_pack" className="btn btn-link btn-block text-left p-0">
                     Language Pack
                   </a>
                 </div>
@@ -169,49 +171,42 @@ export default data => {
 
               <hr className="mt-4 mb-1" />
 
-              <h3 className="mt-4">Docs Versions</h3>
+              <h4 className="mt-4">Versions</h4>
               <div className="btn-group" role="group">
                 <a
-                  href="docs-product.php"
+                  href="epas/12"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
-                  Latest (12)
+                  12 <span className="muted">&mdash; Latest</span>
                 </a>
                 <a
-                  href="/"
+                  href="epas/11"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   11
                 </a>
                 <a
-                  href="/"
+                  href="epas/10"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   10
                 </a>
                 <a
-                  href="/"
+                  href="epas/9.6"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   9.6
                 </a>
                 <a
-                  href="/"
+                  href="epas/9.5"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   9.5
-                </a>
-                <a
-                  href="/"
-                  role="button"
-                  className="btn btn-outline-primary px-4"
-                >
-                  9.4
                 </a>
               </div>
             </div>
@@ -222,11 +217,14 @@ export default data => {
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm p-2">
               <a href="docs-product.php">
-                <Icon
-                  iconName={iconNames.DOTTED_BOX}
-                  className="img-fluid opacity-1 mt-3 ml-3"
-                  width="150"
-                  height="150"
+              <Icon
+                  iconName={iconNames.EDB_PEM}
+                  className="fill-orange"
+                  width="50"
+                  height="50"
+                  circle={true}
+                  circleClassName="bg-blue-10 mt-4 mb-2"
+                  circleDiameter={90}
                 />
               </a>
               <div className="card-body">
@@ -240,19 +238,22 @@ export default data => {
                   </a>
                 </h3>
                 <p className="card-text">
-                  Cum sociis natoque penatibus et magnis dis parturient montes,
-                  nascetur ridiculus mus
+                Monitor and manage multiple Postgres
+clusters from one convenient GUI
                 </p>
               </div>
             </div>
 
             <div className="card rounded shadow-sm p-2">
               <a href="docs-product.php">
-                <Icon
-                  iconName={iconNames.DOTTED_BOX}
-                  className="img-fluid opacity-1 mt-3 ml-3"
-                  width="150"
-                  height="150"
+              <Icon
+                  iconName={iconNames.EDB_BART}
+                  className="fill-orange"
+                  width="50"
+                  height="50"
+                  circle={true}
+                  circleClassName="bg-blue-10 mt-4 mb-2"
+                  circleDiameter={90}
                 />
               </a>
               <div className="card-body">
@@ -264,19 +265,22 @@ export default data => {
                   </a>
                 </h3>
                 <p className="card-text">
-                  Integer posuere erat a ante venenatis dapibus posuere velit
-                  aliquet
+                Disaster Recovery
+for PostgreSQL
                 </p>
               </div>
             </div>
 
             <div className="card rounded shadow-sm p-2">
               <a href="docs-product.php">
-                <Icon
-                  iconName={iconNames.DOTTED_BOX}
-                  className="img-fluid opacity-1 mt-3 ml-3"
-                  width="150"
-                  height="150"
+              <Icon
+                  iconName={iconNames.EDB_EFM}
+                  className="fill-orange"
+                  width="50"
+                  height="50"
+                  circle={true}
+                  circleClassName="bg-blue-10 mt-4 mb-2"
+                  circleDiameter={90}
                 />
               </a>
               <div className="card-body">
@@ -284,7 +288,7 @@ export default data => {
                   <a href="docs-product.php">Failover Manager</a>
                 </h3>
                 <p className="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                High Availability for PostgreSQL
                 </p>
               </div>
             </div>
