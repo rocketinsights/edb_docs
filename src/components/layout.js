@@ -32,7 +32,11 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
       </Helmet>
       <MDXProvider
         components={{
-          table: props => <table {...props} className="table" />,
+          table: props => (
+            <div className="table-with-scroll">
+              <table {...props} className="table" />
+            </div>
+          ),
           pre: props => (
             <figure>
               <pre {...props} />

@@ -13,8 +13,8 @@ def fix_escaped_html(line):
 for path in Path('content').rglob('*.mdx'):
   copying = False
   top_url_line = ""
-  for line in fileinput.input(files=[str(path)], inplace=1):
-    line = fix_escaped_html(line)
+  for line in fileinput.input(files=[str(path)], inplace=1, backup=".bak"):
+    # line = fix_escaped_html(line)
 
     if line.startswith('# ') and not copying:
       title = line.replace("# ", "").replace("\n", "").replace("`", "").replace("\*", "*")
@@ -33,9 +33,5 @@ for path in Path('content').rglob('*.mdx'):
       print(line.replace("`", "").replace("\*", "*").replace("\_", "_"), end="")
     elif "registered\_link" in line:
       print(line.replace("\\",""), end="")
-    elif line.startswith("<table"):
-      print('<div class="table-with-scroll">\n<table class="table">')
-    elif line.startswith("</table>"):
-      print('</table>\n</div>')
     else:
       print(line.replace("\_", "_").replace("\*", "*"), end="")
