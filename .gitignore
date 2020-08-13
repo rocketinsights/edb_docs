@@ -75,5 +75,5 @@ yarn-error.log
 
 __pycache__
 venv/
-.devcontainer/
-.vscode/
+.devcontainer/*
+.vscode/*
