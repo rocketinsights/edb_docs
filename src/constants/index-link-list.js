@@ -2,7 +2,7 @@ import IconNames from '../components/icon/iconNames';
 
 export const indexLinkList = [
   {
-    sectionName: 'EDB Products',
+    sectionName: 'EDB Postgres Platform',
     links: [
       {
         title: 'EDB Postgres Advanced Server',
@@ -10,30 +10,71 @@ export const indexLinkList = [
         iconName: IconNames.EDB_EPAS,
       },
       {
-        title: 'Cloud Database Service',
-        url: '/cds/1',
-        iconName: IconNames.CLOUD_DB,
-      },
-      { title: 'Ark Platform',
+        title: 'EDB Postgres Ark Platform',
         url: '/ark/1',
-        iconName: IconNames.EDB_ARK
+        iconName: IconNames.EDB_ARK,
+      },
+      {
+        title: 'EDB Backup and Recovery Tool',
+        url: '/bart/2.5.4',
+        iconName: IconNames.EDB_BART,
+      },
+      {
+        title: 'EDB Postgres Enterprise Manager',
+        url: '/pem/7.15',
+        iconName: IconNames.EDB_PEM,
+      },
+      {
+        title: 'EDB Postgres Failover Manager',
+        url: '/efm/3.10',
+        iconName: IconNames.EDB_EFM,
+      },
+      {
+        title: 'EDB Postgres Migration Portal',
+        url: '/migration_portal/2.8',
+        iconName: IconNames.EDB_MIGRATION_PORTAL,
       },
     ],
   },
   {
-    sectionName: 'EDB Postgres Tools',
+    sectionName: 'Tools and Connectors',
     links: [
+      // {
+      //   title: 'Postgres Connectors*',
+      //   //url: '/migration_portal/2.8',
+      //   //iconName: IconNames.EDB_PEM,
+      // },
       {
-        title: 'Backup and Recovery Tool',
-        url: '/bart/1',
-        iconName: IconNames.EDB_BART,
+        title: 'Migration Toolkit',
+        url: '/migration_toolkit/53.0.1',
+        iconName: IconNames.EDB_MIGRATION_TOOLKIT,
       },
       {
-        title: 'Postgres Enterprise Manager',
-        url: '/pem/1',
-        iconName: IconNames.EDB_PEM,
+        title: 'Hadoop Data Adapter',
+        url: '/hadoop_data_adapter/2.0',
+        //iconName: IconNames.EDB_PEM,
       },
-      { title: 'Failover Manager', url: '/efm/1', iconName: IconNames.EDB_EFM },
+      {
+        title: 'JDBC Connector',
+        url: '/jdbc_connector/42.2.9.1',
+        iconName: IconNames.JAVA,
+      },
+
+      {
+        title: '.NET Connector',
+        url: '/net_connector/4.1.3.1',
+        //iconName: IconNames.,
+      },
+      {
+        title: 'OCL Connector',
+        url: '/ocl_connector/12.1.2.1',
+        //iconName: IconNames.JAVA,
+      },
+      {
+        title: 'ODBC Connector',
+        url: '/odbc_connector/12.0.0.1',
+        //iconName: IconNames.JAVA,
+      },
     ],
   },
 ];

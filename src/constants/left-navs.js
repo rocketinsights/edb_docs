@@ -32,10 +32,7 @@ export const leftNavs = {
       },
       {
         path: null,
-        title: 'User Guides',
-      },
-      {
-        path: 'epas_guide',
+        title: 'Tools',
       },
       {
         path: 'ecpgplus_guide',
@@ -43,6 +40,13 @@ export const leftNavs = {
       {
         path: 'language_pack',
       },
+      {
+        path: null,
+        title: 'User Guides',
+      },
+      {
+        path: 'epas_guide',
+      }
     ],
   },
 };
