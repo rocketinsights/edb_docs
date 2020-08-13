@@ -41,6 +41,9 @@ export const leftNavs = {
         path: 'language_pack',
       },
       {
+        path: 'edb_plus',
+      },
+      {
         path: null,
         title: 'User Guides',
       },
