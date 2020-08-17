@@ -1,4 +1,5 @@
 import fileinput
+import re
 from pathlib import Path
 
 # Cleaning up the MDX files after Pandoc has converted from RST to MDX
@@ -7,15 +8,13 @@ from pathlib import Path
 # The rest is removing lots of extra characters from conversion
 print('adding frontmatter')
 
-def fix_escaped_html(line):
-  return line.replace("&lt;","<").replace("&gt;",">")
+def fix_registered_link(line):
+  return line.replace("\\", "").replace("&lt;","<").replace("&gt;",">")
 
 for path in Path('content').rglob('*.mdx'):
   copying = False
   top_url_line = ""
   for line in fileinput.input(files=[str(path)], inplace=1, backup=".bak"):
-    # line = fix_escaped_html(line)
-
     if line.startswith('# ') and not copying:
       title = line.replace("# ", "").replace("\n", "").replace("`", "").replace("\*", "*")
       print("---")
@@ -26,12 +25,12 @@ for path in Path('content').rglob('*.mdx'):
       copying = True
     elif not copying:
       if "registered\_link" in line:
-        top_url_line = line.replace("\\", "")
+        top_url_line = fix_registered_link(line)
       else:
         continue
     elif line.startswith('##'):
       print(line.replace("`", "").replace("\*", "*").replace("\_", "_"), end="")
     elif "registered\_link" in line:
-      print(line.replace("\\",""), end="")
+      print(fix_registered_link(line), end="")
     else:
       print(line.replace("\_", "_").replace("\*", "*"), end="")
