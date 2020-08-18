@@ -35,7 +35,7 @@ def getListOfFiles(dirName, parentChapter):
     listOfFiles.sort(key=putIndexFirst2)
     allFiles = list()
     chapter = 0
-    # print(listOfFiles)
+
     # Iterate over all the entries
     for entry in listOfFiles:
         # Create full path
@@ -50,9 +50,10 @@ def getListOfFiles(dirName, parentChapter):
     return allFiles
     
 def main():
-    dirName = '' # docs/epas/12/05_epas_compat_bip_guide
+    dirName = ''
     try:
         dirName = sys.argv[1]
+        dirName = re.sub(r'\/$', '', dirName)
     except:
         print('directory not passed in')
         print('if running from yarn use `yarn build-pdf directory/path/here`')
@@ -83,19 +84,23 @@ def main():
             tag = pattern.search(line)
             if tag and len(elem.anchor) == 0:
                 elem.anchor = tag.group(1)
-            
-        # print(elem.filename)
-        # print(elem.title)
-        # print(elem.chapter)
 
     
     # Print the files
     with open(dirName + '/combined.mdx', 'w') as fp:
         for elem in listOfFiles:
             g = open(elem.filename, "r")
+
+            baseImagePath = os.path.split(elem.filename)[0]
+            splitPath = baseImagePath.split('/')
+            if len(splitPath) >= 4: # limit folder depth, since images are in the sub-product root
+                baseImagePath = '/'.join(splitPath[0:4])
+
             frontmatterCount = 2
             for line in g.readlines():
-                newLine = re.sub(r'(?is)..\/images\/(\w*\/)*', 'images/', line)
+                newLine = re.sub(r'(?is)(..\/)+images\/(\w*\/)*', 'images/', line)
+                newLine = re.sub(r'\(images\/', '(' + baseImagePath + '/images/', newLine)
+
                 if line[0:3] == "## ":
                     newLine = "#" + line
                 if "toctree" in line:
@@ -109,7 +114,6 @@ def main():
                     frontmatterCount -= 1
                     fp.write(newLine)
             fp.write('\n')
-            # print(elem)
 
     os.system(
     "pandoc {0}/combined.mdx " \
@@ -131,7 +135,8 @@ def main():
     if openPdf:
         os.system("open {0}/complete.pdf".format(dirName))
 
-    os.remove(dirName + '/combined.mdx')
+    if os.path.exists(dirName + '/combined.mdx'):
+        os.remove(dirName + '/combined.mdx')
 
         
 if __name__ == '__main__':
