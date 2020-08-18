@@ -115,6 +115,9 @@ def main():
                     fp.write(newLine)
             fp.write('\n')
 
+    splitDirName = dirName.split('/')
+    fileName = "{0}_v{1}_documentation.pdf".format(splitDirName[1], splitDirName[2])
+
     os.system(
     "pandoc {0}/combined.mdx " \
     "--toc " \
@@ -128,12 +131,12 @@ def main():
     '-V fontsize=8pt ' \
     '--highlight-style tango ' \
     "--pdf-engine=xelatex " \
-    "-o {0}/complete.pdf ".format(dirName)
+    "-o {0}/{1} ".format(dirName, fileName)
     )
     # https://learnbyexample.github.io/tutorial/ebook-generation/customizing-pandoc/
 
     if openPdf:
-        os.system("open {0}/complete.pdf".format(dirName))
+        os.system("open {0}/{1}".format(dirName, fileName))
 
     if os.path.exists(dirName + '/combined.mdx'):
         os.remove(dirName + '/combined.mdx')
