@@ -9,10 +9,10 @@ For any given row, its parent and its children are determined by the `CONNECT BY
 
 For any given row, to determine its children:
 
-1.  Evaluate *parent_expr* on the given row
-2.  Evaluate *child_expr* on any other row resulting from the evaluation of *table_expression*
-3.  If *parent_expr* = *child_expr*, then this row is a child node of the given parent row
-4.  Repeat the process for all remaining rows in *table_expression*. All rows that satisfy the equation in step 3 are the children nodes of the given parent row.
+1.  Evaluate `parent_expr` on the given row
+2.  Evaluate `child_expr` on any other row resulting from the evaluation of *table_expression*
+3.  If `parent_expr = child_expr`, then this row is a child node of the given parent row
+4.  Repeat the process for all remaining rows in `table_expression`. All rows that satisfy the equation in step 3 are the children nodes of the given parent row.
 
 <div class="note">
 
@@ -22,7 +22,7 @@ Note
 
 </div>
 
-The evaluation process to determine if a row is a child node occurs on every row returned by *table_expression* before the `WHERE` clause is applied to *table_expression*.
+The evaluation process to determine if a row is a child node occurs on every row returned by `table_expression` before the `WHERE` clause is applied to `table_expression`.
 
 </div>
 

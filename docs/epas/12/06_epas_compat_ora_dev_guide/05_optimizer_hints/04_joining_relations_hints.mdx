@@ -1,109 +1,70 @@
 ---
-title: 'Joining Relations Hints'
+title: "Joining Relations Hints"
 ---
 
 <div id="joining_relations_hints" class="registered_link"></div>
 
+
 When two tables are to be joined, there are three possible plans that may be used to perform the join.
 
-- _Nested Loop Join_ – A table is scanned once for every row in the other joined table.
-- _Merge Sort Join_ – Each table is sorted on the join attributes before the join starts. The two tables are then scanned in parallel and the matching rows are combined to form the join rows.
-- _Hash Join_ – A table is scanned and its join attributes are loaded into a hash table using its join attributes as hash keys. The other joined table is then scanned and its join attributes are used as hash keys to locate the matching rows from the first table.
+  - *Nested Loop Join* – A table is scanned once for every row in the other joined table.
+  - *Merge Sort Join* – Each table is sorted on the join attributes before the join starts. The two tables are then scanned in parallel and the matching rows are combined to form the join rows.
+  - *Hash Join* – A table is scanned and its join attributes are loaded into a hash table using its join attributes as hash keys. The other joined table is then scanned and its join attributes are used as hash keys to locate the matching rows from the first table.
 
 The following table lists the optimizer hints that can be used to influence the planner to use one type of join plan over another.
 
-<div class="table-with-scroll">
-  <table class="table">
-    <tbody>
-      <tr class="odd">
-        <td>Hint</td>
-        <td>
-          <blockquote>
-            <p>Description</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>USE_HASH(table [...])</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              Use a hash join for <code>table</code>.
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>NO_USE_HASH(table [...])</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              Do not use a hash join for <code>table</code>.
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>USE_MERGE(table [...])</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              Use a merge sort join for <code>table</code>.
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>NO_USE_MERGE(table [...])</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              Do not use a merge sort join for <code>table</code>.
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>USE_NL(table [...])</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              Use a nested loop join for <code>table</code>.
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>NO_USE_NL(table [...])</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              Do not use a nested loop join for <code>table</code>.
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+<tbody>
+<tr class="odd">
+<td>Hint</td>
+<td><blockquote>
+<p>Description</p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>USE_HASH(table [...])</code></td>
+<td><blockquote>
+<p>Use a hash join for <code>table</code>.</p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>NO_USE_HASH(table [...])</code></td>
+<td><blockquote>
+<p>Do not use a hash join for <code>table</code>.</p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>USE_MERGE(table [...])</code></td>
+<td><blockquote>
+<p>Use a merge sort join for <code>table</code>.</p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>NO_USE_MERGE(table [...])</code></td>
+<td><blockquote>
+<p>Do not use a merge sort join for <code>table</code>.</p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>USE_NL(table [...])</code></td>
+<td><blockquote>
+<p>Use a nested loop join for <code>table</code>.</p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>NO_USE_NL(table [...])</code></td>
+<td><blockquote>
+<p>Do not use a nested loop join for <code>table</code>.</p>
+</blockquote></td>
+</tr>
+</tbody>
+</table>
 
 **Examples**
 
 In the following example, the `USE_HASH` hint is used for a join on the `pgbench_branches` and `pgbench_accounts` tables. The query plan shows that a hash join is used by creating a hash table from the join attribute of the `pgbench_branches` table.
 
-```text
+``` text
 EXPLAIN SELECT /*+ USE_HASH(b) */ b.bid, a.aid, abalance FROM
 pgbench_branches b, pgbench_accounts a WHERE b.bid = a.bid;
 
@@ -122,7 +83,7 @@ width=4)
 
 Next, the `NO_USE_HASH(a b)` hint forces the planner to use an approach other than hash tables. The result is a merge join.
 
-```text
+``` text
 EXPLAIN SELECT /*+ NO_USE_HASH(a b) */ b.bid, a.aid, abalance FROM
 pgbench_branches b, pgbench_accounts a WHERE b.bid = a.bid;
 
@@ -145,7 +106,7 @@ rows=2014215 width=12)
 
 Finally, the `USE_MERGE` hint forces the planner to use a merge join.
 
-```text
+``` text
 EXPLAIN SELECT /*+ USE_MERGE(a) */ b.bid, a.aid, abalance FROM
 pgbench_branches b, pgbench_accounts a WHERE b.bid = a.bid;
 
@@ -168,7 +129,7 @@ rows=2014215 width=12)
 
 In this three-table join example, the planner first performs a hash join on the `pgbench_branches` and `pgbench_history` tables, then finally performs a hash join of the result with the `pgbench_accounts` table.
 
-```text
+``` text
 EXPLAIN SELECT h.mtime, h.delta, b.bid, a.aid FROM pgbench_history h,
 pgbench_branches b, pgbench_accounts a WHERE h.bid = b.bid AND h.aid = a.aid;
 
@@ -192,7 +153,7 @@ width=4)
 
 This plan is altered by using hints to force a combination of a merge sort join and a hash join.
 
-```text
+``` text
 EXPLAIN SELECT /*+ USE_MERGE(h b) USE_HASH(a) */ h.mtime, h.delta, b.bid,
 a.aid FROM pgbench_history h, pgbench_branches b, pgbench_accounts a WHERE
 h.bid = b.bid AND h.aid = a.aid;

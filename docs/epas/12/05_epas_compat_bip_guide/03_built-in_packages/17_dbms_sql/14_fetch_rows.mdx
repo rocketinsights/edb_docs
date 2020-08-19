@@ -6,15 +6,17 @@ title: "FETCH_ROWS"
 
 The `FETCH_ROWS` function retrieves a row from a cursor.
 
-> `<status> INTEGER FETCH_ROWS(<c> INTEGER)`
+``` text
+<status> INTEGER FETCH_ROWS(<c> INTEGER)
+```
 
 **Parameters**
 
-`<c>`
+`c`
 
 > Cursor ID of the cursor from which to fetch a row.
 
-`<status>`
+`status`
 
 > Returns `1` if a row was successfully fetched, `0` if no more rows to fetch.
 
@@ -24,14 +26,14 @@ The following examples fetches the rows from the `emp` table and displays the re
 
 ``` text
 DECLARE
-    curid           INTEGER;
-    v_empno         NUMBER(4);
-    v_ename         VARCHAR2(10);
-    v_hiredate      DATE;
-    v_sal           NUMBER(7,2);
-    v_comm          NUMBER(7,2);
-    v_sql           VARCHAR2(50) := 'SELECT empno, ename, hiredate, sal, ' ||
-                                    'comm FROM emp';
+    curid          INTEGER;
+    v_empno        NUMBER(4);
+    v_ename        VARCHAR2(10);
+    v_hiredate     DATE;
+    v_sal          NUMBER(7,2);
+    v_comm         NUMBER(7,2);
+    v_sql          VARCHAR2(50) := 'SELECT empno, ename, hiredate, sal, ' ||
+                                   'comm FROM emp';
     v_status        INTEGER;
 BEGIN
     curid := DBMS_SQL.OPEN_CURSOR;

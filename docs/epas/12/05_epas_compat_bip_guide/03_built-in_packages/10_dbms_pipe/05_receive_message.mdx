@@ -6,21 +6,22 @@ title: "RECEIVE_MESSAGE"
 
 The `RECEIVE_MESSAGE` function obtains a message from a specified pipe.
 
-> `<status> INTEGER RECEIVE_MESSAGE(<pipename> VARCHAR2`
-> 
-> > `[, <timeout> INTEGER ])`
+``` text
+<status> INTEGER RECEIVE_MESSAGE(<pipename> VARCHAR2
+   [, <timeout> INTEGER ])
+```
 
 **Parameters**
 
-`<pipename>`
+`pipename`
 
 > Name of the pipe.
 
-`<timeout>`
+`timeout`
 
 > Wait time (seconds). Default is 86400000 (1000 days).
 
-`<status>`
+`status`
 
 > Status code returned by the operation.
 

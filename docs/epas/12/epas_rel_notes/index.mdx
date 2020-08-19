@@ -1,0 +1,170 @@
+---
+title: "Introduction"
+---
+
+
+
+With this Beta release of EDB Postgres Advanced Server 13.0, EnterpriseDB continues to lead as the only worldwide company to deliver innovative and low cost open-source-derived database solutions with commercial quality, ease of use, compatibility, scalability, and performance for small or large-scale enterprises.
+
+EDB Postgres Advanced Server 13.0 Beta is built on open-source PostgreSQL 13.0 Beta-1, which introduces a myriad enhancements that enable databases to scale up and scale out in more efficient ways. PostgreSQL 13.0 is a level up on the existing partitioning functionality, has several improvements in the btree indexes for handling duplicate data, provides more ways to monitor activity within a PostgreSQL database, introduces incremental sorting, trusted extension, and a multitude of other new features and capabilities.
+
+EDB Postgres Advanced Server 13.0 Beta adds a number of new stand-out features:
+
+  - `Automatic LIST Partition`
+  - `PARTITION` or `SUBPARTITION` number while creating `HASH` partition table
+  - Forward declarations in the package body
+  - `CREATE INDEX` syntax contains column name and constant
+  - `USING INDEX` clause in `CREATE TABLE` and `ALTER TABLE`
+  - EDB*Loader: handle unique constraint violations
+  - `STATS_MODE` aggregate function
+  - Support for `utl_http.end_of_body` exception
+  - EDB*Loader supports any connection parameters with the `-c` or `CONNSTR` option
+
+These release notes are applicable to the EPAS 13.0.1 Beta released on May 29, 2020.
+
+## PostgreSQL v13 Beta-1 Features
+
+The major highlights of this release are:
+
+  - Several enhancements related to duplication handling in btree index.
+    
+    > These enhancements help to shrink index size and improve lookup speed, particularly for indexes that contain repeated values.
+
+  - Improvements in PostgreSQL's partitioning functionality.
+    
+    > Including an increased number of cases where a join directly between partitioned tables can occur, which can improve overall query execution time.
+    > 
+    > Partitioned tables now support `BEFORE` row-level triggers, and a partitioned table can now be fully replicated via logical replication without having to publish individual partitions.
+
+  - One of the most anticipated features of PostgreSQL 13 is the ability for the `VACUUM` command to process indexes in parallel.
+    
+    > This functionality can be accessed using the new `PARALLEL` option on the `VACUUM` command (or `--parallel` on `vacuumdb`), which allows you to specify the number of parallel workers to use for vacuuming indexes, although this does not work with the `FULL` option.
+
+  - The capability of incremental sorting which accelerates sorting data when data that is sorted from earlier parts of a query are already sorted.
+
+  - `.datetime()` function for jsonpath queries, which will automatically convert a date-like or time-like string to the appropriate PostgreSQL date/time datatype.
+
+  - PostgreSQL 13 introduces the channel_binding connection parameters, which lets a client specify that they want to require the channel binding functionality as part of SCRAM.
+
+  - PostgreSQL 13 introduces the concept of a "trusted extension", which allows for a superuser to specify extensions that a user can install in their database so long as they have a `CREATE` privilege.
+
+## EDB Postgres Advanced Server v13.0 Beta Features
+
+The major highlights of this release are:
+
+  - `Automatic List Partitioning`
+    
+    > Automatic List Partitioning is an extension to `LIST` partitioning that allows a database to automatically create a partition for any new distinct value of the list partitioning key. A new partition is created when data is inserted into the `LIST` partitioned table and the inserted value does not match any of the existing table partitions.
+
+  - Additional `smallint`, `int`, `bigint`, and `numeric` variants in aggregate function `MEDIAN`.
+
+  - Added support for `CREATE INDEX` syntax that contains a column name and number i.e. `(col_name,1)`
+
+  - Added support to alter the owner of the directory - `ALTER DIRECTORY <dir_name> OWNER TO <role_name>`
+
+  - CSV and XML audit logs have been made consistent
+    
+    > It has been observed that there is a difference in terms of number of fields in the CSV and XML audit logs. Now the audit log is consistent across both versions.
+
+  - Default behaviour for `dbms_output` made compatible with Redwood.
+
+  - Log number of processed statements with `edb_log_every_bulk_value`
+    
+    > During bulk execution we can't identify the number of rows processed when `edb_log_every_bulk_value` is off. This feature allows us to log it both in the audit log file and server log file.
+
+  - EDB*Loader duplicate row aborts
+    
+    > Previously, EDB* Loader would abort the whole operation if any record insertion fails due to a unique constraint violation. This is fixed by using speculative insertion to insert rows. This behavior is enforced if 'handle_conflicts' (a new parameter) is `true` and indexes are present.
+
+  - `SYSDATE` now behaves in a more compatible manner
+    
+    > `SYSDATE` output changes at every nesting level, so multiple copies of `SYSDATE` in the same SQL query will return the same value each time. `SYSDATE` changes on successive statements in the same procedure, or within a nested function call.
+
+  - `PARALLEL [n] | NOPARALLEL` option for `CREATE TABLE` and `INDEX`
+    
+    > Advanced Server now supports `PARALLEL [n] | NOPARALLEL` clause in the `CREATE TABLE, ALTER TABLE, CREATE INDEX`, and `ALTER INDEX` to enable or disable parallelism on an index or a table.
+
+  - `PARTITION` or `SUBPARTITION` number while creating a table
+    
+    > This feature allows you to create automatic hash partitions at a subpartition level.
+
+  - EDB*Loader supports any connection parameters
+    
+    > You can use the EDB*Loader `-c` or `CONNSTR` options to specify any connection parameters supported by `libpq`. This includes SSL connection parameters.
+
+  - `STATS_MODE` function
+    
+    > The `STATS_MODE` function takes a set of values as an argument and returns the value that occurs with the highest frequency. If multiple values appear with the same frequency, the `STATS_MODE` function arbitrarily chooses the first value and returns only that one value.
+
+  - Add support for `DBMS_SQL` function/procedures `(DEFINE_COLUMN_LONG, COLUMN_VALUE_LONG and LAST_ERROR_POSITION)`
+
+  - Support for function `to_timestamp_tz()`
+
+  - Support for function/procedure specification inside package body
+
+  - Support `FM` format in `to_number` function
+
+  - Support for `utl_http.end_of_body` exception
+    
+    > This feature declares the `end_of_body` exception into `utl_http` package and throws the same from `read_line, read_text` and `read_raw` package procedures when no data is left in the response body.
+
+  - `USING INDEX`
+    
+    > `UNIQUE` and `PRIMARY KEY` constraint clauses now have a `CREATE INDEX` statement. This new syntax allows users to specify explicit index details like fillfactor, etc. Columns specified in the constraint and the columns specified in the index mustbe the same.
+
+## Included Components
+
+The following components are included and have been tested in the EDB Postgres Advanced Server v13.0 Beta.
+
+>   - `Database Server 13.0.1`
+>   - `Cloneschema 1.12`
+>   - `Parallelclone 1.7`
+>   - `Edb-modules 1.0`
+>   - `Index Advisor`
+>   - `pgAgent 4.2.0`
+>   - `pldebugger 1.1`
+>   - `plperl`
+>   - `plpython`
+>   - `pltcl`
+>   - `SSLUtils 1.3`
+>   - `SQL Profiler 4.0`
+>   - `SQL Protect`
+
+The remaining product portfolio will be supported with the v13 General Availability (GA) release.
+
+## Installers and Documentation
+
+### PostgreSQL 13.0
+
+PostgreSQL 13.0 contains a number of changes that may affect compatibility with previous releases. They are published in the PostgreSQL 13.0 Release Notes:
+
+> <https://www.postgresql.org/docs/13/release-13.html>
+
+The open issues in PostgreSQL 13.0 are published at:
+
+> <https://wiki.postgresql.org/wiki/PostgreSQL_13_Open_Items>
+
+### EDB Postgres Advanced Server v13.0.1 Beta
+
+EDB Postgres Advanced Server v13.0.x Beta is packaged and delivered as a series of interactive installers available on the Beta Programs download site:
+
+> <http://www.enterprisedb.com/downloads/beta-programs>
+
+Beta Documentation is also provided on the same page.
+
+## Platform Support and System Requirements
+
+EDB Postgres Advanced Server v13.0 Beta supports installations on the following Linux and Windows platforms respectively:
+
+>   - Red Hat Enterprise Linux 7.x (x86_64)
+>   - CentOS 7.x (x86_64)
+>   - Windows x86_64
+
+Details on supported platforms is available on the EnterpriseDB website: <https://www.enterprisedb.com/services-support/edb-supported-products-and-platforms>
+
+## How to Report Problems
+
+To report any issues you are having please contact EnterpriseDB’s technical support staff:
+
+  - Email: <support@enterprisedb.com>
+  - Phone: +1-732-331-1320 or 1-800-235-5891 (US Only)

@@ -9,7 +9,9 @@ By default, Advanced Server will add new data into the first available free-spac
 
 The syntax is:
 
-> `/*+APPEND*/`
+``` text
+/*+APPEND*/
+```
 
 For example, the following command, compatible with Oracle databases, instructs the server to append the data in the `INSERT` statement to the end of the `sales` table:
 
@@ -29,4 +31,6 @@ INSERT /*+APPEND*/ INTO sales VALUES
 
 The `APPEND` hint can also be included in the `SELECT` clause of an `INSERT INTO` statement:
 
-> `INSERT INTO sales_history SELECT /*+APPEND*/ FROM sales;`
+``` text
+INSERT INTO sales_history SELECT /*+APPEND*/ FROM sales;
+```

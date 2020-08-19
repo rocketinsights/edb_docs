@@ -6,13 +6,15 @@ title: "PURGE"
 
 The `PURGE` procedure removes the unreceived messages from a specified implicit pipe.
 
-`PURGE(<pipename> VARCHAR2)`
+``` text
+PURGE(<pipename> VARCHAR2)
+```
 
 Use the `REMOVE_PIPE` function to delete an explicit pipe.
 
-**Parameter**
+**Parameters**
 
-`<pipename>`
+`pipename`
 
 > Name of the pipe.
 
@@ -60,7 +62,7 @@ Purge the pipe:
 EXEC DBMS_PIPE.PURGE('pipe');
 ```
 
-Try to retrieve the next message. The RECEIVE_MESSAGE call returns status code 1 indicating it timed out because no message was available.
+Try to retrieve the next message. The `RECEIVE_MESSAGE` call returns status code 1 indicating it timed out because no message was available.
 
 ``` text
 DECLARE

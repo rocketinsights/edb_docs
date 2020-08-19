@@ -7,7 +7,9 @@ title: "Associating a Profile with an Existing Role"
 
 After creating a profile, you can use the `ALTER USER... PROFILE` or `ALTER ROLE... PROFILE` command to associate the profile with a role. The command syntax related to profile management functionality is:
 
-> `ALTER USER|ROLE <name> [[WITH] option[…]`
+``` text
+ALTER USER|ROLE <name> [[WITH] option[…]
+```
 
 where `option` can be the following compatible clauses:
 
@@ -27,7 +29,7 @@ or `option` can be the following non-compatible clauses:
 
 For information about the administrative clauses of the `ALTER USER` or `ALTER ROLE` command that are supported by Advanced Server, please see the PostgreSQL core documentation available at:
 
-> <https://www.postgresql.org/docs/12/static/sql-commands.html>
+> <https://www.postgresql.org/docs/current/static/sql-commands.html>
 
 Only a database superuser can use the `ALTER USER|ROLE` clauses that enforce profile management. The clauses enforce the following behaviors:
 

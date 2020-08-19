@@ -6,25 +6,26 @@ title: "CREATE_PIPE"
 
 The `CREATE_PIPE` function creates an explicit public pipe or an explicit private pipe with a specified name.
 
-> `<status> INTEGER CREATE_PIPE(<pipename> VARCHAR2`
-> 
-> > `[, <maxpipesize> INTEGER ] [, <private> BOOLEAN ])`
+``` text
+<status> INTEGER CREATE_PIPE(<pipename> VARCHAR2
+   [, <maxpipesize> INTEGER ] [, <private> BOOLEAN ])
+```
 
 **Parameters**
 
-`<pipename>`
+`pipename`
 
 > Name of the pipe.
 
-`<maxpipesize>`
+`maxpipesize`
 
 > Maximum capacity of the pipe in bytes. Default is 8192 bytes.
 
-`<private>`
+`private`
 
-> Create a public pipe if set to FALSE. Create a private pipe if set to `TRUE.` This is the default.
+> Create a public pipe if set to `FALSE`. Create a private pipe if set to `TRUE.` This is the default.
 
-`<status>`
+`status`
 
 > Status code returned by the operation. 0 indicates successful creation.
 

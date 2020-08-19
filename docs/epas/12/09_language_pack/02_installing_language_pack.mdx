@@ -1,69 +1,95 @@
 ---
-title: "Installing Language Pack"
+title: "Installing and Configuring Language Pack"
 ---
 
 <div id="installing_language_pack" class="registered_link"></div>
 
 
-The graphical installer is available from the EnterpriseDB website or via StackBuilder Plus.
+This section walks you through installing and configuring Language Pack.
+
+## Installing Language Pack
+
+The graphical installer is available from the [EDB website](https://www.enterprisedb.com/edb-docs), as well as via Stack Builder and StackBuilder Plus.
 
 <div id="invoking_the_graphical_installer" class="registered_link"></div>
 
 
 
-## Invoking the Graphical Installer
+### Invoking the Graphical Installer
 
-Assume Administrator privileges, and double-click the installer icon; if prompted, provide the password associated with the Administrator account. When prompted, select an installation language, and click OK.
+Assume Administrator privileges, and double-click the installer icon; if prompted, provide the password associated with the Administrator account. When prompted, select an installation language, and click `OK`.
+
+![*The Language Selection Window*](images/lp1.png)
 
 The installer `Welcome` window opens.
 
-![*The Language Pack Welcome Window*](images/the_language_pack_welcome_window.png)
+![*The Language Pack Welcome Window*](images/lp_aug6.png)
 
 Click `Next` to continue.
 
-![*The Ready to Install dialog*](images/the_ready_to_install_dialog.png)
+![*The Ready to Install dialog*](images/lp.2_aug6.png)
 
-The `Ready to Install` window displays the Language Pack installation directory:
+The Ready to Install window displays the Language Pack installation directory:
 
-> On Windows 64: `C:\edb\languagepack/v1`
+> On Windows 64: `C:/edb/languagepack/v1`
 > 
 > On OSX: `/Library/edb/languagepack/v1`
 
 You cannot modify the installation directory. Click `Next` to continue.
 
-![*The Installing dialog*](images/the_installing_dialog.png)
+![*The Installing dialog*](images/lp3_aug6.png)
 
 A progress bar marks installation progress; click `Next` to continue.
 
-![*The Language Pack Setup Complete dialog*](images/the_language_pack_setup_complete_dialog.png)
-
 The installer will inform you that the Language Pack installation has completed; click `Finish` to exit the installer.
 
-
-
-## Installing Language Pack with StackBuilder Plus
-
-You can use StackBuilder Plus to download and invoke the Language Pack graphical installer. To open StackBuilder Plus, select the StackBuilder Plus menu item from the version-specific EDB Postgres sub-menu.
-
-![*The StackBuilder Plus Welcome Window*](images/the_stackbuilder_plus_window.png)
-
-Select your server from the drop-down menu on the StackBuilder Plus Welcome window and click Next to continue.
-
-Expand the `Add-ons, tools and utilities` node of the `Categories` tree control, and check the box to the left of `EDB Language Pack`; click `Next` to continue.
-
-StackBuilder Plus will confirm your package selection before downloading the installer. When the download completes, StackBuilder Plus will offer to invoke the installer for you, or will delay the installation until a more convenient time.
-
-For details about using the graphical installer, see [Invoking the Graphical Installer](02_installing_language_pack#invoking_the_graphical_installer).
+![*The Language Pack Setup Complete dialog*](images/lp4_aug6.png)
 
 
 
-## Configuring Language Pack on an Advanced Server Host
+### Installing Language Pack with Stack Builder
+
+You can use Stack Builder or StackBuilder Plus to download and invoke the Language Pack graphical installer. StackBuilder Plus is distributed with EDB Postgres Advanced Server and Stack Builder is distributed with PostgreSQL.
+
+The following section walks you through installing Language Pack with Stack Builder.
+
+The Stack Builder utility provides a graphical interface that simplifies the process of downloading and installing modules that complement your PostgreSQL installation.
+
+Stack Builder requires Internet access; if your installation of PostgreSQL resides behind a firewall (with restricted Internet access), Stack Builder can download program installers through a proxy server. The module provider deter-mines if the module can be accessed through an HTTP proxy or an FTP proxy; currently, all updates are transferred via an HTTP proxy and the FTP proxy information is not used.
+
+You can invoke Stack Builder at any time after the installation has completed by selecting the `Application Stack Builder` menu option from the `PostgreSQL 13` menu.
+
+Select your server from the drop-down menu on the Stack Builder Welcome window and click `Next` to continue.
+
+![*The Stack Builder Welcome Window*](images/sb_aug6.png)
+
+Expand the `Add-ons, tools and utilities` node of the `Categories` tree control, and check the box next to `EDB Language Pack v1.0-4`. Click `Next` to continue.
+
+![*The Language Pack Selection Window*](images/sb2_aug6.png)
+
+Stack Builder will confirm your package selection before downloading the installer. Click `Next` to continue.
+
+> ![*The Selected Packages Window*](images/sb3_aug6.png)
+
+When the download completes, Stack Builder will offer to invoke the installer for you, or will delay the installation until a more convenient time.
+
+For details about using the graphical installer, see [Invoking the Graphical Installer](#invoking_the_graphical_installer).
+
+
+
+## Configuring Language Pack
+
+This section walks you through configuring Language Pack on an Advanced Server and PostgreSQL hosts.
+
+
+
+### Configuring Language Pack on an Advanced Server Host
 
 After installing Language Pack on an Advanced Server host, you must configure the installation.
 
 
 
-### Configuring Language Pack on Windows
+**Configuring Language Pack on Windows**
 
 On Windows, the Language Pack installer places the languages in:
 
@@ -81,7 +107,7 @@ C:\edb\languagepack\v1\Perl-5.26\bin;
 C:\edb\languagepack\v1\Tcl-8.6\bin;%PATH%
 ```
 
-After performing the steps required to configure Language Pack on Windows, use the Windows `Services` applet to restart the Advanced Server database server.
+After performing the steps required to configure Language Pack on Windows, use the Windows `Services` applet to restart the Advanced Server.
 
 
 
@@ -91,7 +117,7 @@ After installing Language Pack on a PostgreSQL host, you must configure the inst
 
 **Configuring Language Pack on Windows**
 
-After installing Language Pack, you must tell the Python interpreter where to find Python:
+After installing Language Pack, you must set the following variables:
 
 > `set PYTHONHOME=C:\edb\languagepack\v1\Python-3.7`
 
@@ -105,7 +131,7 @@ C:\edb\languagepack\v1\Tcl-8.6\bin;%PATH%
 
 After setting the system-specific steps required to configure Language Pack on Windows, restart the database server.
 
-### Configuring Language Pack on OSX
+**Configuring Language Pack on OSX**
 
 To simplify setting the value of `PATH` or `LD_LIBRARY_PATH`, you can create environment variables that identify the installation location:
 
@@ -115,7 +141,7 @@ PYTHONHOME=/Library/edb/languagepack/v1/Python-3.7
 TCLHOME=/Library/edb/languagepack/v1/Tcl-8.6
 ```
 
-Then, instruct the Python interpreter where to find Python:
+Then, execute the following command to instruct the Python interpreter where to find Python:
 
 > `export PYTHONHOME`
 
@@ -127,7 +153,7 @@ $PERLHOME/bin:
 $TCLHOME/bin:$PATH
 ```
 
-Lastly, use the variables to tell OSX where to find the shared libraries:
+Lastly, set the following variables to instruct OSX where to find the shared libraries:
 
 ``` text
 export DYLD_LIBRARY_PATH=$PYTHONHOME/lib:

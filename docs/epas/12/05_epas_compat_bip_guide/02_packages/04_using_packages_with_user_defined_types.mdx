@@ -11,25 +11,25 @@ The package specification of `emp_rpt` shows the declaration of a record type, `
 ``` text
 CREATE OR REPLACE PACKAGE emp_rpt
 IS
-   TYPE emprec_typ IS RECORD (
-       empno       NUMBER(4),
-       ename       VARCHAR(10)
-   );
-   TYPE emp_refcur IS REF CURSOR;
+    TYPE emprec_typ IS RECORD (
+        empno       NUMBER(4),
+        ename       VARCHAR(10)
+    );
+    TYPE emp_refcur IS REF CURSOR;
 
-   FUNCTION get_dept_name (
-       p_deptno    IN NUMBER
-   ) RETURN VARCHAR2;
-   FUNCTION open_emp_by_dept (
-       p_deptno    IN emp.deptno%TYPE
-   ) RETURN EMP_REFCUR;
-   PROCEDURE fetch_emp (
-       p_refcur    IN OUT SYS_REFCURSOR
-   );
-   PROCEDURE close_refcur (
-       p_refcur    IN OUT SYS_REFCURSOR
-   );
-   END emp_rpt;
+    FUNCTION get_dept_name (
+        p_deptno    IN NUMBER
+    ) RETURN VARCHAR2;
+    FUNCTION open_emp_by_dept (
+        p_deptno    IN emp.deptno%TYPE
+    ) RETURN EMP_REFCUR;
+    PROCEDURE fetch_emp (
+        p_refcur    IN OUT SYS_REFCURSOR
+    );
+    PROCEDURE close_refcur (
+        p_refcur    IN OUT SYS_REFCURSOR
+    );
+END emp_rpt;
 ```
 
 The package body shows the declaration of several private variables - a static cursor, `dept_cur`, a table type, `depttab_typ`, a table variable, `t_dept`, an integer variable, `t_dept_max`, and a record variable, `r_emp`.
@@ -55,48 +55,49 @@ IS
             END IF;
         END LOOP;
         RETURN 'Unknown';
-  END;
-  FUNCTION open_emp_by_dept(
-    p_deptno        IN emp.deptno%TYPE
-  ) RETURN EMP_REFCUR
-  IS
-    emp_by_dept EMP_REFCUR;
-  BEGIN
-    OPEN emp_by_dept FOR SELECT empno, ename FROM emp
-        WHERE deptno = p_deptno;
-    RETURN emp_by_dept;
-  END;
+    END;
 
-  PROCEDURE fetch_emp (
-      p_refcur      IN OUT SYS_REFCURSOR
-  )
-  IS
-  BEGIN
-      DBMS_OUTPUT.PUT_LINE('EMPNO ENAME');
-      DBMS_OUTPUT.PUT_LINE('----- -------');
-      LOOP
-          FETCH p_refcur INTO r_emp;
-          EXIT WHEN p_refcur%NOTFOUND;
-          DBMS_OUTPUT.PUT_LINE(r_emp.empno || ' ' || r_emp.ename);
-      END LOOP;
-  END;
+    FUNCTION open_emp_by_dept(
+        p_deptno        IN emp.deptno%TYPE
+    ) RETURN EMP_REFCUR
+    IS
+        emp_by_dept EMP_REFCUR;
+    BEGIN
+        OPEN emp_by_dept FOR SELECT empno, ename FROM emp
+            WHERE deptno = p_deptno;
+        RETURN emp_by_dept;
+    END;
 
-  PROCEDURE close_refcur (
-      p_refcur      IN OUT SYS_REFCURSOR
-  )
-  IS
-  BEGIN
-      CLOSE p_refcur;
-  END;
+    PROCEDURE fetch_emp (
+        p_refcur      IN OUT SYS_REFCURSOR
+    )
+    IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('EMPNO ENAME');
+        DBMS_OUTPUT.PUT_LINE('----- -------');
+        LOOP
+            FETCH p_refcur INTO r_emp;
+            EXIT WHEN p_refcur%NOTFOUND;
+            DBMS_OUTPUT.PUT_LINE(r_emp.empno || ' ' || r_emp.ename);
+        END LOOP;
+    END;
+
+    PROCEDURE close_refcur (
+        p_refcur      IN OUT SYS_REFCURSOR
+    )
+    IS
+    BEGIN
+        CLOSE p_refcur;
+    END;
 BEGIN
-  OPEN dept_cur;
-  LOOP
-      FETCH dept_cur INTO t_dept(t_dept_max);
-      EXIT WHEN dept_cur%NOTFOUND;
-      t_dept_max := t_dept_max + 1;
-  END LOOP;
-  CLOSE dept_cur;
-  t_dept_max := t_dept_max - 1;
+    OPEN dept_cur;
+    LOOP
+        FETCH dept_cur INTO t_dept(t_dept_max);
+        EXIT WHEN dept_cur%NOTFOUND;
+        t_dept_max := t_dept_max + 1;
+    END LOOP;
+    CLOSE dept_cur;
+    t_dept_max := t_dept_max - 1;
 END emp_rpt;
 ```
 
@@ -108,17 +109,16 @@ The following anonymous block runs the package function and procedures. In the a
 
 ``` text
 DECLARE
-   v_deptno dept.deptno%TYPE DEFAULT 30;
-   v_emp_cur emp_rpt.EMP_REFCUR;
+    v_deptno dept.deptno%TYPE DEFAULT 30;
+    v_emp_cur emp_rpt.EMP_REFCUR;
 BEGIN
-   v_emp_cur := emp_rpt.open_emp_by_dept(v_deptno);
-   DBMS_OUTPUT.PUT_LINE('EMPLOYEES IN DEPT #' || v_deptno ||
-       ': ' || emp_rpt.get_dept_name(v_deptno));
-   emp_rpt.fetch_emp(v_emp_cur);
-   DBMS_OUTPUT.PUT_LINE('**********************');
-   DBMS_OUTPUT.PUT_LINE(v_emp_cur%ROWCOUNT || ' rows were
-   retrieved');
-   emp_rpt.close_refcur(v_emp_cur);
+    v_emp_cur := emp_rpt.open_emp_by_dept(v_deptno);
+    DBMS_OUTPUT.PUT_LINE('EMPLOYEES IN DEPT #' || v_deptno ||
+        ': ' || emp_rpt.get_dept_name(v_deptno));
+    emp_rpt.fetch_emp(v_emp_cur);
+    DBMS_OUTPUT.PUT_LINE('**********************');
+    DBMS_OUTPUT.PUT_LINE(v_emp_cur%ROWCOUNT || ' rows were retrieved');
+    emp_rpt.close_refcur(v_emp_cur);
 END;
 ```
 
@@ -126,14 +126,14 @@ The following is the result of this anonymous block.
 
 ``` text
 EMPLOYEES IN DEPT #30: SALES
-EMPNO ENAME
------ -------
-7499 ALLEN
-7521 WARD
-7654 MARTIN
-7698 BLAKE
-7844 TURNER
-7900 JAMES
+EMPNO    ENAME
+-----    -------
+7499     ALLEN
+7521     WARD
+7654     MARTIN
+7698     BLAKE
+7844     TURNER
+7900     JAMES
 **********************
 6 rows were retrieved
 ```
@@ -146,20 +146,20 @@ DECLARE
     v_emp_cur    emp_rpt.EMP_REFCUR;
     r_emp        emp_rpt.EMPREC_TYP;
 BEGIN
-   v_emp_cur := emp_rpt.open_emp_by_dept(v_deptno);
-   DBMS_OUTPUT.PUT_LINE('EMPLOYEES IN DEPT #' || v_deptno ||
-       ': ' || emp_rpt.get_dept_name(v_deptno));
-   DBMS_OUTPUT.PUT_LINE('EMPNO ENAME');
-   DBMS_OUTPUT.PUT_LINE('----- -------');
-   LOOP
-       FETCH v_emp_cur INTO r_emp;
-       EXIT WHEN v_emp_cur%NOTFOUND;
-       DBMS_OUTPUT.PUT_LINE(r_emp.empno || ' ' ||
-       r_emp.ename);
-   END LOOP;
-   DBMS_OUTPUT.PUT_LINE('**********************');
-   DBMS_OUTPUT.PUT_LINE(v_emp_cur%ROWCOUNT || ' rows were retrieved');
-   CLOSE v_emp_cur;
+    v_emp_cur := emp_rpt.open_emp_by_dept(v_deptno);
+    DBMS_OUTPUT.PUT_LINE('EMPLOYEES IN DEPT #' || v_deptno ||
+        ': ' || emp_rpt.get_dept_name(v_deptno));
+    DBMS_OUTPUT.PUT_LINE('EMPNO ENAME');
+    DBMS_OUTPUT.PUT_LINE('----- -------');
+    LOOP
+        FETCH v_emp_cur INTO r_emp;
+        EXIT WHEN v_emp_cur%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(r_emp.empno || ' ' ||
+            r_emp.ename);
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('**********************');
+    DBMS_OUTPUT.PUT_LINE(v_emp_cur%ROWCOUNT || ' rows were retrieved');
+    CLOSE v_emp_cur;
 END;
 ```
 
@@ -167,14 +167,14 @@ The following is the result of this anonymous block.
 
 ``` text
 EMPLOYEES IN DEPT #30: SALES
-EMPNO ENAME
------ -------
-7499 ALLEN
-7521 WARD
-7654 MARTIN
-7698 BLAKE
-7844 TURNER
-7900 JAMES
+EMPNO    ENAME
+-----    -------
+7499     ALLEN
+7521     WARD
+7654     MARTIN
+7698     BLAKE
+7844     TURNER
+7900     JAMES
 **********************
 6 rows were retrieved
 ```

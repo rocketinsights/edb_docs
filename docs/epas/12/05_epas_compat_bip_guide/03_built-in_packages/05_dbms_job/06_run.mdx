@@ -6,11 +6,13 @@ title: "RUN"
 
 The `RUN` procedure forces the job to be run, even if its state is broken.
 
-`RUN(<job> BINARY_INTEGER)`
+``` text
+RUN(<job> BINARY_INTEGER)
+```
 
 **Parameter**
 
-`<job>`
+`job`
 
 > Identifier of the job to be run.
 
@@ -20,8 +22,6 @@ Force a job to be run.
 
 ``` text
 BEGIN
-
-   DBMS_JOB.RUN(104);
-
+    DBMS_JOB.RUN(104);
 END;
 ```

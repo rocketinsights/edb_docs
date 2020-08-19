@@ -6,37 +6,43 @@ title: "ENCRYPT"
 
 The `ENCRYPT` function or procedure uses a user-specified algorithm, key, and optional initialization vector to encrypt `RAW`, `BLOB` or `CLOB` data. The signature of the `ENCRYPT` function is:
 
-> `ENCRYPT`  
->   `(<src> IN RAW, <typ> IN INTEGER, <key> IN RAW`,  
->   `<iv> IN RAW DEFAULT NULL) RETURN RAW`
+``` text
+ENCRYPT
+  (<src> IN RAW, <typ> IN INTEGER, <key> IN RAW,
+   <iv> IN RAW DEFAULT NULL) RETURN RAW
+```
 
 The signature of the `ENCRYPT` procedure is:
 
-> `ENCRYPT`  
->   `(<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW`,  
->   `<iv> IN RAW DEFAULT NULL)`
+``` text
+ENCRYPT
+  (<dst> INOUT BLOB, <src> IN BLOB, <typ> IN INTEGER, <key> IN RAW,
+   <iv> IN RAW DEFAULT NULL)
+```
 
 or
 
-> `ENCRYPT`  
->   `(<dst> INOUT BLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW`,  
->   `<iv> IN RAW DEFAULT NULL)`
+``` text
+ENCRYPT
+  (<dst> INOUT BLOB, <src> IN CLOB, <typ> IN INTEGER, <key> IN RAW,
+   <iv> IN RAW DEFAULT NULL)
+```
 
 When invoked as a procedure, `ENCRYPT` returns `BLOB` or `CLOB` data to a user-specified `BLOB`.
 
 **Parameters**
 
-`<dst>`
+`dst`
 
-> `<dst>` specifies the name of a `BLOB` to which the output of the `ENCRYPT` procedure will be written. The `ENCRYPT` procedure will overwrite any existing data currently in `<dst>`.
+> `dst` specifies the name of a `BLOB` to which the output of the `ENCRYPT` procedure will be written. The `ENCRYPT` procedure will overwrite any existing data currently in `dst`.
 
-`<src>`
+`src`
 
-> `<src>` specifies the source data that will be encrypted. If you are invoking `ENCRYPT` as a function, specify `RAW` data; if invoking `ENCRYPT` as a procedure, specify `BLOB` or `CLOB` data.
+> `src` specifies the source data that will be encrypted. If you are invoking `ENCRYPT` as a function, specify `RAW` data; if invoking `ENCRYPT` as a procedure, specify `BLOB` or `CLOB` data.
 
-`<typ>`
+`typ`
 
-> `<typ>` specifies the block cipher type that will be used by `ENCRYPT`, and any modifiers. Advanced Server supports the block cipher algorithms, modifiers and cipher suites listed below:
+> `typ` specifies the block cipher type that will be used by `ENCRYPT`, and any modifiers. Advanced Server supports the block cipher algorithms, modifiers and cipher suites listed below:
 
 | **Block Cipher Algorithms**        |                                                             |
 | ---------------------------------- | ----------------------------------------------------------- |
@@ -44,6 +50,8 @@ When invoked as a procedure, `ENCRYPT` returns `BLOB` or `CLOB` data to a user-s
 | `ENCRYPT_3DES`                     | `CONSTANT INTEGER := 3;`                                    |
 | `ENCRYPT_AES`                      | `CONSTANT INTEGER := 4;`                                    |
 | `ENCRYPT_AES128`                   | `CONSTANT INTEGER := 6;`                                    |
+| `ENCRYPT_AES192`                   | `CONSTANT INTEGER := 192;`                                  |
+| `ENCRYPT_AES256`                   | `CONSTANT INTEGER := 256;`                                  |
 | **Block Cipher Modifiers**         |                                                             |
 | `CHAIN_CBC`                        | `CONSTANT INTEGER := 256;`                                  |
 | `CHAIN_ECB`                        | `CONSTANT INTEGER := 768;`                                  |
@@ -55,13 +63,13 @@ When invoked as a procedure, `ENCRYPT` returns `BLOB` or `CLOB` data to a user-s
 | `DES3_CBC_PKCS5`                   | `CONSTANT INTEGER := ENCRYPT_3DES + CHAIN_CBC + PAD_PKCS5;` |
 | `AES_CBC_PKCS5`                    | `CONSTANT INTEGER := ENCRYPT_AES + CHAIN_CBC + PAD_PKCS5;`  |
 
-`<key>`
+`key`
 
-> `<key>` specifies the encryption key.
+> `key` specifies the encryption key.
 
-`<iv>`
+`iv`
 
-> `<iv>` (optional) specifies an initialization vector. By default, `<iv>` is `NULL`.
+> `iv` (optional) specifies an initialization vector. By default, `iv` is `NULL`.
 
 **Examples**
 
@@ -70,8 +78,8 @@ The following example uses the `DBMS_CRYPTO.DES_CBC_PKCS5` Block Cipher Suite (a
 ``` text
 CREATE TABLE passwords
 (
- principal   VARCHAR2(90) PRIMARY KEY, -- username
- ciphertext  RAW(9) -- encrypted password
+  principal   VARCHAR2(90) PRIMARY KEY, -- username
+  ciphertext  RAW(9) -- encrypted password
 );
 CREATE PROCEDURE set_password(username VARCHAR2, cleartext RAW) AS
  typ         INTEGER := DBMS_CRYPTO.DES_CBC_PKCS5;
@@ -79,9 +87,8 @@ CREATE PROCEDURE set_password(username VARCHAR2, cleartext RAW) AS
  iv          RAW(100) := 'my initialization vector';
  encrypted   RAW(2048);
 BEGIN
- encrypted := dbms_crypto.encrypt(cleartext, typ, key, iv);
- UPDATE passwords SET ciphertext = encrypted WHERE principal =
- username;
+  encrypted := dbms_crypto.encrypt(cleartext, typ, key, iv);
+  UPDATE passwords SET ciphertext = encrypted WHERE principal = username;
 END;
 ```
 

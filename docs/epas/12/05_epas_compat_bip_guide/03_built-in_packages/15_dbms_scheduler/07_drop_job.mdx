@@ -6,29 +6,31 @@ title: "DROP_JOB"
 
 Use the `DROP_JOB` procedure to `DROP` a job, `DROP` any arguments that belong to the job, and eliminate any future job executions. The signature of the procedure is:
 
-> `DROP_JOB(`  
-> `<job_name> IN VARCHAR2`,  
-> `<force> IN BOOLEAN DEFAULT FALSE`,  
-> `<defer> IN BOOLEAN DEFAULT FALSE`,  
-> `<commit_semantics> IN VARCHAR2 DEFAULT 'STOP_ON_FIRST_ERROR'`)
+``` text
+DROP_JOB(
+  <job_name> IN VARCHAR2,
+  <force> IN BOOLEAN DEFAULT FALSE,
+  <defer> IN BOOLEAN DEFAULT FALSE,
+  <commit_semantics> IN VARCHAR2 DEFAULT 'STOP_ON_FIRST_ERROR')
+```
 
 **Parameters**
 
-`<job_name>`
+`job_name`
 
-> `<job_name>` specifies the name of the job that is being dropped.
+> `job_name` specifies the name of the job that is being dropped.
 
-`<force>`
+`force`
 
-> `<force>` is accepted for compatibility, and ignored.
+> `force` is accepted for compatibility, and ignored.
 
-`<defer>`
+`defer`
 
-> `<defer>` is accepted for compatibility, and ignored.
+> `defer` is accepted for compatibility, and ignored.
 
-`<commit_semantics>`
+`commit_semantics`
 
-> `<commit_semantics>` instructs the server how to handle an error encountered while dropping a program or job. By default, `<commit_semantics>` is set to `STOP_ON_FIRST_ERROR`, instructing the server to stop when it encounters an error.
+> `commit_semantics` instructs the server how to handle an error encountered while dropping a program or job. By default, `commit_semantics` is set to `STOP_ON_FIRST_ERROR`, instructing the server to stop when it encounters an error.
 > 
 > The `TRANSACTIONAL` and `ABSORB_ERRORS` keywords are accepted for compatibility, and ignored.
 

@@ -6,35 +6,34 @@ title: "BIND_VARIABLE"
 
 The `BIND_VARIABLE` procedure provides the capability to associate a value with an `IN` or `IN OUT` bind variable in a SQL command.
 
-> `BIND_VARIABLE(c INTEGER, <name> VARCHAR2`,
-> 
-> > `<value> { BLOB | CLOB | DATE | FLOAT | INTEGER | NUMBER |`
-> > 
-> > > `TIMESTAMP | VARCHAR2 }`
-> > 
-> > `[, <out_value_size> INTEGER ])`
+``` text
+BIND_VARIABLE(<c> INTEGER, <name> VARCHAR2,
+  <value> { BLOB | CLOB | DATE | FLOAT | INTEGER | NUMBER |
+          TIMESTAMP | VARCHAR2 }
+  [, <out_value_size> INTEGER ])
+```
 
 **Parameters**
 
-`<c>`
+`c`
 
 > Cursor ID of the cursor for the SQL command with bind variables.
 
-`<name>`
+`name`
 
 > Name of the bind variable in the SQL command.
 
-`<value>`
+`value`
 
 > Value to be assigned.
 
-`<out_value_size>`
+`out_value_size`
 
-> If `<name>` is an `IN OUT` variable, defines the maximum length of the output value. If not specified, the length of `<value>` is assumed.
+> If `name` is an `IN OUT` variable, defines the maximum length of the output value. If not specified, the length of `value` is assumed.
 
 **Examples**
 
-The following anonymous block uses bind variables to insert a row into the `emp table`.
+The following anonymous block uses bind variables to insert a row into the `emp` stable.
 
 ``` text
 DECLARE
