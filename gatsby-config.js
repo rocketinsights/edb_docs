@@ -240,6 +240,13 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: 'static/images',
+      },
+    },
+    {
       resolve: `gatsby-source-git`,
       options: {
         name: `advocacy_docs`,
@@ -275,13 +282,6 @@ module.exports = {
             },
           },
         ],
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: 'static/images',
       },
     },
     {
