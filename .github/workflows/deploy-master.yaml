@@ -2,7 +2,7 @@ name: Deploy Master to Netlify on Push
 on:
   push:
     branches:
-      - eb-netlify
+      - master
 jobs:
   build-deploy:
     runs-on: ubuntu-latest

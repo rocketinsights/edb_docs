@@ -2,7 +2,7 @@ name: Deploy Develop to Netlify on Push
 on:
   push:
     branches:
-      - eb-netlify
+      - develop
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
