@@ -2,6 +2,9 @@
 title: "Reference"
 ---
 
+<div id="reference" class="registered_link"></div>
+
+
 <div class="index">
 
 Reference
@@ -187,6 +190,8 @@ If you do not include the `-C PROC` command-line option:
 
 When invoked in non-`PROC` mode, ECPG implements the behavior described in the PostgreSQL Core documentation.
 
+<div id="supported_c_data_types" class="registered_link"></div>
+
 ## Supported C Data Types
 
 <div class="index">
@@ -265,6 +270,8 @@ The following table contains the type codes for *internal* data types. An intern
 | 190                    | INTERVAL DAY TO SECOND |
 | 232                    | TIMESTAMP LOCAL_TZ    |
 
+<div id="sqlda_structure" class="registered_link"></div>
+
 ## The SQLDA Structure
 
 <div class="index">
@@ -309,9 +316,7 @@ The `V` structure member is a pointer to an array of data values.
 > 
 > For a bind descriptor, `V` points to an array of parameter values (you must populate the values in this array before opening a cursor that uses the descriptor).
 
-Your application must allocate the space required to hold each value. Refer to [displayResultSet](executing_query_with_unknown_number_of_variables) function for an example of how to allocate
-
-space for `SELECT`-list values.
+Your application must allocate the space required to hold each value. Refer to [displayResultSet](04_building_executing_dynamic_sql_statements#executing_query_with_unknown_number_of_variables) function for an example of how to allocate space for `SELECT`-list values.
 
 `L` - *length of each data value*
 
@@ -409,7 +414,7 @@ You can embed any Advanced Server SQL statement in a C program. Each statement s
 
 > `EXEC SQL <sql_command_body>;`
 
-Where *sql_command_body* represents a standard SQL statement. You can use a host variable anywhere that the SQL statement expects a value expression. For more information about substituting host variables for value expressions, please refer to [Declaring Host Variables](declaring_host_variables) section.
+Where *sql_command_body* represents a standard SQL statement. You can use a host variable anywhere that the SQL statement expects a value expression. For more information about substituting host variables for value expressions, please refer to [Declaring Host Variables](02_using_embedded_sql#declaring_host_variables) section.
 
 ECPGPlus extends the PostgreSQL server-side syntax for some statements; for those statements, syntax differences are outlined in the following reference sections. For a complete reference to the supported syntax of other SQL commands, please refer to the *PostgreSQL* *Core* *Documentation* available at:
 
@@ -783,7 +788,7 @@ DELETE
 Use the `DELETE` statement to delete one or more rows from a table. The syntax for the ECPGPlus `DELETE` statement is the same as the syntax for the SQL statement, but you can use parameter markers and host variables any place that an expression is allowed. The syntax is:
 
 ``` text
-[FOR <exec_count>] DELETE FROM [ONLY] <table> [[AS] <alias>]
+[FOR <exec_count>] DELETE FROM [ONLY] <table class="table"> [[AS] <alias>]
   [USING <using_list>]
   [WHERE <condition> | WHERE CURRENT OF <cursor_name>]
   [{RETURNING|RETURN} * | <output_expression> [[ AS] <output_name>]
@@ -1281,7 +1286,7 @@ INSERT
 Use the `INSERT` statement to add one or more rows to a table. The syntax for the ECPGPlus INSERT statement is the same as the syntax for the SQL statement, but you can use parameter markers and host variables any place that a value is allowed. The syntax is:
 
 ``` text
-[FOR <exec_count>] INSERT INTO <table> [(<column> [, ...])]
+[FOR <exec_count>] INSERT INTO <table class="table"> [(<column> [, ...])]
 
 {DEFAULT VALUES |
 
@@ -1771,7 +1776,7 @@ Use an `UPDATE` statement to modify the data stored in a table. The syntax is:
 
 ``` text
 EXEC SQL [AT <database_name>][FOR <exec_count>]
-UPDATE [ ONLY ] <table> [ [ AS ] <alias> ]
+UPDATE [ ONLY ] <table class="table"> [ [ AS ] <alias> ]
 SET {<column> = { <expression> | DEFAULT } |
 (<column> [, ...]) = ({ <expression>|DEFAULT } [, ...])} [, ...]
 [ FROM <from_list> ]

@@ -1,94 +1,51 @@
 import React from 'react';
-import { Global, css } from '@emotion/core';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import useSiteMetadata from '../hooks/use-sitemetadata';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import TextBalancer from '../components/text-balancer';
+import { MDXProvider } from '@mdx-js/react';
+import Icon from '../components/icon/';
 
-const Layout = ({ children }) => {
-  const { title, description } = useSiteMetadata();
+import '../styles/index.scss';
+
+const Layout = ({ children, pageMeta, background = 'light' }) => {
+  const { baseUrl, imageUrl, title, description } = useSiteMetadata();
+  const meta = pageMeta || {};
 
   return (
     <>
-      <Global
-        styles={css`
-          * {
-            box-sizing: border-box;
-            margin: 0;
-          }
-
-          /* More info: https://bit.ly/2PsCnzk */
-          /* * + * {
-            margin-top: 1rem;
-          } */
-
-          html,
-          body {
-            margin: 0;
-            color: #555;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-              Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-              'Segoe UI Emoji', 'Segoe UI Symbol';
-            font-size: 14px;
-            line-height: 1.4;
-            scroll-behavior: smooth;
-            background-color: #f9fafc;
-
-            /* remove margin for the main div that Gatsby mounts into */
-            > div {
-              margin-top: 0;
-            }
-          }
-
-          h1,
-          h2,
-          h3,
-          h4,
-          h5,
-          h6 {
-            color: #222;
-            line-height: 1.1;
-
-            + * {
-              margin-top: 0.5rem;
-            }
-          }
-
-          strong {
-            color: #222;
-          }
-
-          li {
-            margin-top: 0.25rem;
-            .active {
-              color: #00adf2;
-              font-weight: 700;
-              text-decoration: underline;
-            }
-          }
-          a {
-            color: #00adf2;
-          }
-
-          .toctree {
-            display: none;
-          }
-        `}
-      />
       <Helmet>
         <html lang="en" />
-        <title>{title}</title>
-        <meta name="description" content={description} />
+        <title>{meta.title || title}</title>
+        <meta name="description" content={meta.description || description} />
+        <meta property="og:title" content={meta.title || title} />
+        <meta
+          property="og:description"
+          content={meta.description || description}
+        />
+        <meta property="og:image" content={imageUrl} />
+        <meta
+          property="og:url"
+          content={meta.path ? baseUrl + meta.path : baseUrl}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <body className={`bg-${background} fixed-container`} />
       </Helmet>
-      {/* <Header /> */}
-      <main
-        css={css`
-          margin: 0 auto;
-          max-width: 1200px;
-          width: 100%;
-        `}
+      <MDXProvider
+        components={{
+          table: props => <table {...props} className="table" />,
+          pre: props => (
+            <figure>
+              <pre {...props} />
+            </figure>
+          ),
+          h2: props => <h2 {...props} className='mt-5' />, // eslint-disable-line jsx-a11y/heading-has-content
+          h3: props => <h3 {...props} className='mt-4-5' />, // eslint-disable-line jsx-a11y/heading-has-content
+          Icon,
+        }}
       >
         {children}
-      </main>
+      </MDXProvider>
+      <TextBalancer />
     </>
   );
 };

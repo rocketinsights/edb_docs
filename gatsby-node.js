@@ -1,9 +1,17 @@
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
+const sortVersionArray = (versions) => {
+  return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
+                 .map(version => version.replace(/\d+/g, n => +n-100000));
+}
+
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
-  if (node.internal.type === 'Mdx') {
+  if (
+    node.internal.type === 'Mdx' &&
+    node.fileAbsolutePath.includes('/docs/')
+  ) {
     // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
     let relativeFilePath = createFilePath({
       node,
@@ -19,13 +27,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
     const version = relativeFilePath.split('/')[2];
 
-    // Creates new query'able field with name of 'path'
+    // Creates new query'able fields
     createNodeField({
       node,
       name: 'path',
       value: relativeFilePath,
     });
-    // Creates new query'able field with name of 'path'
     createNodeField({
       node,
       name: 'product',
@@ -35,6 +42,40 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       node,
       name: 'version',
       value: version,
+    });
+    createNodeField({
+      node,
+      name: 'topic',
+      value: 'null',
+    });
+  }
+  if (
+    node.internal.type === 'Mdx' &&
+    node.fileAbsolutePath.includes('/advocacy_docs/')
+  ) {
+    // Use `createFilePath` to turn markdown files in our `data/faqs` directory into `/faqs/slug`
+    let relativeFilePath = createFilePath({
+      node,
+      getNode,
+      basePath: 'advocacy_docs',
+    });
+
+    relativeFilePath = relativeFilePath.substring(
+      0,
+      relativeFilePath.length - 1,
+    );
+    const topic = relativeFilePath.split('/')[2];
+
+    // Creates new query'able field with name of 'path'
+    createNodeField({
+      node,
+      name: 'path',
+      value: relativeFilePath,
+    });
+    createNodeField({
+      node,
+      name: 'topic',
+      value: topic,
     });
   }
 };
@@ -46,26 +87,84 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         nodes {
           frontmatter {
             title
+            navTitle
+            description
+            redirects
           }
+          excerpt(pruneLength: 100)
           fields {
             path
             product
             version
+            topic
           }
+          fileAbsolutePath
         }
       }
     }
   `);
 
+  const { nodes } = result.data.allMdx;
+
   if (result.errors) {
     reporter.panic('failed to create docs', result.errors);
   }
 
-  const docs = result.data.allMdx.nodes;
+  for (let node of nodes) {
+    if (!node.frontmatter.title) {
+      let file;
+      if (node.fileAbsolutePath.includes('index.mdx')) {
+        file = node.fields.path + '/index.mdx';
+      } else {
+        file = node.fields.path + '.mdx';
+      }
+      reporter.warn(file + ' has no title');
+    }
+  }
+
+  const docs = nodes.filter(file => !!file.fields.version);
+  const learn = nodes.filter(file => !file.fields.version);
+
+  const folderIndex = {};
+
+  nodes.forEach(doc => {
+    const { path } = doc.fields;
+    const { redirects } = doc.frontmatter;
+
+    if (redirects) {
+      redirects.forEach(fromPath => {
+        actions.createRedirect({
+          fromPath,
+          toPath: path,
+          redirectInBrowser: true,
+          isPermanent: true,
+        });
+      });
+    }
+
+    const splitPath = path.split('/');
+    const subPath = splitPath.slice(0, splitPath.length - 1).join('/');
+    const { fileAbsolutePath } = doc;
+    if (fileAbsolutePath.includes('index.mdx')) {
+      folderIndex[path] = true;
+    } else {
+      if (!folderIndex[subPath]) {
+        folderIndex[subPath] = false;
+      }
+    }
+  });
+
+  for (let key of Object.keys(folderIndex)) {
+    if (!folderIndex[key]) {
+      reporter.warn(key + ' has no index.mdx');
+    }
+  }
 
   const versionIndex = {};
+
   docs.forEach(doc => {
     const { product, version } = doc.fields;
+
     if (!versionIndex[product]) {
       versionIndex[product] = [version];
     } else {
@@ -76,7 +175,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   for (const product in versionIndex) {
-    versionIndex[product] = versionIndex[product].sort().reverse();
+    versionIndex[product] = sortVersionArray(versionIndex[product]).reverse();
   }
 
   docs.forEach(doc => {
@@ -87,10 +186,28 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     );
     actions.createPage({
       path: doc.fields.path,
-      component: require.resolve('./src/templates/post.js'),
+      component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
+      },
+    });
+  });
+
+  learn.forEach(doc => {
+    const navLinks = learn.filter(
+      node => node.fields.topic === doc.fields.topic,
+    );
+    const githubLink =
+      'https://github.com/rocketinsights/edb_docs_advocacy/edit/master/advocacy_docs' +
+      doc.fields.path +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    actions.createPage({
+      path: doc.fields.path,
+      component: require.resolve('./src/templates/learn-doc.js'),
+      context: {
+        navLinks: navLinks,
+        githubLink: githubLink,
       },
     });
   });

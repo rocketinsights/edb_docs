@@ -1,17 +1,27 @@
-To run this locally you will need to have Gatsby installed on your machine
-`npm i -g gatsby-cli`
+## Setup
 
-Install all the bits and bobs
-`npm i`
+1. This project uses `nvm` to manage the node version. You should install the correct node version with `nvm install`.
+2. Install yarn and gatsby with `npm i -g gatsby-cli` and `npm i -g yarn`
+3. Install all the bits and bobs with `yarn`
+4. Pull the shared icon files down with `git submodule update --init`
+5. Run the site locally with `gatsby develop`
 
-Run the site locally
-`gatsby develop`
+### Running Katacoda embeds locally
+If you need to run the Katacoda embeds during local development, you'll need to have SSL setup locally.
 
-Deploy the site to GH Pages
-`npm run deploy`
+1. Run the server with `gatsby develop --https`. When promped, enter your root password. This will configured a local certificate for the development server to use. If you have issues, see [this Gatsby doc](https://www.gatsbyjs.org/docs/local-https/#manual-installation-of-certutil).
 
-To migrate RST files, place the folder in a new `content` folder and run this script in the terminal
-`for i in content/**/*.rst ; do python3 pre_pandocs_script.py ${i%}; echo "$i" && pandoc --wrap=none $i -f rst -t gfm -o ${i%.*}.mdx ; python3 post_pandocs_script.py ${i%.*}.mdx ;done; python3 sort_toc_nested.py; python3 fix_image_links.py`
+## Deployment
+
+Deploy the site to GH Pages with `yarn run deploy`
+
+## Icons
+
+We're using the shared [edb-icons repository](https://github.com/rocketinsights/edb-icons) as a git submodule. Any updates to icons should be made in this repository. When you're ready to pull in changes, run `yarn update-icons`. This will create/update `iconNames.js`, `iconType.js`, and pull down the latest icons from the `edb-icons` repo.
+
+## Migrating RST files
+
+To migrate RST files, place the folder in a new `content` folder and run `yarn convert`
 
 The results will show up in the `content_build` folder. These can then be moved to the `docs` folder.
 

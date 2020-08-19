@@ -2,6 +2,9 @@
 title: "Building and Executing Dynamic SQL Statements"
 ---
 
+<div id="building_executing_dynamic_sql_statements" class="registered_link"></div>
+
+
 <div class="index">
 
 Building and Executing Dynamic SQL Statements
@@ -335,9 +338,7 @@ exit(EXIT_FAILURE);
 }
 ```
 
-<div id="executing_query_with_unknown_number_of_variables">
-
-</div>
+<div id="executing_query_with_unknown_number_of_variables" class="registered_link"></div>
 
 ## Example - Executing a Query With an Unknown Number of Variables
 
@@ -530,7 +531,7 @@ Next, the program calls the sqlald()function to allocate the memory required for
 
 When you allocate an SQLDA descriptor, you specify the maximum number of columns you expect to find in the result set (for SELECT-list descriptors) or the maximum number of parameters you expect to find the dynamic query text (for bind-variable descriptors) - in this case, we specify that we expect no more than 20 columns and 20 parameters. You must also specify a maximum length for each column (or parameter) name and each indicator variable name - in this case, we expect names to be no more than 64 bytes long.
 
-See [SQLDA Structure](sqlda_structure) section for a complete description of the SQLDA structure.
+See [SQLDA Structure](06_reference#sqlda_structure) section for a complete description of the SQLDA structure.
 
 ``` text
 params = sqlald(20, 64, 64);

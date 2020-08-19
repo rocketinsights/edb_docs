@@ -2,11 +2,16 @@
 title: "Setting the Retention Policy"
 ---
 
+<div id="setting_the_retention_policy" class="registered_link"></div>
+
+
 The retention policy is determined by the `retention_policy` parameter in the BART configuration file. It can be applied globally to all servers, but each server can override the global retention policy with its own. For information about creating a global retention policy and an individual database server retention policy, see the *Configuration* section of the *EDB Postgres Backup and Recovery Installation and Upgrade Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
 There are two types of retention policies - redundancy retention policy and the recovery window retention policy as described in the following sections.
+
+<div id="redundancy_retention_policy" class="registered_link"></div>
 
 ## Redundancy Retention Policy
 
@@ -58,6 +63,8 @@ WAL COMPRESSION     : disabled
 TABLESPACE PATH(s)  :
 DESCRIPTION         : "Accounting"
 ```
+
+<div id="recovery_window_retention_policy" class="registered_link"></div>
 
 ## Recovery Window Retention Policy
 

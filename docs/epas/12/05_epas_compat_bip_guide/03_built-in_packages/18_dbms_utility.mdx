@@ -2,6 +2,8 @@
 title: "DBMS_UTILITY"
 ---
 
+
+
 The `DBMS_UTILITY` package provides support for the following various utility programs:
 
 |                                                                                                                             |                       |                   |                                                              |
@@ -34,6 +36,8 @@ The following table lists the public variables available in the `DBMS_UTILITY` p
 | lname_array                 | TABLE        |       | For lists of long names.          |
 | uncl_array                  | TABLE        |       | For lists of users and names.     |
 
+<div id="lname_array" class="registered_link"></div>
+
 ## LNAME_ARRAY
 
 The `LNAME_ARRAY` is for storing lists of long names including fully-qualified names.
@@ -41,6 +45,8 @@ The `LNAME_ARRAY` is for storing lists of long names including fully-qualified n
 ``` text
 TYPE lname_array IS `TABLE OF VARCHAR2(4000) INDEX BY BINARY_INTEGER;
 ```
+
+<div id="uncl_array" class="registered_link"></div>
 
 ## UNCL_ARRAY
 
@@ -258,15 +264,11 @@ The `COMMA_TO_TABLE` procedure converts a comma-delimited list of names into a t
 
 `LNAME_ARRAY`
 
-> A `DBMS_UTILITY LNAME_ARRAY` (as described in the
-
-[LNAME_ARRAY](lname_array) section).
+> A `DBMS_UTILITY LNAME_ARRAY` (as described in the <span class="title-ref">LNAME_ARRAY \<lname_array\></span> section).
 
 `<UNCL_ARRAY>`
 
-> A `DBMS_UTILITY UNCL_ARRAY` (as described in the
-
-[UNCL_ARRAY](uncl_array) section).
+> A `DBMS_UTILITY UNCL_ARRAY` (as described in the <span class="title-ref">UNCL_ARRAY \<uncl_array\></span> section).
 
 **Examples**
 
@@ -744,15 +746,11 @@ The `TABLE_TO_COMMA` procedure converts table of names into a comma-delimited li
 
 `LNAME_ARRAY`
 
-> A `DBMS_UTILITY LNAME_ARRAY` (as described in the
-
-[LNAME ARRAY](lname_array) section.
+> A `DBMS_UTILITY LNAME_ARRAY` (as described in the [LNAME ARRAY](../03_built-in_packages/18_dbms_utility#lname_array) section.
 
 `UNCL_ARRAY`
 
-> A `DBMS_UTILITY UNCL_ARRAY` (as described the
-
-[UNCL_ARRAY](uncl_array) section).
+> A `DBMS_UTILITY UNCL_ARRAY` (as described the <span class="title-ref">UNCL_ARRAY \<uncl_array\></span> section).
 
 `<tablen>`
 

@@ -2,6 +2,9 @@
 title: "BACKUP"
 ---
 
+<div id="backup" class="registered_link"></div>
+
+
 The `BACKUP` subcommand is used to create a full backup or an incremental backup. To view examples of a full backup and an incremental backup, see the *EDB Postgres Backup and Recovery Reference Guide* available at:
 
 > <https://www.enterprisedb.com/edb-docs/>
@@ -50,9 +53,7 @@ To take an incremental backup, you must take a full backup first followed by inc
 
 </div>
 
-For more details about incremental backup, see \`Block-Level Incremental
-
-Backup \<block-level_incremental_backup\>\`.
+For more details about incremental backup, see <span class="title-ref">Block-Level Incremental Backup \<block-level_incremental_backup\></span>.
 
 **Please Note:**
 
@@ -149,27 +150,23 @@ Specify the following options only if required. If you do not specify any of the
 
 > Specifies the gzip compression level on the tar file output. `compression_level` is a digit from 1 through 9, with 9 being the best compression. This option is applicable only for the tar format.
 
-\- `--parent { backup_id | backup_name }`
-
->   - Specify this option if you want to take an incremental backup. `<backup_id>` is the backup identifier of a parent backup. `<backup_name>` is the user-defined alphanumeric name of a parent backup.
->   - The parent is a backup taken prior to the incremental backup. The parent backup can be either a full backup or an incremental backup.
->   - The option `–F p` must be specified since an incremental backup can only be taken in plain text format.
-> 
-> <div class="note">
-> 
-> <div class="title">
-> 
-> Note
-> 
-> </div>
-> 
-> An incremental backup cannot be taken on a standby database server. See
-> 
-> </div>
-
-\`Section - Block-Level Incremental
-
-> Backup \<block-level_incremental_backup\>\` for additional information on incremental backups.
+  - `--parent { backup_id | backup_name }`
+    
+    >   - Specify this option if you want to take an incremental backup. `<backup_id>` is the backup identifier of a parent backup. `<backup_name>` is the user-defined alphanumeric name of a parent backup.
+    >   - The parent is a backup taken prior to the incremental backup. The parent backup can be either a full backup or an incremental backup.
+    >   - The option `–F p` must be specified since an incremental backup can only be taken in plain text format.
+    > 
+    > <div class="note">
+    > 
+    > <div class="title">
+    > 
+    > Note
+    > 
+    > </div>
+    > 
+    > An incremental backup cannot be taken on a standby database server. See <span class="title-ref">Section - Block-Level Incremental Backup \<block-level_incremental_backup\></span> for additional information on incremental backups.
+    > 
+    > </div>
 
   - `--backup-name <backup_name>`
     

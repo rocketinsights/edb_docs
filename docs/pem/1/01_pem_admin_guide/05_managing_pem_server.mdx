@@ -2,6 +2,9 @@
 title: "Managing a PEM Server"
 ---
 
+<div id="managing_pem_server" class="registered_link"></div>
+
+
 The sections that follow provide information about tasks related to PEM server such as restarting the PEM server and agent, controlling the PEM server or PEM agent, controlling the HTTPD service on Linux and Windows, controlling the HTTPD server, managing PEM authentication and security, modifying the `pg_hba.conf` file, modifying PEM to use a proxy server etc.
 
 <div class="index">
@@ -170,9 +173,15 @@ The following example shows a `pg_hba.conf` entry that allows an md5 password au
 ---
 title: "TYPE     DATABASE        USER        CIDR-ADDRESS         METHOD"
 ---
+
+<div id="managing_pem_server" class="registered_link"></div>
+
 ---
 title: "IPv4 local connections:"
 ---
+
+<div id="managing_pem_server" class="registered_link"></div>
+
  host     postgres       postgres    192.168.10.102/32       md5
 ```
 
@@ -182,9 +191,15 @@ You may specify the address of a network host, or a network address range. For e
 ---
 title: "TYPE     DATABASE        USER        CIDR-ADDRESS       METHOD"
 ---
+
+<div id="managing_pem_server" class="registered_link"></div>
+
 ---
 title: "IPv4 local connections:"
 ---
+
+<div id="managing_pem_server" class="registered_link"></div>
+
   host      postgres         all       192.168.10.0/24       md5
 ```
 
@@ -368,6 +383,14 @@ The PEM client also contains a `Grant Wizard` (accessed through the `Tools` menu
 
 ## Managing Job Notifications
 
+<div id="pem_job_notification" class="registered_link"></div>
+
+<div class="index">
+
+Sending email notifications for a job
+
+</div>
+
 You can configure the settings in PEM console for sending the SMTP trap on success or failure of a system-generated job (listed under scheduled tasks) or a custom-defined agent job. For information about custom-defined agent jobs, see ‘Creating PEM Scheduled Jobs’. These email notification settings can be configured at following three levels (in order of precedence) to send email notifications to the specified user group:
 
 >   - Job level
@@ -415,6 +438,14 @@ Four server configuration parameters specify information about your job notifica
 >   - Use the *job_status_change_notification* switch to specify if you want to send email notification after each job status change, irrespective of its status being a failure, success, or interrupted.
 
 ## Managing PEM Scheduled Jobs
+
+<div id="pem_scheduled_jobs" class="registered_link"></div>
+
+<div class="index">
+
+Creating PEM scheduled jobs
+
+</div>
 
 You can create a PEM scheduled job to perform a set of custom-defined steps in the specified sequence. These steps may contain SQL code or a batch/shell script that you may run on a server that is bound with the agent. You can schedule these jobs to suit your business requirements. For example, you can create a job for taking a backup of a particular database server and schedule it to run on a specific date and time of every month.
 
