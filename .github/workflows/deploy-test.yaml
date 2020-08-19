@@ -1,0 +1,46 @@
+name: Deploy Test to Netlify on Push
+on:
+  push:
+    branches:
+      - eb-gh-pdf
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # https://github.com/actions/setup-node#usage
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - uses: r-lib/actions/setup-pandoc@v1
+      with:
+        pandoc-version: '2.10.1'
+    - run: git submodule update --init --remote
+    - name: npm install
+      run: npm install
+      env:
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+    - name: install packages
+      run: sudo apt-get install texlive-xetex
+    - name: build pdfs
+      run: npm run build-all-pdfs
+    - name: gatsby build
+      run: npm run build
+      env:
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+        ALGOLIA_API_KEY:  ${{ secrets.ALGOLIA_API_KEY }}
+        ALGOLIA_APP_ID:  ${{ secrets.ALGOLIA_APP_ID }}
+        ALGOLIA_INDEX_NAME:  ${{ secrets.ALGOLIA_INDEX_NAME }}
+    # Deploy the gatsby build to Netlify
+    #- run: npx netlify-cli deploy --dir=public --prod
+    # https://github.com/netlify/actions/blob/master/cli/README.md
+    - uses: netlify/actions/cli@master
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_TEST_SITE_ID }}
+      with:
+        # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepswithargs
+        args: deploy --dir=public --prod
