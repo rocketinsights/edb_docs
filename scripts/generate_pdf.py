@@ -126,8 +126,6 @@ def main():
     "-V linkcolor:blue " \
     "-V geometry:a4paper " \
     "-V geometry:margin=2cm " \
-    '-V mainfont="Helvetica" ' \
-    '-V monofont="Monaco" ' \
     '-V fontsize=8pt ' \
     '--highlight-style tango ' \
     "--pdf-engine=xelatex " \
