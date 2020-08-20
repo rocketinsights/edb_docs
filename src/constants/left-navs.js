@@ -99,4 +99,63 @@ export const leftNavs = {
       },
     ],
   },
+
+  efm: {
+    '3.10': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'efm_quick_start',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'edb_ha_scalability',
+      },
+      {
+        path: 'edb_efm_user',
+      },
+    ],
+  },
+
+  pem: {
+    '7.15': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide_linux',
+      },
+      {
+        path: 'edb_pem_pgbouncer',
+      },
+      {
+        path: 'edb_pem_upgrade',
+      },
+      {
+        path: 'pem_inst_guide_windows',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'edb_pem_admin',
+      },
+      {
+        path: 'edb_pem_agent',
+      },
+      {
+        path: 'edb_pem_bart',
+      },
+      {
+        path: 'edb_pem_ent_feat',
+      },
+    ],
+  },
 };

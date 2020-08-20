@@ -20,14 +20,14 @@ export const indexLinkList = [
         iconName: IconNames.EDB_BART,
       },
       {
-        title: 'EDB Postgres Enterprise Manager',
-        url: '/pem/7.15',
-        iconName: IconNames.EDB_PEM,
-      },
-      {
         title: 'EDB Postgres Failover Manager',
         url: '/efm/3.10',
         iconName: IconNames.EDB_EFM,
+      },
+      {
+        title: 'EDB Postgres Enterprise Manager',
+        url: '/pem/7.15',
+        iconName: IconNames.EDB_PEM,
       },
       {
         title: 'EDB Postgres Migration Portal',
