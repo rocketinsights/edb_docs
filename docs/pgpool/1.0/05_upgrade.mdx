@@ -15,21 +15,15 @@ Assume the identity of the root user and invoke the following command:
 
 On RHEL/CentOS 6 and 7:
 
-``` text
-yum upgrade edb-pgpool<xx>
-```
+    yum upgrade edb-pgpool<xx>
 
-where \<xx\> is the pgpool version you want to upgrade to. For example, to upgrade from pgpool 3.7.13 to 3.7.14, execute the following command:
+where &lt;xx&gt; is the pgpool version you want to upgrade to. For example, to upgrade from pgpool 3.7.13 to 3.7.14, execute the following command:
 
-``` text
-yum upgrade edb-pgpool37
-```
+    yum upgrade edb-pgpool37
 
 On RHEL/CentOS 8:
 
-``` text
-dnf upgrade edb-pgpool<xx>
-```
+    dnf upgrade edb-pgpool<xx>
 
 ## Upgrading pgpool-II Extensions
 
@@ -39,9 +33,7 @@ To upgrade from older versions of pgpool extensions to the latest version, assum
 
 On RHEL/CentOS 6 and 7:
 
-``` text
-yum upgrade edb-as<xx>-pgpool<yy>-extensions
-```
+    yum upgrade edb-as<xx>-pgpool<yy>-extensions
 
 Where `<xx>` is the Advanced Server version, and `<yy>` is the pgpool extension version.
 
@@ -59,6 +51,4 @@ Only minor version upgrade is supported (for example, you can upgrade from 3.6.2
 
 On RHEL/CentOS 8:
 
-``` text
-dnf upgrade edb-as<xx>-pgpool<yy>-extensions
-```
+    dnf upgrade edb-as<xx>-pgpool<yy>-extensions

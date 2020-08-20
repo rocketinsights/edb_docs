@@ -20,31 +20,24 @@ The `VERIFY-CHKSUM` subcommand is only used for tar format backups.
 
 **Syntax:**
 
-> 
-> 
-> ``` text
-> bart VERIFY-CHKSUM
-> [ –s { <server_name> | all } ]
-> [ -i { <backup_id> | <backup_name> | all } ]
-> ```
+>     bart VERIFY-CHKSUM
+>     [ –s { <server_name> | all } ]
+>     [ -i { <backup_id> | <backup_name> | all } ]
 
 The following table describes the `VERIFY-CHKSUM` options:
 
-| Options                                                     | Description                                                                                                                                                                                                                                                                                                                                                         |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-s` or `--server { <server_name> \| all` }                 | | `<server_name>` is the name of the database server whose tar backup checksums are to be verified. | If `all` is specified or if the `-s` option is omitted, the checksums of all tar backups are verified for all database servers.                                                                                                                               |
-| `-i` or `--backupid {<backup_id> \| <backup_name> \| all` } | | `<backup_id>` is the backup identifier of a tar format full backup whose checksum is to be verified along with any user-defined tablespaces. `<backup_name>` is the user-defined alphanumeric name for the full backup. | If `all` is specified or if the `-i` option is omitted, the checksums of all tar backups for the relevant database server are verified. |
+<table><thead><tr class="header"><th>Options</th><th>Description</th></tr></thead><tbody><tr class="odd"><td><code>-s</code> or <code>--server { &lt;server_name&gt; | all</code> }</td><td><p><code>&lt;server_name&gt;</code> is the name of the database server whose tar backup checksums are to be verified.<br />
+If <code>all</code> is specified or if the <code>-s</code> option is omitted, the checksums of all tar backups are verified for all database servers.</p></td></tr><tr class="even"><td><code>-i</code> or <code>--backupid {&lt;backup_id&gt; | &lt;backup_name&gt; | all</code> }</td><td><p><code>&lt;backup_id&gt;</code> is the backup identifier of a tar format full backup whose checksum is to be verified along with any user-defined tablespaces. <code>&lt;backup_name&gt;</code> is the user-defined alphanumeric name for the full backup.<br />
+If <code>all</code> is specified or if the <code>-i</code> option is omitted, the checksums of all tar backups for the relevant database server are verified.</p></td></tr></tbody></table>
 
 **Example**
 
 The following code sample verifies the checksum of all tar format backups of the specified database server:
 
-``` text
--bash-4.1$ bart VERIFY-CHKSUM -s acctg -i all
-SERVER NAME    BACKUP ID     VERIFY
-acctg          1430239348243 OK
-acctg          1430232284202 OK
-acctg          1430232016284 OK
-acctg          1430231949065 OK
-acctg          1429821844271 OK
-```
+    -bash-4.1$ bart VERIFY-CHKSUM -s acctg -i all
+    SERVER NAME    BACKUP ID     VERIFY
+    acctg          1430239348243 OK
+    acctg          1430232284202 OK
+    acctg          1430232016284 OK
+    acctg          1430231949065 OK
+    acctg          1429821844271 OK

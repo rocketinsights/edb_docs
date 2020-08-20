@@ -13,24 +13,16 @@ To uninstall BART on a RHEL/CentOS host, assume the identity of the `root` user 
 
 On RHEL or CentOS 6 and 7:
 
-> 
-> 
-> ``` text
-> yum remove edb-bart
-> ```
+>     yum remove edb-bart
 
 On RHEL or CentOS 8:
 
-> 
-> 
-> ``` text
-> dnf remove edb-bart
-> ```
+>     dnf remove edb-bart
 
 Uninstalling BART does not delete the backup files and archived WAL files that reside in the BART backup catalog. To permanently delete the backup files and archived WAL files in the BART backup catalog (`/opt/backup`), use one of the follwing commands:
 
-  - `rm –rf /opt/backup`
-  - BART `DELETE` subcommand
+-   `rm –rf /opt/backup`
+-   BART `DELETE` subcommand
 
 For information about the BART `DELETE` subcommand, refer the EDB Postgres Backup and Recovery User Guide [available at this page](https://www.enterprisedb.com/edb-docs/).
 
@@ -38,14 +30,10 @@ For information about the BART `DELETE` subcommand, refer the EDB Postgres Backu
 
 To uninstall BART on an SLES 12 host, assume the identity of the `root` user and invoke the following command:
 
-``` text
-zypper remove edb-bart
-```
+    zypper remove edb-bart
 
 ## Uninstalling BART on a Debian/Ubuntu Host
 
 To uninstall BART on a Debian or Ubuntu host, invoke the following command:
 
-``` text
-apt-get remove edb-bart
-```
+    apt-get remove edb-bart
