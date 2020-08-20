@@ -2,7 +2,7 @@ import IconNames from '../components/icon/iconNames';
 
 export const indexLinkList = [
   {
-    sectionName: 'EDB Postgres Platform',
+    sectionName: 'EDB Products & Tools',
     links: [
       {
         title: 'EDB Postgres Advanced Server',
@@ -34,16 +34,7 @@ export const indexLinkList = [
         url: '/migration_portal/2.8',
         iconName: IconNames.EDB_MIGRATION_PORTAL,
       },
-    ],
-  },
-  {
-    sectionName: 'Tools and Connectors',
-    links: [
-      // {
-      //   title: 'Postgres Connectors*',
-      //   //url: '/migration_portal/2.8',
-      //   //iconName: IconNames.EDB_PEM,
-      // },
+
       {
         title: 'Migration Toolkit',
         url: '/migration_toolkit/53.0.1',
@@ -73,6 +64,26 @@ export const indexLinkList = [
       {
         title: 'ODBC Connector',
         url: '/odbc_connector/12.0.0.1',
+        iconName: IconNames.CONNECT
+      },
+      {
+        title: 'PgBouncer',
+        url: '/pgbouncer/1.0',
+        iconName: IconNames.CONNECT
+      },
+      {
+        title: 'Pgpool-II',
+        url: '/pgpool/1.0',
+        iconName: IconNames.CONNECT
+      },
+      {
+        title: 'PostGIS',
+        url: '/postgis/1.0',
+        iconName: IconNames.CONNECT
+      },
+      {
+        title: 'Slony Replication',
+        url: '/slony/2.2.8',
         iconName: IconNames.CONNECT
       },
     ],
