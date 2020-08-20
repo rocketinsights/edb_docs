@@ -52,4 +52,24 @@ export const leftNavs = {
       }
     ],
   },
+
+  ark: {
+    '3.5': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'ark_gsg_guide',
+      },
+      {
+        path: null,
+        title: 'User Guides',
+      },
+      {
+        path: 'ark_admin_guide',
+      }
+    ],
+  },
+
 };

@@ -1,7 +1,7 @@
 import IconNames from '../components/icon/iconNames';
 
 export const products = {
-  ark: { name: 'Postgres Ark', iconName: null },
+  ark: { name: 'Postgres Ark', iconName: IconNames.EDB_ARK },
   bart: { name: 'Backup and Recovery Tool', iconName: IconNames.EDB_BART },
   cds: { name: 'Cloud Database Service', iconName: IconNames.CLOUD_DB },
   efm: { name: 'Failover Manager', iconName: IconNames.EDB_EFM },

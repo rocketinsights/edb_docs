@@ -11,7 +11,7 @@ export const indexLinkList = [
       },
       {
         title: 'EDB Postgres Ark Platform',
-        url: '/ark/1',
+        url: '/ark/3.5',
         iconName: IconNames.EDB_ARK,
       },
       {
