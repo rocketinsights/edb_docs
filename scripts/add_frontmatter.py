@@ -28,7 +28,7 @@ for path in Path('content').rglob('*.mdx'):
   parser = HtmlDataParser()
   for line in fileinput.input(files=[str(path)], inplace=1, backup=".bak"):
     if line.startswith('# ') and not copying:
-      title = line.replace("# ", "").replace("\n", "").replace("`", "").replace("\*", "*")
+      title = line.replace("# ", "").replace("\n", "").replace("`", "")
       parser.feed(title)
       parser.close()
       if len(parser.data):
@@ -47,8 +47,8 @@ for path in Path('content').rglob('*.mdx'):
       else:
         continue
     elif line.startswith('##'):
-      print(line.replace("`", "").replace("\*", "*").replace("\_", "_"), end="")
+      print(line.replace("`", ""), end="")
     elif "registered\_link" in line:
       print(fix_registered_link(line), end="")
     else:
-      print(line.replace("\_", "_").replace("\*", "*"), end="")
+      print(line, end="")
