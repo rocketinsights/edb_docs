@@ -6,5 +6,7 @@ export const products = {
   cds: { name: 'Cloud Database Service', iconName: IconNames.CLOUD_DB },
   efm: { name: 'Failover Manager', iconName: IconNames.EDB_EFM },
   epas: { name: 'EDB Postgres Advanced Server', iconName: IconNames.EDB_EPAS },
+  migration_portal: { name: 'Migration Portal', iconName: IconNames.EDB_MIGRATION_PORTAL },
+  migration_toolkit: { name: 'Migration Toolkit', iconName: IconNames.EDB_MIGRATION_TOOLKIT },
   pem: { name: 'Postgres Enterprise Manager', iconName: IconNames.EDB_PEM },
 };
