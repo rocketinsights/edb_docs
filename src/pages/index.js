@@ -216,7 +216,7 @@ enhanced with mission-critical features that help you maintain greater consisten
 
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm p-2">
-              <a href="docs-product.php">
+              <a href="pem/7.15">
               <Icon
                   iconName={iconNames.EDB_PEM}
                   className="fill-orange"
@@ -229,7 +229,7 @@ enhanced with mission-critical features that help you maintain greater consisten
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="docs-product.php">
+                  <a href="pem/7.15">
                     Postgres
                     <br data-owner="balance-text" />
                     Enterprise
@@ -245,7 +245,7 @@ clusters from one convenient GUI
             </div>
 
             <div className="card rounded shadow-sm p-2">
-              <a href="docs-product.php">
+              <a href="bart/2.5.4">
               <Icon
                   iconName={iconNames.EDB_BART}
                   className="fill-orange"
@@ -258,7 +258,7 @@ clusters from one convenient GUI
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="docs-product.php">
+                  <a href="bart/2.5.4">
                     Backup and
                     <br data-owner="balance-text" />
                     Recovery Tool
@@ -272,7 +272,7 @@ for PostgreSQL
             </div>
 
             <div className="card rounded shadow-sm p-2">
-              <a href="docs-product.php">
+              <a href="efm/3.10">
               <Icon
                   iconName={iconNames.EDB_EFM}
                   className="fill-orange"
@@ -285,7 +285,7 @@ for PostgreSQL
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="docs-product.php">Failover Manager</a>
+                  <a href="efm/3.10">Failover Manager</a>
                 </h3>
                 <p className="card-text">
                 High Availability for PostgreSQL
