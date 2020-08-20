@@ -7,7 +7,7 @@ title: "Command Summary"
 
 
 
-The following sections contains a summary of EDB*Plus commands.
+The following sections contains a summary of EDB Plus commands.
 
 ## ACCEPT
 
@@ -143,7 +143,7 @@ If the `COLUMN` command is followed by a column name, then the column name may b
 `n`
 
 > `n` is a positive integer that specifies the column width in characters within which to display the data. Data in excess of `n` will wrap around with the specified column width.
-> 
+>
 > For numeric columns, `spec` is comprised of the following elements.
 
 |         |                                            |
@@ -283,31 +283,31 @@ CON[NECT] <username>[/<password>][@{<connectstring> | <variable> } ]
 Where:
 
 > `username` is a database username with which to connect to the database.
-> 
-> `password` is the password associated with the specified `username`. If a `password` is not provided, but a password is required for authentication, a search is made for a password file, first in the home directory of the Linux operating system account invoking EDB*Plus (or in the `%APPDATA%\postgresql\` directory for Windows) and then at the location specified by the `PGPASSFILE` environment variable. The password file is `.pgpass` on Linux hosts and `pgpass.conf` on Windows hosts. The following is an example on a Windows host:
-> 
+>
+> `password` is the password associated with the specified `username`. If a `password` is not provided, but a password is required for authentication, a search is made for a password file, first in the home directory of the Linux operating system account invoking EDB Plus (or in the `%APPDATA%\postgresql\` directory for Windows) and then at the location specified by the `PGPASSFILE` environment variable. The password file is `.pgpass` on Linux hosts and `pgpass.conf` on Windows hosts. The following is an example on a Windows host:
+>
 > ``` text
 > C:\Users\Administrator\AppData\Roaming\postgresql\pgpass.conf
 > ```
-> 
-> If a password file cannot be located, or it does not have an entry matching the EDB*Plus connection parameters, then EDB*Plus will prompt for the password. For more information about password files, see the PostgreSQL core documentation at:
-> 
+>
+> If a password file cannot be located, or it does not have an entry matching the EDB Plus connection parameters, then EDB Plus will prompt for the password. For more information about password files, see the PostgreSQL core documentation at:
+>
 > > <https://www.postgresql.org/docs/current/static/libpq-pgpass.html>
-> 
+>
 > <div class="note">
-> 
+>
 > <div class="title">
-> 
+>
 > Note
-> 
+>
 > </div>
-> 
-> When a password is not required, EDB*Plus does not prompt for a password such as when the `trust` authentication method is specified in the `pg_hba.conf` file. For more information about the `pg_hba.conf` file and authentication methods, see the PostgreSQL core documentation at <https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html>
-> 
+>
+> When a password is not required, EDB Plus does not prompt for a password such as when the `trust` authentication method is specified in the `pg_hba.conf` file. For more information about the `pg_hba.conf` file and authentication methods, see the PostgreSQL core documentation at <https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html>
+>
 > </div>
-> 
-> `connectstring` is the database connection string. See <span class="title-ref">Using EDB*Plus \<using_edb_plus\></span> for further information on the database connection string.
-> 
+>
+> `connectstring` is the database connection string. See <span class="title-ref">Using EDB Plus \<using_edb_plus\></span> for further information on the database connection string.
+>
 > `variable` is a variable defined in the `login.sql` file that contains a database connection string. The `login.sql` file can be found in the `edbplus` subdirectory of the Advanced Server home directory.
 
 In the following example, the database connection is changed to database `edb` on the localhost at port `5445` with username `smith`.
@@ -444,7 +444,7 @@ DESC[RIBE] [ schema.]object
 
 
 
-The `DISCONNECT` command closes the current database connection, but does not terminate EDB*Plus.
+The `DISCONNECT` command closes the current database connection, but does not terminate EDB Plus.
 
 ``` text
 DISC[ONNECT ]
@@ -468,7 +468,7 @@ ED[IT ] [ filename[.ext ] ]
 
 
 
-The `EXECUTE` command executes an SPL procedure from EDB*Plus.
+The `EXECUTE` command executes an SPL procedure from EDB Plus.
 
 ``` text
 EXEC[UTE ] spl_procedure [ ([ parameters ]) ]
@@ -486,7 +486,7 @@ EXEC[UTE ] spl_procedure [ ([ parameters ]) ]
 
 
 
-The `EXIT` command terminates the EDB*Plus session and returns control to the operating system. `QUIT` is a synonym for `EXIT`. Specifying no parameters is equivalent to `EXIT SUCCESS COMMIT`.
+The `EXIT` command terminates the EDB Plus session and returns control to the operating system. `QUIT` is a synonym for `EXIT`. Specifying no parameters is equivalent to `EXIT SUCCESS COMMIT`.
 
 ``` text
 { EXIT | QUIT }
@@ -542,13 +542,13 @@ The `HELP` command obtains an index of topics or help on a specific topic. The q
 
 `topic`
 
-> The name of a specific topic – e.g., an EDB*Plus command, for which help is desired.
+> The name of a specific topic – e.g., an EDB Plus command, for which help is desired.
 
 ## HOST
 
 
 
-The `HOST` command executes an operating system command from EDB*Plus.
+The `HOST` command executes an operating system command from EDB Plus.
 
 ``` text
 HO[ST ] [os_command]
@@ -556,7 +556,7 @@ HO[ST ] [os_command]
 
 `os_command`
 
-> The operating system command to be executed. If you do not provide an operating system command, EDB*Plus pauses execution and opens a new shell prompt. When the shell exits, EDB*Plus resumes execution.
+> The operating system command to be executed. If you do not provide an operating system command, EDB Plus pauses execution and opens a new shell prompt. When the shell exits, EDB Plus resumes execution.
 
 ## INPUT
 
@@ -592,7 +592,7 @@ SQL> LIST
 L[IST] [ n | n m | n * | n L[AST] | * | * n | * L[AST] | L[AST] ]
 ```
 
-The buffer does not include a history of the EDB*Plus commands.
+The buffer does not include a history of the EDB Plus commands.
 
 `n`
 
@@ -742,7 +742,7 @@ File "example.sql" written.
 
 
 
-Use the `SET` command to specify a value for a session level variable that controls EDB*Plus behavior. The following forms of the `SET` command are valid:
+Use the `SET` command to specify a value for a session level variable that controls EDB Plus behavior. The following forms of the `SET` command are valid:
 
 **SET AUTOCOMMIT**
 
@@ -754,7 +754,7 @@ SET AUTO[COMMIT]
 {ON | OFF | IMMEDIATE | statement_count}
 ```
 
-Please note that EDB*Plus always automatically commits DDL statements.
+Please note that EDB Plus always automatically commits DDL statements.
 
 `ON`
 
@@ -770,7 +770,7 @@ Please note that EDB*Plus always automatically commits DDL statements.
 
 `statement_count`
 
-> Include a value for `statement_count` to instruct EDB*Plus to issue a commit after the specified count of successful SQL statements.
+> Include a value for `statement_count` to instruct EDB Plus to issue a commit after the specified count of successful SQL statements.
 
 **SET COLUMN SEPARATOR**
 
@@ -784,7 +784,7 @@ The default value of `column_separator` is a single space.
 
 **SET ECHO**
 
-Use the `SET ECHO` command to specify if SQL and EDB*Plus script statements should be displayed onscreen as they are executed.
+Use the `SET ECHO` command to specify if SQL and EDB Plus script statements should be displayed onscreen as they are executed.
 
 ``` text
 SET ECHO {ON | OFF}
@@ -1022,7 +1022,7 @@ Use the `output_file` parameter to specify a path name for the output file.
 
 
 
-Use the `START` command to run an EDB*Plus script file; `START` is an alias for `@` command.
+Use the `START` command to run an EDB Plus script file; `START` is an alias for `@` command.
 
 ``` text
 STA[RT] script_file
@@ -1055,22 +1055,22 @@ WHENEVER SQLERROR
   [COMMIT|ROLLBACK]}
 ```
 
-If Advanced Server encounters an error during the execution of a SQL command or PL/SQL block, EDB*Plus performs the action specified in the `WHENEVER SQLERROR` command:
+If Advanced Server encounters an error during the execution of a SQL command or PL/SQL block, EDB Plus performs the action specified in the `WHENEVER SQLERROR` command:
 
-> Include the `CONTINUE` clause to instruct EDB*Plus to perform the specified action before continuing.
-> 
-> Include the `COMMIT` clause to instruct EDB*Plus to `COMMIT` the current transaction before exiting or continuing.
-> 
-> Include the `ROLLBACK` clause to instruct EDB*Plus to `ROLLBACK` the current transaction before exiting or continuing.
-> 
-> Include the `NONE` clause to instruct EDB*Plus to continue without committing or rolling back the transaction.
-> 
-> Include the `EXIT` clause to instruct EDB*Plus to perform the specified action and exit if it encounters an error.
-> 
-> > Use the following options to specify a status code that EDB*Plus will return before exiting:
-> > 
+> Include the `CONTINUE` clause to instruct EDB Plus to perform the specified action before continuing.
+>
+> Include the `COMMIT` clause to instruct EDB Plus to `COMMIT` the current transaction before exiting or continuing.
+>
+> Include the `ROLLBACK` clause to instruct EDB Plus to `ROLLBACK` the current transaction before exiting or continuing.
+>
+> Include the `NONE` clause to instruct EDB Plus to continue without committing or rolling back the transaction.
+>
+> Include the `EXIT` clause to instruct EDB Plus to perform the specified action and exit if it encounters an error.
+>
+> > Use the following options to specify a status code that EDB Plus will return before exiting:
+> >
 > > ``` text
 > > [SUCCESS|FAILURE|WARNING|n|sub_variable]
 > > ```
-> > 
-> > Please note that EDB*Plus supports substitution variables, but does not support bind variables.
+> >
+> > Please note that EDB Plus supports substitution variables, but does not support bind variables.
