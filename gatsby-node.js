@@ -198,9 +198,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     const navLinks = learn.filter(
       node => node.fields.topic === doc.fields.topic,
     );
-    const githubLink =
-      'https://github.com/rocketinsights/edb_docs_advocacy/edit/master/advocacy_docs' +
+    const advocacyDocsRepoUrl = 'https://github.com/rocketinsights/edb_docs_advocacy';
+    const githubLink = advocacyDocsRepoUrl + 
+      '/edit/master/advocacy_docs' +
       doc.fields.path +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const githubIssuesLink = advocacyDocsRepoUrl + 
+      '/issues/new?title=Regarding%20' +
+      encodeURIComponent(doc.fields.path) +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
     actions.createPage({
       path: doc.fields.path,
@@ -208,6 +213,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       context: {
         navLinks: navLinks,
         githubLink: githubLink,
+        githubIssuesLink: githubIssuesLink,
       },
     });
   });
