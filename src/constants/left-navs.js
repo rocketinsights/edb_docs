@@ -49,7 +49,7 @@ export const leftNavs = {
       },
       {
         path: 'epas_guide',
-      }
+      },
     ],
   },
 
@@ -68,8 +68,35 @@ export const leftNavs = {
       },
       {
         path: 'ark_admin_guide',
-      }
+      },
     ],
   },
 
+  bart: {
+    '2.5.4': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'edb_bart_inst',
+      },
+      {
+        path: 'edb_bart_qs_7',
+      },
+      {
+        path: 'edb_bart_qs_8',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'edb_bart_user',
+      },
+      {
+        path: 'edb_bart_ref',
+      },
+    ],
+  },
 };
