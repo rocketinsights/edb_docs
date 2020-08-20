@@ -52,28 +52,28 @@ export const indexLinkList = [
       {
         title: 'Hadoop Data Adapter',
         url: '/hadoop_data_adapter/2.0',
-        //iconName: IconNames.EDB_PEM,
+        iconName: IconNames.CONNECT,
       },
       {
         title: 'JDBC Connector',
         url: '/jdbc_connector/42.2.9.1',
-        iconName: IconNames.JAVA,
+        iconName: IconNames.CONNECT
       },
 
       {
         title: '.NET Connector',
         url: '/net_connector/4.1.3.1',
-        //iconName: IconNames.,
+        iconName: IconNames.CONNECT
       },
       {
         title: 'OCL Connector',
         url: '/ocl_connector/12.1.2.1',
-        //iconName: IconNames.JAVA,
+        iconName: IconNames.CONNECT
       },
       {
         title: 'ODBC Connector',
         url: '/odbc_connector/12.0.0.1',
-        //iconName: IconNames.JAVA,
+        iconName: IconNames.CONNECT
       },
     ],
   },
