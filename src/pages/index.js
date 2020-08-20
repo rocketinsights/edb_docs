@@ -181,28 +181,28 @@ enhanced with mission-critical features that help you maintain greater consisten
                   12 <span className="muted">&mdash; Latest</span>
                 </a>
                 <a
-                  href="epas/11"
+                  href="epas_legacy/11"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   11
                 </a>
                 <a
-                  href="epas/10"
+                  href="epas_legacy/10"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   10
                 </a>
                 <a
-                  href="epas/9.6"
+                  href="epas_legacy/9.6"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   9.6
                 </a>
                 <a
-                  href="epas/9.5"
+                  href="epas_legacy/9.5"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
