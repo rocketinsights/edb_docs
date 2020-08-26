@@ -3690,7 +3690,7 @@ where *option*\_*name* and the corresponding option\_value can be:
 <td>STORAGE_CLAUSE</td>
 <td><p>TABLESPACE <em>tablespace</em>_<em>name</em>, PCTFREE integer, PCTUSED integer, INITRANS integer, MAXTRANS integer, STORAGE <em>storage_option</em></p>
 <p>Where <em>storage</em>_<em>option</em> is one or more of the following:</p>
-<p>MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL <em>size</em>_<em>clause</em>, NEXT, FREELISTS integer, OPTIMAL <em>size</em>_<em>clause</em>, BUFFER_POOL {KEEP|RECYCLE|DEFAULT}.<br />
+<p>MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL <em>size</em>_<em>clause</em>, NEXT, FREELISTS integer, OPTIMAL <em>size</em>_<em>clause</em>, BUFFER_POOL &#123;KEEP|RECYCLE|DEFAULT&#125;.<br />
 <br />
 Please note that only the TABLESPACE option is enforced; all others are accepted for compatibility and ignored. Use the TABLESPACE clause to specify the name of a tablespace in which the table will be created.</p></td>
 </tr>
@@ -3745,7 +3745,7 @@ The name of any options that will be associated with the new queue table, and th
 <td><p>Use STORAGE_CLAUSE to specify table attributes. STORAGE_CLAUSE may be TABLESPACE <em>tablespace</em>_<em>name</em>, PCTFREE integer, PCTUSED integer, INITRANS integer, MAXTRANS integer, STORAGE <em>storage_option<br />
 </em></p>
 <p>Where <em>storage</em>_<em>option</em> is one or more of the following:</p>
-<p>MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL <em>size</em>_<em>clause</em>, NEXT, FREELISTS integer, OPTIMAL <em>size</em>_<em>clause</em>, BUFFER_POOL {KEEP|RECYCLE|DEFAULT}.<br />
+<p>MINEXTENTS integer, MAXEXTENTS integer, PCTINCREASE integer, INITIAL <em>size</em>_<em>clause</em>, NEXT, FREELISTS integer, OPTIMAL <em>size</em>_<em>clause</em>, BUFFER_POOL &#123;KEEP|RECYCLE|DEFAULT&#125;.<br />
 <br />
 Please note that only the TABLESPACE option is enforced; all others are accepted for compatibility and ignored. Use the TABLESPACE clause to specify the name of a tablespace in which the table will be created.</p></td>
 </tr>
