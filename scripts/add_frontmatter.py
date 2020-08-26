@@ -25,15 +25,16 @@ class HtmlDataParser(HTMLParser):
 for path in Path('content').rglob('*.mdx'):
   copying = False
   top_url_line = ""
-  parser = HtmlDataParser()
+
   for line in fileinput.input(files=[str(path)], inplace=1, backup=".bak"):
     if line.startswith('# ') and not copying:
       title = line.replace("# ", "").replace("\n", "").replace("`", "")
-      parser.feed(title)
-      parser.close()
-      if len(parser.data):
-        title = parser.data[0]
-      parser.reset()
+      data_parser = HtmlDataParser()
+      data_parser.feed(title)
+      data_parser.close()
+      if len(data_parser.data):
+        title = data_parser.data[0]
+      data_parser.reset()
 
       print("---")
       print('title: "' + title + '"')
@@ -50,5 +51,7 @@ for path in Path('content').rglob('*.mdx'):
       print(line.replace("`", ""), end="")
     elif "registered\_link" in line:
       print(fix_registered_link(line), end="")
+    elif "<code>" in line:
+      print(line.replace('{', '&#123;').replace('}', '&#125;'), end="")
     else:
       print(line, end="")
