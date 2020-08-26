@@ -2,6 +2,7 @@ const config = require('./config');
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
+const utf8Truncate = require("truncate-utf8-bytes");
 
 const docQuery = `
 {
@@ -80,7 +81,7 @@ const splitNodeContent = nodes => {
   let result = [];
   for (let node of nodes) {
     let order = 1;
-    let content = node.rawBody.replace(/(\n)+/g, '\n');
+    let content = utf8Truncate(node.rawBody.replace(/(\n)+/g, '\n'), 9800); // 9.8kB
     const contentArray = content.split('\n');
     let contentAggregator = '';
     let hitTocTree = false;
