@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+  repository_dispatch:
+    types: [advo-deploy-prod]
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
