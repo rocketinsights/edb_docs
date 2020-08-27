@@ -19,52 +19,69 @@ The syntax used to define the interface for a package is:
 
 ``` text
 CREATE [ OR REPLACE ] PACKAGE <package_name>
-[ <authorization_clause> ]
-{ IS | AS }
-[ <declaration>; ] ...
-[ <procedure_or_function_declaration> ] ...
+  [ <authorization_clause> ]
+  { IS | AS }
+  [ <declaration>; ] ...
+  [ <procedure_or_function_declaration> ] ...
 END [ <package_name> ] ;
 ```
 
-Where `<authorization_clause>` :=
+Where `authorization_clause` :=
 
-> { `AUTHID DEFINER } | { AUTHID CURRENT_USER` }
+``` text
+{ AUTHID DEFINER } | { AUTHID CURRENT_USER }
+```
 
-Where `<procedure_or_function_declaration>` :=
+Where `procedure_or_function_declaration` :=
 
-> `<procedure_declaration> | <function_declaration>`
+``` text
+procedure_declaration | function_declaration
+```
 
-Where `<procedure_declaration>` :=
+Where `procedure_declaration` :=
 
-> `PROCEDURE <proc_name> [ <argument_list> ]`; `[ <restriction_pragma>; ]`
+``` text
+PROCEDURE proc_name [ argument_list ];
+[ restriction_pragma; ]
+```
 
-Where `<function_declaration>` :=
+Where `function_declaration` :=
 
-> `FUNCTION <func_name> [ <argument_list> ]`
-> 
-> `RETURN <rettype> [ DETERMINISTIC ]`; \[ `<restriction_pragma>`; \]
+``` text
+FUNCTION func_name [ argument_list ]
+  RETURN rettype [ DETERMINISTIC ];
+[ restriction_pragma; ]
+```
 
-Where `<argument_list>` :=
+Where `argument_list` :=
 
-> ( `<argument_declaration>` \[, ...\] )
+``` text
+( argument_declaration [, ...] )
+```
 
-Where `<argument_declaration>` :=
+Where `argument_declaration` :=
 
-> `<argname> [ IN | IN OUT | OUT ] <argtype> [ DEFAULT <value> ]`
+``` text
+argname [ IN | IN OUT | OUT ] argtype [ DEFAULT value ]
+```
 
-Where `<restriction_pragma>` :=
+Where `restriction_pragma` :=
 
-> `PRAGMA RESTRICT_REFERENCES ( <name>, <restrictions>)`
+``` text
+PRAGMA RESTRICT_REFERENCES(name, restrictions)
+```
 
-Where `<restrictions>` :=
+Where `restrictions` :=
 
-> `<restriction>` \[, ... \]
+``` text
+restriction [, ... ]
+```
 
 **Parameters**
 
-`<package_name>`
+`package_name`
 
-> `<package_name>` is an identifier assigned to the package - each package must have a name unique within the schema.
+> `package_name` is an identifier assigned to the package - each package must have a name unique within the schema.
 
 `AUTHID DEFINER`
 
@@ -74,67 +91,67 @@ Where `<restrictions>` :=
 
 > If you specify `AUTHID CURRENT_USER`, the privileges of the current user executing a program in the package are used to determine access privileges.
 
-`<declaration>`
+`declaration`
 
-> `<declaration>` is an identifier of a public variable. A public variable can be accessed from outside of the package using the syntax `<package_name.variable>`. There can be zero, one, or more public variables. Public variable definitions must come before procedure or function declarations.
+> `declaration` is an identifier of a public variable. A public variable can be accessed from outside of the package using the syntax `package_name.variable`. There can be zero, one, or more public variables. Public variable definitions must come before procedure or function declarations.
 > 
-> `<declaration>` can be any of the following:
+> `declaration` can be any of the following:
+> 
+> >   - Variable Declaration
+> >   - Record Declaration
+> >   - Collection Declaration
+> >   - `REF CURSOR` and Cursor Variable Declaration
+> >   - `TYPE` Definitions for Records, Collections, and `REF CURSORs`
+> >   - Exception
+> >   - Object Variable Declaration
 
-  - Variable Declaration
-  - Record Declaration
-  - Collection Declaration
-  - `REF CURSOR` and Cursor Variable Declaration
-  - `TYPE` Definitions for Records, Collections, and `REF CURSORs`
-  - Exception
-  - Object Variable Declaration
+`proc_name`
 
-`<proc_name>`
+> The name of a public procedure.
 
-The name of a public procedure.
+`argname`
 
-`<argname>`
-
-The name of an argument. The argument is referenced by this name within the function or procedure body.
+> The name of an argument. The argument is referenced by this name within the function or procedure body.
 
 `IN | IN OUT | OUT`
 
-The argument mode. `IN` declares the argument for input only. This is the default. `IN OUT` allows the argument to receive a value as well as return a value. `OUT` specifies the argument is for output only.
+> The argument mode. `IN` declares the argument for input only. This is the default. `IN OUT` allows the argument to receive a value as well as return a value. `OUT` specifies the argument is for output only.
 
-`<argtype>`
+`argtype`
 
-The data type(s) of an argument. An argument type may be a base data type, a copy of the type of an existing column using `%TYPE`, or a user-defined type such as a nested table or an object type. A length must not be specified for any base type - for example, specify `VARCHAR2`, not `VARCHAR2(10`).
+> The data type(s) of an argument. An argument type may be a base data type, a copy of the type of an existing column using `%TYPE`, or a user-defined type such as a nested table or an object type. A length must not be specified for any base type - for example, specify `VARCHAR2`, not `VARCHAR2(10`).
+> 
+> The type of a column is referenced by writing `tablename.columnname` `%TYPE`; using this can sometimes help make a procedure independent from changes to the definition of a table.
 
-The type of a column is referenced by writing `<tablename.columnname>` `%TYPE`; using this can sometimes help make a procedure independent from changes to the definition of a table.
+`DEFAULT value`
 
-`DEFAULT <value>`
+> The `DEFAULT` clause supplies a default value for an input argument if one is not supplied in the invocation. `DEFAULT` may not be specified for arguments with modes `IN OUT` or `OUT`.
 
-The `DEFAULT` clause supplies a default value for an input argument if one is not supplied in the invocation. `DEFAULT` may not be specified for arguments with modes `IN OUT` or `OUT`.
+`func_name`
 
-`<func_name>`
+> The name of a public function.
 
-The name of a public function.
+`rettype`
 
-`<rettype>`
-
-The return data type.
+> The return data type.
 
 `DETERMINISTIC`
 
-`DETERMINISTIC` is a synonym for `IMMUTABLE`. A `DETERMINISTIC` function cannot modify the database and always reaches the same result when given the same argument values; it does not do database lookups or otherwise use information not directly present in its argument list. If you include this clause, any call of the function with all-constant arguments can be immediately replaced with the function value.
+> `DETERMINISTIC` is a synonym for `IMMUTABLE`. A `DETERMINISTIC` function cannot modify the database and always reaches the same result when given the same argument values; it does not do database lookups or otherwise use information not directly present in its argument list. If you include this clause, any call of the function with all-constant arguments can be immediately replaced with the function value.
 
-`<restriction>`
+`restriction`
 
 > The following keywords are accepted for compatibility and ignored:
 > 
-> `RNDS`
-> 
-> `RNPS`
-> 
-> `TRUST`
-> 
-> `WNDS`
-> 
-> `WNPS`
+> > `RNDS`
+> > 
+> > `RNPS`
+> > 
+> > `TRUST`
+> > 
+> > `WNDS`
+> > 
+> > `WNPS`
 
 ## Package Body Syntax
 
@@ -146,127 +163,118 @@ CREATE [ OR REPLACE ] PACKAGE BODY <package_name>
   [ <private_declaration>; ] ...
   [ <procedure_or_function_definition> ] ...
   [ <package_initializer> ]
-  END [ <package_name> ] ;
+END [ <package_name> ] ;
 ```
 
-Where `<procedure_or_function_definition>` :=
+Where `procedure_or_function_definition` :=
 
-> `<procedure_definition> | <function_definition>`
+``` text
+procedure_definition | function_definition
+```
 
-Where `<procedure_definition>` :=
+Where `procedure_definition` :=
 
-> `PROCEDURE <proc_name> [ <argument_list> ]`
-> 
-> > `[ <options_list> ]`
-> > 
-> > `{ IS | AS }`
-> > 
-> > > `<procedure_body>`
-> > 
-> > `END [ <proc_name>` \] ;
+``` text
+PROCEDURE proc_name[ argument_list ]
+  [ options_list ]
+  { IS | AS }
+    procedure_body
+  END [ proc_name ] ;
+```
 
-Where `<procedure_body>` :=
+Where `procedure_body` :=
 
-> `[ PRAGMA AUTONOMOUS_TRANSACTION; ]`
-> 
-> \[ `<declaration>`; \] \[, ...\]
-> 
-> `BEGIN`
-> 
-> > `<statement>`; \[...\]
-> > 
-> > `[ EXCEPTION`
-> > 
-> > > `{WHEN <exception> [OR <exception>] [...]] THEN <statement>; }`
-> > 
-> > \[...\]
-> 
-> \]
+``` text
+[ PRAGMA AUTONOMOUS_TRANSACTION; ]
+[ declaration; ] [, ...]
+BEGIN
+  statement; [...]
+[ EXCEPTION
+   { WHEN exception [OR exception] [...]] THEN statement; }
+   [...]
+]
+```
 
-Where `<function_definition>` :=
+Where `function_definition` :=
 
-> `FUNCTION <func_name> [ <argument_list> ]`
-> 
-> > `RETURN <rettype> [ DETERMINISTIC ]`
-> > 
-> > `[ <options_list> ]`
-> > 
-> > `{ IS | AS }`
-> > 
-> > `<function_body>`
-> > 
-> > `END [ <func_name>` \] ;
+``` text
+FUNCTION func_name [ argument_list ]
+  RETURN rettype [ DETERMINISTIC ]
+  [ options_list ]
+  { IS | AS }
+    function_body
+  END [ func_name ] ;
+```
 
-Where `<function_body>` :=
+Where `function_body` :=
 
-> `[ PRAGMA AUTONOMOUS_TRANSACTION; ]`
-> 
-> \[ `<declaration>`; \] \[, ...\]
-> 
-> `BEGIN`
-> 
-> > `<statement>`; \[...\]
-> 
-> \[ `EXCEPTION`
-> 
-> > { `WHEN <exception> [ OR <exception> ] [...] THEN <statement>; }`
-> > 
-> > \[...\]
-> 
-> \]
+``` text
+[ PRAGMA AUTONOMOUS_TRANSACTION; ]
+[ declaration; ] [, ...]
+BEGIN
+  statement; [...]
+[ EXCEPTION
+  { WHEN exception [ OR exception ] [...] THEN statement; }
+  [...]
+]
+```
 
-Where `<argument_list>` :=
+Where `argument_list` :=
 
-> ( `<argument_declaration>` \[, ...\] )
+``` text
+( argument_declaration [, ...] )
+```
 
-Where `<argument_declaration>` :=
+Where `argument_declaration` :=
 
-> `<argname>` \[ `IN | IN OUT | OUT` \] `<argtype> [ DEFAULT <value> ]`
+``` text
+argname [ IN | IN OUT | OUT ] argtype [ DEFAULT value ]
+```
 
-Where `<options_list>` :=
+Where `options_list` :=
 
-> `<option>` \[ ... \]
+``` text
+option [ ... ]
+```
 
-Where `<option>` :=
+Where `option` :=
 
-> `STRICT`  
-> `LEAKPROOF`
-> 
-> `PARALLEL { UNSAFE | RESTRICTED | SAFE }`
-> 
-> `COST <execution_cost>`
-> 
-> `ROWS <result_rows>`
-> 
-> `SET <config_param> { TO <value> | = <value> | FROM CURRENT` }
+``` text
+STRICT
+LEAKPROOF
+PARALLEL { UNSAFE | RESTRICTED | SAFE }
+COST execution_cost
+ROWS result_rows
+SET config_param { TO value | = value | FROM CURRENT }
+```
 
-Where `<package_initializer>` :=
+Where `package_initializer` :=
 
-> `BEGIN`
-> 
-> > `<statement;>` \[...\]
-> 
-> `END;`
+``` text
+BEGIN
+ statement; [...]
+END;
+```
 
 **Parameters**
 
-`<package_name>`
+`package_name`
 
-> `<package_name>` is the name of the package for which this is the package body. There must be an existing package specification with this name.
+> `package_name` is the name of the package for which this is the package body. There must be an existing package specification with this name.
 
-`<private_declaration>`
+`private_declaration`
 
-> `<private_declaration>` is an identifier of a private variable that can be accessed by any procedure or function within the package. There can be zero, one, or more private variables. `<private_declaration>` can be any of the following:
+> `private_declaration` is an identifier of a private variable that can be accessed by any procedure or function within the package. There can be zero, one, or more private variables. `private_declaration` can be any of the following:
 > 
->   - Variable Declaration
->   - Record Declaration
->   - Collection Declaration
->   - `REF CURSOR` and Cursor Variable Declaration
->   - `TYPE` Definitions for Records, Collections, and `REF CURSORs`
->   - Exception
->   - Object Variable Declaration
+> >   - Variable Declaration
+> >   - Record Declaration
+> >   - Collection Declaration
+> >   - `REF CURSOR` and Cursor Variable Declaration
+> >   - `TYPE` Definitions for Records, Collections, and `REF CURSORs`
+> >   - Exception
+> >   - Object Variable Declaration
 
-`<proc_name>`
+`proc_name`
 
 > The name of the procedure being created.
 
@@ -274,25 +282,25 @@ Where `<package_initializer>` :=
 
 > `PRAGMA AUTONOMOUS_TRANSACTION` is the directive that sets the procedure as an autonomous transaction.
 
-`<declaration>`
+`declaration`
 
 > A variable, type, `REF CURSOR`, or subprogram declaration. If subprogram declarations are included, they must be declared after all other variable, type, and `REF CURSOR` declarations.
 
-`<statement>`
+`statement`
 
 > An SPL program statement. Note that a `DECLARE - BEGIN - END` block is considered an SPL statement unto itself. Thus, the function body may contain nested blocks.
 
-`<exception>`
+`exception`
 
 > An exception condition name such as `NO_DATA_FOUND, OTHERS`, etc.
 
-`<func_name>`
+`func_name`
 
 > The name of the function being created.
 
-`<rettype>`
+`rettype`
 
-> The return data type, which may be any of the types listed for `<argtype>`. As for `<argtype>`, a length must not be specified for `<rettype>`.
+> The return data type, which may be any of the types listed for `argtype`. As for `argtype`, a length must not be specified for `rettype`.
 
 `DETERMINISTIC`
 
@@ -326,29 +334,25 @@ Where `<package_initializer>` :=
 
 > `PRAGMA AUTONOMOUS_TRANSACTION` is the directive that sets the function as an autonomous transaction.
 
-`<declaration>`
-
-> A variable, type, `REF CURSOR`, or subprogram declaration. If subprogram declarations are included, they must be declared after all other variable, type, and `REF CURSOR` declarations.
-
-`<argname>`
+`argname`
 
 > The name of a formal argument. The argument is referenced by this name within the procedure body.
 
 `IN | IN OUT | OUT`
 
-> The argument mode. IN declares the argument for input only. This is the default. IN OUT allows the argument to receive a value as well as return a value. OUT specifies the argument is for output only.
+> The argument mode. `IN` declares the argument for input only. This is the default. `IN OUT` allows the argument to receive a value as well as return a value. `OUT` specifies the argument is for output only.
 
-`<argtype>`
+`argtype`
 
 > The data type(s) of an argument. An argument type may be a base data type, a copy of the type of an existing column using `%TYPE`, or a user-defined type such as a nested table or an object type. A length must not be specified for any base type - for example, specify `VARCHAR2`, not `VARCHAR2(10)`.
 > 
-> The type of a column is referenced by writing ``<tablename>. <columnname>`%TYPE``; using this can sometimes help make a procedure independent from changes to the definition of a table.
+> The type of a column is referenced by writing `tablename.columnname%TYPE`; using this can sometimes help make a procedure independent from changes to the definition of a table.
 
-`DEFAULT <value>`
+`DEFAULT value`
 
 > The `DEFAULT` clause supplies a default value for an input argument if one is not supplied in the procedure call. `DEFAULT` may not be specified for arguments with modes `IN OUT` or `OUT`.
 > 
-> Please note: the following options are not compatible with Oracle databases; they are extensions to Oracle package syntax provided by Advanced Server only.
+> Please note: The following options are not compatible with Oracle databases; they are extensions to Oracle package syntax provided by Advanced Server only.
 
 `STRICT`
 
@@ -368,36 +372,36 @@ Where `<package_initializer>` :=
 > 
 > When set to `SAFE`, the procedure or function can be executed in parallel mode with no restriction.
 
-`<execution_cost>`
+`execution_cost`
 
-> `<execution_cost>` specifies a positive number giving the estimated execution cost for the function, in units of `cpu_operator_cost`. If the function returns a set, this is the cost per returned row. The default is `0.0025`.
+> `execution_cost` specifies a positive number giving the estimated execution cost for the function, in units of `cpu_operator_cost`. If the function returns a set, this is the cost per returned row. The default is `0.0025`.
 
-`` `<result_rows> ``
+`result_rows`
 
-> `<result_rows>` is the estimated number of rows that the query planner should expect the function to return. The default is `1000`.
+> `result_rows` is the estimated number of rows that the query planner should expect the function to return. The default is `1000`.
 
 `SET`
 
 > Use the `SET` clause to specify a parameter value for the duration of the function:
 > 
-> `<config_param>` specifies the parameter name.
-> 
-> `<value>` specifies the parameter value.
-> 
-> `FROM CURRENT` guarantees that the parameter value is restored when the function ends.
+> > `config_param` specifies the parameter name.
+> > 
+> > `value` specifies the parameter value.
+> > 
+> > `FROM CURRENT` guarantees that the parameter value is restored when the function ends.
 
-`<package_initializer>`
+`package_initializer`
 
-> The statements in the `<package_initializer>` are executed once per user’s session when the package is first referenced.
-> 
-> <div class="note">
-> 
-> <div class="title">
-> 
-> Note
-> 
-> </div>
-> 
-> The `STRICT, LEAKPROOF, PARALLEL, COST, ROWS` and `SET` keywords provide extended functionality for Advanced Server and are not supported by Oracle.
-> 
-> </div>
+> The statements in the `package_initializer` are executed once per user’s session when the package is first referenced.
+
+<div class="note">
+
+<div class="title">
+
+Note
+
+</div>
+
+The `STRICT, LEAKPROOF, PARALLEL, COST, ROWS` and `SET` keywords provide extended functionality for Advanced Server and are not supported by Oracle.
+
+</div>

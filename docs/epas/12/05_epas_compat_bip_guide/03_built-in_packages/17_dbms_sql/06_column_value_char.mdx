@@ -6,28 +6,29 @@ title: "COLUMN_VALUE_CHAR"
 
 The `COLUMN_VALUE_CHAR` procedure defines a variable to receive a `CHAR` value from a cursor.
 
-`COLUMN_VALUE_CHAR(<c> INTEGER, <position> INTEGER, <value> OUT CHAR`
-
-> `[, <column_error> OUT NUMBER [, <actual_length> OUT INTEGER ]])`
+``` text
+COLUMN_VALUE_CHAR(<c> INTEGER, <position> INTEGER, <value> OUT CHAR
+  [, <column_error> OUT NUMBER [, <actual_length> OUT INTEGER ]])
+```
 
 **Parameters**
 
-`<c>`
+`c`
 
 > Cursor id of the cursor returning data to the variable being defined.
 
-`<position>`
+`position`
 
 > Position within the cursor of the returned data. The first value in the cursor is position 1.
 
-`<value>`
+`value`
 
 > Variable of data type `CHAR` receiving the data returned in the cursor by a prior fetch call.
 
-`<column_error>`
+`column_error`
 
 > Error number associated with the column, if any.
 
-`<actual_length>`
+`actual_length`
 
 > Actual length of the data prior to any truncation.

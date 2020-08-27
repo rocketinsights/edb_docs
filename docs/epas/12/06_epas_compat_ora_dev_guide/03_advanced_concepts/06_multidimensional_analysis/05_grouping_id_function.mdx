@@ -1,8 +1,9 @@
 ---
-title: 'GROUPING_ID Function'
+title: "GROUPING_ID Function"
 ---
 
 <div id="grouping_id_function" class="registered_link"></div>
+
 
 The `GROUPING_ID` function provides a simplification of the `GROUPING` function in order to determine the subtotal level of a row in the result set from a `ROLLBACK, CUBE`, or `GROUPING SETS` extension.
 
@@ -12,7 +13,7 @@ The `GROUPING_ID` function accepts one or more column expressions that have been
 
 The general syntax for use of the `GROUPING_ID` function is shown by the following.
 
-```text
+``` text
 SELECT [ <expr> ...,]
   GROUPING_ID( <col_expr_1> [, <col_expr_2> ] ... )
   [, <expr> ] ...
@@ -28,7 +29,7 @@ The `GROUPING_ID` function returns an integer value. This value corresponds to t
 
 The following query shows how the returned values of the `GROUPING_ID` function represented in column `gid` correspond to the values returned by two `GROUPING` functions on columns `loc` and `dname`.
 
-```text
+``` text
 SELECT loc, dname, COUNT(*) AS "employees",
   GROUPING(loc) AS "gf_loc", GROUPING(dname) AS "gf_dname",
   GROUPING_ID(loc, dname) AS "gid"
@@ -40,7 +41,7 @@ ORDER BY 6, 1, 2;
 
 In the following output, note the relationship between a bit vector consisting of the `gf_loc` value and `gf_dname` value compared to the integer given in `gid`.
 
-```text
+``` text
 loc      |   dname    | employees | gf_loc | gf_dname | gid
 ----------+------------+-----------+--------+----------+-----
 BOSTON   | OPERATIONS |         3 |      0 |        0 |   0
@@ -60,206 +61,108 @@ NEW YORK |            |         3 |      0 |        1 |   1
 
 The following table provides specific examples of the `GROUPING_ID` function calculations based on the `GROUPING` function return values for four rows of the output.
 
-<div class="table-with-scroll">
-  <table class="table">
-    <tbody>
-      <tr class="odd">
-        <td>
-          <p>loc</p>
-        </td>
-        <td>
-          <p>dname</p>
-        </td>
-        <td>
-          <p>Bit Vector</p>
-          <p>gf_loc gf_dname</p>
-        </td>
-        <td>
-          <p>GROUPING_ID</p>
-          <blockquote>
-            <p>gid</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>BOSTON</code>
-        </td>
-        <td>
-          <code>OPERATIONS</code>
-        </td>
-        <td>
-          0 * 2<sup>1</sup> + 0 * 2<sup>0</sup>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>0</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>BOSTON</code>
-        </td>
-        <td>
-          <code>null</code>
-        </td>
-        <td>
-          0 * 2<sup>1</sup> + 1 * 2<sup>0</sup>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>1</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>null</code>
-        </td>
-        <td>
-          <code>ACCOUNTING</code>
-        </td>
-        <td>
-          1 * 2<sup>1</sup> + 0 * 2<sup>0</sup>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>2</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>null</code>
-        </td>
-        <td>
-          <code>null</code>
-        </td>
-        <td>
-          1 * 2<sup>1</sup> + 1 * 2<sup>0</sup>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>3</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>loc</p></td>
+<td><p>dname</p></td>
+<td><p>Bit Vector</p>
+<p>gf_loc gf_dname</p></td>
+<td><p>GROUPING_ID</p>
+<blockquote>
+<p>gid</p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>BOSTON</code></td>
+<td><code>OPERATIONS</code></td>
+<td>0 * 2<sup>1</sup> + 0 * 2<sup>0</sup></td>
+<td><blockquote>
+<p><code>0</code></p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>BOSTON</code></td>
+<td><code>null</code></td>
+<td>0 * 2<sup>1</sup> + 1 * 2<sup>0</sup></td>
+<td><blockquote>
+<p><code>1</code></p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>null</code></td>
+<td><code>ACCOUNTING</code></td>
+<td>1 * 2<sup>1</sup> + 0 * 2<sup>0</sup></td>
+<td><blockquote>
+<p><code>2</code></p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>null</code></td>
+<td><code>null</code></td>
+<td>1 * 2<sup>1</sup> + 1 * 2<sup>0</sup></td>
+<td><blockquote>
+<p><code>3</code></p>
+</blockquote></td>
+</tr>
+</tbody>
+</table>
 
 The following table summarizes how the `GROUPING_ID` function return values correspond to the grouping columns over which aggregation occurs.
 
-<div class="table-with-scroll">
-  <table class="table">
-    <tbody>
-      <tr class="odd">
-        <td>
-          <p>Aggregation by Column</p>
-        </td>
-        <td>
-          <p>Bit Vector</p>
-          <p>gf_loc gf_dname</p>
-        </td>
-        <td>
-          <p>GROUPING_ID</p>
-          <blockquote>
-            <p>gid</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>loc, dname</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>0</code> <code>0</code>
-            </p>
-          </blockquote>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>0</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>loc</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>0</code> <code>1</code>
-            </p>
-          </blockquote>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>1</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="even">
-        <td>
-          <code>dname</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>1</code> <code>0</code>
-            </p>
-          </blockquote>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>2</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="odd">
-        <td>
-          <code>Grand Total</code>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>1</code> <code>1</code>
-            </p>
-          </blockquote>
-        </td>
-        <td>
-          <blockquote>
-            <p>
-              <code>3</code>
-            </p>
-          </blockquote>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+<tbody>
+<tr class="odd">
+<td><p>Aggregation by Column</p></td>
+<td><p>Bit Vector</p>
+<p>gf_loc gf_dname</p></td>
+<td><p>GROUPING_ID</p>
+<blockquote>
+<p>gid</p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>loc, dname</code></td>
+<td><blockquote>
+<p><code>0</code> <code>0</code></p>
+</blockquote></td>
+<td><blockquote>
+<p><code>0</code></p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>loc</code></td>
+<td><blockquote>
+<p><code>0</code> <code>1</code></p>
+</blockquote></td>
+<td><blockquote>
+<p><code>1</code></p>
+</blockquote></td>
+</tr>
+<tr class="even">
+<td><code>dname</code></td>
+<td><blockquote>
+<p><code>1</code> <code>0</code></p>
+</blockquote></td>
+<td><blockquote>
+<p><code>2</code></p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><code>Grand Total</code></td>
+<td><blockquote>
+<p><code>1</code> <code>1</code></p>
+</blockquote></td>
+<td><blockquote>
+<p><code>3</code></p>
+</blockquote></td>
+</tr>
+</tbody>
+</table>
 
 So to display only those subtotals by `dname`, the following simplified query can be used with a `HAVING` clause based on the `GROUPING_ID` function.
 
-```text
+``` text
 SELECT loc, dname, COUNT(*) AS "employees",
   GROUPING(loc) AS "gf_loc", GROUPING(dname) AS "gf_dname",
   GROUPING_ID(loc, dname) AS "gid"
@@ -272,7 +175,7 @@ ORDER BY 6, 1, 2;
 
 The following is the result of the query.
 
-```text
+``` text
 loc |   dname    | employees | gf_loc | gf_dname | gid
 -----+------------+-----------+--------+----------+-----
     | ACCOUNTING |         3 |      1 |        0 |   2

@@ -6,12 +6,12 @@ title: "DBMS_RLS"
 
 The `DBMS_RLS` package enables the implementation of Virtual Private Database on certain Advanced Server database objects.
 
-|                                                                                                                                                                                                                                                                                                                                 |                       |             |                                                  |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- | ------------------------------------------------ |
-| Function/Procedure                                                                                                                                                                                                                                                                                                              | Function or Procedure | Return Type | Description                                      |
-| ADD_POLICY(\<object_schema\>, \<object_name\>, \<policy_name\>, \<function_schema\>, \<policy_function\> \[, \<statement_types\> \[, \<update_check\> \[, \<enable\> \[, \<static_policy\> \[, \<policy_type\> \[, \<long_predicate\> \[, \<sec_relevant_cols\> \[, \<sec_relevant_cols_opt\> \]\]\]\]\]\]\]\]) | Procedure             | n/a         | Add a security policy to a database object.      |
-| DROP_POLICY(\<object_schema\>, \<object_name\>, \<policy_name\>)                                                                                                                                                                                                                                                            | Procedure             | n/a         | Remove a security policy from a database object. |
-| ENABLE_POLICY(\<object_schema\>, \<object_name\>, \<policy_name\>, \<enable\>)                                                                                                                                                                                                                                              | Procedure             | n/a         | Enable or disable a security policy.             |
+|                                                                                                                                                                                                                                               |                       |             |                                                  |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ----------- | ------------------------------------------------ |
+| Function/Procedure                                                                                                                                                                                                                            | Function or Procedure | Return Type | Description                                      |
+| `ADD_POLICY(object_schema, object_name, policy_name, function_schema, policy_function [, statement_types [, update_check [, enable [, static_policy [, policy_type [, long_predicate [, sec_relevant_cols [, sec_relevant_cols_opt ]]]]]]]])` | Procedure             | n/a         | Add a security policy to a database object.      |
+| `DROP_POLICY(object_schema, object_name, policy_name)`                                                                                                                                                                                        | Procedure             | n/a         | Remove a security policy from a database object. |
+| `ENABLE_POLICY(object_schema, object_name, policy_name, enable)`                                                                                                                                                                              | Procedure             | n/a         | Enable or disable a security policy.             |
 
 Advanced Server's implementation of `DBMS_RLS` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
@@ -46,7 +46,7 @@ The database objects currently supported by Advanced Server Virtual Private Data
 The advantages of using Virtual Private Database are the following:
 
   - Provides a fine-grained level of security. Database object level privileges given by the `GRANT` command determine access privileges to the entire instance of a database object, while Virtual Private Database provides access control for the individual rows of a database object instance.
-  - A different security policy can be applied depending upon the type of SQL command (`INSERT, UPDATE, DELETE, or SELECT`).
+  - A different security policy can be applied depending upon the type of SQL command (`INSERT, UPDATE, DELETE`, or `SELECT`).
   - The security policy can vary dynamically for each applicable SQL command affecting the database object depending upon factors such as the session user of the application accessing the database object.
   - Invocation of the security policy is transparent to all applications that access the database object and thus, individual applications do not have to be modified to apply the security policy.
   - Once a security policy is enabled, it is not possible for any application (including new applications) to circumvent the security policy except by the system privilege noted by the following.
@@ -73,19 +73,21 @@ The process for implementing Virtual Private Database is as follows:
   - Use the `ENABLE_POLICY` procedure to disable or enable an existing policy.
   - Use the `DROP_POLICY` procedure to remove an existing policy. The `DROP_POLICY` procedure does not drop the policy function or the associated database object.
 
-Once policies are created, they can be viewed in the catalog views, compatible with Oracle databases: `ALL_POLICIES, DBA_POLICIES`, or `USER_POLICIES`. The supported compatible views are listed in the *Database Compatibility for Oracle Developers Reference Guide*, available at the EnterpriseDB website at:
+Once policies are created, they can be viewed in the catalog views, compatible with Oracle databases: `ALL_POLICIES, DBA_POLICIES`, or `USER_POLICIES`. The supported compatible views are listed in the *Database Compatibility for Oracle Developers Catalog Views Guide*, available at the EDB website at:
 
 > <https://www.enterprisedb.com/edb-docs/>
 
 The `SYS_CONTEXT` function is often used with `DBMS_RLS`. The signature is:
 
-> `SYS_CONTEXT(<namespace>, <attribute>)`
+``` text
+SYS_CONTEXT(<namespace>, <attribute>)
+```
 
 Where:
 
-> `<namespace>` is a `VARCHAR2`; the only accepted value is `USERENV`. Any other value will return `NULL`.
+> `namespace` is a `VARCHAR2`; the only accepted value is `USERENV`. Any other value will return `NULL`.
 > 
-> `<attribute>` is a `VARCHAR2`. `<attribute>` may be:
+> `attribute` is a `VARCHAR2`. `attribute` may be:
 
 | attribute Value | Equivalent Value               |
 | --------------- | ------------------------------ |
@@ -109,13 +111,14 @@ The examples used to illustrate the `DBMS_RLS` package are based on a modified c
 </div>
 
 ``` text
-CREATE TABLE public.vpemp AS SELECT empno, ename, job, sal, comm, deptno FROM emp;
+CREATE TABLE public.vpemp AS SELECT empno, ename, job, sal, comm, deptno
+FROM emp;
 ALTER TABLE vpemp ADD authid VARCHAR2(12);
 UPDATE vpemp SET authid = 'researchmgr' WHERE deptno = 20;
 UPDATE vpemp SET authid = 'salesmgr' WHERE deptno = 30;
 SELECT * FROM vpemp;
 
-empno | ename  |    job    |   sal   |  comm   | deptno |   authid
+empno  | ename  |    job    |   sal   |  comm   | deptno |   authid
 -------+--------+-----------+---------+---------+--------+-------------
   7782 | CLARK  | MANAGER   | 2450.00 |         |     10 |
   7839 | KING   | PRESIDENT | 5000.00 |         |     10 |
@@ -137,11 +140,7 @@ CREATE ROLE salesmgr WITH LOGIN PASSWORD 'password';
 GRANT ALL ON vpemp TO salesmgr;
 ```
 
-<div class="index">
 
-DBMS_RLSADD_POLICY:
-
-</div>
 
 ## ADD_POLICY
 
@@ -149,61 +148,51 @@ The `ADD_POLICY` procedure creates a new policy by associating a policy function
 
 You must be a superuser to execute this procedure.
 
-> `ADD_POLICY(<object_schema> VARCHAR2, <object_name> VARCHAR2,`
-> 
-> > `<policy_name> VARCHAR2, <function_schema> VARCHAR2`,
-> > 
-> > `<policy_function> VARCHAR2`
-> > 
-> > `[, <statement_types> VARCHAR2`
-> > 
-> > `[, <update_check> BOOLEAN`
-> > 
-> > `[, <enable> BOOLEAN`
-> > 
-> > `[, <static_policy> BOOLEAN`
-> > 
-> > `[, <policy_type> INTEGER`
-> > 
-> > `[, <long_predicate> BOOLEAN`
-> > 
-> > `[, <sec_relevant_cols> VARCHAR2`
-> > 
-> > `[, <sec_relevant_cols_opt> INTEGER ]]]]]]]])`
+``` text
+ADD_POLICY(<object_schema> VARCHAR2, <object_name> VARCHAR2,
+  <policy_name> VARCHAR2, <function_schema> VARCHAR2,
+  <policy_function> VARCHAR2
+  [, <statement_types> VARCHAR2
+  [, <update_check> BOOLEAN
+  [, <enable> BOOLEAN
+  [, <static_policy> BOOLEAN
+  [, <policy_type> INTEGER
+  [, <long_predicate> BOOLEAN
+  [, <sec_relevant_cols> VARCHAR2
+  [, <sec_relevant_cols_opt> INTEGER ]]]]]]]])
+```
 
 **Parameters**
 
-`<object_schema>`
+`object_schema`
 
 > Name of the schema containing the database object to which the policy is to be applied.
 
-`<object_name>`
+`object_name`
 
 > Name of the database object to which the policy is to be applied. A given database object may have more than one policy applied to it.
 
-`<policy_name>`
+`policy_name`
 
-> Name assigned to the policy. The combination of database object (identified by `<object_schema>` and `<object_name>`) and policy name must be unique within the database.
+> Name assigned to the policy. The combination of database object (identified by `object_schema` and `object_name`) and policy name must be unique within the database.
 
-`<function_schema>`
+`function_schema`
 
 > Name of the schema containing the policy function.
 > 
-> > 
-> > 
-> > <div class="note">
-> > 
-> > <div class="title">
-> > 
-> > Note
-> > 
-> > </div>
-> > 
-> > The policy function may belong to a package in which case `<function_schema>` must contain the name of the schema in which the package is defined.
-> > 
-> > </div>
+> <div class="note">
+> 
+> <div class="title">
+> 
+> Note
+> 
+> </div>
+> 
+> The policy function may belong to a package in which case `function_schema` must contain the name of the schema in which the package is defined.
+> 
+> </div>
 
-`<policy_function>`
+`policy_function`
 
 > Name of the SPL function that defines the rules of the security policy. The same function may be specified in more than one policy.
 > 
@@ -215,11 +204,11 @@ You must be a superuser to execute this procedure.
 > 
 > </div>
 > 
-> The policy function may belong to a package in which case `<policy_function>` must also contain the package name in dot notation (that is, `<package_name>.<function_name>`).
+> The policy function may belong to a package in which case `policy_function` must also contain the package name in dot notation (that is, `package_name.function_name`).
 > 
 > </div>
 
-`<statement_types>`
+`statement_types`
 
 > Comma-separated list of SQL commands to which the policy applies. Valid SQL commands are `INSERT, UPDATE, DELETE`, and `SELECT`. The default is `INSERT,UPDATE,DELETE,SELECT`.
 > 
@@ -235,7 +224,7 @@ You must be a superuser to execute this procedure.
 > 
 > </div>
 
-`<update_check>`
+`update_check`
 
 > Applies to `INSERT` and `UPDATE` SQL commands only.
 > 
@@ -245,15 +234,15 @@ You must be a superuser to execute this procedure.
 > 
 > The default is `FALSE`.
 
-`<enable>`
+`enable`
 
-> When set to `TRUE`, the policy is enabled and applied to the SQL commands given by the `<statement_types>` parameter. When set to `FALSE` the policy is disabled and not applied to any SQL commands. The policy can be enabled using the `ENABLE_POLICY` procedure. The default is `TRUE`.
+> When set to `TRUE`, the policy is enabled and applied to the SQL commands given by the `statement_types` parameter. When set to `FALSE` the policy is disabled and not applied to any SQL commands. The policy can be enabled using the `ENABLE_POLICY` procedure. The default is `TRUE`.
 
-`<static_policy>`
+`static_policy`
 
 > In Oracle, when set to `TRUE`, the policy is *static*, which means the policy function is evaluated once per database object the first time it is invoked by a policy on that database object. The resulting policy function predicate string is saved in memory and reused for all invocations of that policy on that database object while the database server instance is running.
 > 
-> When set to FALSE, the policy is *dynamic*, which means the policy function is re-evaluated and the policy function predicate string regenerated for all invocations of the policy.
+> When set to `FALSE`, the policy is *dynamic*, which means the policy function is re-evaluated and the policy function predicate string regenerated for all invocations of the policy.
 > 
 > The default is `FALSE`.
 > 
@@ -265,7 +254,7 @@ You must be a superuser to execute this procedure.
 > 
 > </div>
 > 
-> In Oracle 10g, the `<policy_type>` parameter was introduced, which is intended to replace the `<static_policy>` parameter. In Oracle, if the `<policy_type>` parameter is not set to its default value of `NULL`, the `<policy_type>` parameter setting overrides the `<static_policy>` setting.
+> In Oracle 10g, the `policy_type` parameter was introduced, which is intended to replace the `static_policy` parameter. In Oracle, if the `policy_type` parameter is not set to its default value of `NULL`, the `policy_type` parameter setting overrides the `static_policy` setting.
 > 
 > </div>
 > 
@@ -277,11 +266,11 @@ You must be a superuser to execute this procedure.
 > 
 > </div>
 > 
-> The setting of `<static_policy>` is ignored by Advanced Server. Advanced Server implements only the dynamic policy, regardless of the setting of the `<static_policy>` parameter.
+> The setting of `static_policy` is ignored by Advanced Server. Advanced Server implements only the dynamic policy, regardless of the setting of the `static_policy` parameter.
 > 
 > </div>
 
-`<policy_type>`
+`policy_type`
 
 > In Oracle, determines when the policy function is re-evaluated, and hence, if and when the predicate string returned by the policy function changes. The default is `NULL`.
 > 
@@ -297,7 +286,7 @@ You must be a superuser to execute this procedure.
 > 
 > </div>
 
-`<long_predicate>`
+`long_predicate`
 
 > In Oracle, allows predicates up to 32K bytes if set to `TRUE`, otherwise predicates are limited to 4000 bytes. The default is `FALSE`.
 > 
@@ -313,15 +302,15 @@ You must be a superuser to execute this procedure.
 > 
 > </div>
 
-`<sec_relevant_cols>`
+`sec_relevant_cols`
 
-> Comma-separated list of columns of `<object_name>`. Provides *column-level Virtual Private Database* for the listed columns. The policy is enforced if any of the listed columns are referenced in a SQL command of a type listed in `<statement_types>`. The policy is not enforced if no such columns are referenced.
+> Comma-separated list of columns of `object_name`. Provides *column-level Virtual Private Database* for the listed columns. The policy is enforced if any of the listed columns are referenced in a SQL command of a type listed in `statement_types`. The policy is not enforced if no such columns are referenced.
 > 
-> The default is `NULL`, which has the same effect as if all of the database object’s columns were included in `<sec_relevant_cols>`.
+> The default is `NULL`, which has the same effect as if all of the database object’s columns were included in `sec_relevant_cols`.
 
-`<sec_relevant_cols_opt>`
+`sec_relevant_cols_opt`
 
-> In Oracle, if `<sec_relevant_cols_opt>` is set to `DBMS_RLS.ALL_ROWS (INTEGER` constant of value 1), then the columns listed in `<sec_relevant_cols>` return `NULL` on all rows where the applied policy predicate is false. (If `<sec_relevant_cols_opt>` is not set to `DBMS_RLS.ALL_ROWS`, these rows would not be returned at all in the result set.) The default is `NULL`.
+> In Oracle, if `sec_relevant_cols_opt` is set to `DBMS_RLS.ALL_ROWS (INTEGER` constant of value 1), then the columns listed in `sec_relevant_cols` return `NULL` on all rows where the applied policy predicate is false. (If `sec_relevant_cols_opt` is not set to `DBMS_RLS.ALL_ROWS`, these rows would not be returned at all in the result set.) The default is `NULL`.
 > 
 > <div class="note">
 > 
@@ -367,7 +356,7 @@ This example uses the `SYS_CONTEXT` function to return the login user name. In O
 
 </div>
 
-The following anonymous block calls the `ADD_POLICY` procedure to create a policy named `secure_update` to be applied to the `vpemp` table using function `verify_session_user` whenever an `INSERT, UPDATE`, or `DELETE SQL` command is given referencing the `vpemp` table.
+The following anonymous block calls the `ADD_POLICY` procedure to create a policy named `secure_update` to be applied to the `vpemp` table using function `verify_session_user` whenever an `INSERT, UPDATE`, or `DELETE` SQL command is given referencing the `vpemp` table.
 
 ``` text
 DECLARE
@@ -451,17 +440,18 @@ edb=> SELECT * FROM vpemp;
 (14 rows)
 ```
 
-Furthermore, since the `<update_check>` parameter was set to `TRUE` in the `ADD_POLICY` procedure, the following `INSERT` command throws an exception since the value given for the `authid` column, `researchmgr`, does not match the session user, which is `salesmgr`, and hence, fails the policy.
+Furthermore, since the `update_check` parameter was set to `TRUE` in the `ADD_POLICY` procedure, the following `INSERT` command throws an exception since the value given for the `authid` column, `researchmgr`, does not match the session user, which is `salesmgr`, and hence, fails the policy.
 
 ``` text
-edb=> INSERT INTO vpemp VALUES (9001,'SMITH','ANALYST',3200.00,NULL,20, 'researchmgr');
+edb=> INSERT INTO vpemp VALUES (9001,'SMITH','ANALYST',3200.00,NULL,20,
+'researchmgr');
 ERROR:  policy with check option violation
 DETAIL:  Policy predicate was evaluated to FALSE with the updated values
 ```
 
-If `<update_check>` was set to `FALSE`, the preceding `INSERT` command would have succeeded.
+If `update_check` was set to `FALSE`, the preceding `INSERT` command would have succeeded.
 
-The following example illustrates the use of the `<sec_relevant_cols>` parameter to apply a policy only when certain columns are referenced in the SQL command. The following policy function is used for this example, which selects rows where the employee salary is less than `2000`.
+The following example illustrates the use of the `sec_relevant_cols` parameter to apply a policy only when certain columns are referenced in the SQL command. The following policy function is used for this example, which selects rows where the employee salary is less than `2000`.
 
 ``` text
 CREATE OR REPLACE FUNCTION sal_lt_2000 (
@@ -539,11 +529,7 @@ edb=# SELECT empno, ename, job, sal, comm, deptno, authid FROM vpemp;
 (8 rows)
 ```
 
-<div class="index">
 
-DBMS_RLS_DROP_POLICY
-
-</div>
 
 ## DROP_POLICY
 
@@ -551,21 +537,22 @@ The `DROP_POLICY` procedure deletes an existing policy. The policy function and 
 
 You must be a superuser to execute this procedure.
 
-> `DROP_POLICY(<object_schema> VARCHAR2, <object_name> VARCHAR2`,
-> 
-> `<policy_name> VARCHAR2)`
+``` text
+DROP_POLICY(<object_schema> VARCHAR2, <object_name> VARCHAR2,
+  <policy_name> VARCHAR2)
+```
 
 **Parameters**
 
-`<object_schema>`
+`object_schema`
 
 > Name of the schema containing the database object to which the policy applies.
 
-`<object_name>`
+`object_name`
 
 > Name of the database object to which the policy applies.
 
-`<policy_name>`
+`policy_name`
 
 > Name of the policy to be deleted.
 
@@ -587,11 +574,7 @@ BEGIN
 END;
 ```
 
-<div class="index">
 
-DBMS_RLS_ENABLE_POLICY
-
-</div>
 
 ## ENABLE_POLICY
 
@@ -599,25 +582,26 @@ The `ENABLE_POLICY` procedure enables or disables an existing policy on the spec
 
 You must be a superuser to execute this procedure.
 
-> `ENABLE_POLICY(<object_schema> VARCHAR2, <object_name> VARCHAR2`,
-> 
-> `<policy_name> VARCHAR2, <enable> BOOLEAN)`
+``` text
+ENABLE_POLICY(<object_schema> VARCHAR2, <object_name> VARCHAR2,
+  <policy_name> VARCHAR2, <enable> BOOLEAN)
+```
 
 **Parameters**
 
-`<object_schema>`
+`object_schema`
 
 > Name of the schema containing the database object to which the policy applies.
 
-`<object_name>`
+`object_name`
 
 > Name of the database object to which the policy applies.
 
-`<policy_name>`
+`policy_name`
 
 > Name of the policy to be enabled or disabled.
 
-`<enable>`
+`enable`
 
 > When set to `TRUE`, the policy is enabled. When set to `FALSE`, the policy is disabled.
 

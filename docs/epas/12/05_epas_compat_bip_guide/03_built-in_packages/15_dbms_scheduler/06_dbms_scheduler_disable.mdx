@@ -7,24 +7,26 @@ title: "DISABLE"
 
 Use the `DISABLE` procedure to disable a program or a job. The signature of the `DISABLE` procedure is:
 
-> `DISABLE(`  
-> `<name> IN VARCHAR2`,  
-> `<force> IN BOOLEAN DEFAULT FALSE`,  
-> `<commit_semantics> IN VARCHAR2 DEFAULT 'STOP_ON_FIRST_ERROR')`
+``` text
+DISABLE(
+  <name> IN VARCHAR2,
+  <force> IN BOOLEAN DEFAULT FALSE,
+  <commit_semantics> IN VARCHAR2 DEFAULT 'STOP_ON_FIRST_ERROR')
+```
 
 **Parameters**
 
-`<name>`
+`name`
 
-> `<name>` specifies the name of the program or job that is being disabled.
+> `name` specifies the name of the program or job that is being disabled.
 
-`<force>`
+`force`
 
-> `<force>` is accepted for compatibility, and ignored.
+> `force` is accepted for compatibility, and ignored.
 
-`<commit_semantics>`
+`commit_semantics`
 
-> `<commit_semantics>` instructs the server how to handle an error encountered while disabling a program or job. By default, `<commit_semantics>` is set to `STOP_ON_FIRST_ERROR`, instructing the server to stop when it encounters an error. Any programs or jobs that were successfully disabled prior to the error will be committed to disk.
+> `commit_semantics` instructs the server how to handle an error encountered while disabling a program or job. By default, `commit_semantics` is set to `STOP_ON_FIRST_ERROR`, instructing the server to stop when it encounters an error. Any programs or jobs that were successfully disabled prior to the error will be committed to disk.
 > 
 > The `TRANSACTIONAL` and `ABSORB_ERRORS` keywords are accepted for compatibility, and ignored.
 

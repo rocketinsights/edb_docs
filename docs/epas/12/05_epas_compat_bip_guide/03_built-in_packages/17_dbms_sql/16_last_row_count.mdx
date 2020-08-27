@@ -6,11 +6,13 @@ title: "LAST_ROW_COUNT"
 
 The `LAST_ROW_COUNT` function returns the number of rows that have been currently fetched.
 
-> `<rowcnt> INTEGER LAST_ROW_COUNT`
+``` text
+<rowcnt> INTEGER LAST_ROW_COUNT
+```
 
 **Parameters**
 
-`<rowcnt>`
+`rowcnt`
 
 > Number of row fetched thus far.
 
@@ -20,13 +22,13 @@ The following example uses the `LAST_ROW_COUNT` function to display the total nu
 
 ``` text
 DECLARE
-    curid           INTEGER;
-    v_empno         NUMBER(4);
-    v_ename         VARCHAR2(10);
-    v_hiredate      DATE;
-    v_sal           NUMBER(7,2);
-    v_comm          NUMBER(7,2);
-    v_sql           VARCHAR2(50) := 'SELECT empno, ename, hiredate, sal, ' ||
+    curid          sINTEGER;
+    v_empno        NUMBER(4);
+    v_ename        VARCHAR2(10);
+    v_hiredate     DATE;
+    v_sal          NUMBER(7,2);
+    v_comm         NUMBER(7,2);
+    v_sql          VARCHAR2(50) := 'SELECT empno, ename, hiredate, sal, ' ||
                                     'comm FROM emp';
     v_status        INTEGER;
 BEGIN
@@ -77,4 +79,33 @@ EMPNO  ENAME       HIREDATE    SAL       COMM
 7902   FORD        1981-12-03  3,000.00       .00
 7934   MILLER      1982-01-23  1,300.00       .00
 Number of rows: 14
+```
+
+# `LAST_ERROR_POSITION`
+
+The `LAST_ERROR_POSITION` function returns an `INTEGER` value indicating the byte offset in the SQL statement text where the error occurred. The error position of the first character in the SQL statement is at `1`.
+
+``` text
+LAST_ERROR_POSITION RETURN INTEGER;
+```
+
+**Examples**
+
+The following example demonstrates an anonymous block that returns an error position with the `LAST_ERROR_POSITION` function.
+
+``` text
+DECLARE
+    curid             INTEGER;
+    sql_stmt          VARCHAR2(50) := 'SELECT empno FROM not_exist_table';
+    v_position        INTEGER;
+BEGIN
+    curid := DBMS_SQL.OPEN_CURSOR;
+    DBMS_SQL.PARSE(curid, sql_stmt, DBMS_SQL.native);
+EXCEPTION WHEN OTHERS THEN
+    v_position := DBMS_SQL.LAST_ERROR_POSITION;
+    DBMS_OUTPUT.PUT_LINE('error position = ' || v_position);
+    DBMS_SQL.CLOSE_CURSOR(curid);
+END;
+
+error position = 19
 ```

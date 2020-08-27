@@ -7,7 +7,9 @@ title: "Calling dblink_ora Functions"
 
 The following command establishes a connection using the `dblink_ora_connect()` function:
 
-> `SELECT dblink_ora_connect('acctg', 'localhost', 'xe', 'hr', 'pwd', 1521);`
+``` text
+SELECT dblink_ora_connect('acctg', 'localhost', 'xe', 'hr', 'pwd', 1521);
+```
 
 The example connects to a service named xe running on port `1521` (on the `localhost`) with a user name of `hr` and a password of `pwd`. You can use the connection name `acctg` to refer to this connection when calling other dblink_ora functions.
 
@@ -32,6 +34,9 @@ INFO:  Row: 12
 
 The following `SELECT` statement uses `dblink_ora_record()` function and the `acctg` connection to retrieve information from the Oracle server:
 
-> `SELECT * FROM dblink_ora_record( 'acctg', 'SELECT first_name from employees') AS t1(id VARCHAR);`
+``` text
+SELECT * FROM dblink_ora_record( 'acctg', 'SELECT first_name from
+employees') AS t1(id VARCHAR);
+```
 
 The command retrieves a list that includes all of the entries in the `first_name` column of the `employees` table.

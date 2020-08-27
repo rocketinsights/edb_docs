@@ -7,7 +7,9 @@ title: "Dropping a Profile"
 
 Use the `DROP PROFILE` command to drop a profile. The syntax is:
 
-> `DROP PROFILE [IF EXISTS] <profile_name> [CASCADE|RESTRICT];`
+``` text
+DROP PROFILE [IF EXISTS] <profile_name> [CASCADE|RESTRICT];
+```
 
 Include the `IF EXISTS` clause to instruct the server to not throw an error if the specified profile does not exist. The server will issue a notice if the profile does not exist.
 

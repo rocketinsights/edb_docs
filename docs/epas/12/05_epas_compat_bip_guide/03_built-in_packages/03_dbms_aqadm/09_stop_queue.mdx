@@ -4,31 +4,31 @@ title: "STOP_QUEUE"
 
 
 
-Use the `STOP_QUEUE` procedure to disable enqueuing or dequeueing on a specified queue.
+Use the `STOP_QUEUE` procedure to disable enqueuing or dequeueing on a specified queue. The signature is:
 
-The signature is:
-
-> `STOP_QUEUE(`  
->    `<queue_name> IN VARCHAR2`,  
->    `<enqueue> IN BOOLEAN DEFAULT TRUE`,  
->    `<dequeue> IN BOOLEAN DEFAULT TRUE`,  
->    `<wait> IN BOOLEAN DEFAULT TRUE)`
+``` text
+STOP_QUEUE(
+  <queue_name> IN VARCHAR2,
+  <enqueue> IN BOOLEAN DEFAULT TRUE,
+  <dequeue> IN BOOLEAN DEFAULT TRUE,
+  <wait> IN BOOLEAN DEFAULT TRUE)
+```
 
 **Parameters**
 
-`<queue_name>`
+`queue_name`
 
-> `<queue_name>` specifies the name of the queue that you are stopping.
+> `queue_name` specifies the name of the queue that you are stopping.
 
-`<enqueu>`
+`enqueue`
 
 > Specify `TRUE` to disable enqueueing (the default), or `FALSE` to leave the current setting unchanged.
 
-`<dequeue>`
+`dequeue`
 
 > Specify `TRUE` to disable dequeueing (the default), or `FALSE` to leave the current setting unchanged.
 
-`<wait>`
+`wait`
 
 > Specify `TRUE` to instruct the server to wait for any uncompleted transactions to complete before applying the specified changes; while waiting to stop the queue, no transactions are allowed to enqueue or dequeue from the specified queue. Specify `FALSE` to stop the queue immediately.
 

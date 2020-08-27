@@ -8,17 +8,17 @@ The `DBMS_OUTPUT` package provides the capability to send messages (lines of tex
 
 The procedures and functions available in the `DBMS_OUTPUT` package are listed in the following table.
 
-|                                             |                 |                                                                                                      |
-| ------------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------- |
-| **Function/Procedure**                      | **Return Type** | **Description**                                                                                      |
-| `DISABLE`                                   | n/a             | Disable the capability to send and receive messages.                                                 |
-| `ENABLE(<buffer_size>)`                     | n/a             | Enable the capability to send and receive messages.                                                  |
-| `GET_LINE(<line> OUT, <status> OUT)`        | n/a             | Get a line from the message buffer.                                                                  |
-| `GET_LINES(<lines> OUT, <numlines> IN OUT)` | n/a             | Get multiple lines from the message buffer.                                                          |
-| `NEW_LINE`                                  | n/a             | Puts an end-of-line character sequence.                                                              |
-| `PUT(<item>)`                               | n/a             | Puts a partial line without an end-of-line character sequence.                                       |
-| `PUT_LINE(<item>)`                          | n/a             | Puts a complete line with an end-of-line character sequence.                                         |
-| `SERVEROUTPUT(<stdout>)`                    | n/a             | Direct messages from `PUT, PUT_LINE,` or `NEW_LINE` to either standard output or the message buffer. |
+|                                         |             |                                                                                                      |
+| --------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| Function/Procedure                      | Return Type | Description                                                                                          |
+| `DISABLE`                               | n/a         | Disable the capability to send and receive messages.                                                 |
+| `ENABLE(buffer_size)`                   | n/a         | Enable the capability to send and receive messages.                                                  |
+| `GET_LINE(line OUT, status OUT)`        | n/a         | Get a line from the message buffer.                                                                  |
+| `GET_LINES(lines OUT, numlines IN OUT)` | n/a         | Get multiple lines from the message buffer.                                                          |
+| `NEW_LINE`                              | n/a         | Puts an end-of-line character sequence.                                                              |
+| `PUT(item)`                             | n/a         | Puts a partial line without an end-of-line character sequence.                                       |
+| `PUT_LINE(item)`                        | n/a         | Puts a complete line with an end-of-line character sequence.                                         |
+| `SERVEROUTPUT(stdout)`                  | n/a         | Direct messages from `PUT, PUT_LINE,` or `NEW_LINE` to either standard output or the message buffer. |
 
 The following table lists the public variables available in the `DBMS_OUTPUT` package.
 
@@ -35,11 +35,7 @@ The `CHARARR` is for storing multiple message lines.
 TYPE chararr IS TABLE OF VARCHAR2(32767) INDEX BY BINARY_INTEGER;
 ```
 
-<div class="index">
 
-DBMS_OUTPUT_DISABLE
-
-</div>
 
 ## DISABLE
 
@@ -47,7 +43,9 @@ The `DISABLE` procedure clears out the message buffer. Any messages in the buffe
 
 Use the `ENABLE` procedure or `SERVEROUTPUT(TRUE)` procedure to re-enable the sending and receiving of messages.
 
-`DISABLE`
+``` text
+DISABLE
+```
 
 **Examples**
 
@@ -55,17 +53,11 @@ This anonymous block disables the sending and receiving messages in the current 
 
 ``` text
 BEGIN
-
-  DBMS_OUTPUT.DISABLE;
-
+    DBMS_OUTPUT.DISABLE;
 END;
 ```
 
-<div class="index">
 
-DBMS_OUTPUT_ENABLE
-
-</div>
 
 ## ENABLE
 
@@ -74,16 +66,19 @@ The `ENABLE` procedure enables the capability to send messages to the message bu
 The destination of a message sent with `PUT, PUT_LINE,` or `NEW_LINE` depends upon the state of `SERVEROUTPUT`.
 
   - If the last state of `SERVEROUTPUT` is `TRUE`, the message goes to standard output of the command line.
-
   - If the last state of `SERVEROUTPUT` is `FALSE`, the message goes to the message buffer.
-    
-    > `ENABLE [ (<buffer_size> INTEGER) ]`
+
+<!-- end list -->
+
+``` text
+ENABLE [ (<buffer_size> INTEGER) ]
+```
 
 **Parameter**
 
-`<buffer_size>`
+`buffer_size`
 
-> Maximum length of the message buffer in bytes. If a `<buffer_size>` of less than 2000 is specified, the buffer size is set to 2000.
+> Maximum length of the message buffer in bytes. If a `buffer_size` of less than 2000 is specified, the buffer size is set to 2000.
 
 **Examples**
 
@@ -91,9 +86,9 @@ The following anonymous block enables messages. Setting `SERVEROUTPUT(TRUE)` for
 
 ``` text
 BEGIN
-   DBMS_OUTPUT.ENABLE;
-   DBMS_OUTPUT.SERVEROUTPUT(TRUE);
-   DBMS_OUTPUT.PUT_LINE('Messages enabled');
+    DBMS_OUTPUT.ENABLE;
+    DBMS_OUTPUT.SERVEROUTPUT(TRUE);
+    DBMS_OUTPUT.PUT_LINE('Messages enabled');
 END;
 
 Messages enabled
@@ -103,8 +98,8 @@ The same effect could have been achieved by simply using `SERVEROUTPUT(TRUE)`.
 
 ``` text
 BEGIN
-   DBMS_OUTPUT.SERVEROUTPUT(TRUE);
-   DBMS_OUTPUT.PUT_LINE('Messages enabled');
+    DBMS_OUTPUT.SERVEROUTPUT(TRUE);
+    DBMS_OUTPUT.PUT_LINE('Messages enabled');
 END;
 
 Messages enabled
@@ -114,9 +109,9 @@ The following anonymous block enables messages, but setting `SERVEROUTPUT(FALSE)
 
 ``` text
 BEGIN
-   DBMS_OUTPUT.ENABLE;
-   DBMS_OUTPUT.SERVEROUTPUT(FALSE);
-   DBMS_OUTPUT.PUT_LINE('Message sent to buffer');
+    DBMS_OUTPUT.ENABLE;
+    DBMS_OUTPUT.SERVEROUTPUT(FALSE);
+    DBMS_OUTPUT.PUT_LINE('Message sent to buffer');
 END;
 ```
 
@@ -124,15 +119,17 @@ END;
 
 The `GET_LINE` procedure provides the capability to retrieve a line of text from the message buffer. Only text that has been terminated by an end-of-line character sequence is retrieved – that is complete lines generated using `PUT_LINE`, or by a series of `PUT` calls followed by a `NEW_LINE` call.
 
-> `GET_LINE(<line> OUT VARCHAR2, <status> OUT INTEGER)`
+``` text
+GET_LINE(<line> OUT VARCHAR2, <status> OUT INTEGER)
+```
 
 **Parameters**
 
-`<line>`
+`line`
 
 > Variable receiving the line of text from the message buffer.
 
-`<status>`
+`status`
 
 > 0 if a line was returned from the message buffer, 1 if there was no line to return.
 
@@ -202,21 +199,23 @@ SELECT msg FROM messages;
 
 The `GET_LINES` procedure provides the capability to retrieve one or more lines of text from the message buffer into a collection. Only text that has been terminated by an end-of-line character sequence is retrieved – that is complete lines generated using `PUT_LINE`, or by a series of `PUT` calls followed by a `NEW_LINE` call.
 
-> `GET_LINES(<lines> OUT CHARARR, <numlines> IN OUT INTEGER)`
+``` text
+GET_LINES(<lines> OUT CHARARR, <numlines> IN OUT INTEGER)
+```
 
 **Parameters**
 
-`<lines>`
+`lines`
 
-> Table receiving the lines of text from the message buffer. See `CHARARR` for a description of `<lines>.`
+> Table receiving the lines of text from the message buffer. See `CHARARR` for a description of `lines.`
 
-`<numlines> IN`
+`numlines IN`
 
 > Number of lines to be retrieved from the message buffer.
 
-`<numlines> OUT`
+`numlines OUT`
 
-> Actual number of lines retrieved from the message buffer. If the output value of `<numlines>` is less than the input value, then there are no more lines left in the message buffer.
+> Actual number of lines retrieved from the message buffer. If the output value of `numlines` is less than the input value, then there are no more lines left in the message buffer.
 
 **Examples**
 
@@ -275,33 +274,33 @@ SELECT msg FROM messages;
 
 The `NEW_LINE` procedure writes an end-of-line character sequence in the message buffer.
 
-> `NEW_LINE`
+``` text
+NEW_LINE
+```
 
 **Parameter**
 
 The `NEW_LINE` procedure expects no parameters.
 
-<div class="index">
 
-DBMS_OUTPUT_PUT
-
-</div>
 
 ## PUT
 
 The `PUT` procedure writes a string to the message buffer. No end-of-line character sequence is written at the end of the string. Use the `NEW_LINE` procedure to add an end-of-line character sequence.
 
-> `PUT(<item> VARCHAR2)`
+``` text
+PUT(<item> VARCHAR2)
+```
 
 **Parameter**
 
-`<item>`
+`item`
 
 > Text written to the message buffer.
 
 **Examples**
 
-The following example uses the `PUT` procedure to display a comma-delimited list of employees from the emp table.
+The following example uses the `PUT` procedure to display a comma-delimited list of employees from the `emp` table.
 
 ``` text
 DECLARE
@@ -343,21 +342,19 @@ END;
 7934,MILLER,CLERK,7782,23-JAN-82 00:00:00,1300.00,,10
 ```
 
-<div class="index">
 
-DBMS_OUTPUT_PUT_LINE
-
-</div>
 
 ## PUT_LINE
 
 The `PUT_LINE` procedure writes a single line to the message buffer including an end-of-line character sequence.
 
-> `PUT_LINE(<item> VARCHAR2)`
+``` text
+PUT_LINE(<item> VARCHAR2)
+```
 
 **Parameter**
 
-`<item>`
+`item`
 
 > Text to be written to the message buffer.
 
@@ -399,13 +396,17 @@ END;
 
 The `SERVEROUTPUT` procedure provides the capability to direct messages to standard output of the command line or to the message buffer. Setting `SERVEROUTPUT(TRUE)` also performs an implicit execution of `ENABLE`.
 
-The default setting of `SERVEROUTPUT` is implementation dependent. For example, in Oracle SQL*Plus, `SERVEROUTPUT(FALSE)` is the default. In PSQL, `SERVEROUTPUT(TRUE)` is the default. Also note that in Oracle SQL*Plus, this setting is controlled using the SQL*Plus SET command, not by a stored procedure as implemented in Advanced Server.
+The default setting of `SERVEROUTPUT` is implementation dependent. For example, in Oracle SQL*Plus, `SERVEROUTPUT(FALSE)` is the default. In PSQL, `SERVEROUTPUT(TRUE)` is the default. Also note that in Oracle SQL*Plus, this setting is controlled using the SQL*Plus `SET` command, not by a stored procedure as implemented in Advanced Server.
 
-> `SERVEROUTPUT(<stdout> BOOLEAN)`
+``` text
+SERVEROUTPUT(<stdout> BOOLEAN)
+```
+
+To get an Oracle-style display output, you can set the `dbms_output.serveroutput` to `FALSE` in the `postgresql.conf` file; this disables the message output. The default is `TRUE`, which enables the message output.
 
 **Parameter**
 
-`<stdout>`
+`stdout`
 
 > Set to `TRUE` if subsequent `PUT, PUT_LINE`, or `NEW_LINE` commands are to send text directly to standard output of the command line. Set to `FALSE` if text is to be sent to the message buffer.
 

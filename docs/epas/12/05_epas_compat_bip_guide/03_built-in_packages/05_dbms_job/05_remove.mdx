@@ -6,11 +6,13 @@ title: "REMOVE"
 
 The `REMOVE` procedure deletes the specified job from the database. The job must be resubmitted using the `SUBMIT` procedure in order to have it executed again. Note that the stored procedure that was associated with the job is not deleted.
 
-`REMOVE(<job> BINARY_INTEGER)`
+``` text
+REMOVE(<job> BINARY_INTEGER)
+```
 
 **Parameter**
 
-`<job>`
+`job`
 
 > Identifier of the job that is to be removed from the database.
 
@@ -20,8 +22,6 @@ Remove a job from the database:
 
 ``` text
 BEGIN
-
-   DBMS_JOB.REMOVE(104);
-
+    DBMS_JOB.REMOVE(104);
 END;
 ```

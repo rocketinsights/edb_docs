@@ -6,32 +6,34 @@ title: "DBMS_RANDOM"
 
 The `DBMS_RANDOM` package provides a number of methods to generate random values. The procedures and functions available in the `DBMS_RANDOM` package are listed in the following table.
 
-|                        |             |                                                                                                                                                 |
-| ---------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Function/Procedure     | Return Type | Description                                                                                                                                     |
-| `INITIALIZE(<val>)`    | n/a         | Initializes the `DBMS_RANDOM` package with the specified seed `<value>`. Deprecated, but supported for backward compatibility.                  |
-| `NORMAL()`             | `NUMBER`    | Returns a random `NUMBER`.                                                                                                                      |
-| `RANDOM`               | `INTEGER`   | Returns a random `INTEGER` with a value greater than or equal to -2^31 and less than 2^31. Deprecated, but supported for backward compatibility |
-| `SEED(<val>)`          | n/a         | Resets the seed with the specified `<value>`.                                                                                                   |
-| `SEED(<val>)`          | n/a         | Resets the seed with the specified `<value>`.                                                                                                   |
-| `STRING(<opt>, <len>)` | `VARCHAR2`  | Returns a random string.                                                                                                                        |
-| `TERMINATE`            | n/a         | `TERMINATE` has no effect. Deprecated, but supported for backward compatibility.                                                                |
-| `VALUE`                | `NUMBER`    | Returns a random number with a value greater than or equal to `0` and less than `1`, with 38 digit precision.                                   |
-| `VALUE(<low>, <high>)` | `NUMBER`    | Returns a random number with a value greater than or equal to `<low>` and less than `<high>`.                                                   |
+|                    |             |                                                                                                                                                 |
+| ------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Function/Procedure | Return Type | Description                                                                                                                                     |
+| `INITIALIZE(val)`  | n/a         | Initializes the `DBMS_RANDOM` package with the specified seed `value`. Deprecated, but supported for backward compatibility.                    |
+| `NORMAL()`         | `NUMBER`    | Returns a random `NUMBER`.                                                                                                                      |
+| `RANDOM`           | `INTEGER`   | Returns a random `INTEGER` with a value greater than or equal to -2^31 and less than 2^31. Deprecated, but supported for backward compatibility |
+| `SEED(val)`        | n/a         | Resets the seed with the specified `value`.                                                                                                     |
+| `SEED(val)`        | n/a         | Resets the seed with the specified `value`.                                                                                                     |
+| `STRING(opt, len)` | `VARCHAR2`  | Returns a random string.                                                                                                                        |
+| `TERMINATE`        | n/a         | `TERMINATE` has no effect. Deprecated, but supported for backward compatibility.                                                                |
+| `VALUE`            | `NUMBER`    | Returns a random number with a value greater than or equal to `0` and less than `1`, with 38 digit precision.                                   |
+| `VALUE(low, high)` | `NUMBER`    | Returns a random number with a value greater than or equal to `low` and less than `high`.                                                       |
 
 ## INITIALIZE
 
 The `INITIALIZE` procedure initializes the `DBMS_RANDOM` package with a seed value. The signature is:
 
-> `INITIALIZE(<val> IN INTEGER)`
+``` text
+INITIALIZE(<val> IN INTEGER)
+```
 
 This procedure should be considered deprecated; it is included for backward compatibility only.
 
-**Parameter**
+**Parameters**
 
-`<val>`
+`val`
 
-> `<val>` is the seed value used by the `DBMS_RANDOM` package algorithm.
+> `val` is the seed value used by the `DBMS_RANDOM` package algorithm.
 
 **Example**
 
@@ -45,13 +47,15 @@ DBMS_RANDOM.INITIALIZE(6475);
 
 The `NORMAL` function returns a random number of type `NUMBER`. The signature is:
 
-> `<result> NUMBER NORMAL()`
+``` text
+<result> NUMBER NORMAL()
+```
 
-**Parameter**
+**Parameters**
 
-`<result>`
+`result`
 
-> `<result>` is a random value of type `NUMBER`.
+> `result` is a random value of type `NUMBER`.
 
 **Example**
 
@@ -65,15 +69,17 @@ x:= DBMS_RANDOM.NORMAL();
 
 The `RANDOM` function returns a random `INTEGER` value that is greater than or equal to -2 ^31 and less than 2 ^31. The signature is:
 
-> `<result> INTEGER RANDOM()`
+``` text
+<result> INTEGER RANDOM()
+```
 
 This function should be considered deprecated; it is included for backward compatibility only.
 
-**Parameter**
+**Parameters**
 
-`<result>`
+`result`
 
-> `<result>` is a random value of type INTEGER.
+> `result` is a random value of type INTEGER.
 
 **Example**
 
@@ -87,13 +93,15 @@ x := DBMS_RANDOM.RANDOM();
 
 The first form of the `SEED` procedure resets the seed value for the `DBMS_RANDOM` package with an `INTEGER` value. The `SEED` procedure is available in two forms; the signature of the first form is:
 
-> `SEED(<val> IN INTEGER)`
+``` text
+SEED(<val> IN INTEGER)
+```
 
-**Parameter**
+**Parameters**
 
-`<val>`
+`val`
 
-> `<val>` is the seed value used by the `DBMS_RANDOM` package algorithm.
+> `val` is the seed value used by the `DBMS_RANDOM` package algorithm.
 
 **Example**
 
@@ -107,13 +115,15 @@ DBMS_RANDOM.SEED(8495);
 
 The second form of the `SEED` procedure resets the seed value for the `DBMS_RANDOM` package with a string value. The `SEED` procedure is available in two forms; the signature of the second form is:
 
-`SEED(<val> IN VARCHAR2)`
+``` text
+SEED(<val> IN VARCHAR2)
+```
 
-**Parameter**
+**Parameters**
 
-`<val>`
+`val`
 
-> `<val>` is the seed value used by the `DBMS_RANDOM` package algorithm.
+> `val` is the seed value used by the `DBMS_RANDOM` package algorithm.
 
 **Example**
 
@@ -127,19 +137,15 @@ DBMS_RANDOM.SEED('abc123');
 
 The `STRING` function returns a random `VARCHAR2` string in a user-specified format. The signature of the `STRING` function is:
 
-> `<result> VARCHAR2 STRING(<opt> IN CHAR, <len> IN NUMBER)`
+``` text
+<result> VARCHAR2 STRING(<opt> IN CHAR, <len> IN NUMBER)
+```
 
 **Parameters**
 
-`<opt>`
+`opt`
 
-> Formatting option for the returned string. `<option>` may be:
-> 
-> <div class="tabularcolumns">
-> 
-> Y{0.6}|
-> 
-> </div>
+> Formatting option for the returned string. `option` may be:
 
 | **Option** | **Specifies Formatting Option** |
 | ---------- | ------------------------------- |
@@ -149,13 +155,13 @@ The `STRING` function returns a random `VARCHAR2` string in a user-specified for
 | `x` or `X` | Uppercase alpha-numeric string  |
 | `p` or `P` | Any printable characters        |
 
-`<len>`
+`len`
 
 > The length of the returned string.
 
-`<result>`
+`result`
 
-> `<result>` is a random value of type `VARCHAR2`.
+> `result` is a random value of type `VARCHAR2`.
 
 **Example**
 
@@ -169,27 +175,27 @@ x := DBMS_RANDOM.STRING('X', 10);
 
 The `TERMINATE` procedure has no effect. The signature is:
 
-> `TERMINATE`
+``` text
+TERMINATE
+```
 
 The `TERMINATE` procedure should be considered deprecated; the procedure is supported for compatibility only.
 
-<div class="index">
 
-DBMS_RANDOM_VALUE_FIRST_FORM
-
-</div>
 
 ## VALUE
 
 The `VALUE` function returns a random `NUMBER` that is greater than or equal to 0, and less than 1, with 38 digit precision. The `VALUE` function has two forms; the signature of the first form is:
 
-> `<result> NUMBER VALUE()`
+``` text
+<result> NUMBER VALUE()
+```
 
-**Parameter**
+**Parameters**
 
-`<result>`
+`result`
 
-> `<result>` is a random value of type `NUMBER`.
+> `result` is a random value of type `NUMBER`.
 
 **Example**
 
@@ -199,31 +205,29 @@ The following code snippet demonstrates a call to the `VALUE` function. The call
 x := DBMS_RANDOM.VALUE();
 ```
 
-<div class="index">
 
-DBMS_RANDOM_VALUE_SECOND_FORM
-
-</div>
 
 ## VALUE
 
 The `VALUE` function returns a random `NUMBER` with a value that is between user-specified boundaries. The `VALUE` function has two forms; the signature of the second form is:
 
-> `<result> NUMBER VALUE(<low> IN NUMBER, <high> IN NUMBER)`
+``` text
+<result> NUMBER VALUE(<low> IN NUMBER, <high> IN NUMBER)
+```
 
 **Parameters**
 
-`<low>`
+`low`
 
-> `<low>` specifies the lower boundary for the random value. The random value may be equal to `<low>`.
+> `low` specifies the lower boundary for the random value. The random value may be equal to `low`.
 
-`<high>`
+`high`
 
-> `<high>` specifies the upper boundary for the random value; the random value will be less than `<high>`.
+> `high` specifies the upper boundary for the random value; the random value will be less than `high`.
 
-`<result>`
+`result`
 
-> `<result>` is a random value of type `NUMBER`.
+> `result` is a random value of type `NUMBER`.
 
 **Example**
 

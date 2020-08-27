@@ -60,11 +60,17 @@ Include the `REPLACE` clause to replace an existing synonym definition with a ne
 
 Include the `PUBLIC` clause to create the synonym in the `public` schema. Compatible with Oracle databases, the `CREATE PUBLIC SYNONYM` command creates a synonym that resides in the `public` schema:
 
-> `CREATE [OR REPLACE] PUBLIC SYNONYM <syn_name> FOR  <object_schema>.<object_name>;`
+``` text
+CREATE [OR REPLACE] PUBLIC SYNONYM <syn_name> FOR
+<object_schema>.<object_name>;
+```
 
 This just a shorthand way to write:
 
-> `CREATE [OR REPLACE] SYNONYM public.<syn_name> FOR     <object_schema>.<object_name>;`
+``` text
+CREATE [OR REPLACE] SYNONYM public.<syn_name> FOR
+<object_schema>.<object_name>;
+```
 
 The following example creates a synonym named `personnel` that refers to the `enterprisedb.emp` table.
 
@@ -117,7 +123,9 @@ SELECT * FROM personnel;
 
 To delete a synonym, use the command, `DROP SYNONYM`. The syntax is:
 
-> `DROP [PUBLIC] SYNONYM [<schema>.] <syn_name>`
+``` text
+DROP [PUBLIC] SYNONYM [<schema>.] <syn_name>
+```
 
 **Parameters:**
 

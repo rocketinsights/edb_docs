@@ -18,29 +18,31 @@ An administrator must grant execute privileges to each user or group before they
 
 </div>
 
-|                                                                      |                       |             |                                                                                            |
-| -------------------------------------------------------------------- | --------------------- | ----------- | ------------------------------------------------------------------------------------------ |
-| Function/Procedure                                                   | Function or Procedure | Return Type | Description                                                                                |
-| CAST_TO_RAW(c IN VARCHAR2)                                         | Function              | RAW         | Converts a VARCHAR2 string to a RAW value.                                                 |
-| CAST_TO_VARCHAR2(r IN RAW)                                         | Function              | VARCHAR2    | Converts a RAW value to a VARCHAR2 string.                                                 |
-| CONCAT(r1 IN RAW, r2 IN RAW, r3 IN RAW,…)                            | Function              | RAW         | Concatenate multiple RAW values into a single RAW value.                                   |
-| CONVERT(r IN RAW, to_charset IN VARCHAR2, from_charset IN VARCHAR2 | Function              | RAW         | Converts encoded data from one encoding to another, and returns the result as a RAW value. |
-| LENGTH(r IN RAW)                                                     | Function              | NUMBER      | Returns the length of a RAW value.                                                         |
-| SUBSTR(r IN RAW, pos IN INTEGER, len IN INTEGER)                     | Function              | RAW         | Returns a portion of a RAW value.                                                          |
+|                                                                      |                       |             |                                                                                              |
+| -------------------------------------------------------------------- | --------------------- | ----------- | -------------------------------------------------------------------------------------------- |
+| Function/Procedure                                                   | Function or Procedure | Return Type | Description                                                                                  |
+| `CAST_TO_RAW(c IN VARCHAR2)`                                         | Function              | `RAW`       | Converts a `VARCHAR2` string to a `RAW` value.                                               |
+| `CAST_TO_VARCHAR2(r IN RAW)`                                         | Function              | `VARCHAR2`  | Converts a `RAW` value to a `VARCHAR2` string.                                               |
+| `CONCAT(r1 IN RAW, r2 IN RAW, r3 IN RAW,…)`                          | Function              | `RAW`       | Concatenate multiple `RAW` values into a single `RAW` value.                                 |
+| `CONVERT(r IN RAW, to_charset IN VARCHAR2, from_charset IN VARCHAR2` | Function              | `RAW`       | Converts encoded data from one encoding to another, and returns the result as a `RAW` value. |
+| `LENGTH(r IN RAW)`                                                   | Function              | `NUMBER`    | Returns the length of a `RAW` value.                                                         |
+| `SUBSTR(r IN RAW, pos IN INTEGER, len IN INTEGER)`                   | Function              | `RAW`       | Returns a portion of a `RAW` value.                                                          |
 
 Advanced Server's implementation of `UTL_RAW` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
 ## CAST_TO_RAW
 
-The `CAST_TO_RAW` function converts a `VARCHAR2` string to a RAW value. The signature is:
+The `CAST_TO_RAW` function converts a `VARCHAR2` string to a `RAW` value. The signature is:
 
-> `CAST_TO_RAW(<c> VARCHAR2)`
+``` text
+CAST_TO_RAW(<c> VARCHAR2)
+```
 
 The function returns a `RAW` value if you pass a non-`NULL` value; if you pass a `NULL` value, the function will return `NULL`.
 
 **Parameters**
 
-`<c>`
+`c`
 
 > The `VARCHAR2` value that will be converted to `RAW`.
 
@@ -60,7 +62,7 @@ BEGIN
 END;
 ```
 
-The result set includes the content of the original string and the converted RAW value:
+The result set includes the content of the original string and the converted `RAW` value:
 
 ``` text
 Accounts
@@ -71,13 +73,15 @@ Accounts
 
 The `CAST_TO_VARCHAR2` function converts `RAW` data to `VARCHAR2` data. The signature is:
 
-> `CAST_TO_VARCHAR2(<r> RAW)`
+``` text
+CAST_TO_VARCHAR2(<r> RAW)
+```
 
 The function returns a `VARCHAR2` value if you pass a non-`NULL` value; if you pass a `NULL` value, the function will return `NULL`.
 
 **Parameters**
 
-`<r>`
+`r`
 
 > The `RAW` value that will be converted to a `VARCHAR2` value.
 
@@ -108,13 +112,15 @@ Accounts
 
 The `CONCAT` function concatenates multiple `RAW` values into a single `RAW` value. The signature is:
 
-> `CONCAT(<r1> RAW, <r2> RAW, <r3> RAW,…)`
+``` text
+CONCAT(<r1> RAW, <r2> RAW, <r3> RAW,…)
+```
 
 The function returns a `RAW` value. Unlike the Oracle implementation, the Advanced Server implementation is a variadic function, and does not place a restriction on the number of values that can be concatenated.
 
 **Parameters**
 
-`<r1, r2, r3,…>`
+`r1, r2, r3,…`
 
 > The `RAW` values that `CONCAT` will concatenate.
 
@@ -123,12 +129,12 @@ The function returns a `RAW` value. Unlike the Oracle implementation, the Advanc
 The following example uses the `CONCAT` function to concatenate multiple `RAW` values into a single `RAW` value:
 
 ``` text
-| SELECT UTL_RAW.CAST_TO_VARCHAR2(UTL_RAW.CONCAT('\x61', '\x62',
-| '\x63')) FROM DUAL;
-| concat
-| --------
-| abc
-| (1 row)
+SELECT UTL_RAW.CAST_TO_VARCHAR2(UTL_RAW.CONCAT('\x61', '\x62', '\x63')) FROM
+DUAL;
+ concat
+--------
+ abc
+(1 row)
 ```
 
 The result (the concatenated values) is then converted to `VARCHAR2` format by the `CAST_TO_VARCHAR2` function.
@@ -137,23 +143,25 @@ The result (the concatenated values) is then converted to `VARCHAR2` format by t
 
 The `CONVERT` function converts a string from one encoding to another encoding and returns the result as a `RAW` value. The signature is:
 
-> `CONVERT(<r> RAW, <to_charset> VARCHAR2, <from_charset> VARCHAR2)`
+``` text
+CONVERT(<r> RAW, <to_charset> VARCHAR2, <from_charset> VARCHAR2)
+```
 
 The function returns a `RAW` value.
 
 **Parameters**
 
-`<r>`
+`r`
 
 > The `RAW` value that will be converted.
 
-`<to_charset>`
+`to_charset`
 
-> The name of the encoding to which `<r>` will be converted.
+> The name of the encoding to which `r` will be converted.
 
-`<from_charset>`
+`from_charset`
 
-> The name of the encoding from which `<r>` will be converted.
+> The name of the encoding from which `r` will be converted.
 
 **Example**
 
@@ -187,15 +195,17 @@ Accounts
 
 The `LENGTH` function returns the length of a `RAW` value. The signature is:
 
-> `LENGTH(<r> RAW)`
+``` text
+LENGTH(<r> RAW)
+```
 
 The function returns a `RAW` value.
 
 **Parameters**
 
-`<r>`
+`r`
 
-The `RAW` value that `LENGTH` will evaluate.
+> The `RAW` value that `LENGTH` will evaluate.
 
 **Example**
 
@@ -203,9 +213,9 @@ The following example uses the `LENGTH` function to return the length of a `RAW`
 
 ``` text
 SELECT UTL_RAW.LENGTH(UTL_RAW.CAST_TO_RAW('Accounts')) FROM DUAL;
-length
+ length
 --------
-8
+ 8
 (1 row)
 ```
 
@@ -213,41 +223,39 @@ The following example uses the `LENGTH` function to return the length of a `RAW`
 
 ``` text
 SELECT UTL_RAW.LENGTH(UTL_RAW.CAST_TO_RAW('hello'));
-length
+ length
 --------
-     5
+     12
 (1 row)
 ```
 
-<div class="index">
 
-UTL_RAW_SUBSTR
-
-</div>
 
 ## SUBSTR
 
 The `SUBSTR` function returns a substring of a `RAW` value. The signature is:
 
-> `SUBSTR (<r> RAW, <pos> INTEGER, <len> INTEGER)`
+``` text
+SUBSTR (<r> RAW, <pos> INTEGER, <len> INTEGER)
+```
 
 This function returns a `RAW` value.
 
 **Parameters**
 
-`<r>`
+`r`
 
-The `RAW` value from which the substring will be returned.
+> The `RAW` value from which the substring will be returned.
 
-`<pos>`
+`pos`
 
 > The position within the `RAW` value of the first byte of the returned substring.
+> 
+> >   - If `pos` is `0` or `1`, the substring begins at the first byte of the `RAW` value.
+> >   - If `pos` is greater than one, the substring begins at the first byte specified by `pos`. For example, if `pos` is `3`, the substring begins at the third byte of the value.
+> >   - If `pos` is negative, the substring begins at `pos` bytes from the end of the source value. For example, if `pos` is `-3`, the substring begins at the third byte from the end of the value.
 
-  - If `<pos>` is `0` or `1`, the substring begins at the first byte of the `RAW` value.
-  - If `<pos>` is greater than one, the substring begins at the first byte specified by `<pos>`. For example, if `<pos>` is `3`, the substring begins at the third byte of the value.
-  - If `<pos>` is negative, the substring begins at `<pos>` bytes from the end of the source value. For example, if `<pos>` is `-3`, the substring begins at the third byte from the end of the value.
-
-`<len>`
+`len`
 
 > The maximum number of bytes that will be returned.
 
@@ -258,18 +266,17 @@ The following example uses the `SUBSTR` function to select a substring that begi
 ``` text
 SELECT UTL_RAW.SUBSTR(UTL_RAW.CAST_TO_RAW('Accounts'), 3, 5) FROM DUAL;
  substr
- --------
+--------
  count
- (1 row)
+(1 row)
 ```
 
 The following example uses the `SUBSTR` function to select a substring that starts `5` bytes from the end of a `RAW` value:
 
 ``` text
-SELECT UTL_RAW.SUBSTR(UTL_RAW.CAST_TO_RAW('Accounts'), -5 , 3) FROM
-DUAL;
-substr
+SELECT UTL_RAW.SUBSTR(UTL_RAW.CAST_TO_RAW('Accounts'), -5 , 3) FROM DUAL;
+ substr
 --------
-oun
+ oun
 (1 row)
 ```
