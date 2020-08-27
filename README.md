@@ -1,5 +1,10 @@
 # EDB Docs
 
+![Staging Deployment](https://github.com/rocketinsights/edb_docs/workflows/Deploy%20Develop%20to%20Netlify/badge.svg) - [Staging Link](https://edb-docs-staging.netlify.app/)
+
+
+![Production Deployment](https://github.com/rocketinsights/edb_docs/workflows/Deploy%20Master%20to%20Netlify/badge.svg) - [Production Link](https://edb-docs.netlify.app/)
+
 ## Setup
 
 1. Clone the repo!
