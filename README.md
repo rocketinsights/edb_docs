@@ -1,19 +1,18 @@
+# EDB Docs
+
 ## Setup
 
-1. This project uses `nvm` to manage the node version. You should install the correct node version with `nvm install`.
-2. Install yarn and gatsby with `npm i -g gatsby-cli` and `npm i -g yarn`
-3. Install all the bits and bobs with `yarn`
-4. Pull the shared icon files down with `git submodule update --init`
-5. Run the site locally with `gatsby develop`
+1. Clone the repo!
+2. (MacOS) Install the [homebrew package manager](https://brew.sh/), if it's not already installed.
+3. Install Node.js. We're currently using Node.js version 12. To install this version, first install `nvm` (Node Version Manager). This can be done with (MacOS) `brew install nvm`, followed by `nvm install`. Optionally, you can skip installing `nvm` and install Node.js 12 directly if you prefer.
+4. Install yarn and gatsby with `npm i -g gatsby-cli` and `npm i -g yarn`
+5. Install all required packages with `yarn`
+6. Pull the shared icon files down with `git submodule update --init`
+7. Run the site locally with `gatsby develop`. The site should now be running at `http://localhost:8000/`!
 
-### Running Katacoda embeds locally
-If you need to run the Katacoda embeds during local development, you'll need to have SSL setup locally.
+### Resolving issues
 
-1. Run the server with `gatsby develop --https`. When promped, enter your root password. This will configured a local certificate for the development server to use. If you have issues, see [this Gatsby doc](https://www.gatsbyjs.org/docs/local-https/#manual-installation-of-certutil).
-
-## Deployment
-
-Deploy the site to GH Pages with `yarn run deploy`
+If you experience errors or other issues with the site, the first step you should take is to run `gatsby clean`, and then try `gatsby develop` again. This clears gatsby cache, and can often resolve issues.
 
 ## Icons
 
@@ -21,8 +20,4 @@ We're using the shared [edb-icons repository](https://github.com/rocketinsights/
 
 ## Migrating RST files
 
-To migrate RST files, place the folder in a new `content` folder and run `yarn convert`
-
-The results will show up in the `content_build` folder. These can then be moved to the `docs` folder.
-
-The folder structure in docs is `{product}/{version number}/{content folder}`. If there is no version involved, just make it "1"
+See the [wiki](https://github.com/rocketinsights/edb_docs/wiki/RST-Content-Conversion-Process)!
