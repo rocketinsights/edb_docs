@@ -1,8 +1,10 @@
-name: Deploy Develop to Netlify on Push
+name: Deploy Develop to Netlify
 on:
   push:
     branches:
       - develop
+  repository_dispatch:
+    types: [advo-deploy-develop]
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
