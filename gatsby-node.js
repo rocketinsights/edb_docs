@@ -1,4 +1,5 @@
 const { createFilePath } = require(`gatsby-source-filesystem`);
+const { exec } = require("child_process");
 
 const sortVersionArray = (versions) => {
   return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
@@ -216,5 +217,23 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         githubIssuesLink: githubIssuesLink,
       },
     });
+  });
+
+  const sha = await new Promise((resolve, reject) => {
+    exec("git rev-parse HEAD", (error, stdout, stderr) => resolve(stdout));
+  });
+
+  const branch = await new Promise((resolve, reject) => {
+    exec("git branch --show-current", (error, stdout, stderr) => resolve(stdout));
+  });
+
+  actions.createPage({
+    path: 'build-info',
+    component: require.resolve('./src/templates/build-info.js'),
+    context: {
+      sha: sha,
+      branch: branch,
+      buildTime: Date.now(),
+    },
   });
 };
