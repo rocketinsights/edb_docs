@@ -7,7 +7,9 @@ title: "Creating a New Role Associated with a Profile"
 
 A database superuser can use clauses of the `CREATE USER|ROLE` command to assign a named profile to a role when creating the role, or to specify profile management details for a role. The command syntax related to profile management functionality is:
 
-> `CREATE USER|ROLE <name> [[WITH] <option> […]]`
+``` text
+CREATE USER|ROLE <name> [[WITH] <option> […]]
+```
 
 where `option` can be the following compatible clauses:
 
@@ -25,7 +27,7 @@ or `option` can be the following non-compatible clauses:
 
 For information about the administrative clauses of the `CREATE USER` or `CREATE ROLE` command that are supported by Advanced Server, see the PostgreSQL core documentation available at:
 
-> <https://www.postgresql.org/docs/12/static/sql-commands.html>
+> <https://www.postgresql.org/docs/current/static/sql-commands.html>
 
 `CREATE ROLE|USER... PROFILE` adds a new role with an associated profile to an Advanced Server database cluster.
 

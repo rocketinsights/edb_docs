@@ -4,26 +4,26 @@ title: "START_QUEUE"
 
 
 
-Use the `START_QUEUE` procedure to make a queue available for enqueuing and dequeueing.
+Use the `START_QUEUE` procedure to make a queue available for enqueuing and dequeueing. The signature is:
 
-The signature is:
-
-> `START_QUEUE(`  
->     `<queue_name> IN VARCHAR2`,  
->     `<enqueue> IN BOOLEAN DEFAULT TRUE`,  
->     `<dequeue> IN BOOLEAN DEFAULT TRUE)`
+``` text
+START_QUEUE(
+  <queue_name> IN VARCHAR2,
+  <enqueue> IN BOOLEAN DEFAULT TRUE,
+  <dequeue> IN BOOLEAN DEFAULT TRUE)
+```
 
 **Parameters**
 
-`<queue_name>`
+`queue_name`
 
-> `<queue_name>` specifies the name of the queue that you are starting.
+> `queue_name` specifies the name of the queue that you are starting.
 
-`<enqueue>`
+`enqueue`
 
 > Specify `TRUE` to enable enqueueing (the default), or `FALSE` to leave the current setting unchanged.
 
-`<dequeue>`
+`dequeue`
 
 > Specify `TRUE` to enable dequeueing (the default), or `FALSE` to leave the current setting unchanged.
 

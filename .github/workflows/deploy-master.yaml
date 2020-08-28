@@ -1,14 +1,17 @@
-name: Deploy Master to Netlify on Push
+name: Deploy Master to Netlify
 on:
   push:
     branches:
       - master
+  repository_dispatch:
+    types: [advo-deploy-prod]
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    # https://github.com/actions/setup-node#usage
+      with:
+        ref: 'master'
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'

@@ -116,17 +116,20 @@ The following demonstrates the execution of the procedures in `mailbox`. The fir
 
 ``` text
 EXEC mailbox.create_mailbox;
+
 Created mailbox: PG$PIPE$13$3940
 ```
 
 Using the mailbox name, any user in the same database with access to the `mailbox` package and `DBMS_PIPE` package can add messages:
 
 ``` text
-EXEC mailbox.add_message('PG$PIPE$13$3940','Hi, John','Can you attend a meeting at 3:00, today?','-- Mary');
+EXEC mailbox.add_message('PG$PIPE$13$3940','Hi, John','Can you attend a
+meeting at 3:00, today?','-- Mary');
 
 Added message with 3 item(s) to mailbox PG$PIPE$13$3940
 
-EXEC mailbox.add_message('PG$PIPE$13$3940','Don''t forget to submit your report','Thanks,','-- Joe');
+EXEC mailbox.add_message('PG$PIPE$13$3940','Don''t forget to submit your
+report','Thanks,','-- Joe');
 
 Added message with 3 item(s) to mailbox PG$PIPE$13$3940
 ```

@@ -6,14 +6,16 @@ title: "TRIM"
 
 The `TRIM` procedure provides the capability to truncate a large object to the specified length.
 
-> `TRIM(<lob_loc> IN OUT { BLOB | CLOB }, <newlen> INTEGER)`
+``` text
+TRIM(<lob_loc> IN OUT { BLOB | CLOB }, <newlen> INTEGER)
+```
 
 **Parameters**
 
-`<lob_loc>`
+`lob_loc`
 
 > Large object locator of the large object to be trimmed.
 
-`<newlen>`
+`newlen`
 
 > Number of bytes/characters to which the large object is to be trimmed.

@@ -1,14 +1,17 @@
-name: Deploy Develop to Netlify on Push
+name: Deploy Develop to Netlify
 on:
   push:
     branches:
       - develop
+  repository_dispatch:
+    types: [advo-deploy-develop]
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    # https://github.com/actions/setup-node#usage
+      with:
+        ref: develop
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'

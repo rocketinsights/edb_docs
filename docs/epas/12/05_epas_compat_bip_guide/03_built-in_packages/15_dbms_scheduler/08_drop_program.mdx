@@ -4,23 +4,23 @@ title: "DROP_PROGRAM"
 
 
 
-The `DROP_PROGRAM` procedure
+The `DROP_PROGRAM` procedure to drop a program. The signature of the `DROP_PROGRAM` procedure is:
 
-The signature of the `DROP_PROGRAM` procedure is:
-
-> `DROP_PROGRAM(`  
-> `<program_name> IN VARCHAR2`,  
-> `<force> IN BOOLEAN DEFAULT FALSE)`
+``` text
+DROP_PROGRAM(
+  <program_name> IN VARCHAR2,
+  <force> IN BOOLEAN DEFAULT FALSE)
+```
 
 **Parameters**
 
-`<program_name>`
+`program_name`
 
-> `<program_name>` specifies the name of the program that is being dropped.
+> `program_name` specifies the name of the program that is being dropped.
 
-`<force>`
+`force`
 
-> `<force>` is a `BOOLEAN` value that instructs the server how to handle programs with dependent jobs.
+> `force` is a `BOOLEAN` value that instructs the server how to handle programs with dependent jobs.
 > 
 > > Specify `FALSE` to instruct the server to return an error if the program is referenced by a job.
 > > 

@@ -16,22 +16,22 @@ A handle to the file to be written to, or read from is used to reference the fil
 
 References to directories on the file system are done using the directory name or alias that is assigned to the directory using the `CREATE DIRECTORY` command. The procedures and functions available in the `UTL_FILE` package are listed in the following table:
 
-|                                                                                      |             |                                                                                                                                                            |
-| ------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Function/Procedure                                                                   | Return Type | Description                                                                                                                                                |
-| FCLOSE(file IN OUT)                                                                  | n/a         | Closes the specified file identified by file.                                                                                                              |
-| FCLOSE_ALL                                                                          | n/a         | Closes all open files.                                                                                                                                     |
-| FCOPY(location, filename, dest_dir, dest_file \[, start_line \[, end_line \] \]) | n/a         | Copies filename in the directory identified by location to file, dest_file, in directory, dest_dir, starting from line, start_line, to line, end_line. |
-| FFLUSH(file)                                                                         | n/a         | Forces data in the buffer to be written to disk in the file identified by file.                                                                            |
-| FOPEN(location, filename, open_mode \[, max_linesize \])                           | FILE_TYPE  | Opens file, filename, in the directory identified by location.                                                                                             |
-| FREMOVE(location, filename)                                                          | n/a         | Removes the specified file from the file system.                                                                                                           |
-| FRENAME(location, filename, dest_dir, dest_file \[, overwrite \])                  | n/a         | Renames the specified file.                                                                                                                                |
-| GET_LINE(file, buffer OUT)                                                          | n/a         | Reads a line of text into variable, buffer, from the file identified by file.                                                                              |
-| IS_OPEN(file)                                                                       | BOOLEAN     | Determines whether or not the given file is open.                                                                                                          |
-| NEW_LINE(file \[, lines \])                                                         | n/a         | Writes an end-of-line character sequence into the file.                                                                                                    |
-| PUT(file, buffer)                                                                    | n/a         | Writes buffer to the given file. PUT does not write an end-of-line character sequence.                                                                     |
-| PUT_LINE(file, buffer)                                                              | n/a         | Writes buffer to the given file. An end-of-line character sequence is added by the PUT_LINE procedure.                                                    |
-| PUTF(file, format \[, arg1 \] \[, ...\])                                             | n/a         | Writes a formatted string to the given file. Up to five substitution parameters, arg1,...arg5 may be specified for replacement in format.                  |
+|                                                                                |             |                                                                                                                                                                    |
+| ------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Function/Procedure                                                             | Return Type | Description                                                                                                                                                        |
+| `FCLOSE(file IN OUT)`                                                          | n/a         | Closes the specified file identified by `file`.                                                                                                                    |
+| `FCLOSE_ALL`                                                                   | n/a         | Closes all open files.                                                                                                                                             |
+| `FCOPY(location, filename, dest_dir, dest_file [, start_line [, end_line ] ])` | n/a         | Copies `filename` in the directory identified by `location` to file, `dest_file`, in directory, `dest_dir`, starting from line, `start_line`, to line, `end_line`. |
+| `FFLUSH(file)`                                                                 | n/a         | Forces data in the buffer to be written to disk in the file identified by `file`.                                                                                  |
+| `FOPEN(location, filename, open_mode [, max_linesize ])`                       | `FILE_TYPE` | Opens file, `filename`, in the directory identified by `location`.                                                                                                 |
+| `FREMOVE(location, filename)`                                                  | n/a         | Removes the specified file from the file system.                                                                                                                   |
+| `FRENAME(location, filename, dest_dir, dest_file [, overwrite ])`              | n/a         | Renames the specified file.                                                                                                                                        |
+| `GET_LINE(file, buffer OUT)`                                                   | n/a         | Reads a line of text into variable, `buffer`, from the file identified by `file`.                                                                                  |
+| `IS_OPEN(file)`                                                                | `BOOLEAN`   | Determines whether or not the given file is open.                                                                                                                  |
+| `NEW_LINE(file [, lines ])`                                                    | n/a         | Writes an end-of-line character sequence into the file.                                                                                                            |
+| `PUT(file, buffer)`                                                            | n/a         | Writes `buffer` to the given file. `PUT` does not write an end-of-line character sequence.                                                                         |
+| `PUT_LINE(file, buffer)`                                                       | n/a         | Writes `buffer` to the given file. An end-of-line character sequence is added by the `PUT_LINE` procedure.                                                         |
+| `PUTF(file, format [, arg1 ] [, ...])`                                         | n/a         | Writes a formatted string to the given file. Up to five substitution parameters, `arg1,...arg5` may be specified for replacement in `format`.                      |
 
 Advanced Server's implementation of `UTL_FILE` is a partial implementation when compared to Oracle's version. Only those functions and procedures listed in the table above are supported.
 
@@ -129,53 +129,57 @@ This parameter can also be set on a per role basis with the `ALTER ROLE` command
 
 The `FCLOSE` procedure closes an open file.
 
-> `FCLOSE(<file> IN OUT FILE_TYPE)`
+``` text
+FCLOSE(<file> IN OUT FILE_TYPE)
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
-Variable of type `FILE_TYPE` containing a file handle of the file to be closed.
+> Variable of type `FILE_TYPE` containing a file handle of the file to be closed.
 
 ## FCLOSE_ALL
 
 The `FLCLOSE_ALL` procedures closes all open files. The procedure executes successfully even if there are no open files to close.
 
-> `FCLOSE_ALL`
+``` text
+FCLOSE_ALL
+```
 
 ## FCOPY
 
 The `FCOPY` procedure copies text from one file to another.
 
-> `FCOPY(<location> VARCHAR2, <filename> VARCHAR2`,
-> 
-> > `<dest_dir> VARCHAR2, <dest_file> VARCHAR2`
-> > 
-> > \[, `<start_line> PLS_INTEGER [, <end_line> PLS_INTEGER` \] \])
+``` text
+FCOPY(<location> VARCHAR2, <filename> VARCHAR2,
+  <dest_dir> VARCHAR2, <dest_file> VARCHAR2
+  [, <start_line> PLS_INTEGER [, <end_line> PLS_INTEGER ] ])
+```
 
 **Parameters**
 
-`<location>`
+`location`
 
 > Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be copied.
 
-`<filename>`
+`filename`
 
 > Name of the source file to be copied.
 
-`<dest_dir>`
+`dest_dir`
 
 > Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory to which the file is to be copied.
 
-`<dest_file>`
+`dest_file`
 
 > Name of the destination file.
 
-`<start_line>`
+`start_line`
 
 > Line number in the source file from which copying will begin. The default is 1.
 
-`<end_line>`
+`end_line`
 
 > Line number of the last line in the source file to be copied. If omitted or null, copying will go to the last line of the file.
 
@@ -235,11 +239,13 @@ The following is the destination file, 'empcopy.csv'
 
 The `FFLUSH` procedure flushes unwritten data from the write buffer to the file.
 
-> `FFLUSH(<file> FILE_TYPE)`
+``` text
+FFLUSH(<file> FILE_TYPE)
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing a file handle.
 
@@ -283,29 +289,31 @@ END;
 
 The `FOPEN` function opens a file for I/O.
 
-> `<filetype> FILE_TYPE FOPEN(<location> VARCHAR2`,  
-> `<filename> VARCHAR2,<open_mode> VARCHAR2`  
-> \[, `<max_linesize> BINARY_INTEGER ])`
+``` text
+filetype FILE_TYPE FOPEN(<location> VARCHAR2,
+  <filename> VARCHAR2,<open_mode> VARCHAR2
+  [, <max_linesize> BINARY_INTEGER ])
+```
 
 **Parameters**
 
-`<location>`
+`location`
 
 > Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be opened.
 
-`<filename>`
+`filename`
 
 > Name of the file to be opened.
 
-`<open_mode>`
+`open_mode`
 
 > Mode in which the file will be opened. Modes are: `a` - append to file; `r` - read from file; `w` - write to file.
 
-`<max_linesize>`
+`max_linesize`
 
-> Maximum size of a line in characters. In read mode, an exception is thrown if an attempt is made to read a line exceeding `<max_linesize>`. In write and append modes, an exception is thrown if an attempt is made to write a line exceeding `<max_linesize>`. The end-of-line character(s) are not included in determining if the maximum line size is exceeded. This behavior is not compatible with Oracle databases; Oracle does count the end-of-line character(s).
+> Maximum size of a line in characters. In read mode, an exception is thrown if an attempt is made to read a line exceeding `max_linesize`. In write and append modes, an exception is thrown if an attempt is made to write a line exceeding `max_linesize`. The end-of-line character(s) are not included in determining if the maximum line size is exceeded. This behavior is not compatible with Oracle databases; Oracle does count the end-of-line character(s).
 
-`<filetype>`
+`filetype`
 
 > Variable of type `FILE_TYPE` containing the file handle of the opened file.
 
@@ -313,17 +321,19 @@ The `FOPEN` function opens a file for I/O.
 
 The `FREMOVE` procedure removes a file from the system.
 
-> `FREMOVE(<location> VARCHAR2, <filename> VARCHAR2)`
+``` text
+FREMOVE(<location> VARCHAR2, <filename> VARCHAR2)
+```
 
 An exception is thrown if the file to be removed does not exist.
 
 **Parameters**
 
-`<location>`
+`location`
 
 > Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be removed.
 
-`<filename>`
+`filename`
 
 > Name of the file to be removed.
 
@@ -351,33 +361,33 @@ Removed file: empfile.csv
 
 The `FRENAME` procedure renames a given file. This effectively moves a file from one location to another.
 
-> `FRENAME(<location> VARCHAR2, <filename> VARCHAR2`,
-> 
-> `<dest_dir> VARCHAR2, <dest_file> VARCHAR2`,
-> 
-> \[ `<overwrite> BOOLEAN` \])
+``` text
+FRENAME(<location> VARCHAR2, <filename> VARCHAR2,
+  <dest_dir> VARCHAR2, <dest_file> VARCHAR2,
+  [ <overwrite> BOOLEAN ])
+```
 
 **Parameters**
 
-`<location>`
+`location`
 
 > Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory containing the file to be renamed.
 
-`<filename>`
+`filename`
 
 > Name of the source file to be renamed.
 
-`<dest_dir>`
+`dest_dir`
 
 > Directory name, as stored in `pg_catalog.edb_dir.dirname`, of the directory to which the renamed file is to exist.
 
-`<dest_file>`
+`dest_file`
 
 > New name of the original file.
 
-`<overwrite>`
+`overwrite`
 
-> Replaces any existing file named `<dest_file>` in `<dest_dir>` if set to `TRUE`, otherwise an exception is thrown if set to `FALSE`. This is the default.
+> Replaces any existing file named `dest_file` in `dest_dir` if set to `TRUE`, otherwise an exception is thrown if set to `FALSE`. This is the default.
 
 **Examples**
 
@@ -437,15 +447,17 @@ The following is the renamed file, 'newemp.csv'
 
 The `GET_LINE` procedure reads a line of text from a given file up to, but not including the end-of-line terminator. A `NO_DATA_FOUND` exception is thrown when there are no more lines to read.
 
-> `GET_LINE(<file> FILE_TYPE, <buffer> OUT VARCHAR2)`
+``` text
+GET_LINE(<file> FILE_TYPE, <buffer> OUT VARCHAR2)
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing the file handle of the opened file.
 
-`<buffer>`
+`buffer`
 
 > Variable to receive a line from the file.
 
@@ -498,15 +510,17 @@ End of file empfile.csv - 14 records retrieved
 
 The `IS_OPEN` function determines whether or not the given file is open.
 
-> `<status> BOOLEAN IS_OPEN(<file> FILE_TYPE)`
+``` text
+<status> BOOLEAN IS_OPEN(<file> FILE_TYPE)
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing the file handle of the file to be tested.
 
-`<status>`
+`status`
 
 > `TRUE` if the given file is open, `FALSE` otherwise.
 
@@ -514,15 +528,17 @@ The `IS_OPEN` function determines whether or not the given file is open.
 
 The `NEW_LINE` procedure writes an end-of-line character sequence in the file.
 
-> `NEW_LINE(<file> FILE_TYPE [, <lines> INTEGER ])`
+``` text
+NEW_LINE(<file> FILE_TYPE [, <lines> INTEGER ])
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing the file handle of the file to which end-of-line character sequences are to be written.
 
-`<lines>`
+`lines`
 
 > Number of end-of-line character sequences to be written. The default is one.
 
@@ -597,27 +613,24 @@ C:\TEMP\EMPDIR>TYPE empfile.csv
 7934,MILLER,CLERK,7782,23-JAN-82 00:00:00,1300.00,,10
 ```
 
-<div class="index">
 
-UTL_FILE_PUT
-
-</div>
 
 ## PUT
 
 The `PUT` procedure writes a string to the given file. No end-of-line character sequence is written at the end of the string. Use the `NEW_LINE` procedure to add an end-of-line character sequence.
 
-> `PUT(<file> FILE_TYPE, <buffer> { DATE | NUMBER | TIMESTAMP |`
-> 
-> `VARCHAR2 })`
+``` text
+PUT(<file> FILE_TYPE, <buffer> { DATE | NUMBER | TIMESTAMP |
+  VARCHAR2 })
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing the file handle of the file to which the given string is to be written.
 
-`<buffer>`
+`buffer`
 
 > Text to be written to the specified file.
 
@@ -679,26 +692,24 @@ C:\TEMP\EMPDIR>TYPE empfile.csv
 7934,MILLER,CLERK,7782,23-JAN-82 00:00:00,1300.00,,10
 ```
 
-<div class="index">
 
-UTL_FILE_PUT_LINE
-
-</div>
 
 ## PUT_LINE
 
 The `PUT_LINE` procedure writes a single line to the given file including an end-of-line character sequence.
 
-> `PUT_LINE(<file> FILE_TYPE`,  
-> `<buffer> {DATE|NUMBER|TIMESTAMP|VARCHAR2})`
+``` text
+PUT_LINE(<file> FILE_TYPE,
+  <buffer> {DATE|NUMBER|TIMESTAMP|VARCHAR2})
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing the file handle of the file to which the given line is to be written.
 
-`<buffer>`
+`buffer`
 
 > Text to be written to the specified file.
 
@@ -752,23 +763,24 @@ C:\TEMP\EMPDIR>TYPE empfile.csv
 
 The `PUTF` procedure writes a formatted string to the given file.
 
-> `PUTF(<file> FILE_TYPE, <format> VARCHAR2 [, <arg1> VARCHAR2]`
-> 
-> `[, ...])`
+``` text
+PUTF(<file> FILE_TYPE, <format> VARCHAR2 [, <arg1> VARCHAR2]
+  [, ...])
+```
 
 **Parameters**
 
-`<file>`
+`file`
 
 > Variable of type `FILE_TYPE` containing the file handle of the file to which the formatted line is to be written.
 
-`<format>`
+`format`
 
 > String to format the text written to the file. The special character sequence, `%s`, is substituted by the value of arg. The special character sequence, `\n`, indicates a new line. Note, however, in Advanced Server, a new line character must be specified with two consecutive backslashes instead of one - `\\n`. This characteristic is not compatible with Oracle databases.
 
-`<arg1>`
+`arg1`
 
-> Up to five arguments, `<arg1>`,...`<arg5>`, to be substituted in the format string for each occurrence of `%s`. The first arg is substituted for the first occurrence of `%s`, the second arg is substituted for the second occurrence of `%s`, etc.
+> Up to five arguments, `arg1`,...`arg5`, to be substituted in the format string for each occurrence of `%s`. The first arg is substituted for the first occurrence of `%s`, the second arg is substituted for the second occurrence of `%s`, etc.
 
 **Examples**
 
