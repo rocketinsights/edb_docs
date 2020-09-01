@@ -214,6 +214,8 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-json',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-meta-redirect',
+    'gatsby-plugin-netlify',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -301,7 +303,6 @@ module.exports = {
         ],
       },
     },
-    'gatsby-plugin-meta-redirect',
     {
       // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
       resolve: `gatsby-plugin-algolia`,
