@@ -43,7 +43,7 @@ export const indexLinkList = [
       {
         title: 'Hadoop Data Adapter',
         url: '/hadoop_data_adapter/2.0',
-        iconName: IconNames.CONNECT,
+        iconName: IconNames.HADOOP,
       },
       {
         title: 'JDBC Connector',
@@ -69,22 +69,22 @@ export const indexLinkList = [
       {
         title: 'PgBouncer',
         url: '/pgbouncer/1.0',
-        iconName: IconNames.CONNECT
+        iconName: IconNames.POSTGRESQL
       },
       {
         title: 'Pgpool-II',
         url: '/pgpool/1.0',
-        iconName: IconNames.CONNECT
+        iconName: IconNames.POSTGRESQL
       },
       {
         title: 'PostGIS',
         url: '/postgis/1.0',
-        iconName: IconNames.CONNECT
+        iconName: IconNames.GLOBE
       },
       {
         title: 'Slony Replication',
         url: '/slony/2.2.8',
-        iconName: IconNames.CONNECT
+        iconName: IconNames.NETWORK2
       },
     ],
   },
