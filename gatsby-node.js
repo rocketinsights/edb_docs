@@ -6,7 +6,15 @@ const sortVersionArray = (versions) => {
                  .map(version => version.replace(/\d+/g, n => +n-100000));
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+const buildLatestPath = (path) => {
+  const splitPath = path.split('/');
+  const postVersionPath = splitPath.slice(3).join('/');
+  return `/${splitPath[1]}/latest${postVersionPath.length > 0 ? `/${postVersionPath}` : ''}`;
+}
+
+const productLatestVersionCache = [];
+
+exports.onCreateNode = async ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
   if (
@@ -25,7 +33,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       relativeFilePath.length - 1,
     );
     const product = relativeFilePath.split('/')[1];
-
     const version = relativeFilePath.split('/')[2];
 
     // Creates new query'able fields
@@ -180,17 +187,29 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   docs.forEach(doc => {
+    const isLatest = versionIndex[doc.fields.product][0] === doc.fields.version;
+    if (isLatest) {
+      actions.createRedirect({
+        fromPath: doc.fields.path,
+        toPath: buildLatestPath(doc.fields.path),
+        redirectInBrowser: true,
+        isPermanent: false,
+      });
+    }
+
     const navLinks = docs.filter(
       node =>
         node.fields.product === doc.fields.product &&
         node.fields.version === doc.fields.version,
     );
+
     actions.createPage({
-      path: doc.fields.path,
+      path: isLatest ? buildLatestPath(doc.fields.path) : doc.fields.path,
       component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
+        nodePath: doc.fields.path,
       },
     });
   });
