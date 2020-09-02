@@ -18,8 +18,8 @@ import {
 import { leftNavs } from '../constants/left-navs';
 
 export const query = graphql`
-  query($path: String!) {
-    mdx(fields: { path: { eq: $path } }) {
+  query($nodePath: String!) {
+    mdx(fields: { path: { eq: $nodePath } }) {
       frontmatter {
         title
         navTitle
@@ -50,9 +50,9 @@ const getProductAndVersion = path => {
 };
 
 const makeVersionArray = (versions, path) => {
-  return versions.map(version => ({
+  return versions.map((version, i) => ({
     version: version,
-    url: `${getProductUrlBase(path)}/${version}`,
+    url: `${getProductUrlBase(path)}/${i === 0 ? 'latest' : version}`,
   }));
 };
 
