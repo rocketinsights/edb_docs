@@ -91,6 +91,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             navTitle
             description
             redirects
+            iconName
           }
           excerpt(pruneLength: 100)
           fields {
