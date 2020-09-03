@@ -50,3 +50,14 @@ code {
 .guide-link {
   font-size: 1.1rem;
 }
+
+.download-pdf  {
+  svg {
+    position: relative;
+    top: -3px;
+  }
+  &:hover {
+    background-color: transparent;
+    color: orangered;
+  }
+}
