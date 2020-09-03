@@ -166,8 +166,9 @@ const DocTemplate = ({ data, pageContext }) => {
           />
         </SideNavigation>
         <MainContent>
-          <h1 className="balance-text">{frontmatter.title}</h1>
+          <h1 className="balance-text">{frontmatter.title} <span className="font-weight-light ml-2 text-muted badge-light px-2 rounded text-smaller" >v{version}</span></h1>
           <PdfDownload path={path} />
+
           <ContentRow>
             <Col xs={9}>
               <MDXRenderer>{body}</MDXRenderer>
