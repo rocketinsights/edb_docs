@@ -100,7 +100,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             redirects
             iconName
           }
-          excerpt(pruneLength: 100)
+          excerpt(pruneLength: 280)
           fields {
             path
             product
@@ -220,11 +220,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       node => node.fields.topic === doc.fields.topic,
     );
     const advocacyDocsRepoUrl = 'https://github.com/rocketinsights/edb_docs_advocacy';
-    const githubLink = advocacyDocsRepoUrl + 
+    const githubLink = advocacyDocsRepoUrl +
       '/edit/master/advocacy_docs' +
       doc.fields.path +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
-    const githubIssuesLink = advocacyDocsRepoUrl + 
+    const githubIssuesLink = advocacyDocsRepoUrl +
       '/issues/new?title=Regarding%20' +
       encodeURIComponent(doc.fields.path) +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');

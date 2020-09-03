@@ -110,19 +110,20 @@ const Section = ({ section }) => (
   <div className="card-deck my-4" key={section.title}>
     <div className="card rounded shadow-sm p-2">
       <div className="card-body">
-        <h3 className="card-title balance-text">{section.title}</h3>
+        <h2 className="card-title balance-text">{section.title}</h2>
         {section.guides.map(guide =>
           guide ? (
             <p className="card-text" key={`${guide.frontmatter.title}`}>
               <Link
                 to={guide.fields.path}
-                className="btn btn-link btn-block text-left p-0"
+                className="guide-link btn btn-link btn-block text-left p-0"
               >
-                {guide.frontmatter.title}
+                {guide.frontmatter.navTitle}
               </Link>
-              <span className="small text-muted">
-                {guide.frontmatter.description || guide.excerpt}
-              </span>
+              {/* <div className="text-small">
+                <span>{guide.frontmatter.description || guide.excerpt}
+                </span>
+              </div> */}
             </p>
           ) : (
             <DevOnly key={Math.random()}>
