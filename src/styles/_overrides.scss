@@ -43,6 +43,12 @@ code {
   justify-content: flex-end !important;
 }
 
+.text-smaller {
+  font-size: 1.4rem !important;
+  position: relative;
+  top: -3px;
+}
+
 .download-pdf  {
   svg {
     position: relative;
