@@ -195,6 +195,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         toPath: buildLatestPath(doc.fields.path),
         redirectInBrowser: true,
         isPermanent: false,
+        force: true,
       });
     }
 
