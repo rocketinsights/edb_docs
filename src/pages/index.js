@@ -47,7 +47,7 @@ export default data => {
 
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
-              <div className="ml-3">
+              <div className="ml-4">
               <Icon
                   iconName={iconNames.INSTALL}
                   className="fill-orange"
@@ -71,7 +71,7 @@ export default data => {
               </div>
             </div>
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
-              <div className="ml-3">
+              <div className="ml-4">
               <Icon
                   iconName={iconNames.CONNECT}
                   className="fill-orange"
@@ -127,7 +127,7 @@ enhanced with mission-critical features that help you maintain greater consisten
 
               <div className="row">
                 <div className="col-md">
-                  <h5 className="mt-4">Getting Started</h5>
+                  <h3 className="mt-4">Getting Started</h3>
                   <a href="epas/12/01_epas_inst_linux" className="btn btn-link btn-block text-left p-0">
                     Installation Guide for Linux
                   </a>
@@ -140,7 +140,7 @@ enhanced with mission-critical features that help you maintain greater consisten
                 </div>
 
                 <div className="col-md">
-                  <h5 className="mt-4">For Oracle Developers</h5>
+                  <h3 className="mt-4">For Oracle Developers</h3>
                   <a href="epas/12/06_epas_compat_ora_dev_guide" className="btn btn-link btn-block text-left p-0">
                     Database Compatibility for Oracle Developers
                   </a>
@@ -156,7 +156,7 @@ enhanced with mission-critical features that help you maintain greater consisten
                 </div>
 
                 <div className="col-md">
-                  <h5 className="mt-4">User Guides</h5>
+                  <h3 className="mt-4">User Guides</h3>
                   <a href="epas/12/10_epas_guide" className="btn btn-link btn-block text-left p-0">
                     EDB Postgres Advanced Server
                   </a>
