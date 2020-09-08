@@ -12,7 +12,6 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
   const { baseUrl, imageUrl, title, description } = useSiteMetadata();
   const meta = pageMeta || {};
   const url = meta.path ? baseUrl + meta.path : baseUrl;
-  const addCanonical = /\/latest($|\/)/.test(url);
 
   return (
     <>
@@ -27,7 +26,9 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
         />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:url" content={url} />
-        { addCanonical && <link rel="canonical" href={url} /> }
+        { meta.canonicalPath &&
+          <link rel="canonical" href={baseUrl + meta.canonicalPath} />
+        }
         <meta name="twitter:card" content="summary_large_image" />
         <body className={`bg-${background} fixed-container`} />
       </Helmet>

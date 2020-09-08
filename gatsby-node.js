@@ -6,10 +6,10 @@ const sortVersionArray = (versions) => {
                  .map(version => version.replace(/\d+/g, n => +n-100000));
 }
 
-const buildLatestPath = (path) => {
+const replacePathVersion = (path, version = 'latest') => {
   const splitPath = path.split('/');
   const postVersionPath = splitPath.slice(3).join('/');
-  return `/${splitPath[1]}/latest${postVersionPath.length > 0 ? `/${postVersionPath}` : ''}`;
+  return `/${splitPath[1]}/${version}${postVersionPath.length > 0 ? `/${postVersionPath}` : ''}`;
 }
 
 const productLatestVersionCache = [];
@@ -192,7 +192,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     if (isLatest) {
       actions.createRedirect({
         fromPath: doc.fields.path,
-        toPath: buildLatestPath(doc.fields.path),
+        toPath: replacePathVersion(doc.fields.path),
         redirectInBrowser: true,
         isPermanent: false,
         force: true,
@@ -206,12 +206,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     );
 
     actions.createPage({
-      path: isLatest ? buildLatestPath(doc.fields.path) : doc.fields.path,
+      path: isLatest ? replacePathVersion(doc.fields.path) : doc.fields.path,
       component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
         nodePath: doc.fields.path,
+        potentialLatestPath: replacePathVersion(doc.fields.path), // the latest url for this path (may not exist!)
+        potentialLatestNodePath: replacePathVersion(
+          doc.fields.path,
+          versionIndex[doc.fields.product][0]
+        ), // the latest version number path (may not exist!), needed for query
       },
     });
   });
