@@ -137,7 +137,7 @@ const Section = ({ section }) => (
   </div>
 );
 
-const DocTemplate = ({ data, pageContext }) => {
+const DocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { fields, frontmatter, body, tableOfContents } = data.mdx;
   const { path } = fields;
   const depth = path.split('/').length;
@@ -150,7 +150,7 @@ const DocTemplate = ({ data, pageContext }) => {
   const pageMeta = {
     title: frontmatter.title,
     description: frontmatter.description,
-    path: path,
+    path: pagePath,
   };
 
   return (
