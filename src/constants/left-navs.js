@@ -157,5 +157,17 @@ export const leftNavs = {
         path: 'pem_ent_feat',
       },
     ],
+    '7.14': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide_linux',
+      },
+      {
+        path: 'pem_inst_guide_windows',
+      },
+    ],
   },
 };
