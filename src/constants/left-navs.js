@@ -132,10 +132,10 @@ export const leftNavs = {
         path: 'pem_inst_guide_linux',
       },
       {
-        path: 'edb_pem_pgbouncer',
+        path: 'pem_pgbouncer',
       },
       {
-        path: 'edb_pem_upgrade',
+        path: 'pem_upgrade',
       },
       {
         path: 'pem_inst_guide_windows',
@@ -145,16 +145,16 @@ export const leftNavs = {
         title: 'Guides',
       },
       {
-        path: 'edb_pem_admin',
+        path: 'pem_admin',
       },
       {
-        path: 'edb_pem_agent',
+        path: 'pem_agent',
       },
       {
-        path: 'edb_pem_bart',
+        path: 'pem_bart',
       },
       {
-        path: 'edb_pem_ent_feat',
+        path: 'pem_ent_feat',
       },
     ],
   },
