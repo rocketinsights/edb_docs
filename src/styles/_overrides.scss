@@ -59,3 +59,13 @@ code {
     color: orangered;
   }
 }
+
+/* Dropdown overrides */
+.dropdown-menu {
+  border: none !important;
+  border-radius: $border-radius !important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: black !important;
+}
