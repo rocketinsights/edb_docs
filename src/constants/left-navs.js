@@ -60,14 +60,30 @@ export const leftNavs = {
         title: 'Getting Started',
       },
       {
-        path: 'ark_gsg_guide',
+        path: 'ark_gsg',
       },
       {
         path: null,
         title: 'User Guides',
       },
       {
-        path: 'ark_admin_guide',
+        path: 'ark_admin',
+      },
+    ],
+    '3.4': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'ark_gsg',
+      },
+      {
+        path: null,
+        title: 'User Guides',
+      },
+      {
+        path: 'ark_admin',
       },
     ],
   },
