@@ -166,7 +166,7 @@ const removeLeadingBrackets = section => {
   return section;
 };
 
-const queries = [
+const queries = process.env.INDEX_ON_BUILD ? [
   {
     query: docQuery,
     transformer: ({ data }) =>
@@ -197,7 +197,11 @@ const queries = [
       ),
     indexName: 'edb',
   },
-];
+] : [];
+
+if (!process.env.INDEX_ON_BUILD) {
+  console.log('Skipping Algolia index build');
+}
 
 module.exports = {
   pathPrefix: config.gatsby.pathPrefix,

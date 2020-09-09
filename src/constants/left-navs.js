@@ -60,47 +60,170 @@ export const leftNavs = {
         title: 'Getting Started',
       },
       {
-        path: 'ark_gsg_guide',
+        path: 'ark_gsg',
       },
       {
         path: null,
         title: 'User Guides',
       },
       {
-        path: 'ark_admin_guide',
+        path: 'ark_admin',
       },
     ],
-  },
-
-  bart: {
-    '2.5.4': [
+    '3.4': [
       {
         path: null,
         title: 'Getting Started',
       },
       {
-        path: 'edb_bart_inst',
+        path: 'ark_gsg',
       },
       {
-        path: 'edb_bart_qs_7',
+        path: null,
+        title: 'User Guides',
       },
       {
-        path: 'edb_bart_qs_8',
+        path: 'ark_admin',
+      },
+    ],
+  },
+
+  bart: {
+    '2.5.5': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs_7',
+      },
+      {
+        path: 'bart_qs_8',
       },
       {
         path: null,
         title: 'Guides',
       },
       {
-        path: 'edb_bart_user',
+        path: 'bart_user',
       },
       {
-        path: 'edb_bart_ref',
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.4': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs_7',
+      },
+      {
+        path: 'bart_qs_8',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_user',
+      },
+      {
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.3': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_user',
+      },
+      {
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.2': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.1': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_user',
+      },
+      {
+        path: 'bart_ref',
       },
     ],
   },
 
   efm: {
+    '4.0': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'efm_quick_start',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'efm_ha_scalability',
+      },
+      {
+        path: 'efm_user',
+      },
+    ],
     '3.10': [
       {
         path: null,
@@ -114,10 +237,52 @@ export const leftNavs = {
         title: 'Guides',
       },
       {
-        path: 'edb_ha_scalability',
+        path: 'efm_ha_scalability',
       },
       {
-        path: 'edb_efm_user',
+        path: 'efm_user',
+      },
+    ],
+    '3.9': [
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'efm_ha_scalability',
+      },
+      {
+        path: 'efm_user',
+      },
+    ],
+    '3.8': [
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'efm_ha_scalability',
+      },
+      {
+        path: 'efm_user',
+      },
+    ],
+    '3.7': [
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'efm_user',
+      },
+    ],
+    '3.6': [
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'efm_user',
       },
     ],
   },
@@ -132,10 +297,10 @@ export const leftNavs = {
         path: 'pem_inst_guide_linux',
       },
       {
-        path: 'edb_pem_pgbouncer',
+        path: 'pem_pgbouncer',
       },
       {
-        path: 'edb_pem_upgrade',
+        path: 'pem_upgrade',
       },
       {
         path: 'pem_inst_guide_windows',
@@ -145,16 +310,173 @@ export const leftNavs = {
         title: 'Guides',
       },
       {
-        path: 'edb_pem_admin',
+        path: 'pem_admin',
       },
       {
-        path: 'edb_pem_agent',
+        path: 'pem_agent',
       },
       {
-        path: 'edb_pem_bart',
+        path: 'pem_bart',
       },
       {
-        path: 'edb_pem_ent_feat',
+        path: 'pem_ent_feat',
+      },
+    ],
+    '7.14': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide_linux',
+      },
+      {
+        path: 'pem_inst_guide_windows',
+      },
+    ],
+    '7.13': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide',
+      },
+      {
+        path: 'pem_pgbouncer',
+      },
+      {
+        path: 'pem_upgrade',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'pem_admin',
+      },
+      {
+        path: 'pem_agent',
+      },
+      {
+        path: 'pem_bart',
+      },
+      {
+        path: 'pem_ent_feat',
+      },
+    ],
+    '7.12': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide',
+      },
+      {
+        path: 'pem_pgbouncer',
+      },
+      {
+        path: 'pem_ark',
+      },
+      {
+        path: 'pem_upgrade',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'pem_gsg',
+      },
+      {
+        path: 'pem_agent',
+      },
+      {
+        path: 'pem_bart',
+      },
+      {
+        path: 'pem_ent_feat',
+      },
+    ],
+    '7.11': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide',
+      },
+      {
+        path: 'pem_pgbouncer',
+      },
+      {
+        path: 'pem_ark',
+      },
+      {
+        path: 'pem_upgrade',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'pem_gsg',
+      },
+      {
+        path: 'pem_agent',
+      },
+      {
+        path: 'pem_bart',
+      },
+      {
+        path: 'pem_ent_feat',
+      },
+    ],
+    '7.10': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_inst_guide',
+      },
+      {
+        path: 'pem_pgbouncer',
+      },
+      {
+        path: 'pem_ark',
+      },
+      {
+        path: 'pem_upgrade',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'pem_gsg',
+      },
+      {
+        path: 'pem_agent',
+      },
+      {
+        path: 'pem_bart',
+      },
+      {
+        path: 'pem_ent_feat',
+      },
+    ],
+    '7.9': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'pem_gsg',
+      },
+      {
+        path: 'pem_agent',
       },
     ],
   },
