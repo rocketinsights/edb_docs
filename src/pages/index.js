@@ -174,7 +174,7 @@ enhanced with mission-critical features that help you maintain greater consisten
               <h4 className="mt-4">Versions</h4>
               <div className="btn-group" role="group">
                 <a
-                  href="epas/12"
+                  href="epas/latest"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
@@ -216,7 +216,7 @@ enhanced with mission-critical features that help you maintain greater consisten
 
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm p-2">
-              <a href="pem/7.15">
+              <a href="pem/latest">
               <Icon
                   iconName={iconNames.EDB_PEM}
                   className="fill-orange"
@@ -229,7 +229,7 @@ enhanced with mission-critical features that help you maintain greater consisten
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="pem/7.15">
+                  <a href="pem/latest">
                     Postgres
                     <br data-owner="balance-text" />
                     Enterprise
@@ -245,7 +245,7 @@ clusters from one convenient GUI
             </div>
 
             <div className="card rounded shadow-sm p-2">
-              <a href="bart/2.5.4">
+              <a href="bart/latest">
               <Icon
                   iconName={iconNames.EDB_BART}
                   className="fill-orange"
@@ -258,7 +258,7 @@ clusters from one convenient GUI
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="bart/2.5.4">
+                  <a href="bart/latest">
                     Backup and
                     <br data-owner="balance-text" />
                     Recovery Tool
@@ -272,7 +272,7 @@ for PostgreSQL
             </div>
 
             <div className="card rounded shadow-sm p-2">
-              <a href="efm/3.10">
+              <a href="efm/latest">
               <Icon
                   iconName={iconNames.EDB_EFM}
                   className="fill-orange"
@@ -285,7 +285,7 @@ for PostgreSQL
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="efm/3.10">Failover Manager</a>
+                  <a href="efm/latest">Failover Manager</a>
                 </h3>
                 <p className="card-text">
                 High Availability for PostgreSQL
