@@ -13,15 +13,15 @@ To invoke the PEM agent installer, assume `Administrative` privileges and naviga
 
 The `Setup…` page opens, welcoming you to the PEM Agent installer.
 
-<figure><img src="../images/setup_pem_server_on_existing_postgres_server_welcome_wizard.png" class="align-center" alt="The PEM Agent Installer&#39;s Welcome dialog" /><figcaption aria-hidden="true"><em>The PEM Agent Installer's Welcome dialog</em></figcaption></figure>
+![*The PEM Agent Installer&#39;s Welcome dialog*](../images/setup_pem_server_on_existing_postgres_server_welcome_wizard.png)
 
 Click `Next` to continue to the `License Agreement`.
 
-<figure><img src="../images/setup_pem_server_on_same_host_license_agreement.png" class="align-center" alt="The PEM License Agreement" /><figcaption aria-hidden="true"><em>The PEM License Agreement</em></figcaption></figure>
+![*The PEM License Agreement*](../images/setup_pem_server_on_same_host_license_agreement.png)
 
 Carefully review the license agreement before highlighting the appropriate radio button and accepting the agreement; click `Next` to continue to the `Installation Directory` dialog.
 
-<figure><img src="../images/using_the_graphical_installer_to_install_pem_agent_installation_directory.png" class="align-center" alt="Specify an Installation Directory" /><figcaption aria-hidden="true"><em>Specify an Installation Directory</em></figcaption></figure>
+![*Specify an Installation Directory*](../images/using_the_graphical_installer_to_install_pem_agent_installation_directory.png)
 
 By default, the PEM agent is installed in the `/home/opt/PEM directory`. You can accept the default installation directory, or modify the contents of the `Installation Directory` field, specifying an alternate installation directory for the PEM agent.
 
@@ -31,7 +31,7 @@ Check the box next to `Register now?` to instruct the installer to register the 
 
 Click `Next` to continue to the `PEM Server Installation Details` dialog.
 
-<figure><img src="../images/using_the_graphical_installer_to_install_pem_agent_pem_server_installation_details.png" class="align-center" alt="Provide PEM server installation details" /><figcaption aria-hidden="true"><em>Provide PEM server installation details</em></figcaption></figure>
+![*Provide PEM server installation details*](../images/using_the_graphical_installer_to_install_pem_agent_pem_server_installation_details.png)
 
 Enter the connection details for the PEM server on the `PEM server installation details` dialog:
 
@@ -54,7 +54,7 @@ The PEM server must allow connections from the PEM agent installer. If you encou
 
 </div>
 
-<figure><img src="../images/using_the_graphical_installer_to_install_pem_agent_agent_details.png" class="align-center" alt="Specify a descriptive name for the PEM agent" /><figcaption aria-hidden="true"><em>Specify a descriptive name for the PEM agent</em></figcaption></figure>
+![*Specify a descriptive name for the PEM agent*](../images/using_the_graphical_installer_to_install_pem_agent_agent_details.png)
 
 The tree control displayed in the `Browser` panel of the PEM web interface displays the value entered in the `Description` field to identify the PEM agent. Specify a descriptive name for the agent, such as the hostname of the machine the agent is installed on, or a name that reflects the host's functionality.
 
@@ -62,21 +62,21 @@ Provide a descriptive name, or accept the default provided by the PEM agent host
 
 If you checked the `Show advanced options` checkbox, the `Advanced options` dialog opens.
 
-<figure><img src="../images/using_an_rpm_package_to_install_the_pem_agent_advanced_options_certificate_path.png" class="align-center" alt="Provide the certificate path" /><figcaption aria-hidden="true"><em>Provide the certificate path</em></figcaption></figure>
+![*Provide the certificate path*](../images/using_an_rpm_package_to_install_the_pem_agent_advanced_options_certificate_path.png)
 
 By default, the PEM agent installer places the certificate in the `/root/.pem directory`. Specify an alternate path for the certificate or accept the default and click `Next`.
 
 The wizard is now ready to install the PEM agent; click `Back` to amend the installation directory, or `Next` to continue.
 
-<figure><img src="../images/using_the_graphical_installer_to_install_pem_agent_installation_in_progress%20.png" class="align-center" alt="The PEM Agent installation is ready to begin" /><figcaption aria-hidden="true"><em>The PEM Agent installation is ready to begin</em></figcaption></figure>
+![*The PEM Agent installation is ready to begin*](../images/using_the_graphical_installer_to_install_pem_agent_installation_in_progress%20.png)
 
 Click `Next` on the `Ready to Install` dialog to instruct the installer to copy files to the system and register the agent on the PEM server.
 
-<figure><img src="../images/using_the_graphical_installer_to_install_pem_agent__installating_creating_certificates.png" class="align-center" alt="Progress bars mark the installation&#39;s progress" /><figcaption aria-hidden="true"><em>Progress bars mark the installation's progress</em></figcaption></figure>
+![*Progress bars mark the installation&#39;s progress*](../images/using_the_graphical_installer_to_install_pem_agent__installating_creating_certificates.png)
 
 The PEM agent installer displays progress bars to mark the PEM agent's installation progress.
 
-<figure><img src="../images/using_the_graphical_installer_to_install_pem_agent_installation_complete.png" class="align-center" alt="The PEM Agent installation is complete" /><figcaption aria-hidden="true"><em>The PEM Agent installation is complete</em></figcaption></figure>
+![*The PEM Agent installation is complete*](../images/using_the_graphical_installer_to_install_pem_agent_installation_complete.png)
 
 When the installation has completed, the PEM agent will be running and reporting operating system and host data to the PEM server. To start monitoring Postgres instances on the host of the PEM agent, they must now be added to PEM’s enterprise directory and bound to the agent.
 
