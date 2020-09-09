@@ -73,29 +73,117 @@ export const leftNavs = {
   },
 
   bart: {
-    '2.5.4': [
+    '2.5.5': [
       {
         path: null,
         title: 'Getting Started',
       },
       {
-        path: 'edb_bart_inst',
+        path: 'bart_inst',
       },
       {
-        path: 'edb_bart_qs_7',
+        path: 'bart_qs_7',
       },
       {
-        path: 'edb_bart_qs_8',
+        path: 'bart_qs_8',
       },
       {
         path: null,
         title: 'Guides',
       },
       {
-        path: 'edb_bart_user',
+        path: 'bart_user',
       },
       {
-        path: 'edb_bart_ref',
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.4': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs_7',
+      },
+      {
+        path: 'bart_qs_8',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_user',
+      },
+      {
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.3': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_user',
+      },
+      {
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.2': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_ref',
+      },
+    ],
+    '2.5.1': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'bart_inst',
+      },
+      {
+        path: 'bart_qs',
+      },
+      {
+        path: null,
+        title: 'Guides',
+      },
+      {
+        path: 'bart_user',
+      },
+      {
+        path: 'bart_ref',
       },
     ],
   },
