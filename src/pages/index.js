@@ -47,7 +47,7 @@ export default data => {
 
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
-              <div className="ml-3">
+              <div className="ml-4">
               <Icon
                   iconName={iconNames.INSTALL}
                   className="fill-orange"
@@ -71,7 +71,7 @@ export default data => {
               </div>
             </div>
             <div className="card rounded shadow-sm d-flex flex-row align-items-center">
-              <div className="ml-3">
+              <div className="ml-4">
               <Icon
                   iconName={iconNames.CONNECT}
                   className="fill-orange"
@@ -127,7 +127,7 @@ enhanced with mission-critical features that help you maintain greater consisten
 
               <div className="row">
                 <div className="col-md">
-                  <h5 className="mt-4">Getting Started</h5>
+                  <h3 className="mt-4">Getting Started</h3>
                   <a href="epas/12/01_epas_inst_linux" className="btn btn-link btn-block text-left p-0">
                     Installation Guide for Linux
                   </a>
@@ -140,7 +140,7 @@ enhanced with mission-critical features that help you maintain greater consisten
                 </div>
 
                 <div className="col-md">
-                  <h5 className="mt-4">For Oracle Developers</h5>
+                  <h3 className="mt-4">For Oracle Developers</h3>
                   <a href="epas/12/06_epas_compat_ora_dev_guide" className="btn btn-link btn-block text-left p-0">
                     Database Compatibility for Oracle Developers
                   </a>
@@ -156,7 +156,7 @@ enhanced with mission-critical features that help you maintain greater consisten
                 </div>
 
                 <div className="col-md">
-                  <h5 className="mt-4">User Guides</h5>
+                  <h3 className="mt-4">User Guides</h3>
                   <a href="epas/12/10_epas_guide" className="btn btn-link btn-block text-left p-0">
                     EDB Postgres Advanced Server
                   </a>
@@ -174,35 +174,35 @@ enhanced with mission-critical features that help you maintain greater consisten
               <h4 className="mt-4">Versions</h4>
               <div className="btn-group" role="group">
                 <a
-                  href="epas/12"
+                  href="epas/latest"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   12 <span className="muted">&mdash; Latest</span>
                 </a>
                 <a
-                  href="epas_legacy/11"
+                  href="epas/11"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   11
                 </a>
                 <a
-                  href="epas_legacy/10"
+                  href="epas/10"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   10
                 </a>
                 <a
-                  href="epas_legacy/9.6"
+                  href="epas/9.6"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
                   9.6
                 </a>
                 <a
-                  href="epas_legacy/9.5"
+                  href="epas/9.5"
                   role="button"
                   className="btn btn-outline-primary px-4"
                 >
@@ -216,7 +216,7 @@ enhanced with mission-critical features that help you maintain greater consisten
 
           <div className="card-deck mt-4">
             <div className="card rounded shadow-sm p-2">
-              <a href="pem/7.15">
+              <a href="pem/latest">
               <Icon
                   iconName={iconNames.EDB_PEM}
                   className="fill-orange"
@@ -229,7 +229,7 @@ enhanced with mission-critical features that help you maintain greater consisten
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="pem/7.15">
+                  <a href="pem/latest">
                     Postgres
                     <br data-owner="balance-text" />
                     Enterprise
@@ -245,7 +245,7 @@ clusters from one convenient GUI
             </div>
 
             <div className="card rounded shadow-sm p-2">
-              <a href="bart/2.5.4">
+              <a href="bart/latest">
               <Icon
                   iconName={iconNames.EDB_BART}
                   className="fill-orange"
@@ -258,7 +258,7 @@ clusters from one convenient GUI
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="bart/2.5.4">
+                  <a href="bart/latest">
                     Backup and
                     <br data-owner="balance-text" />
                     Recovery Tool
@@ -272,7 +272,7 @@ for PostgreSQL
             </div>
 
             <div className="card rounded shadow-sm p-2">
-              <a href="efm/3.10">
+              <a href="efm/latest">
               <Icon
                   iconName={iconNames.EDB_EFM}
                   className="fill-orange"
@@ -285,7 +285,7 @@ for PostgreSQL
               </a>
               <div className="card-body">
                 <h3 className="card-title balance-text">
-                  <a href="efm/3.10">Failover Manager</a>
+                  <a href="efm/latest">Failover Manager</a>
                 </h3>
                 <p className="card-text">
                 High Availability for PostgreSQL

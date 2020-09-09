@@ -1,3 +1,8 @@
+// this patch is required to consistently load all the doc files
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
+gracefulFs.gracefulify(realFs);
+
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { exec } = require("child_process");
 
@@ -6,7 +11,15 @@ const sortVersionArray = (versions) => {
                  .map(version => version.replace(/\d+/g, n => +n-100000));
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+const buildLatestPath = (path) => {
+  const splitPath = path.split('/');
+  const postVersionPath = splitPath.slice(3).join('/');
+  return `/${splitPath[1]}/latest${postVersionPath.length > 0 ? `/${postVersionPath}` : ''}`;
+}
+
+const productLatestVersionCache = [];
+
+exports.onCreateNode = async ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
   if (
@@ -25,7 +38,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       relativeFilePath.length - 1,
     );
     const product = relativeFilePath.split('/')[1];
-
     const version = relativeFilePath.split('/')[2];
 
     // Creates new query'able fields
@@ -91,8 +103,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             navTitle
             description
             redirects
+            iconName
           }
-          excerpt(pruneLength: 100)
+          excerpt(pruneLength: 280)
           fields {
             path
             product
@@ -180,17 +193,30 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   docs.forEach(doc => {
+    const isLatest = versionIndex[doc.fields.product][0] === doc.fields.version;
+    if (isLatest) {
+      actions.createRedirect({
+        fromPath: doc.fields.path,
+        toPath: buildLatestPath(doc.fields.path),
+        redirectInBrowser: true,
+        isPermanent: false,
+        force: true,
+      });
+    }
+
     const navLinks = docs.filter(
       node =>
         node.fields.product === doc.fields.product &&
         node.fields.version === doc.fields.version,
     );
+
     actions.createPage({
-      path: doc.fields.path,
+      path: isLatest ? buildLatestPath(doc.fields.path) : doc.fields.path,
       component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
+        nodePath: doc.fields.path,
       },
     });
   });
@@ -200,11 +226,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       node => node.fields.topic === doc.fields.topic,
     );
     const advocacyDocsRepoUrl = 'https://github.com/rocketinsights/edb_docs_advocacy';
-    const githubLink = advocacyDocsRepoUrl + 
+    const githubLink = advocacyDocsRepoUrl +
       '/edit/master/advocacy_docs' +
       doc.fields.path +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
-    const githubIssuesLink = advocacyDocsRepoUrl + 
+    const githubIssuesLink = advocacyDocsRepoUrl +
       '/issues/new?title=Regarding%20' +
       encodeURIComponent(doc.fields.path) +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');

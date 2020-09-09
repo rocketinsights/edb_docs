@@ -166,7 +166,7 @@ const removeLeadingBrackets = section => {
   return section;
 };
 
-const queries = [
+const queries = process.env.INDEX_ON_BUILD ? [
   {
     query: docQuery,
     transformer: ({ data }) =>
@@ -197,7 +197,11 @@ const queries = [
       ),
     indexName: 'edb',
   },
-];
+] : [];
+
+if (!process.env.INDEX_ON_BUILD) {
+  console.log('Skipping Algolia index build');
+}
 
 module.exports = {
   pathPrefix: config.gatsby.pathPrefix,
@@ -214,6 +218,8 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-json',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-meta-redirect',
+    'gatsby-plugin-netlify',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -301,7 +307,6 @@ module.exports = {
         ],
       },
     },
-    'gatsby-plugin-meta-redirect',
     {
       // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
       resolve: `gatsby-plugin-algolia`,

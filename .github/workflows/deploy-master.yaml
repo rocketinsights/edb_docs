@@ -9,6 +9,10 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.5.0
+      with:
+        access_token: ${{ github.token }}
     - uses: actions/checkout@v2
       with:
         ref: 'master'
@@ -27,6 +31,7 @@ jobs:
         ALGOLIA_API_KEY:  ${{ secrets.ALGOLIA_API_KEY }}
         ALGOLIA_APP_ID:  ${{ secrets.ALGOLIA_APP_ID }}
         ALGOLIA_INDEX_NAME:  ${{ secrets.ALGOLIA_INDEX_NAME }}
+        INDEX_ON_BUILD: true
     # Deploy the gatsby build to Netlify
     #- run: npx netlify-cli deploy --dir=public --prod
     # https://github.com/netlify/actions/blob/master/cli/README.md

@@ -18,8 +18,8 @@ import {
 import { leftNavs } from '../constants/left-navs';
 
 export const query = graphql`
-  query($path: String!) {
-    mdx(fields: { path: { eq: $path } }) {
+  query($nodePath: String!) {
+    mdx(fields: { path: { eq: $nodePath } }) {
       frontmatter {
         title
         navTitle
@@ -50,9 +50,9 @@ const getProductAndVersion = path => {
 };
 
 const makeVersionArray = (versions, path) => {
-  return versions.map(version => ({
+  return versions.map((version, i) => ({
     version: version,
-    url: `${getProductUrlBase(path)}/${version}`,
+    url: `${getProductUrlBase(path)}/${i === 0 ? 'latest' : version}`,
   }));
 };
 
@@ -118,11 +118,12 @@ const Section = ({ section }) => (
                 to={guide.fields.path}
                 className="btn btn-link btn-block text-left p-0"
               >
-                {guide.frontmatter.title}
+                {guide.frontmatter.navTitle || guide.frontmatter.title}
               </Link>
-              <span className="small text-muted">
-                {guide.frontmatter.description || guide.excerpt}
-              </span>
+              {/* <div className="text-small">
+                <span>{guide.frontmatter.description || guide.excerpt}
+                </span>
+              </div> */}
             </p>
           ) : (
             <DevOnly key={Math.random()}>
@@ -166,8 +167,9 @@ const DocTemplate = ({ data, pageContext }) => {
           />
         </SideNavigation>
         <MainContent>
-          <h1 className="balance-text">{frontmatter.title}</h1>
+          <h1 className="balance-text">{frontmatter.title} <span className="font-weight-light ml-2 text-muted badge-light px-2 rounded text-smaller" >v{version}</span></h1>
           <PdfDownload path={path} />
+
           <ContentRow>
             <Col xs={9}>
               <MDXRenderer>{body}</MDXRenderer>
