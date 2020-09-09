@@ -1,3 +1,8 @@
+// this patch is required to consistently load all the doc files
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
+gracefulFs.gracefulify(realFs);
+
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { exec } = require("child_process");
 
