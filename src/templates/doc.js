@@ -18,7 +18,7 @@ import {
 import { leftNavs } from '../constants/left-navs';
 
 export const query = graphql`
-  query($nodePath: String!) {
+  query($nodePath: String!, $potentialLatestNodePath: String) {
     mdx(fields: { path: { eq: $nodePath } }) {
       frontmatter {
         title
@@ -31,6 +31,9 @@ export const query = graphql`
       }
       body
       tableOfContents
+    }
+    potentialLatest: mdx(fields: { path: { eq: $potentialLatestNodePath } }) {
+      id
     }
   }
 `;
@@ -98,6 +101,11 @@ const getLinkItemFromPath = (path, navLinks) => {
   return null;
 };
 
+const determineCanonicalPath = (hasLatest, latestPath) => {
+  if (hasLatest) { return latestPath; } // latest will also have hasLatest=true
+  return null;
+}
+
 const Sections = ({ sections }) => (
   <>
     {sections.map(section => (
@@ -138,7 +146,7 @@ const Section = ({ section }) => (
   </div>
 );
 
-const DocTemplate = ({ data, pageContext }) => {
+const DocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { fields, frontmatter, body, tableOfContents } = data.mdx;
   const { path } = fields;
   const depth = path.split('/').length;
@@ -151,7 +159,11 @@ const DocTemplate = ({ data, pageContext }) => {
   const pageMeta = {
     title: frontmatter.title,
     description: frontmatter.description,
-    path: path,
+    path: pagePath,
+    canonicalPath: determineCanonicalPath(
+      !!data.potentialLatest,
+      pageContext.potentialLatestPath
+    ),
   };
 
   return (
