@@ -4,6 +4,8 @@ require('dotenv').config({
 });
 const utf8Truncate = require("truncate-utf8-bytes");
 
+console.log(`NODE ENV = ${process.env.NODE_ENV}`);
+
 const docQuery = `
 {
   allMdx {
@@ -209,8 +211,8 @@ module.exports = {
     title: 'EDB Docs',
     description:
       'EDB supercharges Postgres with products, services, and support to help you control database risk, manage costs, and scale efficiently.',
-    baseUrl: 'https://edb-docs.herokuapp.com',
-    imageUrl: 'https://edb-docs.herokuapp.com/images/social.jpg',
+    baseUrl: 'https://edb-docs.netlify.com',
+    imageUrl: 'https://edb-docs.netlify.com/images/social.jpg',
   },
   plugins: [
     'gatsby-plugin-sass',
@@ -270,10 +272,9 @@ module.exports = {
         },
         gatsbyRemarkPlugins: [
           {
-            resolve:
-              process.env.NODE_ENV === 'development'
-                ? 'gatsby-remark-static-images'
-                : 'gatsby-remark-images',
+            resolve: process.env.OPTIMIZE_IMAGES ?
+              'gatsby-remark-images' :
+              'gatsby-remark-static-images'
           },
           {
             resolve: `gatsby-remark-autolink-headers`,

@@ -9,36 +9,41 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Cancel Previous Runs
+    - name: Cancel previous runs
       uses: styfle/cancel-workflow-action@0.5.0
       with:
         access_token: ${{ github.token }}
+
     - uses: actions/checkout@v2
       with:
         ref: 'master'
+    - name: Update submodules
+      run: git submodule update --init --remote
+
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: git submodule update --init --remote
-    - name: npm install
-      run: npm install
+    - name: Install yarn
+      run: sudo npm -g install yarn
+    - name: Yarn install
+      run: yarn install --immutable
       env:
         NODE_ENV: ${{ secrets.NODE_ENV }}
-    - name: gatsby build
-      run: npm run build
+
+    - name: Gatsby build
+      run: yarn build
       env:
         NODE_ENV: ${{ secrets.NODE_ENV }}
         ALGOLIA_API_KEY:  ${{ secrets.ALGOLIA_API_KEY }}
         ALGOLIA_APP_ID:  ${{ secrets.ALGOLIA_APP_ID }}
         ALGOLIA_INDEX_NAME:  ${{ secrets.ALGOLIA_INDEX_NAME }}
         INDEX_ON_BUILD: true
-    # Deploy the gatsby build to Netlify
-    #- run: npx netlify-cli deploy --dir=public --prod
-    # https://github.com/netlify/actions/blob/master/cli/README.md
-    - uses: netlify/actions/cli@master
+        OPTIMIZE_IMAGES: true
+
+    - name: Netlify deploy
+      run: |
+        sudo yarn global add netlify-cli
+        netlify deploy --dir=public --prod
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_MASTER_SITE_ID }}
-      with:
-        # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepswithargs
-        args: deploy --dir=public --prod
