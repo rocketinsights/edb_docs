@@ -4,6 +4,8 @@ require('dotenv').config({
 });
 const utf8Truncate = require("truncate-utf8-bytes");
 
+console.log(`NODE ENV = ${process.env.NODE_ENV}`);
+
 const docQuery = `
 {
   allMdx {
@@ -270,10 +272,7 @@ module.exports = {
         },
         gatsbyRemarkPlugins: [
           {
-            resolve:
-              process.env.NODE_ENV === 'development'
-                ? 'gatsby-remark-static-images'
-                : 'gatsby-remark-images',
+            resolve: 'gatsby-remark-static-images',
           },
           {
             resolve: `gatsby-remark-autolink-headers`,
