@@ -272,7 +272,9 @@ module.exports = {
         },
         gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-static-images',
+            resolve: process.env.OPTIMIZE_IMAGES ?
+              'gatsby-remark-images' :
+              'gatsby-remark-static-images'
           },
           {
             resolve: `gatsby-remark-autolink-headers`,
