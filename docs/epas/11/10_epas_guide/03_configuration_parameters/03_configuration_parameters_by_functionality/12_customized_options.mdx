@@ -363,15 +363,15 @@ Sets the timing interval between two sampling cycles for EDB wait states. The de
 
 **Required Authorization to Activate:** Session user
 
-Use the `edbldr.empty_csv_field` parameter to specify how EDB*Loader will treat an empty string. The valid values for the `edbldr.empty_csv_field` parameter are:
+Use the `edbldr.empty_csv_field` parameter to specify how EDB Loader will treat an empty string. The valid values for the `edbldr.empty_csv_field` parameter are:
 
-| Parameter Setting | EDB*Loader Behavior                                                                                            |
+| Parameter Setting | EDB Loader Behavior                                                                                            |
 | ----------------- | --------------------------------------------------------------------------------------------------------------- |
 | NULL              | An empty field is treated as NULL.                                                                              |
 | empty_string     | An empty field is treated as a string of length zero.                                                           |
 | pgsql             | An empty field is treated as a NULL if it does not contain quotes and as an empty string if it contains quotes. |
 
-For more information about the edbldr.empty_csv_field parameter in EDB*Loader, see the *Database Compatibility for Oracle Developers Tools and Utilities Guide* at the EnterpriseDB website:
+For more information about the edbldr.empty_csv_field parameter in EDB Loader, see the *Database Compatibility for Oracle Developers Tools and Utilities Guide* at the EnterpriseDB website:
 
 [https://www.enterprisedb.com/edb-docs](https://www.enterprisedb.com/resources/product-documentation)
 

@@ -18,11 +18,11 @@ Advanced Server's `postgresql.conf` file includes a configuration parameter name
 This is a dynamic parameter which can be modified in the `postgresql.conf` file, or while a session is in progress. To enable DRITA, you must either:
 
 > Modify the `postgresql.conf` file, setting the `timed_statistics` parameter to `TRUE`.
-> 
+>
 > or
-> 
+>
 > Connect to the server with the EDB-PSQL client, and invoke the command:
-> 
+>
 > `SET timed_statistics = TRUE`
 
 After modifying the `timed_statistics` parameter, take a starting snapshot. A snapshot captures the current state of each timer and event counter. The server will compare the starting snapshot to a later snapshot to gauge system performance.
@@ -1080,7 +1080,7 @@ The signature is:
 `scope`
 
 > scope determines which tables the function returns statistics about. Specify `SYS`, `USER` or `ALL`:
-> 
+>
 >   - `SYS` indicates that the function should return information about system defined tables. A table is considered a system table if it is stored in one of the following schemas: `pg_catalog`, `information_schema`, or `sys`.
 >   - `USER` indicates that the function should return information about user-defined tables.
 >   - `ALL` specifies that the function should return information about all tables.
@@ -1207,7 +1207,7 @@ The signature is:
 `scope`
 
 > scope determines which tables the function returns statistics about. Specify `SYS`, `USER` or `ALL`:
-> 
+>
 > >   - `SYS` indicates that the function should return information about system defined tables. A table is considered a system table if it is stored in one of the following schemas: `pg_catalog`, `information_schema`, or `sys`.
 > >   - `USER` indicates that the function should return information about user-defined tables.
 > >   - `ALL` specifies that the function should return information about all tables.
@@ -1292,7 +1292,7 @@ The signature is:
 `scope`
 
 > scope determines which tables the function returns statistics about. Specify `SYS`, `USER` or `ALL`:
-> 
+>
 > >   - `SYS` indicates that the function should return information about system defined tables. A table is considered a system table if it is stored in one of the following schemas: pg_catalog, information_schema, or sys.
 > >   - `USER` indicates that the function should return information about user-defined tables.
 > >   - `ALL` specifies that the function should return information about all tables.
@@ -1523,6 +1523,6 @@ These Advanced Server feature specific wait events and the `other lwlock acquire
 
 | **Event Name**          | **Description**                                                   |
 | ----------------------- | ----------------------------------------------------------------- |
-| `BulkLoadLock`          | The server has waited for access related to EDB*Loader.          |
+| `BulkLoadLock`          | The server has waited for access related to EDB Loader.          |
 | `EDBResoureManagerLock` | The server has waited for access related to EDB Resource Manager. |
 | `other lwlock acquire`  | Summation of waits for lightweight lock tranches.                 |
