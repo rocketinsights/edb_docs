@@ -12,6 +12,9 @@ export const leftNavs = {
         path: 'epas_inst_windows',
       },
       {
+        path: 'epas_rel_notes',
+      },
+      {
         path: 'epas_upgrade_guide',
       },
       {
@@ -19,7 +22,7 @@ export const leftNavs = {
         title: 'For Oracle Developers',
       },
       {
-        path: '06_epas_compat_ora_dev_guide',
+        path: 'epas_compat_ora_dev_guide',
       },
       {
         path: 'epas_compat_reference',

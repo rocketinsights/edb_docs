@@ -15,7 +15,7 @@ There are also features that Advanced Server does not yet support. Features in t
 
   - Automated Storage Management can be replaced with (system specific) volume management software.
   - Table compression can be implemented by storing data in a tablespace that resides on a compressed filesystem.
-  - External tables don't exist in Advanced Server, but you *can* load flat text files into staging tables in the database. We recommend using the EDB*Loader utility to load the data into an Advanced Server database quickly.
+  - External tables don't exist in Advanced Server, but you *can* load flat text files into staging tables in the database. We recommend using the EDB Loader utility to load the data into an Advanced Server database quickly.
   - When migrating multiple profiles from an Oracle database into Advanced server, you must manually assign the profile to a user (or users) when the migration completes.
 
 <div id="unsupported_pg_features" class="registered_link"></div>
@@ -27,7 +27,7 @@ There are also features that Advanced Server does not yet support. Features in t
 Migration Toolkit does not support migration of the following Postgres features:
 
 > `OPERATOR CLASS`
-> 
+>
 > `OPERATOR FAMILY`
 
 For information about `OPERATOR CLASS` and `OPERATOR FAMILY`, see the PostgreSQL core documentation available at:
@@ -61,7 +61,7 @@ The following code sample includes a simple example of a check constraint that r
 ``` text
 CREATE TABLE emp (
 emp_id INT NOT NULL PRIMARY KEY,
-dept VARCHAR(255) NOT NULL, 
+dept VARCHAR(255) NOT NULL,
 CHECK (dept IN ('sales', 'admin', 'technical'))
 );
 ```
@@ -69,13 +69,13 @@ CHECK (dept IN ('sales', 'admin', 'technical'))
 If we test the check constraint by entering a valid dept type, the INSERT statement works without error:
 
 > `test=# INSERT INTO emp VALUES (7324, 'sales');`
-> 
+>
 > `INSERT 0 1`
 
 If we try to insert a value not included in the constraint (support), Advanced Server throws an error:
 
 > `test=# INSERT INTO emp VALUES (7325, 'support');`
-> 
+>
 > `ERROR: new row for relation "emp" violates check constraint "emp_dept_check"`
 
 **Does Advanced Server support materialized views?**

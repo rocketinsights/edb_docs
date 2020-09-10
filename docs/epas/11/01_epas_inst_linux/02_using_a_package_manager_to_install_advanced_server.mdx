@@ -44,9 +44,9 @@ Before using an RPM package to install Advanced Server on a Linux host, you must
 
 You must install `xterm, konsole`, or `gnome-terminal` before executing any console-based program installed by EnterpriseDB installers.
 
-**Install Migration Toolkit or EDB*Plus Installation Prerequisites (Optional)**
+**Install Migration Toolkit or EDB Plus Installation Prerequisites (Optional)**
 
-Before using an RPM to install Migration Toolkit or EDB*Plus, you must first install Java version 1.7 or later for Migration Toolkit and Java version 1.8 or later for EDB*Plus. On a Linux system, you can use the yum package manager to install Java. Open a terminal window, assume superuser privileges, and enter:
+Before using an RPM to install Migration Toolkit or EDB Plus, you must first install Java version 1.7 or later for Migration Toolkit and Java version 1.8 or later for EDB Plus. On a Linux system, you can use the yum package manager to install Java. Open a terminal window, assume superuser privileges, and enter:
 
 > `# yum install java`
 
@@ -87,17 +87,17 @@ gpgkey=file:///etc/pki/rpm-gpg/ENTERPRISEDB-GPG-KEY
 After saving your changes to the configuration file, you must download and install the repository keys:
 
 1.  Use the following command to download the repository key:
-    
+
     `curl -o /etc/pki/rpm-gpg/ENTERPRISEDB-GPG-KEY https://yum.enterprisedb.com/ENTERPRISEDB-GPG-KEY`
 
 2.  Use the following command to install the key:
-    
+
     `rpm --import /etc/pki/rpm-gpg/ENTERPRISEDB-GPG-KEY`
 
 3.  Use the following commands to install the prerequisite software:
-    
+
     `# yum -y install epel-release`
-    
+
     `# yum makecache`
 
 Then, you can use `yum install` command to install Advanced Server. For example, to install the server and its core components, use the command:
@@ -218,7 +218,7 @@ Please note: The available package list is subject to change.
 </tr>
 <tr class="odd">
 <td>edb-as12-edbplus</td>
-<td>The <code>edb-edbplus</code> package contains the files required to install the EDB*Plus command line client. EDB*Plus commands are compatible with Oracle's SQL*Plus.</td>
+<td>The <code>edb-edbplus</code> package contains the files required to install the EDB Plus command line client. EDB Plus commands are compatible with Oracle's SQL*Plus.</td>
 </tr>
 <tr class="even">
 <td>edb-as12-pgsnmpd</td>
@@ -455,27 +455,27 @@ To install Advanced Server on a Debian or Ubuntu host, you must have credentials
 The following steps will walk you through using the EnterpriseDB apt repository to install a debian package. When using the commands, replace the `username` and `password` with the credentials provided by EnterpriseDB.
 
 1.  Assume superuser privileges:
-    
+
     `sudo su –`
 
 2.  Configure the EnterpriseDB repository:
-    
+
     `sh -c 'echo "deb https://\ <username>:<password>\ @apt.enterprisedb.com/$(lsb_release -cs)-edb/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/edb-$(lsb_release -cs).list'`
 
 3.  Add support to your system for secure APT repositories:
-    
+
     `apt-get install apt-transport-https`
 
 4.  Add the EBD signing key:
-    
+
     `wget -q -O - https://\ <username>:<password> @apt.enterprisedb.com/edb-deb.gpg.key \| apt-key add -`
 
 5.  Update the repository metadata:
-    
+
     `apt-get update`
 
 6.  Install Debian package:
-    
+
     `apt-get install edb-as12`
 
 <div class="note">
@@ -486,11 +486,11 @@ Note
 
 </div>
 
-Some Advanced Server components require a Java installation. Before using a native package to add Migration Toolkit to your system, please ensure that Java version 7 is installed on your Advanced Server host. Before using a native package to install EDB*Plus, please ensure that Java version 8 or later is installed.
+Some Advanced Server components require a Java installation. Before using a native package to add Migration Toolkit to your system, please ensure that Java version 7 is installed on your Advanced Server host. Before using a native package to install EDB Plus, please ensure that Java version 8 or later is installed.
 
 </div>
 
-If you are installing an Advanced Server supporting component that requires Java (such as MTK or EDB*Plus), make sure that you install Java version 8 before installing the supporting components.
+If you are installing an Advanced Server supporting component that requires Java (such as MTK or EDB Plus), make sure that you install Java version 8 before installing the supporting components.
 
 The Debian package manager places Advanced Server and supporting components in the directories listed in the following table:
 
@@ -661,7 +661,7 @@ Please note: The available package list is subject to change.
 </tr>
 <tr class="even">
 <td>edb-as12-edbplus</td>
-<td>The <code>edb-edbplus</code> package contains the files required to install the EDB*Plus command line client. EDB*Plus commands are compatible with Oracle's SQL*Plus.</td>
+<td>The <code>edb-edbplus</code> package contains the files required to install the EDB Plus command line client. EDB Plus commands are compatible with Oracle's SQL*Plus.</td>
 </tr>
 <tr class="odd">
 <td>edb-as12-pgsnmpd</td>
@@ -983,7 +983,7 @@ The `edb-as12-server-core` RPM contains a script that starts the Advanced Server
 The example that follows creates a second instance on an Advanced Server host; the secondary instance is named `secondary`:
 
 1.  Create a hard link in `/etc/rc.d/init.d` (or equivalent location) to the `edb-as-12` service (named `secondary-edb-as-12`):
-    
+
     `ln edb-as-12 secondary-edb-as-12`
 
 Be sure to pick a name that is not already used in `/etc/rc.d/init.d.`
@@ -993,13 +993,13 @@ Be sure to pick a name that is not already used in `/etc/rc.d/init.d.`
 3.  Create the target `PGDATA` directory.
 
 4.  Assume the identity of the Advanced Server database superuser (`enterprisedb`) and invoke `initdb` on the target `PGDATA`. For information about using `initdb`, please see the `PostgreSQL` Core Documentation available at:
-    
+
     > <https://www.postgresql.org/docs/12/static/app-initdb.html>.
 
 5.  Edit the `postgresql.conf` file to specify the port, address, TCP/IP settings, etc. for the `secondary` instance.
 
 6.  Start the postmaster with the following command:
-    
+
     `service secondary-edb-as-12 start`
 
 **On RHEL or CentOS 7.x**
@@ -1009,7 +1009,7 @@ The `edb-as12-server-core` RPM for version 7.x contains a unit file that starts 
 The example that follows creates an Advanced Server installation with two instances; the secondary instance is named `secondary`:
 
 1.  Make a copy of the default file with the new name. As noted at the top of the file, all modifications must reside under `/etc`. You must pick a name that is not already used `in /etc/systemd/system`.
-    
+
     > `cp /usr/lib/systemd/system/edb-as-12.service /etc/systemd/system/secondary-edb-as-12.service`
 
 2.  Edit the file, changing `PGDATA` to point to the new `data` directory that you will create the cluster against.
@@ -1023,11 +1023,11 @@ The example that follows creates an Advanced Server installation with two instan
 5.  Edit the `postgresql.conf` file for the new instance, specifying the port, the IP address, TCP/IP settings, etc.
 
 6.  Make sure that new cluster runs after a reboot:
-    
+
     `systemctl enable secondary-edb-as-12`
 
 7.  Start the second cluster with the following command:
-    
+
     `systemctl start secondary-edb-as-12`
 
 ### Creating an Advanced Server Repository on an Isolated Network
@@ -1047,15 +1047,15 @@ yum install createrepo
 ```
 
 2.  Create a directory in which to store the repository:
-    
+
     > `mkdir /srv/repos`
 
 3.  Copy the RPM installation packages to your local repository. You can download the individual packages or use a tarball to populate the repository. The packages are available from the EnterpriseDB repository at:
-    
+
     > `https://yum.enterprisedb.com/`
 
 4.  Sync the RPM packages and create the repository.
-    
+
     > `reposync -r edbas12 -p /srv/repos createrepo /srv/repos`
 
 5.  Install your preferred webserver on the host that will act as your local repository, and ensure that the repository directory is accessible to the other servers on your network.
