@@ -102,6 +102,37 @@ export const leftNavs = {
         path: 'epas_guide',
       },
     ],
+    '10': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'epas_inst',
+      },
+      {
+        path: 'epas_release_notes',
+      },
+      {
+        path: null,
+        title: 'For Oracle Developers',
+      },
+
+      {
+        path: 'epas_compat_reference',
+      },
+
+      {
+        path: null,
+        title: 'Tools',
+      },
+      {
+        path: 'ecpgplus_guide',
+      },
+      {
+        path: 'language_pack',
+      },
+    ],
   },
 
   ark: {
