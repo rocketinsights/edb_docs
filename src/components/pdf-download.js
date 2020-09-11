@@ -24,7 +24,7 @@ const PdfDownload = ({ path }) => {
         <span className="mt-3 mb-2 font-weight-bold text-muted text-uppercase small d-block">
           Other Versions
         </span>
-        <a href={file.publicURL} className="download-pdf pl-0">
+        <a href={file.publicURL}>
           Download PDF
         </a>
       </div>
