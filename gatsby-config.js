@@ -317,7 +317,7 @@ module.exports = {
         indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
         queries,
         chunkSize: 10000, // default: 1000,
-        enablePartialUpdates: true,
+        enablePartialUpdates: false,
       },
     },
   ],
