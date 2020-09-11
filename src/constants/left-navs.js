@@ -133,6 +133,24 @@ export const leftNavs = {
         path: 'language_pack',
       },
     ],
+    '9.6': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'epas_inst',
+      },
+    ],
+    '9.5': [
+      {
+        path: null,
+        title: 'Getting Started',
+      },
+      {
+        path: 'inst_guide',
+      },
+    ]
   },
 
   ark: {
