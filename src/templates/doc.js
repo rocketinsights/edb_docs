@@ -9,7 +9,6 @@ import {
   Layout,
   LeftNav,
   MainContent,
-  PdfDownload,
   PrevNext,
   SideNavigation,
   TableOfContents,
@@ -195,7 +194,6 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           </ContentRow>
           {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
-          <PdfDownload path={path} />
           <DevFrontmatter frontmatter={frontmatter} />
           <Footer />
 
