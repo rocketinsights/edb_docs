@@ -89,6 +89,8 @@ const LearnDocTemplate = ({ data, pageContext }) => {
     link => mdx.fields.path.includes(link.url)
   ) || { iconName: null }).iconName;
 
+  const showToc = !!tableOfContents.items;
+
   return (
     <Layout pageMeta={pageMeta}>
       <TopBar />
@@ -109,16 +111,16 @@ const LearnDocTemplate = ({ data, pageContext }) => {
 
           {mdx.tableOfContents.items ? (
             <ContentRow>
-              <Col xs={9}>
+              <Col xs={showToc ? 9 : 12}>
                 <MDXRenderer>{mdx.body}</MDXRenderer>
                 <Tiles mdx={mdx} navLinks={navLinks} />
               </Col>
 
-              <Col xs={3}>
-                {mdx.tableOfContents.items && (
+              { showToc &&
+                <Col xs={3}>
                   <TableOfContents toc={mdx.tableOfContents.items} />
-                )}
-              </Col>
+                </Col>
+              }
             </ContentRow>
           ) : (
             <>
