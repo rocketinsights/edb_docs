@@ -89,7 +89,7 @@ const LearnDocTemplate = ({ data, pageContext }) => {
     link => mdx.fields.path.includes(link.url)
   ) || { iconName: null }).iconName;
 
-  const showToc = !!tableOfContents.items;
+  const showToc = !!mdx.tableOfContents.items;
 
   return (
     <Layout pageMeta={pageMeta}>
@@ -109,30 +109,22 @@ const LearnDocTemplate = ({ data, pageContext }) => {
             </a>
           </div>
 
-          {mdx.tableOfContents.items ? (
-            <ContentRow>
-              <Col xs={showToc ? 9 : 12}>
-                <MDXRenderer>{mdx.body}</MDXRenderer>
-                <Tiles mdx={mdx} navLinks={navLinks} />
-              </Col>
-
-              { showToc &&
-                <Col xs={3}>
-                  <TableOfContents toc={mdx.tableOfContents.items} />
-                </Col>
-              }
-            </ContentRow>
-          ) : (
-            <>
+          <ContentRow>
+            <Col xs={showToc ? 9 : 12}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
               <Tiles mdx={mdx} navLinks={navLinks} />
-            </>
-          )}
+            </Col>
+
+            { showToc &&
+              <Col xs={3}>
+                <TableOfContents toc={mdx.tableOfContents.items} />
+              </Col>
+            }
+          </ContentRow>
 
           <DevFrontmatter frontmatter={mdx.frontmatter} />
 
           <hr />
-    
           <p>
             Could this page could be better? <a href={githubIssuesLink + "&template=problem-with-topic.md&labels=bug"}>
               Report a problem
