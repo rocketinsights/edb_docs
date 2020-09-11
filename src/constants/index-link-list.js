@@ -6,84 +6,84 @@ export const indexLinkList = [
     links: [
       {
         title: 'EDB Postgres Advanced Server',
-        url: '/epas/12',
+        url: '/epas/latest',
         iconName: IconNames.EDB_EPAS,
       },
       {
         title: 'EDB Postgres Ark Platform',
-        url: '/ark/3.5',
+        url: '/ark/latest',
         iconName: IconNames.EDB_ARK,
       },
       {
         title: 'EDB Backup and Recovery Tool',
-        url: '/bart/2.5.4',
+        url: '/bart/latest',
         iconName: IconNames.EDB_BART,
       },
       {
         title: 'EDB Postgres Failover Manager',
-        url: '/efm/3.10',
+        url: '/efm/latest',
         iconName: IconNames.EDB_EFM,
       },
       {
         title: 'EDB Postgres Enterprise Manager',
-        url: '/pem/7.15',
+        url: '/pem/latest',
         iconName: IconNames.EDB_PEM,
       },
       {
         title: 'EDB Postgres Migration Portal',
-        url: '/migration_portal/2.8',
+        url: '/migration_portal/latest',
         iconName: IconNames.EDB_MIGRATION_PORTAL,
       },
 
       {
         title: 'Migration Toolkit',
-        url: '/migration_toolkit/53.0.1',
+        url: '/migration_toolkit/latest',
         iconName: IconNames.EDB_MIGRATION_TOOLKIT,
       },
       {
         title: 'Hadoop Data Adapter',
-        url: '/hadoop_data_adapter/2.0',
+        url: '/hadoop_data_adapter/latest',
         iconName: IconNames.HADOOP,
       },
       {
         title: 'JDBC Connector',
-        url: '/jdbc_connector/42.2.9.1',
+        url: '/jdbc_connector/latest',
         iconName: IconNames.CONNECT
       },
 
       {
         title: '.NET Connector',
-        url: '/net_connector/4.1.3.1',
+        url: '/net_connector/latest',
         iconName: IconNames.CONNECT
       },
       {
         title: 'OCL Connector',
-        url: '/ocl_connector/12.1.2.1',
+        url: '/ocl_connector/latest',
         iconName: IconNames.CONNECT
       },
       {
         title: 'ODBC Connector',
-        url: '/odbc_connector/12.0.0.1',
+        url: '/odbc_connector/latest',
         iconName: IconNames.CONNECT
       },
       {
         title: 'PgBouncer',
-        url: '/pgbouncer/1.0',
+        url: '/pgbouncer/latest',
         iconName: IconNames.POSTGRESQL
       },
       {
         title: 'Pgpool-II',
-        url: '/pgpool/1.0',
+        url: '/pgpool/latest',
         iconName: IconNames.POSTGRESQL
       },
       {
         title: 'PostGIS',
-        url: '/postgis/1.0',
+        url: '/postgis/latest',
         iconName: IconNames.GLOBE
       },
       {
         title: 'Slony Replication',
-        url: '/slony/2.2.8',
+        url: '/slony/latest',
         iconName: IconNames.NETWORK2
       },
     ],
