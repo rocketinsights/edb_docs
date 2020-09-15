@@ -8,7 +8,10 @@ import {
 } from '../components';
 import { MDXProvider } from '@mdx-js/react';
 import Icon from '../components/icon/';
-import Katacoda from '../advocacy_components/katacoda';
+import { 
+  KatacodaPageLink,
+  KatacodaPanel,
+} from '../advocacy_components';
 
 import '../styles/index.scss';
 
@@ -48,7 +51,8 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
           h3: props => <h3 {...props} className='mt-4-5' />, // eslint-disable-line jsx-a11y/heading-has-content
           img: props => <img {...props} className='mw-100' />, // eslint-disable-line jsx-a11y/alt-text
           Icon,
-          Katacoda,
+          KatacodaPageLink,
+          KatacodaPanel,
           Attention,
         }}
       >
