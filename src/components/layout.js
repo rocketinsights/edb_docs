@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import useSiteMetadata from '../hooks/use-sitemetadata';
 import {
   Attention,
+  CodeBlock,
   TextBalancer,
 } from '../components';
 import { MDXProvider } from '@mdx-js/react';
@@ -42,11 +43,7 @@ const Layout = ({ children, pageMeta, background = 'light' }) => {
               <table {...props} className="table" />
             </div>
           ),
-          pre: props => (
-            <figure>
-              <pre {...props} />
-            </figure>
-          ),
+          pre: props => <CodeBlock {...props} />,
           h2: props => <h2 {...props} className='mt-5' />, // eslint-disable-line jsx-a11y/heading-has-content
           h3: props => <h3 {...props} className='mt-4-5' />, // eslint-disable-line jsx-a11y/heading-has-content
           img: props => <img {...props} className='mw-100' />, // eslint-disable-line jsx-a11y/alt-text
