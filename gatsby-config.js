@@ -213,6 +213,7 @@ module.exports = {
       'EDB supercharges Postgres with products, services, and support to help you control database risk, manage costs, and scale efficiently.',
     baseUrl: 'https://edb-docs.netlify.com',
     imageUrl: 'https://edb-docs.netlify.com/images/social.jpg',
+    siteUrl: 'https://edb-docs.netlify.com',
   },
   plugins: [
     'gatsby-plugin-sass',
@@ -222,6 +223,7 @@ module.exports = {
     'gatsby-plugin-sharp',
     'gatsby-plugin-meta-redirect',
     'gatsby-plugin-netlify',
+    'gatsby-plugin-sitemap',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
