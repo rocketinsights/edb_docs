@@ -70,8 +70,8 @@ const CodePre = ({ className, content }) => {
   }
 
   const runClick = (e) => {
-    const block = e.target.closest('figure').querySelector('.katacoda-exec')
-    block && block.click();
+    const text = codeRef.current && codeRef.current.textContent;
+    window.katacoda.write(text);
   };
 
   return (
