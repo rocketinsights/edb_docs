@@ -114,7 +114,7 @@ export default data => {
                 </a>
                 <div className="ml-4">
                   <h3 className="balance-text">
-                    <a href="epas/12">EDB Postgres Advanced Server</a>
+                    <a href="epas/latest">EDB Postgres Advanced Server</a>
                   </h3>
                   <p className="card-text">
                   EDB Postgres Advanced Server gives you the best of both worlds—all the advantages of PostgreSQL,
@@ -128,42 +128,45 @@ enhanced with mission-critical features that help you maintain greater consisten
               <div className="row">
                 <div className="col-md">
                   <h3 className="mt-4">Getting Started</h3>
-                  <a href="epas/12/01_epas_inst_linux" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/01_epas_inst_linux" className="btn btn-link btn-block text-left p-0">
                     Installation Guide for Linux
                   </a>
-                  <a href="epas/12/02_epas_inst_windows" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/02_epas_inst_windows" className="btn btn-link btn-block text-left p-0">
                     Installation Guide for Windows
                   </a>
-                  <a href="epas/12/03_epas_upgrade_guide" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/03_epas_rel_notes" className="btn btn-link btn-block text-left p-0">
+                    Release Notes
+                  </a>
+                  <a href="epas/latest/04_epas_upgrade_guide" className="btn btn-link btn-block text-left p-0">
                     Upgrade Guide
                   </a>
                 </div>
 
                 <div className="col-md">
                   <h3 className="mt-4">For Oracle Developers</h3>
-                  <a href="epas/12/06_epas_compat_ora_dev_guide" className="btn btn-link btn-block text-left p-0">
-                    Database Compatibility for Oracle Developers
+                  <a href="epas/latest/07_epas_compat_ora_dev_guide" className="btn btn-link btn-block text-left p-0">
+                    Database Compatibility for Oracle Developers (User Guide)
                   </a>
-                  <a href="epas/12/04_epas_compat_reference" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/05_epas_compat_reference" className="btn btn-link btn-block text-left p-0">
                     SQL Reference
                   </a>
-                  <a href="epas/12/05_epas_compat_bip_guide" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/06_epas_compat_bip_guide" className="btn btn-link btn-block text-left p-0">
                     Built-in Package Guide
                   </a>
-                  <a href="epas/12/07_epas_compat_tools_guide" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/08_epas_compat_tools_guide" className="btn btn-link btn-block text-left p-0">
                     Tools and Utilities
                   </a>
                 </div>
 
                 <div className="col-md">
                   <h3 className="mt-4">User Guides</h3>
-                  <a href="epas/12/10_epas_guide" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/11_epas_guide" className="btn btn-link btn-block text-left p-0">
                     EDB Postgres Advanced Server
                   </a>
-                  <a href="epas/12/08_ecpgplus_guide" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/09_ecpgplus_guide" className="btn btn-link btn-block text-left p-0">
                     ECPGPlus
                   </a>
-                  <a href="epas/12/09_language_pack" className="btn btn-link btn-block text-left p-0">
+                  <a href="epas/latest/10_language_pack" className="btn btn-link btn-block text-left p-0">
                     Language Pack
                   </a>
                 </div>

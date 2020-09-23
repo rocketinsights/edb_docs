@@ -44,26 +44,13 @@ code {
 }
 
 .text-smaller {
-  font-size: 1.4rem !important;
-  position: relative;
-  top: -3px;
-}
-
-.download-pdf  {
-  svg {
-    position: relative;
-    top: -3px;
-  }
-  &:hover {
-    background-color: transparent;
-    color: orangered;
-  }
+  font-size: 1.4rem;
 }
 
 /* Dropdown overrides */
-.dropdown-menu {
-  border: none !important;
+.version-dropdown.dropdown-menu {
   border-radius: $border-radius !important;
+  border-top-color: #4D89B1 !important;
 }
 
 .dropdown-item.active, .dropdown-item:active {

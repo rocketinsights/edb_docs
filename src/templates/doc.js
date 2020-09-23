@@ -9,7 +9,6 @@ import {
   Layout,
   LeftNav,
   MainContent,
-  PdfDownload,
   PrevNext,
   SideNavigation,
   TableOfContents,
@@ -166,6 +165,8 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
     ),
   };
 
+  const showToc = !!tableOfContents.items;
+
   return (
     <Layout pageMeta={pageMeta}>
       <TopBar />
@@ -179,24 +180,24 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           />
         </SideNavigation>
         <MainContent>
-          <h1 className="balance-text">{frontmatter.title} <span className="font-weight-light ml-2 text-muted badge-light px-2 rounded text-smaller" >v{version}</span></h1>
-          <PdfDownload path={path} />
+          <h1 className="balance-text">{frontmatter.title} <span className="font-weight-light ml-2 text-muted badge-light px-2 rounded text-smaller position-relative lh-1 top-minus-3">v{version}</span></h1>
 
           <ContentRow>
-            <Col xs={9}>
+            <Col xs={showToc ? 9 : 12}>
               <MDXRenderer>{body}</MDXRenderer>
             </Col>
 
-            <Col xs={3}>
-              {tableOfContents.items && (
+            { showToc &&
+              <Col xs={3}>
                 <TableOfContents toc={tableOfContents.items} />
-              )}
-            </Col>
+              </Col>
+            }
           </ContentRow>
           {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
           <DevFrontmatter frontmatter={frontmatter} />
           <Footer />
+
         </MainContent>
       </Container>
     </Layout>
