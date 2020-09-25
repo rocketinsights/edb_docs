@@ -17,6 +17,16 @@ const replacePathVersion = (path, version = 'latest') => {
   return `/${splitPath[1]}/${version}${postVersionPath.length > 0 ? `/${postVersionPath}` : ''}`;
 }
 
+const buildCustomSlugPath = (path, slug) => {
+  if (!slug) { return path; }
+
+  const splitPath = path.split('/');
+  const slugIndex = Math.max(splitPath.length - 1, 3);
+  if (splitPath[slugIndex]) { splitPath[slugIndex] = slug; }
+
+  return splitPath.join('/');
+}
+
 const productLatestVersionCache = [];
 
 exports.onCreateNode = async ({ node, getNode, actions }) => {
@@ -40,11 +50,14 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
     const product = relativeFilePath.split('/')[1];
     const version = relativeFilePath.split('/')[2];
 
+    const { slug } = node.frontmatter;
+    const path = buildCustomSlugPath(relativeFilePath, slug);
+
     // Creates new query'able fields
     createNodeField({
       node,
       name: 'path',
-      value: relativeFilePath,
+      value: path,
     });
     createNodeField({
       node,
@@ -94,6 +107,11 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
 };
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
+  const { createNodeField } = actions;
+  if (!createNodeField) {
+    throw 'adasds'
+  }
+
   const result = await graphql(`
     query {
       allMdx {
@@ -104,6 +122,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             description
             redirects
             iconName
+            slug
             katacodaPages {
               scenario
               account
@@ -140,6 +159,25 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     }
   }
 
+  // const finalizedPaths = [];
+  nodes.forEach(node => {
+    const { path } = node.fields;
+    const { slug } = node.frontmatter;
+
+    // finalizedPaths.push({
+    //   nodePath: path,
+    //   path: buildCustomSlugPath(path, slug),
+    // });
+
+    // createNodeField({
+    //   node: node,
+    //   name: 'finalizedPath',
+    //   value: buildCustomSlugPath(path, slug),
+    // })
+
+    node.finalizedPath = buildCustomSlugPath(path, slug);
+  });
+
   const docs = nodes.filter(file => !!file.fields.version);
   const learn = nodes.filter(file => !file.fields.version);
 
@@ -149,11 +187,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     const { path } = doc.fields;
     const { redirects } = doc.frontmatter;
 
+    // console.log(doc.finalizedPath);
+
     if (redirects) {
       redirects.forEach(fromPath => {
         actions.createRedirect({
           fromPath,
-          toPath: path,
+          toPath: doc.finalizedPath,
           redirectInBrowser: true,
           isPermanent: true,
         });
@@ -214,14 +254,20 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         node.fields.version === doc.fields.version,
     );
 
+    // const path = buildCustomSlugPath(doc.fields.path, doc.frontmatter.slug);
+    // console.log(path);
+
+    const path = doc.fields.path;
+    console.log(path);
+
     actions.createPage({
-      path: isLatest ? replacePathVersion(doc.fields.path) : doc.fields.path,
+      path: isLatest ? replacePathVersion(path) : path,
       component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
         nodePath: doc.fields.path,
-        potentialLatestPath: replacePathVersion(doc.fields.path), // the latest url for this path (may not exist!)
+        potentialLatestPath: replacePathVersion(path), // the latest url for this path (may not exist!)
         potentialLatestNodePath: replacePathVersion(
           doc.fields.path,
           versionIndex[doc.fields.product][0]
