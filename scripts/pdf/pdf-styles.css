@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "Signika";
+  src: url("Signika-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("SourceCodePro-Regular.ttf") format("truetype");
+}
+
+html {
+  font-size: 28px;
+  font-family: "Signika";
+}
+
+pre {
+  font-family: "Source Code Pro";
+  font-weight: normal;
+}
+
+p {
+  margin-bottom: 2rem;
+}
+
+code {
+  white-space: pre-wrap;
+}
+
+table {
+  word-break: break-word;
+}

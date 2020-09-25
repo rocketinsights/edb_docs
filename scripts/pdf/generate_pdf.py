@@ -43,7 +43,7 @@ def getListOfFiles(dirName, parentChapter):
         # If entry is a directory then get the list of files in this directory 
         if os.path.isdir(fullPath):
             allFiles = allFiles + getListOfFiles(fullPath, parentChapter + str(chapter) + ".")
-        elif '.mdx' in entry or '.md' in entry:
+        elif ('.mdx' in entry or '.md' in entry) and chapter > 0:
             allFiles.append(ToCItem(fullPath, parentChapter + str(chapter)))
                 
         chapter += 1
@@ -122,18 +122,16 @@ def main():
     "pandoc {0}/combined.mdx " \
     "--toc " \
     "-f gfm " \
-    "-H scripts/pdf-head.tex "\
-    "-V linkcolor:blue " \
-    "-V geometry:a4paper " \
-    "-V geometry:margin=2cm " \
-    '-V mainfont="Helvetica" ' \
-    '-V monofont="Monaco" ' \
-    '-V fontsize=8pt ' \
     '--highlight-style tango ' \
-    "--pdf-engine=xelatex " \
+    "--pdf-engine=wkhtmltopdf " \
+    "-V margin-left=0.25inch " \
+    "-V margin-right=0.25inch " \
+    "-V margin-top=0.25inch " \
+    "-V margin-bottom=0.25inch " \
+    "-V papersize=letter " \
+    "--css=scripts/pdf/pdf-styles.css " \
     "-o {0}/{1} ".format(dirName, fileName)
     )
-    # https://learnbyexample.github.io/tutorial/ebook-generation/customizing-pandoc/
 
     if openPdf:
         os.system("open {0}/{1}".format(dirName, fileName))
