@@ -60,7 +60,9 @@ def main():
         sys.exit(1)
 
     openPdf = False
+    html = False
     try:
+        html = (sys.argv[2] == '--html')
         openPdf = (sys.argv[2] == '--open')
     except:
         pass
@@ -116,29 +118,58 @@ def main():
             fp.write('\n')
 
     splitDirName = dirName.split('/')
-    fileName = "{0}_v{1}_documentation.pdf".format(splitDirName[1], splitDirName[2])
+    htmlFileName = "{0}_v{1}_documentation.html".format(splitDirName[1], splitDirName[2])
+    coverFileName = "{0}_v{1}_documentation_cover.html".format(splitDirName[1], splitDirName[2])
+    pdfFileName = "{0}_v{1}_documentation.pdf".format(splitDirName[1], splitDirName[2])
+    title = "{0} v{1}".format(splitDirName[1], splitDirName[2])
 
     os.system(
     "pandoc {0}/combined.mdx " \
-    "--toc " \
     "-f gfm " \
+    "--self-contained " \
     '--highlight-style tango ' \
-    "--pdf-engine=wkhtmltopdf " \
-    "-V margin-left=0.25inch " \
-    "-V margin-right=0.25inch " \
-    "-V margin-top=0.25inch " \
-    "-V margin-bottom=0.25inch " \
-    "-V papersize=letter " \
     "--css=scripts/pdf/pdf-styles.css " \
-    "-o {0}/{1} ".format(dirName, fileName)
+    "-o {0}/{1} ".format(dirName, htmlFileName)
     )
 
+    if html:
+        os.system("open {0}/{1}".format(dirName, htmlFileName))
+    else:
+        os.system(
+        "sed " \
+        "'s/\[TITLE\]/{2}/' " \
+        "scripts/pdf/cover.html " \
+        "> {0}/{1}" \
+        "".format(dirName, coverFileName, title)
+        )
+
+        os.system(
+        "wkhtmltopdf " \
+        "--title '{4}' " \
+        "--header-right [doctitle] " \
+        "--header-font-name Signika " \
+        "--header-font-size 8 " \
+        "--header-spacing 3 " \
+        "--footer-right [page] " \
+        "--footer-left 'Copyright © 2009 - 2020 EnterpriseDB Corporation.  All rights reserved.' " \
+        "--footer-font-name Signika " \
+        "--footer-font-size 8 " \
+        "--footer-spacing 3 " \
+        "{0}/{3} " \
+        "toc  --xsl-style-sheet scripts/pdf/toc-style.xsl " \
+        "{0}/{1} " \
+        "{0}/{2} " \
+        "".format(dirName, htmlFileName, pdfFileName, coverFileName, title)
+        )
+
     if openPdf:
-        os.system("open {0}/{1}".format(dirName, fileName))
+        os.system("open {0}/{1}".format(dirName, pdfFileName))
 
     if os.path.exists(dirName + '/combined.mdx'):
         os.remove(dirName + '/combined.mdx')
+    if not html:
+        os.remove(dirName + '/' + htmlFileName)
+        os.remove(dirName + '/' + coverFileName)
 
-        
 if __name__ == '__main__':
     main()
