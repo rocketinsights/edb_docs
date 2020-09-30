@@ -27,6 +27,14 @@ def filterList(filename):
     else:
         return True
 
+def getTitle(dirName):
+    indexPath = dirName + '/index.mdx'
+    if os.path.exists(indexPath):
+        indexFile = open(indexPath, 'r')
+        for line in indexFile.readlines():
+            if 'title: ' in line:
+                return line.replace('title: ', '').strip()
+    return None
 
 def getListOfFiles(dirName, parentChapter):
     # create a list of file and sub directories 
@@ -43,7 +51,7 @@ def getListOfFiles(dirName, parentChapter):
         # If entry is a directory then get the list of files in this directory 
         if os.path.isdir(fullPath):
             allFiles = allFiles + getListOfFiles(fullPath, parentChapter + str(chapter) + ".")
-        elif ('.mdx' in entry or '.md' in entry) and chapter > 0:
+        elif '.mdx' in entry or '.md' in entry:
             allFiles.append(ToCItem(fullPath, parentChapter + str(chapter)))
                 
         chapter += 1
@@ -66,15 +74,24 @@ def main():
         openPdf = (sys.argv[2] == '--open')
     except:
         pass
+
+    splitDirName = dirName.split('/')
+
+    mdxFilePath = "{0}/{1}_v{2}_documentation.mdx".format(dirName, splitDirName[1], splitDirName[2])
+    htmlFilePath = "{0}/{1}_v{2}_documentation.html".format(dirName, splitDirName[1], splitDirName[2])
+    coverFilePath = "{0}/{1}_v{2}_documentation_cover.html".format(dirName, splitDirName[1], splitDirName[2])
+    pdfFilePath = "{0}/{1}_v{2}_documentation.pdf".format(dirName, splitDirName[1], splitDirName[2])
     
     if not os.path.exists(dirName):
         raise Exception('directory does not exist')
 
-    if os.path.exists(dirName + '/combined.mdx'):
-        os.remove(dirName + '/combined.mdx')
+    if os.path.exists(mdxFilePath):
+        os.remove(mdxFilePath)
 
     # Get the list of all files in directory tree at given path
     listOfFiles = getListOfFiles(dirName, "")
+    listOfFiles.pop(0) # remove base product index page, which are empty
+
     toc = list()
     for elem in listOfFiles:
         g = open(elem.filename, "r")
@@ -89,7 +106,7 @@ def main():
 
     
     # Print the files
-    with open(dirName + '/combined.mdx', 'w') as fp:
+    with open(mdxFilePath, 'w') as fp:
         for elem in listOfFiles:
             g = open(elem.filename, "r")
 
@@ -110,66 +127,64 @@ def main():
                 if frontmatterCount == 0:
                     fp.write(newLine)
                 if "title: " in line:
-                    newLine = elem.chapter + " " + line[7:].replace('"', '')
+                    newLine = elem.chapter + " " + line[7:].replace('"', '').replace("'", '')
                     fp.write(newLine)
                 if "---" in line and frontmatterCount > 0:
                     frontmatterCount -= 1
                     fp.write(newLine)
             fp.write('\n')
 
-    splitDirName = dirName.split('/')
-    htmlFileName = "{0}_v{1}_documentation.html".format(splitDirName[1], splitDirName[2])
-    coverFileName = "{0}_v{1}_documentation_cover.html".format(splitDirName[1], splitDirName[2])
-    pdfFileName = "{0}_v{1}_documentation.pdf".format(splitDirName[1], splitDirName[2])
-    title = "{0} v{1}".format(splitDirName[1], splitDirName[2])
+    product = getTitle(dirName) or splitDirName[1]
+    version = splitDirName[2]
+    title = "{0} - Version {1}".format(product, version)
 
     os.system(
-    "pandoc {0}/combined.mdx " \
+    "pandoc {0} " \
     "-f gfm " \
     "--self-contained " \
     '--highlight-style tango ' \
     "--css=scripts/pdf/pdf-styles.css " \
-    "-o {0}/{1} ".format(dirName, htmlFileName)
+    "-o {1}".format(mdxFilePath, htmlFilePath)
     )
 
     if html:
-        os.system("open {0}/{1}".format(dirName, htmlFileName))
+        os.system("open " + htmlFilePath)
     else:
         os.system(
         "sed " \
-        "'s/\[TITLE\]/{2}/' " \
+        "-e 's/\[PRODUCT\]/{1}/' " \
+        "-e 's/\[VERSION\]/{2}/' " \
         "scripts/pdf/cover.html " \
-        "> {0}/{1}" \
-        "".format(dirName, coverFileName, title)
+        "> {0}" \
+        "".format(coverFilePath, product, version)
         )
 
         os.system(
         "wkhtmltopdf " \
-        "--title '{4}' " \
+        "--title '{3}' " \
+        "{0} " \
+        "toc  --xsl-style-sheet scripts/pdf/toc-style.xsl " \
         "--header-right [doctitle] " \
         "--header-font-name Signika " \
         "--header-font-size 8 " \
         "--header-spacing 3 " \
         "--footer-right [page] " \
-        "--footer-left 'Copyright © 2009 - 2020 EnterpriseDB Corporation.  All rights reserved.' " \
+        "--footer-left 'Copyright © 2009 - 2020 EnterpriseDB Corporation. All rights reserved.' " \
         "--footer-font-name Signika " \
         "--footer-font-size 8 " \
         "--footer-spacing 3 " \
-        "{0}/{3} " \
-        "toc  --xsl-style-sheet scripts/pdf/toc-style.xsl " \
-        "{0}/{1} " \
-        "{0}/{2} " \
-        "".format(dirName, htmlFileName, pdfFileName, coverFileName, title)
+        "{1} " \
+        "{2} " \
+        "".format(coverFilePath, htmlFilePath, pdfFilePath, title)
         )
 
     if openPdf:
-        os.system("open {0}/{1}".format(dirName, pdfFileName))
+        os.system("open " + pdfFilePath)
 
-    if os.path.exists(dirName + '/combined.mdx'):
-        os.remove(dirName + '/combined.mdx')
-    if not html:
-        os.remove(dirName + '/' + htmlFileName)
-        os.remove(dirName + '/' + coverFileName)
+    # os.remove(mdxFilePath)
+    # if not html:
+    #     os.remove(htmlFilePath)
+    #     os.remove(coverFilePath)
 
 if __name__ == '__main__':
     main()
