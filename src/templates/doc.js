@@ -198,8 +198,8 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           <DevFrontmatter frontmatter={frontmatter} />
           <hr />
           <p>
-            Could this page could be better? <a href={githubIssuesLink + "&template=documentation-feedback.md&labels=bug"}>
-              Report a problem
+            WORK IN PROGRESS: <a href={githubIssuesLink + "&template=documentation-feedback.md&labels=feedback"}>
+              Feedback on this page
             </a>
           </p>
           <Footer />
