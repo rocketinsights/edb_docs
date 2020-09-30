@@ -1,10 +1,11 @@
 import os
 import re
 import sys
+import datetime
 
-'''
-    For the given path, get the List of all files in the directory tree 
-'''
+# magic snippet for inline repl
+# import code; code.interact(local=dict(globals(), **locals()))
+
 class ToCItem:
     def __init__(self, filename, chapter):
         self.filename = filename
@@ -33,8 +34,18 @@ def getTitle(dirName):
         indexFile = open(indexPath, 'r')
         for line in indexFile.readlines():
             if 'title: ' in line:
-                return line.replace('title: ', '').strip()
+                return stripQuotes(line.replace('title: ', ''))
     return None
+
+def stripQuotes(str):
+    return str.strip().strip("'").strip('"')
+
+def fixImagePath(baseImagePath, line):
+    newLine = line
+    matches = re.search(r'((?:\.*\.*\/*)*images\/)(?:.+\.(?:png|jpg|gif|bmp))', line)
+    if matches:
+        newLine = newLine.replace(matches.groups()[0], baseImagePath + '/images/')
+    return newLine
 
 def getListOfFiles(dirName, parentChapter):
     # create a list of file and sub directories 
@@ -117,9 +128,10 @@ def main():
 
             frontmatterCount = 2
             for line in g.readlines():
-                newLine = re.sub(r'(?is)(..\/)+images\/(\w*\/)*', 'images/', line)
-                newLine = re.sub(r'\(images\/', '(' + baseImagePath + '/images/', newLine)
+                newLine = line
 
+                if "images" in line and not baseImagePath in line:
+                    newLine = fixImagePath(baseImagePath, line)
                 if line[0:3] == "## ":
                     newLine = "#" + line
                 if "toctree" in line:
@@ -127,7 +139,7 @@ def main():
                 if frontmatterCount == 0:
                     fp.write(newLine)
                 if "title: " in line:
-                    newLine = elem.chapter + " " + line[7:].replace('"', '').replace("'", '')
+                    newLine = elem.chapter + " " + stripQuotes(line[7:]) + '\n'
                     fp.write(newLine)
                 if "---" in line and frontmatterCount > 0:
                     frontmatterCount -= 1
@@ -159,23 +171,27 @@ def main():
         "".format(coverFilePath, product, version)
         )
 
-        os.system(
-        "wkhtmltopdf " \
-        "--title '{3}' " \
-        "{0} " \
-        "toc  --xsl-style-sheet scripts/pdf/toc-style.xsl " \
+        headerFooterOptions = "" \
         "--header-right [doctitle] " \
         "--header-font-name Signika " \
         "--header-font-size 8 " \
         "--header-spacing 3 " \
         "--footer-right [page] " \
-        "--footer-left 'Copyright © 2009 - 2020 EnterpriseDB Corporation. All rights reserved.' " \
+        "--footer-left 'Copyright © 2009 - {0} EnterpriseDB Corporation. All rights reserved.' " \
         "--footer-font-name Signika " \
         "--footer-font-size 8 " \
-        "--footer-spacing 3 " \
+        "--footer-spacing 3 ".format(datetime.datetime.now().year)
+
+        os.system(
+        "wkhtmltopdf " \
+        "--title '{3}' " \
+        "{0} " \
+        "toc  --xsl-style-sheet scripts/pdf/toc-style.xsl " \
+        "{4} " \
         "{1} " \
+        "{4} " \
         "{2} " \
-        "".format(coverFilePath, htmlFilePath, pdfFilePath, title)
+        "".format(coverFilePath, htmlFilePath, pdfFilePath, title, headerFooterOptions)
         )
 
     if openPdf:

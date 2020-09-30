@@ -94,7 +94,7 @@ table {
   margin-top: 2rem;
   text-align: left;
   border-collapse: collapse;
-  width: 100%;
+  width: 100% !important;
   /*word-break: break-word;*/
 }
 
