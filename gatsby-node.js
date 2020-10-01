@@ -257,7 +257,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
     actions.createPage({
       path: doc.fields.path,
-      component: require.resolve('./src/templates/doc.js'),
+      component: require.resolve('./src/templates/learn-doc.js'),
       context: {
         navLinks: navLinks,
         githubLink: githubLink,
