@@ -214,6 +214,16 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         node.fields.version === doc.fields.version,
     );
 
+    const docsRepoUrl = 'https://github.com/rocketinsights/edb_docs';
+    const githubLink = docsRepoUrl +
+      '/edit/master/docs' +
+      doc.fields.path +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const githubIssuesLink = docsRepoUrl +
+      '/issues/new?title=Regarding%20' +
+      encodeURIComponent(doc.fields.path) +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+
     actions.createPage({
       path: isLatest ? replacePathVersion(doc.fields.path) : doc.fields.path,
       component: require.resolve('./src/templates/doc.js'),
@@ -221,6 +231,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
         nodePath: doc.fields.path,
+        githubLink: githubLink,
+        githubIssuesLink: githubIssuesLink,
         potentialLatestPath: replacePathVersion(doc.fields.path), // the latest url for this path (may not exist!)
         potentialLatestNodePath: replacePathVersion(
           doc.fields.path,
@@ -245,7 +257,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
     actions.createPage({
       path: doc.fields.path,
-      component: require.resolve('./src/templates/learn-doc.js'),
+      component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         githubLink: githubLink,
