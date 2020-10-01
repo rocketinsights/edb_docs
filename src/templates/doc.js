@@ -149,7 +149,7 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { fields, frontmatter, body, tableOfContents } = data.mdx;
   const { path } = fields;
   const depth = path.split('/').length;
-  const { navLinks, versions, githubLink, githubIssuesLink } = pageContext;
+  const { navLinks, versions } = pageContext;
   const versionArray = makeVersionArray(versions, path);
   const { product, version } = getProductAndVersion(path);
   const navOrder = getNavOrder(product, version, leftNavs);
@@ -196,12 +196,6 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           {depth > 3 && <PrevNext navLinks={navLinks} path={path} />}
           {sections && <Sections sections={sections} />}
           <DevFrontmatter frontmatter={frontmatter} />
-          <hr />
-          <p>
-            WORK IN PROGRESS: <a href={githubIssuesLink + "&template=documentation-feedback.md&labels=feedback"}>
-              Feedback on this page
-            </a>
-          </p>
           <Footer />
 
         </MainContent>
