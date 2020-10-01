@@ -125,6 +125,7 @@ import NotFoundSvg from '../../../static/edb-icons/not-found.svg';
 import OptionsSvg from '../../../static/edb-icons/options.svg';
 import PandasSvg from '../../../static/edb-icons/pandas.svg';
 import PartnerSvg from '../../../static/edb-icons/partner.svg';
+import PdfSvg from '../../../static/edb-icons/pdf.svg';
 import PeopleSvg from '../../../static/edb-icons/people.svg';
 import PerlColorSvg from '../../../static/edb-icons/perl-color.svg';
 import PhpColorSvg from '../../../static/edb-icons/php-color.svg';
@@ -430,6 +431,8 @@ export default function IconType({ iconName, ...rest }) {
       return <PandasSvg {...rest} />;
     case iconNames.PARTNER:
       return <PartnerSvg {...rest} />;
+    case iconNames.PDF:
+      return <PdfSvg {...rest} />;
     case iconNames.PEOPLE:
       return <PeopleSvg {...rest} />;
     case iconNames.PERL_COLOR:
