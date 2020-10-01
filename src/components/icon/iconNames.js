@@ -123,6 +123,7 @@ export default {
   OPTIONS: 'options',
   PANDAS: 'pandas',
   PARTNER: 'partner',
+  PDF: 'pdf',
   PEOPLE: 'people',
   PERL_COLOR: 'perlcolor',
   PHP_COLOR: 'phpcolor',
