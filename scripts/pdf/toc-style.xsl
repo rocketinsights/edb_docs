@@ -17,14 +17,17 @@
             font-size: 20px;
             font-family: Signika;
           }
-          div {border-bottom: 1px dashed rgb(200,200,200);}
+          div {
+            white-space: pre !important;
+            border-bottom: 1px dashed rgb(200,200,200);
+          }
           span {float: right;}
           li {list-style: none;}
           ul {
             font-size: 20px;
             font-family: Signika;
           }
-          ul ul {font-size: 80%; }
+          ul ul {display: none; font-size: 80%; }
           ul {padding-left: 0em;}
           ul ul {padding-left: 1em;}
           a {text-decoration:none; color: black;}

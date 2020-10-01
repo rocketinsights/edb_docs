@@ -139,7 +139,7 @@ def main():
                 if frontmatterCount == 0:
                     fp.write(newLine)
                 if "title: " in line:
-                    newLine = elem.chapter + " " + stripQuotes(line[7:]) + '\n'
+                    newLine = re.sub(r'\.0', '', elem.chapter) + ("&nbsp;" * 10) + stripQuotes(line[7:]) + "\n"
                     fp.write(newLine)
                 if "---" in line and frontmatterCount > 0:
                     frontmatterCount -= 1
@@ -186,7 +186,7 @@ def main():
         "wkhtmltopdf " \
         "--title '{3}' " \
         "{0} " \
-        "toc  --xsl-style-sheet scripts/pdf/toc-style.xsl " \
+        "toc --xsl-style-sheet scripts/pdf/toc-style.xsl " \
         "{4} " \
         "{1} " \
         "{4} " \
