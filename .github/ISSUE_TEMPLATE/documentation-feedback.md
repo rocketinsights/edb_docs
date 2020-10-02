@@ -1,10 +1,9 @@
 ---
 name: Feedback on page
-about: Report a problem you've observed while reading a topic
+about: Report a problem with product documentation
 title: 'Problem on (PUT PAGE PATH / URL / TITLE HERE)'
-labels: ''
+labels: 'documentation'
 assignees: ''
-
 ---
 
 ## Summary
