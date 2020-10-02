@@ -212,10 +212,10 @@ def main():
     if openPdf:
         os.system("open " + pdfFilePath)
 
-    # os.remove(mdxFilePath)
-    # if not html:
-    #     os.remove(htmlFilePath)
-    #     os.remove(coverFilePath)
+    os.remove(mdxFilePath)
+    if not html:
+        os.remove(htmlFilePath)
+        os.remove(coverFilePath)
 
 if __name__ == '__main__':
     main()
