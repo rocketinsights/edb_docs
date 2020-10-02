@@ -4,11 +4,11 @@
   font-weight: normal;
 }
 
-@font-face {
+/*@font-face {
   font-family: "Signika";
   src: url("Signika-Bold.ttf") format("truetype");
   font-weight: bold;
-}
+}*/
 
 @font-face {
   font-family: "Source Code Pro";
@@ -16,29 +16,42 @@
   font-style: normal;
 }
 
-@font-face {
+/* Not currently used */
+/*@font-face {
   font-family: "Source Code Pro";
   src: url("SourceCodePro-Italic.ttf") format("truetype");
   font-style: italic;
-}
+}*/
 
 body {
   font-size: 28px;
+}
+
+body::before {
+  content: ' '; /* this is needed to fix some font rendering quirk */
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, th {
   font-family: Signika;
   font-weight: normal;
 }
 
-body::before {
-  content: ' ';
-  font-family: sans-serif;
+h2 {
+  margin: 4rem 0;
 }
 
-pre {
-  font-family: Source Code Pro;
-  font-weight: normal;
+h3 {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
 }
 
-p, table, ul, pre {
+h4, h5, h6 {
+  margin-top: 4rem;
+  margin-bottom: 2.5rem;
+}
+
+p, ul {
   margin-bottom: 2rem;
 }
 
@@ -51,14 +64,10 @@ hr {
   border-top: 1px solid #ebeff2;
 }
 
-
-/* TOC */
-#TOC ul {
-  margin-bottom: 0;
-}
-
-#TOC {
-  page-break-after: always;
+blockquote {
+  border-left: 5px solid #ebeff2;
+  padding-left: 1rem;
+  margin-left: 0;
 }
 
 
@@ -78,14 +87,18 @@ pre code {
 }
 
 pre {
+  font-family: Source Code Pro;
+  font-weight: normal;
   background-color: #f8f8f8; /* match SourceCode pandoc highlighting colors */
   border-radius: .2rem;
   padding: .3rem;
+  margin-bottom: 2rem;
 }
+
 
 /* Tables */
 table {
-  margin-top: 2rem;
+  margin: 3rem 0;
   text-align: left;
   border-collapse: collapse;
   width: 100% !important;
@@ -102,5 +115,5 @@ tbody tr {
 
 th, td {
   padding: 0.3rem 0;
-  padding-right: 1rem;
+  padding-right: 1.5rem;
 }

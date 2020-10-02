@@ -175,23 +175,38 @@ def main():
         "--header-right [doctitle] " \
         "--header-font-name Signika " \
         "--header-font-size 8 " \
-        "--header-spacing 3 " \
+        "--header-spacing 7 " \
         "--footer-right [page] " \
         "--footer-left 'Copyright © 2009 - {0} EnterpriseDB Corporation. All rights reserved.' " \
         "--footer-font-name Signika " \
         "--footer-font-size 8 " \
-        "--footer-spacing 3 ".format(datetime.datetime.now().year)
+        "--footer-spacing 7 ".format(datetime.datetime.now().year)
 
         os.system(
         "wkhtmltopdf " \
         "--title '{3}' " \
+        "--margin-top 15mm " \
+        "--margin-bottom 15mm " \
         "{0} " \
+        "--footer-font-name Signika " \
+        "--footer-font-size 8 " \
+        "--footer-spacing 7 " \
+        "--footer-left 'Copyright © 2009 - {6} EnterpriseDB Corporation. All rights reserved.' " \
+        "--footer-right 'Built at {5}' " \
         "toc --xsl-style-sheet scripts/pdf/toc-style.xsl " \
         "{4} " \
         "{1} " \
         "{4} " \
         "{2} " \
-        "".format(coverFilePath, htmlFilePath, pdfFilePath, title, headerFooterOptions)
+        "".format(
+            coverFilePath,
+            htmlFilePath,
+            pdfFilePath,
+            title,
+            headerFooterOptions,
+            datetime.datetime.utcnow().isoformat()[0:-7],
+            datetime.datetime.now().year
+        )
         )
 
     if openPdf:
