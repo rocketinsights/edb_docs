@@ -1,6 +1,6 @@
 ---
 name: Product Feedback
-about: Report a problem you've observed while reading a topic
+about: Feedback relating to an EDB product
 labels: 'product-feedback'
 assignees: ''
 ---
