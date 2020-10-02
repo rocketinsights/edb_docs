@@ -73,6 +73,7 @@ export default {
   EDB_PEM: 'edbpem',
   EDB_REPLICATION: 'edbreplication',
   EDB_SYMBOL: 'edbsymbol',
+  ELLIPSIS: 'ellipsis',
   ENERGY: 'energy',
   ENTERPRISE: 'enterprise',
   EXPORT: 'export',

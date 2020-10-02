@@ -50,11 +50,30 @@ code {
 }
 
 /* Dropdown overrides */
-.version-dropdown.dropdown-menu {
+.version-dropdown.dropdown-menu,
+[aria-labelledby="page-actions-button"] {
   border-radius: $border-radius !important;
   border-top-color: #4D89B1 !important;
 }
 
 .dropdown-item.active, .dropdown-item:active {
   color: black !important;
+}
+
+
+.dropdown #page-actions-button.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown #page-actions-button {
+  padding-right: 0;
+}
+
+// Make the icon inverse on hover
+#page-actions-button:hover svg {
+  fill: white;
+}
+// Make it still be white if mouse pointer is away
+#page-actions-button[aria-expanded="true"] svg{
+  fill: white;
 }

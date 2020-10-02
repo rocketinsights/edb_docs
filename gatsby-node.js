@@ -216,11 +216,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
     const docsRepoUrl = 'https://github.com/rocketinsights/edb_docs';
     const githubLink = docsRepoUrl +
-      '/edit/master/docs' +
+      '/edit/develop/docs' +
       doc.fields.path +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
     const githubIssuesLink = docsRepoUrl +
-      '/issues/new?title=Regarding%20' +
+      '/issues/new?title=Feedback%20on%20' +
       encodeURIComponent(doc.fields.path) +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
 
