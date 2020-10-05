@@ -40,13 +40,6 @@ def getTitle(dirName):
 def stripQuotes(str):
     return str.strip().strip("'").strip('"')
 
-def fixImagePath(baseImagePath, line):
-    newLine = line
-    matches = re.search(r'((?:\.*\.*\/*)*images\/)(?:.+\.(?:png|jpg|gif|bmp))', line)
-    if matches:
-        newLine = newLine.replace(matches.groups()[0], baseImagePath + '/images/')
-    return newLine
-
 def getListOfFiles(dirName, parentChapter):
     # create a list of file and sub directories 
     # names in the given directory 
@@ -115,6 +108,7 @@ def main():
             if tag and len(elem.anchor) == 0:
                 elem.anchor = tag.group(1)
 
+    resourceSearchPaths = { dirName }
     
     # Print the files
     with open(mdxFilePath, 'w') as fp:
@@ -122,16 +116,12 @@ def main():
             g = open(elem.filename, "r")
 
             baseImagePath = os.path.split(elem.filename)[0]
-            splitPath = baseImagePath.split('/')
-            if len(splitPath) >= 4: # limit folder depth, since images are in the sub-product root
-                baseImagePath = '/'.join(splitPath[0:4])
+            resourceSearchPaths.add(baseImagePath)
 
             frontmatterCount = 2
             for line in g.readlines():
                 newLine = line
 
-                if "images" in line and not baseImagePath in line:
-                    newLine = fixImagePath(baseImagePath, line)
                 if line[0:3] == "## ":
                     newLine = "#" + line
                 if "toctree" in line:
@@ -155,9 +145,15 @@ def main():
     "-f gfm " \
     "--self-contained " \
     '--highlight-style tango ' \
-    "--css=scripts/pdf/pdf-styles.css " \
-    "-o {1}".format(mdxFilePath, htmlFilePath)
+    "--css=../../../scripts/pdf/pdf-styles.css " \
+    "--resource-path={2} " \
+    "-o {1}".format(mdxFilePath, htmlFilePath, ':'.join(resourceSearchPaths))
     )
+
+    if not os.path.exists(htmlFilePath):
+        print("\033[91m html file failed to generate! \033[0m")
+        os.remove(mdxFilePath)
+        return
 
     if html:
         os.system("open " + htmlFilePath)
