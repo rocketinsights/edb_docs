@@ -122,6 +122,8 @@ def main():
             for line in g.readlines():
                 newLine = line
 
+                if line[0:2] == "# ":
+                    newLine = "##" + line
                 if line[0:3] == "## ":
                     newLine = "#" + line
                 if "toctree" in line:
