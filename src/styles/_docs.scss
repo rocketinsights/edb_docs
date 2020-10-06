@@ -3,6 +3,10 @@ main {
   min-height: auto; 
 }
 
+table {
+  width: 100% !important; // some docs have table widths set inline :(
+}
+
 /* remove glow from search input */
 .form-control:focus { box-shadow:none !important; }
 
