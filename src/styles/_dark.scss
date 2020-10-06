@@ -121,27 +121,18 @@ body.dark {
   }
 }
 
-body.light {
-  .sun {
-    display: none;
-  }
-  .moon {
-    display: inline-block;
-  }
-}
-
 .sun, .moon {
   position: relative;
+  z-index: 1;
+  top: 7px;
 }
 .sun {
-  top: 7px;
-  left: 13px;
-  z-index: 1;
+  display: none;
+  left: -33px;
 }
 .moon {
-  z-index: 1;
-  right: -25px;
-  top: 7px;
+  display: inline-block;
+  left: -21px;
 }
 
 // Bootstrap Switch component

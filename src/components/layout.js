@@ -16,10 +16,7 @@ import {
 import '../styles/index.scss';
 
 const darkModeActive = () => {
-  if (window) {
-    return window.localStorage.getItem('dark-theme') === 'true';
-  }
-  return false;
+  return window && window.localStorage.getItem('dark-theme') === 'true';
 }
 
 const Layout = ({ children, pageMeta, katacodaPanelData, background = 'light' }) => {
