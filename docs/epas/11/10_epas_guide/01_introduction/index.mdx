@@ -1,42 +1,21 @@
 ---
-title: "Introduction"
+title: "What’s New"
 ---
 
-<div id="introduction" class="registered_link"></div>
+<div id="whats_new" class="registered_link"></div>
 
 
-Advanced Server adds extended functionality to the open-source PostgreSQL database. The extended functionality supports database administration, enhanced SQL capabilities, database and application security, performance monitoring and analysis, and application development utilities. This guide documents those features that are exclusive to Advanced Server.
 
-  - **Enhanced Compatibility Features.** This section provides an overview of compatibility features supported by Advanced Server.
-  - **Database Administration.** This section contains information about features and tools that are helpful to the database administrator.
-      - `Index Advisor` helps to determine the additional indexes needed on tables to improve application performance.
-      - `SQL Profiler` locates and diagnoses poorly running SQL queries in applications.
-      - `pgsnmpd` is an SNMP agent that returns hierarchical monitoring information regarding the current state of Advanced Server.
-  - **Security.** This section contains information about security features supported by Advanced Server.
-      - `SQL/Protect` provides protection against SQL injection attacks.
-      - `Virtual Private Database` provides fine-grained, row level access.
-      - `sslutils` provides SSL certificate generation functions.
-      - `Data redaction` provides protection against sensitive data exposure.
-  - **EDB Resource Manager.** This section contains information about the EDB Resource Manager feature, which provides the capability to control system resource usage by Advanced Server processes.
-      - `Resource Groups` shows how to create and maintain the groups on which resource limits can be defined.
-      - `CPU Usage Throttling` provides a method to control CPU usage by Advanced Server processes.
-      - `Dirty Buffer Throttling` provides a method to control the dirty rate of shared buffers by Advanced Server processes.
-  - **The libpq C Library.** The `libpq C library` is the C application programming interface (API) language for Advanced Server.
-  - **The PL Debugger.** The `PL Debugger` is a graphically oriented debugging tool for PL/pgSQL.
-  - **Performance Analysis and Tuning.** This section contains the various tools for analyzing and improving application and database server performance.
-      - `Dynatune` provides a quick and easy means for configuring Advanced Server depending upon the type of application usage.
-      - `EDB wait states` provides a way to capture wait events and other data for performance diagnosis.
-  - **EDB Clone Schema.** This section contains information about the EDB Clone Schema feature, which provides the capability to copy a schema and its database objects within a single database or from one database to another database.
-  - **Enhanced SQL and Other Miscellaneous Features.** This section contains information on enhanced SQL functionality and other features that provide additional flexibility and convenience.
-  - **System Catalog Tables.** This section contains additional *system catalog tables* added for Advanced Server specific database objects.
-  - **Advanced Server Keywords.** This section contains information about the words that Advanced Server recognizes as keywords.
 
-For information about the features that are shared by Advanced Server and PostgreSQL, see the PostgreSQL core documentation, available at:
+The following features have been changed in EDB Postgres Advanced Server 11 to create Advanced Server 12:
 
-> <https://www.postgresql.org/docs/current/index.html>
-
-<div class="toctree" data-maxdepth="3">
-
-whats_new conventions examples_used
-
-</div>
+  - Advanced Server introduces `COMPOUND TRIGGERS`, which are stored as a PL block that executes in response to a specified triggering event. For information, see the *Database Compatibility for Oracle Developer’s Guide*.
+  - Advanced Server now supports new `DATA DICTIONARY VIEWS` that provide information that is compatible with the Oracle data dictionary views. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
+  - Advanced Server has added the `LISTAGG` function to support string aggregation that concatenates data from multiple rows into a single row in an ordered manner. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
+  - Advanced Server now supports `CAST(MULTISET)` function, allowing subquery output to be CAST to a nested table type. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
+  - Advanced Server has added the `MEDIAN function` to calculate a median value from the set of provided values. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
+  - Advanced Server has added the `SYS_GUID` function to generate and return a globally unique identifier in the form of 16-bytes of RAW data. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
+  - Advanced Server now supports an Oracle-compatible `SELECT UNIQUE` clause in addition to an existing `SELECT DISTINCT` clause. For information, see the *Database Compatibility for Oracle Developer's Reference Guide*.
+  - Advanced Server has re-implemented `default_with_rowids`, which is used to create a table that includes a `ROWID` column in the newly created table.
+  - Advanced Server now supports logical decoding on the standby server, which allows creating a logical replication slot on a standby, independently of a primary server.
+  - Advanced Server introduces `INTERVAL PARTITIONING`, which allows a database to automatically create partitions of a specified interval as new data is inserted into a table. For information, see the *Database Compatibility for Oracle Developer's Guide*.

@@ -1,10 +1,25 @@
+// this patch is required to consistently load all the doc files
+const realFs = require('fs');
+const gracefulFs = require('graceful-fs');
+gracefulFs.gracefulify(realFs);
+
 const { createFilePath } = require(`gatsby-source-filesystem`);
+const { exec } = require("child_process");
 
-const sortVersions = (a, b) => {
-  return parseFloat(a) - parseFloat(b);
-};
+const sortVersionArray = (versions) => {
+  return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
+                 .map(version => version.replace(/\d+/g, n => +n-100000));
+}
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+const replacePathVersion = (path, version = 'latest') => {
+  const splitPath = path.split('/');
+  const postVersionPath = splitPath.slice(3).join('/');
+  return `/${splitPath[1]}/${version}${postVersionPath.length > 0 ? `/${postVersionPath}` : ''}`;
+}
+
+const productLatestVersionCache = [];
+
+exports.onCreateNode = async ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   // Ensures we are processing only markdown files
   if (
@@ -23,7 +38,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       relativeFilePath.length - 1,
     );
     const product = relativeFilePath.split('/')[1];
-
     const version = relativeFilePath.split('/')[2];
 
     // Creates new query'able fields
@@ -89,8 +103,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             navTitle
             description
             redirects
+            iconName
+            katacodaPages {
+              scenario
+              account
+            }
           }
-          excerpt(pruneLength: 100)
+          excerpt(pruneLength: 280)
           fields {
             path
             product
@@ -174,21 +193,51 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 
   for (const product in versionIndex) {
-    versionIndex[product] = versionIndex[product].sort(sortVersions).reverse();
+    versionIndex[product] = sortVersionArray(versionIndex[product]).reverse();
   }
 
   docs.forEach(doc => {
+    const isLatest = versionIndex[doc.fields.product][0] === doc.fields.version;
+    if (isLatest) {
+      actions.createRedirect({
+        fromPath: doc.fields.path,
+        toPath: replacePathVersion(doc.fields.path),
+        redirectInBrowser: true,
+        isPermanent: false,
+        force: true,
+      });
+    }
+
     const navLinks = docs.filter(
       node =>
         node.fields.product === doc.fields.product &&
         node.fields.version === doc.fields.version,
     );
+
+    const docsRepoUrl = 'https://github.com/rocketinsights/edb_docs';
+    const githubLink = docsRepoUrl +
+      '/edit/develop/docs' +
+      doc.fields.path +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const githubIssuesLink = docsRepoUrl +
+      '/issues/new?title=Feedback%20on%20' +
+      encodeURIComponent(doc.fields.path) +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+
     actions.createPage({
-      path: doc.fields.path,
+      path: isLatest ? replacePathVersion(doc.fields.path) : doc.fields.path,
       component: require.resolve('./src/templates/doc.js'),
       context: {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
+        nodePath: doc.fields.path,
+        githubLink: githubLink,
+        githubIssuesLink: githubIssuesLink,
+        potentialLatestPath: replacePathVersion(doc.fields.path), // the latest url for this path (may not exist!)
+        potentialLatestNodePath: replacePathVersion(
+          doc.fields.path,
+          versionIndex[doc.fields.product][0]
+        ), // the latest version number path (may not exist!), needed for query
       },
     });
   });
@@ -197,9 +246,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     const navLinks = learn.filter(
       node => node.fields.topic === doc.fields.topic,
     );
-    const githubLink =
-      'https://github.com/rocketinsights/edb_docs_advocacy/edit/master/advocacy_docs' +
+    const advocacyDocsRepoUrl = 'https://github.com/rocketinsights/edb_docs_advocacy';
+    const githubLink = advocacyDocsRepoUrl +
+      '/edit/master/advocacy_docs' +
       doc.fields.path +
+      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const githubIssuesLink = advocacyDocsRepoUrl +
+      '/issues/new?title=Regarding%20' +
+      encodeURIComponent(doc.fields.path) +
       (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
     actions.createPage({
       path: doc.fields.path,
@@ -207,7 +261,44 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       context: {
         navLinks: navLinks,
         githubLink: githubLink,
+        githubIssuesLink: githubIssuesLink,
       },
     });
+
+    (doc.frontmatter.katacodaPages || []).forEach(katacodaPage => {
+      if (!katacodaPage.scenario || !katacodaPage.account) {
+        raise `katacoda scenario or account missing for ${doc.fields.path}`;
+      }
+
+      actions.createPage({
+        path: `${doc.fields.path}/${katacodaPage.scenario}`,
+        component: require.resolve('./src/templates/katacoda-page.js'),
+        context: {
+          ...katacodaPage,
+          learn: {
+            title: doc.frontmatter.title,
+            description: doc.frontmatter.description,
+          },
+        },
+      })
+    });
+  });
+
+  const sha = await new Promise((resolve, reject) => {
+    exec("git rev-parse HEAD", (error, stdout, stderr) => resolve(stdout));
+  });
+
+  const branch = await new Promise((resolve, reject) => {
+    exec("git branch --show-current", (error, stdout, stderr) => resolve(stdout));
+  });
+
+  actions.createPage({
+    path: 'build-info',
+    component: require.resolve('./src/templates/build-info.js'),
+    context: {
+      sha: sha,
+      branch: branch,
+      buildTime: Date.now(),
+    },
   });
 };

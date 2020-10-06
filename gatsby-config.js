@@ -2,6 +2,9 @@ const config = require('./config');
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
+const utf8Truncate = require("truncate-utf8-bytes");
+
+console.log(`NODE ENV = ${process.env.NODE_ENV}`);
 
 const docQuery = `
 {
@@ -27,6 +30,9 @@ const transformNodeForAlgolia = node => {
   newNode['title'] = node.frontmatter.title;
   newNode['path'] = node.fields.path;
   newNode['type'] = 'guide';
+  // if (node.frontmatter.product) { newNode['product'] = node.frontmatter.product; }
+  // if (node.frontmatter.platform) { newNode['platform'] = node.frontmatter.platform; }
+  newNode['platform'] = node.frontmatter.platform || 'unknown';
 
   if (!!node.fields.product) {
     newNode['product'] = node.fields.product;
@@ -77,7 +83,7 @@ const splitNodeContent = nodes => {
   let result = [];
   for (let node of nodes) {
     let order = 1;
-    let content = node.rawBody.replace(/(\n)+/g, '\n');
+    let content = utf8Truncate(node.rawBody.replace(/(\n)+/g, '\n'), 9800); // 9.8kB
     const contentArray = content.split('\n');
     let contentAggregator = '';
     let hitTocTree = false;
@@ -162,13 +168,13 @@ const removeLeadingBrackets = section => {
   return section;
 };
 
-const queries = [
+const queries = process.env.INDEX_ON_BUILD ? [
   {
     query: docQuery,
     transformer: ({ data }) =>
       splitNodeContent(
         addBreadcrumbsToNodes(
-          data.allMdx.nodes.filter(node => !!node.fields.product),
+          data.allMdx.nodes.filter(node => node.type === 'doc'),
         ).map(node => transformNodeForAlgolia(node)),
       ),
     indexName: 'edb-products',
@@ -178,7 +184,7 @@ const queries = [
     transformer: ({ data }) =>
       splitNodeContent(
         addBreadcrumbsToNodes(
-          data.allMdx.nodes.filter(node => !node.fields.product),
+          data.allMdx.nodes.filter(node => node.type === 'guide'),
         ).map(node => transformNodeForAlgolia(node)),
       ),
     indexName: 'advocacy',
@@ -193,7 +199,11 @@ const queries = [
       ),
     indexName: 'edb',
   },
-];
+] : [];
+
+if (!process.env.INDEX_ON_BUILD) {
+  console.log('Skipping Algolia index build');
+}
 
 module.exports = {
   pathPrefix: config.gatsby.pathPrefix,
@@ -201,8 +211,9 @@ module.exports = {
     title: 'EDB Docs',
     description:
       'EDB supercharges Postgres with products, services, and support to help you control database risk, manage costs, and scale efficiently.',
-    baseUrl: 'https://edb-docs.herokuapp.com',
-    imageUrl: 'https://edb-docs.herokuapp.com/images/social.jpg',
+    baseUrl: 'https://edb-docs.netlify.com',
+    imageUrl: 'https://edb-docs.netlify.com/images/social.jpg',
+    siteUrl: 'https://edb-docs.netlify.com',
   },
   plugins: [
     'gatsby-plugin-sass',
@@ -210,6 +221,9 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-json',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-meta-redirect',
+    'gatsby-plugin-netlify',
+    'gatsby-plugin-sitemap',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -237,6 +251,13 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: 'static/images',
+      },
+    },
+    {
       resolve: `gatsby-source-git`,
       options: {
         name: `advocacy_docs`,
@@ -253,10 +274,9 @@ module.exports = {
         },
         gatsbyRemarkPlugins: [
           {
-            resolve:
-              process.env.NODE_ENV === 'development'
-                ? 'gatsby-remark-static-images'
-                : 'gatsby-remark-images',
+            resolve: process.env.OPTIMIZE_IMAGES ?
+              'gatsby-remark-images' :
+              'gatsby-remark-static-images'
           },
           {
             resolve: `gatsby-remark-autolink-headers`,
@@ -272,13 +292,6 @@ module.exports = {
             },
           },
         ],
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: 'static/images',
       },
     },
     {
@@ -316,7 +329,7 @@ module.exports = {
         indexName: process.env.ALGOLIA_INDEX_NAME, // for all queries
         queries,
         chunkSize: 10000, // default: 1000,
-        enablePartialUpdates: true,
+        enablePartialUpdates: false,
       },
     },
   ],

@@ -1,5 +1,7 @@
+import Attention from './attention';
 import BackButton from './back-button';
 import CardDecks from './card-decks';
+import CodeBlock from './code-block';
 import DarkModeToggle from './dark-mode-toggle';
 import DevOnly from './dev-only';
 import DevFrontmatter from './dev-frontmatter';
@@ -9,6 +11,7 @@ import Layout from './layout';
 import LeftNav from './left-nav';
 import Logo from './logo';
 import MainContent from './main-content';
+import PdfDownload from './pdf-download.js';
 import PrevNext from './prev-next';
 import SearchNavigationLinks from './search-navigation-links';
 import SearchNavigation from './search-navigation';
@@ -20,8 +23,10 @@ import TreeNode from './tree-node';
 import VersionDropdown from './version-dropdown';
 
 export {
+  Attention,
   BackButton,
   CardDecks,
+  CodeBlock,
   DarkModeToggle,
   DevOnly,
   DevFrontmatter,
@@ -31,6 +36,7 @@ export {
   LeftNav,
   Logo,
   MainContent,
+  PdfDownload,
   PrevNext,
   SearchNavigationLinks,
   SearchNavigation,

@@ -23,9 +23,7 @@ If you encounter a similar message, you should confirm that the data directory i
 
 If you encounter difficulty when installing the `EPEL` release package, you can use the following command to install the `epel-release` package:
 
-``` text
-yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-```
+    yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 Please note that you may need to enable the `[extras]` repository definition in the `CentOS-Base.repo` file (located in `/etc/yum.repos.d`). If `yum` cannot access a repository that contains `epel-release`, you will get an error message:
 

@@ -21,12 +21,28 @@ export const query = graphql`
         title
         navTitle
         description
+        katacodaPanel {
+          account
+          scenario
+          codelanguages
+        }
       }
       fields {
         path
       }
       body
       tableOfContents
+    }
+    file(name: { eq: "advocacy-index-nav" }) {
+      childAdvocacyDocsJson {
+        advocacyLinks {
+          links {
+            title
+            url
+            iconName
+          }
+        }
+      }
     }
   }
 `;
@@ -67,18 +83,25 @@ const Tiles = ({ mdx, navLinks }) => {
 
 const LearnDocTemplate = ({ data, pageContext }) => {
   const { mdx } = data;
-  const { navLinks, githubLink } = pageContext;
+  const { navLinks, githubLink, githubIssuesLink } = pageContext;
   const pageMeta = {
     title: mdx.frontmatter.title,
     description: mdx.frontmatter.description,
     path: mdx.fields.path,
   };
+
+  const katacodaPanelData = mdx.frontmatter.katacodaPanel;
+  const iconName = (data.file.childAdvocacyDocsJson.advocacyLinks[0].links.find(
+    link => mdx.fields.path.includes(link.url)
+  ) || { iconName: null }).iconName;
+  const showToc = !!mdx.tableOfContents.items;
+
   return (
-    <Layout pageMeta={pageMeta}>
+    <Layout pageMeta={pageMeta} katacodaPanelData={katacodaPanelData}>
       <TopBar />
       <Container fluid className="p-0 d-flex bg-white">
         <SideNavigation>
-          <LeftNav navLinks={navLinks} path={mdx.fields.path} />
+          <LeftNav navLinks={navLinks} path={mdx.fields.path} iconName={iconName} />
         </SideNavigation>
         <MainContent>
           <div className="d-flex justify-content-between align-items-center">
@@ -91,27 +114,29 @@ const LearnDocTemplate = ({ data, pageContext }) => {
             </a>
           </div>
 
-          {mdx.tableOfContents.items ? (
-            <ContentRow>
-              <Col xs={9}>
-                <MDXRenderer>{mdx.body}</MDXRenderer>
-                <Tiles mdx={mdx} navLinks={navLinks} />
-              </Col>
-
-              <Col xs={3}>
-                {mdx.tableOfContents.items && (
-                  <TableOfContents toc={mdx.tableOfContents.items} />
-                )}
-              </Col>
-            </ContentRow>
-          ) : (
-            <>
+          <ContentRow>
+            <Col xs={showToc ? 9 : 12}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
               <Tiles mdx={mdx} navLinks={navLinks} />
-            </>
-          )}
+            </Col>
+
+            { showToc &&
+              <Col xs={3}>
+                <TableOfContents toc={mdx.tableOfContents.items} />
+              </Col>
+            }
+          </ContentRow>
 
           <DevFrontmatter frontmatter={mdx.frontmatter} />
+
+          <hr />
+          <p>
+            Could this page could be better? <a href={githubIssuesLink + "&template=problem-with-topic.md&labels=bug"}>
+              Report a problem
+            </a> or <a href={githubIssuesLink + "&template=suggest-addition-to-topic.md&labels=enhancement"}>
+              suggest an addition
+            </a>!
+          </p>
 
           <Footer />
         </MainContent>
