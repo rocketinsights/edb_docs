@@ -148,6 +148,42 @@ const Section = ({ section }) => (
   </div>
 );
 
+const FeedbackDropdown = ({ githubIssuesLink }) => (
+  <DropdownButton
+      className="float-right position-relative py-1"
+      size="sm"
+      variant="outline-info"
+      id="page-actions-button"
+      title={
+        //this seems absolutely buck wild to me, but it's what StackOverflow suggests 🤷🏻‍♂️
+        <Icon
+          iconName="ellipsis"
+          className="fill-orange mr-2"
+          width="15"
+          height="15"
+        />
+      }
+    >
+      <Dropdown.Item
+        href={githubIssuesLink + '&template=documentation-feedback.md'}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Report a problem
+      </Dropdown.Item>
+      <Dropdown.Item
+        href={
+          githubIssuesLink +
+          '&template=product-feedback.md&labels=feedback'
+        }
+        target="_blank"
+        rel="noreferrer"
+      >
+        Give product feedback
+      </Dropdown.Item>
+    </DropdownButton>
+)
+
 const DocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { fields, frontmatter, body, tableOfContents } = data.mdx;
   const { path } = fields;
@@ -183,39 +219,7 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           />
         </SideNavigation>
         <MainContent>
-        <DropdownButton
-            className="float-right position-relative py-1"
-            size="sm"
-            variant="outline-info"
-            id="page-actions-button"
-            title={
-              //this seems absolutely buck wild to me, but it's what StackOverflow suggests 🤷🏻‍♂️
-              <Icon
-                iconName="ellipsis"
-                className="fill-orange mr-2"
-                width="15"
-                height="15"
-              />
-            }
-          >
-            <Dropdown.Item
-              href={githubIssuesLink + '&template=documentation-feedback.md'}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Report a problem
-            </Dropdown.Item>
-            <Dropdown.Item
-              href={
-                githubIssuesLink +
-                '&template=product-feedback.md&labels=feedback'
-              }
-              target="_blank"
-              rel="noreferrer"
-            >
-              Give product feedback
-            </Dropdown.Item>
-          </DropdownButton>
+          <FeedbackDropdown githubIssuesLink={githubIssuesLink} />
 
           <h1 className="balance-text">
             {frontmatter.title}{' '}

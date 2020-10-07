@@ -56,7 +56,7 @@ const Layout = ({ children, pageMeta, katacodaPanelData, background = 'light' })
           h2: props => <h2 {...props} className='mt-5' />, // eslint-disable-line jsx-a11y/heading-has-content
           h3: props => <h3 {...props} className='mt-4-5' />, // eslint-disable-line jsx-a11y/heading-has-content
           img: props => <img {...props} className='mw-100' />, // eslint-disable-line jsx-a11y/alt-text
-          blockquote: props => <blockquote {...props} className='pl-3 border-left border-5'></blockquote>,
+          blockquote: props => <blockquote {...props} className='pl-3 border-left border-top-0 border-bottom-0 border-right-0 border-5'></blockquote>,
           KatacodaPanel: props => <KatacodaPanel {...props} katacodaPanelData={katacodaPanelData} />,
           KatacodaPageLink,
           Attention,
