@@ -319,7 +319,6 @@ module.exports = {
         minify: true,
       },
     },
-    'gatsby-plugin-meta-redirect',
     {
       // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
       resolve: `gatsby-plugin-algolia`,
