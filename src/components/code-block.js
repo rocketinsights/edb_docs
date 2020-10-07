@@ -115,15 +115,20 @@ const OutputPre = ({ content }) => (
 );
 
 const CodeBlock = ({ children, katacodaPanelData, ...otherProps }) => {
-  const [codeContent, outputContent] = splitChildrenIntoCodeAndOutput(children.props.children);
+  const [codeContent, outputContent] = children.props ?
+    splitChildrenIntoCodeAndOutput(children.props.children) :
+    [children, ''];
+  const language = children.props ?
+    (children.props.className || '').replace('language-','') :
+    'text';
+
   const execLanguages = katacodaPanelData ? ['shell'].concat(katacodaPanelData.codelanguages) : [];
-  const language = children.props.className.replace('language-','');
 
   if (codeContent.length > 0) {
     return (
       <figure className='codeblock-wrapper katacoda-enabled'>
         <CodePre
-          className={children.props.className}
+          className={`language-${language}`}
           content={codeContent}
           runnable={execLanguages.includes(language)}
         />
