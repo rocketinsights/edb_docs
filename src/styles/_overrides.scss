@@ -1,5 +1,9 @@
 /* This file is for styles not explicitly taken from the EDB wireframe */
 
+.hidden-for-testing {
+  display: none !important;
+}
+
 .sidebar {
   width: 310px; /* sidebar was expanding occasionally */
 }
