@@ -112,9 +112,18 @@ html.katacoda-panel-active .katacoda-exec-button {
   .cta { font-size: 1.2rem; }
 }
 
-// Because it is fixed position, the Katacoda panel screws up printing big-time
+
+// .topbar,  nav {
+//   opacity: 0.1;
+// }
+
 @media print {
-  .katacoda-panel-active {
+  .topbar, .sidebar, nav {
+    display: none !important;
+  }
+
+  // Because it is fixed position, the Katacoda panel screws up printing big-time
+  .katacoda-panel-active { 
     body { margin-bottom: unset; }
     .katacoda-panel { display: none; }
   }
