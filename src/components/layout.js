@@ -15,6 +15,10 @@ import {
 
 import '../styles/index.scss';
 
+const darkModeActive = () => {
+  return window && window.localStorage.getItem('dark-theme') === 'true';
+}
+
 const Layout = ({ children, pageMeta, katacodaPanelData, background = 'light' }) => {
   const { baseUrl, imageUrl, title, description } = useSiteMetadata();
   const meta = pageMeta || {};
@@ -37,7 +41,9 @@ const Layout = ({ children, pageMeta, katacodaPanelData, background = 'light' })
           <link rel="canonical" href={baseUrl + meta.canonicalPath} />
         }
         <meta name="twitter:card" content="summary_large_image" />
-        <body className={`bg-${background} fixed-container`} />
+        <body
+          className={`bg-${background} fixed-container ${darkModeActive() && 'dark'}`}
+        />
       </Helmet>
       <MDXProvider
         components={{

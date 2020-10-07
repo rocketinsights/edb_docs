@@ -10,27 +10,22 @@ export const indexLinkList = [
         iconName: IconNames.EDB_EPAS,
       },
       {
-        title: 'EDB Postgres Ark Platform',
-        url: '/ark/latest',
-        iconName: IconNames.EDB_ARK,
-      },
-      {
-        title: 'EDB Backup and Recovery Tool',
+        title: 'Backup and Recovery Tool',
         url: '/bart/latest',
         iconName: IconNames.EDB_BART,
       },
       {
-        title: 'EDB Postgres Failover Manager',
+        title: 'Failover Manager',
         url: '/efm/latest',
         iconName: IconNames.EDB_EFM,
       },
       {
-        title: 'EDB Postgres Enterprise Manager',
+        title: 'Postgres Enterprise Manager',
         url: '/pem/latest',
         iconName: IconNames.EDB_PEM,
       },
       {
-        title: 'EDB Postgres Migration Portal',
+        title: 'Migration Portal',
         url: '/migration_portal/latest',
         iconName: IconNames.EDB_MIGRATION_PORTAL,
       },
@@ -85,6 +80,11 @@ export const indexLinkList = [
         title: 'Slony Replication',
         url: '/slony/latest',
         iconName: IconNames.NETWORK2
+      },
+      {
+        title: 'Ark Platform',
+        url: '/ark/latest',
+        iconName: IconNames.EDB_ARK,
       },
     ],
   },
