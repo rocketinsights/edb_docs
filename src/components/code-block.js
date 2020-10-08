@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 const childToString = (child) => {
-  if (!child || !child.props) {
-    return '';
-  } else if (typeof child !== 'string') {
+  if (typeof child === 'string') {
+    return child; // hit string, unroll
+  } else if (child && child.props) {
     return childToString(child.props.children);
   }
-  return child;
+
+  return '';
 }
 
 const popExtraNewLines = (code) => {
@@ -19,26 +20,26 @@ const popExtraNewLines = (code) => {
 const splitChildrenIntoCodeAndOutput = (rawChildren) => {
   if (!rawChildren) { return [[], []]; }
 
-  const splitRegex = /__OUTPUT__/;
+  const splitRegex = /(?:\s+|^)__OUTPUT__(?:\s+|$)/;
   const code = [];
   const output = [];
 
-  const children = typeof rawChildren === 'string' ? [rawChildren] : rawChildren;
+  const children = Array.isArray(rawChildren) ? rawChildren : [rawChildren];
 
   let splitFound = false;
   for (let i = 0; i < children.length; i++) {
     const child = children[i];
 
     if (splitFound) { // we've already split, toss it into output and move on
-      output.push(childToString(child).trim());
+      output.push(childToString(child));
       continue;
     }
 
     const sChild = childToString(child);
     const splitChild = sChild.split(splitRegex);
     if (splitChild.length > 1) { // found split location
-      code.push(splitChild[0].trim()); // will convert token to pure text, seems to be okay in practice
-      output.push(splitChild[1].trim());
+      code.push(splitChild[0].replace(/(\n|\r\n)*$/g, '')); // will convert token to pure text, seems to be okay in practice
+      output.push(splitChild[1].replace(/^(\n|\r\n)*/g, ''));
       popExtraNewLines(code);
       splitFound = true;
     } else {
@@ -49,10 +50,12 @@ const splitChildrenIntoCodeAndOutput = (rawChildren) => {
   return [code, output];
 };
 
-const CodePre = ({ className, content }) => {
+const CodePre = ({ className, content, runnable }) => {
+  const codeRef = React.createRef();
   const [copyButtonText, setCopyButtonText] = useState('Copy');
   const copyClick = (e) => {
-    navigator.clipboard.writeText(content).then(() => {
+    const text = codeRef.current && codeRef.current.textContent;
+    navigator.clipboard.writeText(text).then(() => {
       setCopyButtonText('Copied!');
       setTimeout(() => {
         setCopyButtonText('Copy');
@@ -61,7 +64,6 @@ const CodePre = ({ className, content }) => {
     e.target.blur();
   };
 
-
   const [wrap, setWrap] = useState(false);
   const wrapClick = (e) => {
     setWrap(!wrap);
@@ -69,8 +71,9 @@ const CodePre = ({ className, content }) => {
   }
 
   const runClick = (e) => {
-    const block = e.target.closest('figure').querySelector('.katacoda-exec')
-    block && block.click();
+    const text = codeRef.current && codeRef.current.textContent;
+    window.katacoda.write(text);
+    e.target.blur();
   };
 
   return (
@@ -81,17 +84,19 @@ const CodePre = ({ className, content }) => {
           <Button size="sm" variant="link" onClick={copyClick}>{copyButtonText}</Button>
         </div>
 
-        <Button
-          size="sm"
-          variant="outline-info"
-          className="katacoda-exec-button"
-          onClick={runClick}
-        >
-          ► Run
-        </Button>
+        { runnable &&
+          <Button
+            size="sm"
+            variant="outline-info"
+            className="katacoda-exec-button"
+            onClick={runClick}
+          >
+            ► Run
+          </Button>
+        }
       </div>
 
-      <pre className={`${className} ${wrap && 'ws-preline'} m-0 br-tl-0 br-tr-0`}>
+      <pre className={`${className} ${wrap && 'ws-prewrap'} m-0 br-tl-0 br-tr-0`} ref={codeRef}>
         { content }
       </pre>
     </>
@@ -109,13 +114,26 @@ const OutputPre = ({ content }) => (
   </div>
 );
 
-const CodeBlock = ({ children, ...otherProps }) => {
-  const [codeContent, outputContent] = splitChildrenIntoCodeAndOutput(children.props.children);
+const CodeBlock = ({ children, katacodaPanelData, ...otherProps }) => {
+  const childIsComponent = !!children.props // true in normal usage, false if raw <pre> tags are used
+
+  const [codeContent, outputContent] = childIsComponent ?
+    splitChildrenIntoCodeAndOutput(children.props.children) :
+    [children, ''];
+  const language = childIsComponent ?
+    (children.props.className || '').replace('language-','') :
+    'text';
+
+  const execLanguages = katacodaPanelData ? ['shell'].concat(katacodaPanelData.codelanguages) : [];
 
   if (codeContent.length > 0) {
     return (
       <figure className='codeblock-wrapper katacoda-enabled'>
-        <CodePre className={children.props.className} content={codeContent} />
+        <CodePre
+          className={`language-${language}`}
+          content={codeContent}
+          runnable={execLanguages.includes(language)}
+        />
         { outputContent.length > 0 && <OutputPre content={outputContent} /> }
       </figure>
     );

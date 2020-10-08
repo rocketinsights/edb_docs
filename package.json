@@ -13,8 +13,8 @@
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "convert": "for i in content/**/*.rst ; do python3 scripts/pre_pandoc_script.py ${i%}; echo \"$i\" && pandoc --wrap=none $i -f rst -t gfm --atx-headers -o ${i%.*}.mdx ; done ; python3 scripts/post_pandoc_script.py",
     "update-icons": "git submodule update --init --remote && node scripts/createIconTypes.js && node scripts/createIconNames.js",
-    "build-pdf": "python3 scripts/generate_pdf.py",
-    "build-all-pdfs": "for i in docs/**/*/ ; do echo \"$i\"; python3 scripts/generate_pdf.py ${i%}; done"
+    "build-pdf": "python3 scripts/pdf/generate_pdf.py",
+    "build-all-pdfs": "for i in docs/**/*/ ; do echo \"$i\"; python3 scripts/pdf/generate_pdf.py ${i%}; done"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.6.1",
@@ -37,6 +37,7 @@
     "gatsby-plugin-sass": "^2.3.2",
     "gatsby-plugin-sharp": "^2.6.11",
     "gatsby-plugin-sitemap": "^2.4.13",
+    "gatsby-plugin-use-dark-mode": "^1.1.2",
     "gatsby-remark-autolink-headers": "^2.3.1",
     "gatsby-remark-images": "^3.3.10",
     "gatsby-remark-prismjs": "^3.5.4",
@@ -55,7 +56,8 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "react-instantsearch-dom": "^6.5.0",
-    "truncate-utf8-bytes": "^1.0.2"
+    "truncate-utf8-bytes": "^1.0.2",
+    "use-dark-mode": "^2.3.1"
   },
   "devDependencies": {
     "gh-pages": "^2.2.0",
