@@ -115,10 +115,12 @@ const OutputPre = ({ content }) => (
 );
 
 const CodeBlock = ({ children, katacodaPanelData, ...otherProps }) => {
-  const [codeContent, outputContent] = children.props ?
+  const childIsComponent = !!children.props // true in normal usage, false if raw <pre> tags are used
+
+  const [codeContent, outputContent] = childIsComponent ?
     splitChildrenIntoCodeAndOutput(children.props.children) :
     [children, ''];
-  const language = children.props ?
+  const language = childIsComponent ?
     (children.props.className || '').replace('language-','') :
     'text';
 
