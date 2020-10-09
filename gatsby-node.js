@@ -3,10 +3,10 @@ const realFs = require('fs');
 const gracefulFs = require('graceful-fs');
 gracefulFs.gracefulify(realFs);
 
-const git = require('simple-git')();
+const Git = require('simple-git/promise');
 
 const { createFilePath } = require(`gatsby-source-filesystem`);
-const { exec } = require("child_process");
+const { exec, execSync } = require("child_process");
 
 const sortVersionArray = (versions) => {
   return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
@@ -326,9 +326,16 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 //   }));
 // }
 
-exports.onPreBootstrap = () => {
-  git.clone(
+exports.onPreBootstrap = async () => {
+  console.log('syncing docs mtime');
+  execSync("python3 scripts/git-restore-mtime.py")
+
+  console.log('checking out advocacy_docs');
+  execSync("rm -r advocacy_docs/")
+  await Git().clone(
     'https://github.com/rocketinsights/edb_docs_advocacy.git',
     'advocacy_docs/'
   )
+  console.log('sync advocacy_docs mtime');
+  execSync("cd advocacy_docs/ && python3 ../scripts/git-restore-mtime.py");
 }
