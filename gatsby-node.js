@@ -61,6 +61,13 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
       name: 'topic',
       value: 'null',
     });
+
+    const fileNode = getNode(node.parent);
+    createNodeField({
+      node,
+      name: 'mtime',
+      value: fileNode.mtime,
+    });
   }
   if (
     node.internal.type === 'Mdx' &&
