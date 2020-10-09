@@ -29,6 +29,7 @@ export const query = graphql`
       }
       fields {
         path
+        mtime
       }
       body
       tableOfContents
@@ -83,6 +84,7 @@ const Tiles = ({ mdx, navLinks }) => {
 
 const LearnDocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { mdx } = data;
+  const { mtime } = mdx.fields;
   const { navLinks, githubLink, githubIssuesLink } = pageContext;
   const pageMeta = {
     title: mdx.frontmatter.title,
@@ -143,7 +145,7 @@ const LearnDocTemplate = ({ data, pageContext, path: pagePath }) => {
             </a>!
           </p>
 
-          <Footer />
+          <Footer timestamp={mtime} />
         </MainContent>
       </Container>
     </Layout>

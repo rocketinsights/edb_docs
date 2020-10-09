@@ -20,7 +20,7 @@ jobs:
         fetch-depth: 0 # fetch whole repo so git-restore-mtime can work
     - name: Update submodules
       run: git submodule update --init --remote
-    - name: Restore Mtime
+    - name: Restore mtime
       run: python3 scripts/git-restore-mtime.py
 
     - uses: actions/setup-node@v1

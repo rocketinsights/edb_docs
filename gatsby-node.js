@@ -3,6 +3,8 @@ const realFs = require('fs');
 const gracefulFs = require('graceful-fs');
 gracefulFs.gracefulify(realFs);
 
+const git = require('simple-git')();
+
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { exec } = require("child_process");
 
@@ -96,6 +98,13 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
       node,
       name: 'topic',
       value: topic,
+    });
+
+    const fileNode = getNode(node.parent);
+    createNodeField({
+      node,
+      name: 'mtime',
+      value: fileNode.mtime,
     });
   }
 };
@@ -309,3 +318,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     },
   });
 };
+
+// exports.sourceNodes = async () => {
+//   console.log('sourceNodes callback - restoring mtimes from git')
+//   console.log(await new Promise((resolve, reject) => {
+//     exec("python3 scripts/git-restore-mtime.py", (error, stdout, stderr) => resolve(stdout));
+//   }));
+// }
+
+exports.onPreBootstrap = () => {
+  git.clone(
+    'https://github.com/rocketinsights/edb_docs_advocacy.git',
+    'advocacy_docs/'
+  )
+}
