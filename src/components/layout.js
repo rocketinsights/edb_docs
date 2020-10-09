@@ -30,7 +30,10 @@ const Layout = ({ children, pageMeta, katacodaPanelData, background = 'light' })
 
   // gatsby-ssr handles initial setting of class, this will sync the toggle to that
   useEffect(() => {
-    if (document.documentElement.classList.contains('dark')){
+    if (
+      document.documentElement.classList.contains('dark') ||
+      window.localStorage.getItem('dark') === 'true'
+    ) {
       setDark(true);
     }
   }, [setDark])

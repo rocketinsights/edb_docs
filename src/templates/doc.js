@@ -214,6 +214,7 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           <LeftNav
             navLinks={navLinks}
             path={path}
+            pagePath={pagePath}
             versionArray={versionArray}
             navOrder={navOrder}
           />

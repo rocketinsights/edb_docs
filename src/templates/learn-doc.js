@@ -81,7 +81,7 @@ const Tiles = ({ mdx, navLinks }) => {
   return null;
 };
 
-const LearnDocTemplate = ({ data, pageContext }) => {
+const LearnDocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { mdx } = data;
   const { navLinks, githubLink, githubIssuesLink } = pageContext;
   const pageMeta = {
@@ -101,7 +101,12 @@ const LearnDocTemplate = ({ data, pageContext }) => {
       <TopBar />
       <Container fluid className="p-0 d-flex bg-white">
         <SideNavigation>
-          <LeftNav navLinks={navLinks} path={mdx.fields.path} iconName={iconName} />
+          <LeftNav
+            navLinks={navLinks}
+            path={mdx.fields.path}
+            pagePath={pagePath}
+            iconName={iconName}
+          />
         </SideNavigation>
         <MainContent>
           <div className="d-flex justify-content-between align-items-center">
