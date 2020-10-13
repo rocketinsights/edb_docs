@@ -77,3 +77,5 @@ __pycache__
 venv/
 .devcontainer/*
 .vscode/*
+
+advocacy_docs/

@@ -4,7 +4,9 @@ const gracefulFs = require('graceful-fs');
 gracefulFs.gracefulify(realFs);
 
 const { createFilePath } = require(`gatsby-source-filesystem`);
-const { exec } = require("child_process");
+const { exec, execSync } = require("child_process");
+
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 const sortVersionArray = (versions) => {
   return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
@@ -96,6 +98,13 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
       node,
       name: 'topic',
       value: topic,
+    });
+
+    const fileNode = getNode(node.parent);
+    createNodeField({
+      node,
+      name: 'mtime',
+      value: fileNode.mtime,
     });
   }
 };
@@ -309,3 +318,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     },
   });
 };
+
+exports.onPreBootstrap = async () => {
+  console.log('sourcing git repos');
+  // this can probably be async with Promise.all when we add more sources
+  execSync('python3 scripts/source/source_advocacy.py');
+
+  if (!isDevelopment) {
+    execSync('python3 scripts/source/restore_mtimes.py');
+  }
+}
