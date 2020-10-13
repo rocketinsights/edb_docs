@@ -3,10 +3,10 @@ const realFs = require('fs');
 const gracefulFs = require('graceful-fs');
 gracefulFs.gracefulify(realFs);
 
-const Git = require('simple-git/promise');
-
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { exec, execSync } = require("child_process");
+
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 const sortVersionArray = (versions) => {
   return versions.map(version => version.replace(/\d+/g, n => +n+100000)).sort()
@@ -319,17 +319,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   });
 };
 
-// exports.sourceNodes = async () => {
-//   console.log('sourceNodes callback - restoring mtimes from git')
-//   console.log(await new Promise((resolve, reject) => {
-//     exec("python3 scripts/git-restore-mtime.py", (error, stdout, stderr) => resolve(stdout));
-//   }));
-// }
-
 exports.onPreBootstrap = async () => {
-  console.log('sourcing git repos')
+  console.log('sourcing git repos');
   // this can probably be async with Promise.all when we add more sources
-  execSync('python3 scripts/source/source_advocacy.py')
+  execSync('python3 scripts/source/source_advocacy.py');
 
-  execSync('python3 scripts/source/restore_mtimes.py')
+  if (!isDevelopment) {
+    execSync('python3 scripts/source/restore_mtimes.py');
+  }
 }
