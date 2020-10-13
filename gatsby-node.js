@@ -327,10 +327,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 // }
 
 exports.onPreBootstrap = async () => {
-  console.log('checking out advocacy_docs');
-  execSync("rm -r advocacy_docs/")
-  await Git().clone(
-    'https://github.com/rocketinsights/edb_docs_advocacy.git',
-    'advocacy_docs/'
-  )
+  console.log('sourcing git repos')
+  // this can probably be async with Promise.all when we add more sources
+  execSync('python3 scripts/source/source_advocacy.py')
+
+  execSync('python3 scripts/source/restore_mtimes.py')
 }
