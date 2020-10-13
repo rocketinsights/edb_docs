@@ -322,8 +322,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 exports.onPreBootstrap = async () => {
   // this must happen before sourcing to make sure the repo is clean
   if (!isDevelopment) {
-    print('restoring mtime for docs')
-    os.system('python3 scripts/source/git-restore-mtime.py')
+    console.log('restoring mtime for docs')
+    execSync('python3 scripts/source/git-restore-mtime.py');
   }
 
   console.log('sourcing git repos');
