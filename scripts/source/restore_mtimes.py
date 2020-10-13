@@ -1,7 +1,6 @@
 import os
 
-print('restoring mtime for docs')
-os.system('python3 scripts/source/git-restore-mtime.py')
+# mtime restoration for base docs is in gatsby-node directly
 
 if os.path.exists('advocacy_docs/advocacy_docs'):
     print('restoring mtime for advocacy_docs')
