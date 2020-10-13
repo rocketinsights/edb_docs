@@ -264,15 +264,6 @@ module.exports = {
         path: 'advocacy_docs/advocacy_docs',
       },
     },
-    // {
-    //   resolve: `gatsby-source-git`,
-    //   options: {
-    //     name: `advocacy_docs`,
-    //     path: 'advocacy_docs',
-    //     remote: `https://github.com/rocketinsights/edb_docs_advocacy`,
-    //     patterns: `advocacy_docs/**`,
-    //   },
-    // },
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
