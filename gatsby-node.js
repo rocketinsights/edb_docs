@@ -327,15 +327,10 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 // }
 
 exports.onPreBootstrap = async () => {
-  console.log('syncing docs mtime');
-  execSync("python3 scripts/git-restore-mtime.py")
-
   console.log('checking out advocacy_docs');
   execSync("rm -r advocacy_docs/")
   await Git().clone(
     'https://github.com/rocketinsights/edb_docs_advocacy.git',
     'advocacy_docs/'
   )
-  console.log('sync advocacy_docs mtime');
-  execSync("cd advocacy_docs/ && python3 ../scripts/git-restore-mtime.py");
 }
