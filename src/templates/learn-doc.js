@@ -85,7 +85,7 @@ const Tiles = ({ mdx, navLinks }) => {
 const LearnDocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { mdx } = data;
   const { mtime } = mdx.fields;
-  const { navLinks, githubLink, githubIssuesLink } = pageContext;
+  const { navLinks, githubFileLink, githubEditLink, githubIssuesLink } = pageContext;
   const pageMeta = {
     title: mdx.frontmatter.title,
     description: mdx.frontmatter.description,
@@ -114,7 +114,7 @@ const LearnDocTemplate = ({ data, pageContext, path: pagePath }) => {
           <div className="d-flex justify-content-between align-items-center">
             <h1 className="balance-text">{mdx.frontmatter.title}</h1>
             <a
-              href={githubLink || '#'}
+              href={githubEditLink || '#'}
               className="btn btn-sm btn-primary px-4 text-nowrap"
             >
               Edit this page
@@ -145,7 +145,7 @@ const LearnDocTemplate = ({ data, pageContext, path: pagePath }) => {
             </a>!
           </p>
 
-          <Footer timestamp={mtime} />
+          <Footer timestamp={mtime} githubFileLink={githubFileLink} />
         </MainContent>
       </Container>
     </Layout>

@@ -189,7 +189,7 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
   const { fields, frontmatter, body, tableOfContents } = data.mdx;
   const { path, mtime } = fields;
   const depth = path.split('/').length;
-  const { navLinks, versions, githubIssuesLink } = pageContext;
+  const { navLinks, versions, githubFileLink, githubIssuesLink } = pageContext;
   const versionArray = makeVersionArray(versions, path);
   const { product, version } = getProductAndVersion(path);
   const navOrder = getNavOrder(product, version, leftNavs);
@@ -245,7 +245,7 @@ const DocTemplate = ({ data, pageContext, path: pagePath }) => {
           {sections && <Sections sections={sections} />}
           <DevFrontmatter frontmatter={frontmatter} />
 
-          <Footer timestamp={mtime} />
+          <Footer timestamp={mtime} githubFileLink={githubFileLink} />
         </MainContent>
       </Container>
     </Layout>

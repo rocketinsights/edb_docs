@@ -231,14 +231,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     );
 
     const docsRepoUrl = 'https://github.com/rocketinsights/edb_docs';
-    const githubLink = docsRepoUrl +
-      '/edit/develop/docs' +
-      doc.fields.path +
-      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
-    const githubIssuesLink = docsRepoUrl +
-      '/issues/new?title=Feedback%20on%20' +
-      encodeURIComponent(doc.fields.path) +
-      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const fileUrlSegment = doc.fields.path + (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const githubFileLink = `${docsRepoUrl}/commits/master/docs${fileUrlSegment}`;
+    const githubIssuesLink = `${docsRepoUrl}/issues/new?title=Feedback%20on%20${encodeURIComponent(fileUrlSegment)}`;
 
     actions.createPage({
       path: isLatest ? replacePathVersion(doc.fields.path) : doc.fields.path,
@@ -247,7 +242,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         navLinks: navLinks,
         versions: versionIndex[doc.fields.product],
         nodePath: doc.fields.path,
-        githubLink: githubLink,
+        githubFileLink: githubFileLink,
         githubIssuesLink: githubIssuesLink,
         potentialLatestPath: replacePathVersion(doc.fields.path), // the latest url for this path (may not exist!)
         potentialLatestNodePath: replacePathVersion(
@@ -262,21 +257,20 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     const navLinks = learn.filter(
       node => node.fields.topic === doc.fields.topic,
     );
+
     const advocacyDocsRepoUrl = 'https://github.com/rocketinsights/edb_docs_advocacy';
-    const githubLink = advocacyDocsRepoUrl +
-      '/edit/master/advocacy_docs' +
-      doc.fields.path +
-      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
-    const githubIssuesLink = advocacyDocsRepoUrl +
-      '/issues/new?title=Regarding%20' +
-      encodeURIComponent(doc.fields.path) +
-      (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const fileUrlSegment = doc.fields.path + (doc.fileAbsolutePath.includes('index.mdx') ? '/index.mdx' : '.mdx');
+    const githubFileLink = `${advocacyDocsRepoUrl}/commits/master/advocacy_docs${fileUrlSegment}`;
+    const githubEditLink = `${advocacyDocsRepoUrl}/edit/master/advocacy_docs${fileUrlSegment}`;
+    const githubIssuesLink = `${advocacyDocsRepoUrl}/issues/new?title=Regarding%20${encodeURIComponent(fileUrlSegment)}`;
+
     actions.createPage({
       path: doc.fields.path,
       component: require.resolve('./src/templates/learn-doc.js'),
       context: {
         navLinks: navLinks,
-        githubLink: githubLink,
+        githubFileLink: githubFileLink,
+        githubEditLink: githubEditLink,
         githubIssuesLink: githubIssuesLink,
       },
     });
