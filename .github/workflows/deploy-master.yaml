@@ -17,6 +17,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: 'master'
+        fetch-depth: 0 # fetch whole repo so git-restore-mtime can work
     - name: Update submodules
       run: git submodule update --init --remote
 
@@ -39,6 +40,7 @@ jobs:
         ALGOLIA_INDEX_NAME:  ${{ secrets.ALGOLIA_INDEX_NAME }}
         INDEX_ON_BUILD: true
         OPTIMIZE_IMAGES: true
+        FORCE_MTIME: true
 
     - name: Netlify deploy
       run: |

@@ -258,12 +258,10 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-git`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `advocacy_docs`,
-        path: 'advocacy_docs',
-        remote: `https://github.com/rocketinsights/edb_docs_advocacy`,
-        patterns: `advocacy_docs/**`,
+        name: 'advocacy_docs',
+        path: 'advocacy_docs/advocacy_docs',
       },
     },
     {
@@ -308,15 +306,6 @@ module.exports = {
         fonts: [
           `source code pro\:400`, // you can also specify font weights and styles
         ],
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-use-dark-mode',
-      options: {
-        classNameDark: 'dark',
-        classNameLight: 'light',
-        storageKey: 'dark-theme',
-        minify: true,
       },
     },
     {
