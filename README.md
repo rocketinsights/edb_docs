@@ -1,3 +1,5 @@
+__!!! THIS README IS COMPLETELY BOGUS AND NEEDS TO BE UPDATED !!!__
+
 # EDB Docs
 
 ![Staging Deployment](https://github.com/rocketinsights/edb_docs/workflows/Deploy%20Develop%20to%20Netlify/badge.svg) - [Staging Link](https://edb-docs-staging.netlify.app/)
